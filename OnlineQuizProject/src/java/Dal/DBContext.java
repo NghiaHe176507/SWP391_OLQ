@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author nghia
+ * @param <T>
  */
 public abstract class DBContext<T extends BaseEntity> {
 
@@ -22,14 +23,12 @@ public abstract class DBContext<T extends BaseEntity> {
 
     public DBContext() {
         try {
-            String url = "jdbc:sqlserver://localhost\\DESKTOP-KRG8A16\\NGHIA2003:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://LAPTOP-TML7FNC1:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
             String user = "sa";
-            String pass = "Nghia2003@@";
+            String pass = "minhtuanha2003";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
 
