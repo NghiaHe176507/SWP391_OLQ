@@ -5,15 +5,39 @@
         <servlet-class>controller.authentication.RegisterController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>createAccount</servlet-name>
+        <servlet-name>CreateAccount</servlet-name>
         <servlet-class>controller.account.CreateAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteAccount</servlet-name>
+        <servlet-class>controller.account.DeleteAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAccount</servlet-name>
+        <servlet-class>controller.account.UpdateAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewListAccount</servlet-name>
+        <servlet-class>controller.account.ViewListAccount</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>createAccount</servlet-name>
+        <servlet-name>CreateAccount</servlet-name>
         <url-pattern>/createaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAccount</servlet-name>
+        <url-pattern>/deleteaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAccount</servlet-name>
+        <url-pattern>/updateaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewListAccount</servlet-name>
+        <url-pattern>/listaccount</url-pattern>
     </servlet-mapping>
 </web-app>
