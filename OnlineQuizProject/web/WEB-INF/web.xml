@@ -4,11 +4,16 @@
         <servlet-name>RegisterController</servlet-name>
         <servlet-class>controller.authentication.RegisterController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>createAccount</servlet-name>
+        <servlet-class>controller.account.CreateAccount</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>createAccount</servlet-name>
+        <url-pattern>/createaccount</url-pattern>
+    </servlet-mapping>
 </web-app>
-
-
-
