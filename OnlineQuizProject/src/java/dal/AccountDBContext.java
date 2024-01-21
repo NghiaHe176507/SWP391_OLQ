@@ -17,18 +17,14 @@ import java.util.logging.Logger;
  */
 public class AccountDBContext extends DBContext<Account> {
 
-    @Override
-    public Account getById(String Id) {
+    public Account getAccount(String mail, String password) {
         try {
-            String sql = "SELECT [account_id]\n"
-                    + "      ,[mail]\n"
-                    + "      ,[password]\n"
-                    + "      ,[displayname]\n"
-                    + "      ,[account_status]\n"
+            String sql = "SELECT *"
                     + "  FROM [Account]\n"
-                    + "  WHERE [account_id] = ?";
+                    + "  WHERE [mail] = ? AND [password] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, Id);
+            stm.setString(1, mail);
+            stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 Account account = new Account();
@@ -44,6 +40,11 @@ public class AccountDBContext extends DBContext<Account> {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public Account getById(String Id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

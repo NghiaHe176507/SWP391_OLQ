@@ -25,7 +25,7 @@
                     <h2 style="text-align:center; font-family: Poppins ">Welcome to Quiz Online, please login to continue</h2>
                     <div class="col">
                         <p>${mess}</p>
-                        <input type="text" name="email" placeholder="Email" required style="background-color: white" pattern="[A-Za-z0-9]+">
+                        <input type="text" name="mail" placeholder="Email" required style="background-color: white" pattern="[A-Za-z0-9]+">
                         <input type="password" name="password" placeholder="Password" required style="background-color: white" pattern="[A-Za-z0-9]+">
                         <input type="submit" value="Login">
                     </div>

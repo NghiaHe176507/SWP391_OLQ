@@ -5,10 +5,6 @@
         <servlet-class>controller.authentication.RegisterController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.account.LoginController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>CreateAccount</servlet-name>
         <servlet-class>controller.account.CreateAccount</servlet-class>
     </servlet>
@@ -23,6 +19,10 @@
     <servlet>
         <servlet-name>ViewListAccount</servlet-name>
         <servlet-class>controller.account.ViewListAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>controller.account.LoginController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
