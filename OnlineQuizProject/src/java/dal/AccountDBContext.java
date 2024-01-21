@@ -16,12 +16,41 @@ import java.util.logging.Logger;
  * @author PC
  */
 public class AccountDBContext extends DBContext<Account> {
+@Override
+    public Account getById(String Id) {
+        try {
+            String sql = """
+                         SELECT [account_id]
+                               ,[mail]
+                               ,[password]
+                               ,[displayname]
+                               ,[account_status]
+                           FROM [Account]
+                           WHERE [account_id] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, Id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Account account = new Account();
+                account.setAccountId(rs.getInt("account_id"));
+                account.setMail(rs.getString("mail"));
+                account.setPassword(rs.getString("password"));
+                account.setDisplayName(rs.getString("displayname"));
+                account.setAccountStatus(rs.getString("account_status"));
+                return account;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public Account getAccount(String mail, String password) {
         try {
-            String sql = "SELECT *"
-                    + "  FROM [Account]\n"
-                    + "  WHERE [mail] = ? AND [password] = ?";
+            String sql = """
+                         SELECT *  FROM [Account]
+                           WHERE [mail] = ? AND [password] = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, mail);
             stm.setString(2, password);
@@ -41,10 +70,4 @@ public class AccountDBContext extends DBContext<Account> {
         }
         return null;
     }
-
-    @Override
-    public Account getById(String Id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }
