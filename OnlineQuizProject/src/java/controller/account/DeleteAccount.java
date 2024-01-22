@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author PC
  */
-public class CreateAccount extends HttpServlet {
+public class DeleteAccount extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,7 +30,12 @@ public class CreateAccount extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        int accountId = Integer.parseInt((request.getParameter("accountId")));
+        ControllerDBContext db = new ControllerDBContext();
+        db.deleteAccountById(accountId);
+        response.sendRedirect("listaccount");
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,7 +50,7 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/view/ControlAccount/CreateAccount.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -59,19 +64,7 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerDBContext db = new ControllerDBContext();
-        Account newAccount = new Account();
-        String mail = request.getParameter("mail");
-        String password = request.getParameter("password");
-        String displayname = request.getParameter("displayname");
-        String status = request.getParameter("status");
-        newAccount.setMail(mail);
-        newAccount.setPassword(password);
-        newAccount.setDisplayName(displayname);
-        newAccount.setAccountStatus(status);
-        db.createNewAccount(newAccount);
-
-        response.getWriter().println("Account created successful!");
+        processRequest(request, response);
     }
 
     /**

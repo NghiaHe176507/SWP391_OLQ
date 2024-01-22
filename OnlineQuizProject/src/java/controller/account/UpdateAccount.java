@@ -4,6 +4,7 @@
  */
 package controller.account;
 
+import dal.AccountDBContext;
 import dal.ControllerDBContext;
 import entity.Account;
 import java.io.IOException;
@@ -17,7 +18,9 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author PC
  */
-public class CreateAccount extends HttpServlet {
+public class UpdateAccount extends HttpServlet {
+
+    ControllerDBContext db = new ControllerDBContext();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,7 +33,6 @@ public class CreateAccount extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,7 +47,13 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/view/ControlAccount/CreateAccount.jsp").forward(request, response);
+        AccountDBContext accountDB = new AccountDBContext();
+        int accountId = Integer.parseInt(request.getParameter("accountId"));
+        Account accountNeedToUpdate = new Account();
+        accountNeedToUpdate = accountDB.getById(String.valueOf(accountId));
+        request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
+        request.getRequestDispatcher("/view/ControlAccount/EditAccount.jsp").forward(request, response);
+
     }
 
     /**
@@ -59,19 +67,18 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ControllerDBContext db = new ControllerDBContext();
-        Account newAccount = new Account();
+        Account accountUpdated = new Account();
+        int accountId = Integer.parseInt(request.getParameter("accountId"));
         String mail = request.getParameter("mail");
         String password = request.getParameter("password");
         String displayname = request.getParameter("displayname");
         String status = request.getParameter("status");
-        newAccount.setMail(mail);
-        newAccount.setPassword(password);
-        newAccount.setDisplayName(displayname);
-        newAccount.setAccountStatus(status);
-        db.createNewAccount(newAccount);
-
-        response.getWriter().println("Account created successful!");
+        accountUpdated.setAccountId(accountId);
+        accountUpdated.setMail(mail);
+        accountUpdated.setPassword(password);
+        accountUpdated.setDisplayName(displayname);
+        accountUpdated.setAccountStatus(status);
+        db.updateAccount(accountUpdated);
     }
 
     /**
