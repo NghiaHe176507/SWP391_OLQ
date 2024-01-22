@@ -34,7 +34,7 @@ public class LoginController extends HttpServlet {
         Account account = db.getAccount(mail, password);
         if (account != null) { //login succesful
             request.getSession().setAttribute("account", account);
-            response.getWriter().println("Login successful");
+            request.getRequestDispatcher("home.jsp").forward(request, response);
             
         } else {
             request.getSession().setAttribute("account", null);

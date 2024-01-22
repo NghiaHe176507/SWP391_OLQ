@@ -49,6 +49,7 @@ public class AccountDBContext extends DBContext<Account> {
     public Account getAccount(String mail, String password) {
         try {
             String sql = """
+                        
                          SELECT *  FROM [Account]
                            WHERE [mail] = ? AND [password] = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
