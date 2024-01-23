@@ -22,11 +22,11 @@
     </servlet>
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.account.LoginController</servlet-class>
+        <servlet-class>controller.authentication.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
-        <servlet-class>controller.account.LogoutController</servlet-class>
+        <servlet-class>controller.authentication.LogoutController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
