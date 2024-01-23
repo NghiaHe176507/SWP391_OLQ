@@ -24,7 +24,7 @@ public abstract class DBContext<T extends BaseEntity> {
         try {
             String url = "jdbc:sqlserver://localhost:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
             String user = "sa";
-            String pass = "03052003";
+            String pass = "123";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException | SQLException ex) {
@@ -32,7 +32,5 @@ public abstract class DBContext<T extends BaseEntity> {
         }
 
     }
-
-
     public abstract T getById(String Id);
 }
