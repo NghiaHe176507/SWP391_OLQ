@@ -27,7 +27,7 @@
     </head>
 
     <body>
-        <form>
+        <form action="home" method="POST">
             <!-- Main container div -->
             <div class="container">
                 <!-- Header section -->
@@ -35,7 +35,7 @@
                     <div class="header">
                         <!-- Logo -->
                         <div class="logo col-md-2">
-                            <a href="#home">QUIZWIZ</a>
+                            <a href="#">QUIZWIZ</a>
                         </div>
 
                         <!-- Search container -->
@@ -47,17 +47,8 @@
                         <!-- Login section -->
                         <div class="login column-gap-md-2">
                             <ul id="nav">
-                                <li>
-                                    <a href="#">
-                                        Let's Quiz Wisdom
-                                        <i class="nav-arraow-down"></i>
-                                    </a>
-                                    <!-- Submenu -->
-                                    <ul class="subnav">
-                                        <li><a href="#">Sign In</a></li>
-                                        <li><a href="#">Sign Up</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="#">Sign In</a></li>
+                                <li><a href="#">Sign Up</a></li>
                             </ul>
                         </div>
                     </div>
@@ -85,15 +76,15 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <!-- Image 1 -->
-                        <img src="../image/Slider1.webp" class="d-block w-100" alt="...">
+                        <img src="image/Slider1.webp" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
                         <!-- Image 2 -->
-                        <img src="../image/slider2.jpg" class="d-block w-100" alt="...">
+                        <img src="image/slider2.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
                         <!-- Image 3 -->
-                        <img src="../image/slider3.jpg" class="d-block w-100" alt="...">
+                        <img src="image/slider3.jpg" class="d-block w-100" alt="...">
                     </div>
                 </div>
                 <!-- Carousel control buttons -->
