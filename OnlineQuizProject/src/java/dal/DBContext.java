@@ -20,18 +20,21 @@ public abstract class DBContext<T extends BaseEntity> {
 
     protected Connection connection;
 
-    public DBContext() {
+   public DBContext() {
         try {
-            String url = "jdbc:sqlserver://DESKTOP-VIO3U0P\\SQLEXPRESS:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://localhost\\DESKTOP-KRG8A16\\NGHIA2003:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
             String user = "sa";
-            String pass = "03052003";
+            String pass = "Nghia2003@@";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+
 
 
     public abstract T getById(String Id);

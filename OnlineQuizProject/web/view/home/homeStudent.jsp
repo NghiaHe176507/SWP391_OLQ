@@ -1,3 +1,10 @@
+<%-- 
+    Document   : homeStudent
+    Created on : Jan 27, 2024, 1:27:21 AM
+    Author     : nghia
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +26,7 @@
 </head>
 
 <body>
-    <form>
+    <form action="/Student/home" method="POST">
         <!-- Main container div -->
         <div class="container">
             <!-- Header section -->
