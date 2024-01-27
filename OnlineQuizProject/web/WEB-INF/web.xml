@@ -32,6 +32,10 @@
         <servlet-name>HomeStudent</servlet-name>
         <servlet-class>controller.home.HomeStudent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomeLecture</servlet-name>
+        <servlet-class>controller.home.HomeLecture</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -63,5 +67,9 @@
     <servlet-mapping>
         <servlet-name>HomeStudent</servlet-name>
         <url-pattern>/homeStudent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeLecture</servlet-name>
+        <url-pattern>/homeLecture</url-pattern>
     </servlet-mapping>
 </web-app>
