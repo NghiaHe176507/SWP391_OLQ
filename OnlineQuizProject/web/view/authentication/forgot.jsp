@@ -18,7 +18,7 @@
         <style>
             .error {
                 color: red;
-                font-size: 11px;
+                font-size: 10px;
                 text-align: left;
             }
         </style>
@@ -35,6 +35,7 @@
                     <c:if test="${not empty errorMessage}">
                         <div style="color: red; padding: 10px 10px; text-align: left; font-size: 13px">${errorMessage}</div>
                     </c:if>
+
                     <div class="form-group">
                         <label for="gmail" class="form-label">Gmail:<span class="required">(*)</span></label>
                         <input type="text" id="gmail" name="gmail" placeholder="Enter your Gmail address" class="form-control">
@@ -51,7 +52,8 @@
                         <label for="confirmPassword" class="form-label">Confirm New Password:<span class="required">(*)</span></label>
                         <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" class="form-control">
                         <div id="confirmPasswordError" class="error"></div>
-                    </div>
+                    </div> 
+
                     <div class="policy">
                         <input type="checkbox" id="acceptTerms">
                         <h4>I accept all terms & condition</h4>
@@ -63,7 +65,7 @@
                     <script>
                         function validateForm() {
                             var password = document.getElementById('password').value;
-                            var confirmPassword = document.getElementById('confirmPassword').value; // Fix here
+                            var confirmPassword = document.getElementById('confirmPassword').value;
                             var gmail = document.getElementById('gmail').value;
 
                             var passwordError = document.getElementById('passwordError');
@@ -77,6 +79,7 @@
                                 return false;
                             }
 
+                            // Reset previous errors
                             passwordError.innerHTML = "";
                             confirmPasswordError.innerHTML = ""; // Fix here
                             gmailError.innerHTML = "";
@@ -101,6 +104,7 @@
                             return true;
                         }
                     </script>
+
             </div>
         </div>
     </body>

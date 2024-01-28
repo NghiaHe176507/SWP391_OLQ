@@ -4,6 +4,7 @@
     Author     : Đạt Phạm
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
     <head>
@@ -24,9 +25,11 @@
                 <div class="row">
                     <h2 style="text-align:center; font-family: Poppins ">Welcome to Quiz Online, please login to continue</h2>
                     <div class="col">
-                        <p>${mess}</p>
-                        <input type="text" name="mail" placeholder="Email" required style="background-color: white" pattern="[A-Za-z0-9]+">
-                        <input type="password" name="password" placeholder="Password" required style="background-color: white" pattern="[A-Za-z0-9]+">
+                       <c:if test="${checkAuthentication eq 'F'}">
+                            <div style="color: red">Sai thông tin đăng nhập</div>
+                        </c:if>
+                        <input type="text" name="mail" placeholder="Email" required style="background-color: white">
+                        <input type="password" name="password" placeholder="Password" required style="background-color: white" >
                         <input type="submit" value="Login">
                     </div>
 
