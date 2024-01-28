@@ -1,4 +1,10 @@
+<%-- 
+    Document   : home
+    Created on : Jan 14, 2024, 2:36:55 PM
+    Author     : Phạm Văn Nghĩa
+--%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +13,7 @@
         <meta charset="UTF-8">
         <title>QuizWiz</title>
         <!-- Favicon -->
-        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
+        <link rel="icon" href="../image/iconlogo.PNG" type="image/x-icon" />
         <!-- Stylesheets -->
         <link rel="stylesheet" href="css/home.css">
         <!-- Link to your javascripts -->
@@ -41,8 +47,17 @@
                         <!-- Login section -->
                         <div class="login column-gap-md-2">
                             <ul id="nav">
-                                <li><a href="#">Sign In</a></li>
-                                <li><a href="#">Sign Up</a></li>
+                                <li>
+                                    <a href="#">
+                                        Let's Quiz Wisdom
+                                        <i class="nav-arraow-down"></i>
+                                    </a>
+                                    <!-- Submenu -->
+                                    <ul class="subnav">
+                                        <li><a href="#">Sign In</a></li>
+                                        <li><a href="#">Sign Up</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -70,15 +85,15 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <!-- Image 1 -->
-                        <img src="image/Slider1.webp" class="d-block w-100" alt="...">
+                        <img src="../image/Slider1.webp" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
                         <!-- Image 2 -->
-                        <img src="image/slider2.jpg" class="d-block w-100" alt="...">
+                        <img src="../image/slider2.jpg" class="d-block w-100" alt="...">
                     </div>
                     <div class="carousel-item">
                         <!-- Image 3 -->
-                        <img src="image/slider3.jpg" class="d-block w-100" alt="...">
+                        <img src="../image/slider3.jpg" class="d-block w-100" alt="...">
                     </div>
                 </div>
                 <!-- Carousel control buttons -->

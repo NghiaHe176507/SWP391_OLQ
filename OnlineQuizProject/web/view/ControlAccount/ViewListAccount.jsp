@@ -16,7 +16,7 @@
             {
                 var conf = confirm("are you sure?");
                 if (conf) {
-                    window.location.href = 'deleteaccount?accountId=' + id;
+                    window.location.href = 'deleteaccount?accountId='+id;
                 }
             }
         </script>
@@ -28,32 +28,22 @@
                 <td>Mail</td>
                 <td>Password</td>
                 <td>Display Name</td>
-                <td>Full Name</td>
-                <td>Role</td>
                 <td>Status</td>
                 <td>Action</td>
             </tr>
-            <c:forEach items="${requestScope.listAccountWithInfo}" var="accountInfo">
+            <c:forEach items="${requestScope.listAccount}" var="account">
                 <tr>
-                    <td>${accountInfo.account.accountId}</td>
-                    <td>${accountInfo.account.mail}</td>
-                    <td>${accountInfo.account.password}</td>
-                    <td>${accountInfo.account.displayName}</td>
-                    <td>${accountInfo.fullName}</td>
-                    <td>${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName()}</td>
-                    <td>${accountInfo.account.accountStatus}</td>
+                    <td>${account.accountId}</td>
+                    <td>${account.mail}</td>
+                    <td>${account.password}</td>
+                    <td>${account.displayName}</td>
+                    <td>${account.accountStatus}</td>
                     <td>
-                        <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleId() != 1}">
-                            <a href="updateaccount?accountId=${accountInfo.account.accountId}">Edit</a>
-                            <input type="button" value="Delete" onclick="deleteAccount(${accountInfo.account.accountId})"/>
-                        </c:if>
+                        <a href="updateaccount?accountId=${account.accountId}">Edit</a>
+                        <input type="button" value="Delete" onclick="deleteAccount(${account.accountId})"/>
                     </td>
                 </tr>
             </c:forEach>
         </table>
-        <br/>
-        Note: Delete account đối với student là xóa tất cả mọi thông tin liên quan đến account bao gồm thông tin, lớp đã join, kết quả ktra trong database.<br/>
-        Chỉ có thể update role/delete account giảng viên khi tài khoản chưa có hoạt động gì.<br/>
-        Không thể delete account Admin.
     </body>
 </html>

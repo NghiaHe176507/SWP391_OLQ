@@ -5,20 +5,14 @@
 package controller.account;
 
 import dal.AccountDBContext;
-import dal.AccountInfoDBContext;
 import dal.ControllerDBContext;
-import dal.RoleDBContext;
 import entity.Account;
-import entity.AccountInfo;
-import entity.Role;
-import entity.RoleFeature;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.util.ArrayList;
 
 /**
  *
@@ -26,8 +20,6 @@ import java.util.ArrayList;
  */
 public class UpdateAccount extends HttpServlet {
 
-    RoleDBContext roleDB = new RoleDBContext();
-    AccountInfoDBContext accountInfoDB = new AccountInfoDBContext();
     ControllerDBContext db = new ControllerDBContext();
 
     /**
@@ -57,15 +49,9 @@ public class UpdateAccount extends HttpServlet {
             throws ServletException, IOException {
         AccountDBContext accountDB = new AccountDBContext();
         int accountId = Integer.parseInt(request.getParameter("accountId"));
-        Account accountNeedToUpdate = accountDB.getById(String.valueOf(accountId));
-        AccountInfo infoAbountAccountNeedToUpdate = db.getAccountInfoByAccountId(accountNeedToUpdate.getAccountId());
-        RoleFeature roleFeatureAbountAccountNeedToUpdate = db.getRoleFeatureByAccountId(accountNeedToUpdate.getAccountId());
-
-        ArrayList<Role> listRole = db.getListRole();
-        request.setAttribute("listRole", listRole);
+        Account accountNeedToUpdate = new Account();
+        accountNeedToUpdate = accountDB.getById(String.valueOf(accountId));
         request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
-        request.setAttribute("infoAbountAccountNeedToUpdate", infoAbountAccountNeedToUpdate);
-        request.setAttribute("roleFeatureAbountAccountNeedToUpdate", roleFeatureAbountAccountNeedToUpdate);
         request.getRequestDispatcher("/view/ControlAccount/EditAccount.jsp").forward(request, response);
 
     }
@@ -81,39 +67,18 @@ public class UpdateAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Account accountNeedToUpdate = new Account();
-        AccountInfo accountInfoNeedToUpdate = new AccountInfo();
-        RoleFeature roleFeatureNeedToUpdate = new RoleFeature();
-
+        Account accountUpdated = new Account();
         int accountId = Integer.parseInt(request.getParameter("accountId"));
         String mail = request.getParameter("mail");
         String password = request.getParameter("password");
         String displayname = request.getParameter("displayname");
-        String fullname = request.getParameter("fullname");
-        Date dob = Date.valueOf(request.getParameter("dob"));
         String status = request.getParameter("status");
-        String roleId = request.getParameter("roleId");
-
-        accountNeedToUpdate.setAccountId(accountId);
-        accountNeedToUpdate.setMail(mail);
-        accountNeedToUpdate.setPassword(password);
-        accountNeedToUpdate.setDisplayName(displayname);
-        accountNeedToUpdate.setAccountStatus(status);
-        
-        accountInfoNeedToUpdate.setAccountInfoId(db.getAccountInfoByAccountId(accountId).getAccountInfoId());
-        accountInfoNeedToUpdate.setFullName(fullname);
-        accountInfoNeedToUpdate.setDob(dob);
-        accountInfoNeedToUpdate.setAccount(accountNeedToUpdate);
-
-        roleFeatureNeedToUpdate.setRoleFeatureId(db.getRoleFeatureByAccountId(accountId).getRoleFeatureId());
-        roleFeatureNeedToUpdate.setRole(roleDB.getById(roleId));
-        roleFeatureNeedToUpdate.setAccount(accountNeedToUpdate);
-
-        db.updateAccount(accountNeedToUpdate);
-        db.updateAccountInfo(accountInfoNeedToUpdate);
-        db.updateRoleFeature(roleFeatureNeedToUpdate);
-        response.sendRedirect("listaccount");
+        accountUpdated.setAccountId(accountId);
+        accountUpdated.setMail(mail);
+        accountUpdated.setPassword(password);
+        accountUpdated.setDisplayName(displayname);
+        accountUpdated.setAccountStatus(status);
+        db.updateAccount(accountUpdated);
     }
 
     /**

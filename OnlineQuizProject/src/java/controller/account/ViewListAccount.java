@@ -7,8 +7,6 @@ package controller.account;
 
 import dal.ControllerDBContext;
 import entity.Account;
-import entity.AccountInfo;
-import entity.RoleFeature;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -33,10 +31,8 @@ public class ViewListAccount extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
-        ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
-        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
-        request.setAttribute("listAccountWithInfo", listAccount);
-        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
+        ArrayList<Account> listAccount = db.getListAccount();
+        request.setAttribute("listAccount", listAccount);
         request.getRequestDispatcher("/view/ControlAccount/ViewListAccount.jsp").forward(request, response);
     } 
 

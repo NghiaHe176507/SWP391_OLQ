@@ -15,12 +15,12 @@ public class Register extends BaseEntity {
     private int registerId;
     private Date registerDate;
     private AccountInfo studentInfo;
-    private Group classRegister;
+    private Class classRegister;
 
     public Register() {
     }
 
-    public Register(int registerId, Date registerDate, AccountInfo studentInfo, Group classRegister) {
+    public Register(int registerId, Date registerDate, AccountInfo studentInfo, Class classRegister) {
         this.registerId = registerId;
         this.registerDate = registerDate;
         this.studentInfo = studentInfo;
@@ -51,11 +51,11 @@ public class Register extends BaseEntity {
         this.studentInfo = studentInfo;
     }
 
-    public Group getClassRegister() {
+    public Class getClassRegister() {
         return classRegister;
     }
 
-    public void setClassRegister(Group classRegister) {
+    public void setClassRegister(Class classRegister) {
         this.classRegister = classRegister;
     }
 
