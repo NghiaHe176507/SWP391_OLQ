@@ -38,7 +38,7 @@ public class LoginController extends HttpServlet {
         Account param = new Account();
         param.setMail(mail);
         param.setPassword(password);
-        Account loggedUser = db.get(param);
+        Account loggedUser = db.getAccount(mail, password);
         
           if (loggedUser == null ) {
             request.setAttribute("checkAuthentication", "F");
