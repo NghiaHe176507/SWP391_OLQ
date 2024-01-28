@@ -436,6 +436,53 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return null;
     }
 
+    // This method checks if the email already exists in the database
+    public boolean isEmailExists(String email) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM Account WHERE mail = ?")) {
+            preparedStatement.setString(1, email);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            // Handle any SQL exceptions, log them, or throw an exception
+        }
+
+        return false; // Return false in case of an error
+    }
+
+    public Account getAccountByMail(String mail) {
+        try {
+            String sql = """
+                         SELECT [account_id]
+                               ,[mail]
+                               ,[password]
+                               ,[displayname]
+                               ,[account_status]
+                           FROM [Account]
+                           WHERE [mail] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, mail);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Account account = new Account();
+                account.setAccountId(rs.getInt("account_id"));
+                account.setMail(rs.getString("mail"));
+                account.setPassword(rs.getString("password"));
+                account.setDisplayName(rs.getString("displayname"));
+                account.setAccountStatus(rs.getString("account_status"));
+                return account;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     @Override
     public BaseEntity getById(String Id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
