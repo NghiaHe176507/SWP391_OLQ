@@ -47,7 +47,7 @@ public abstract class BaseRequiredAuthenController extends HttpServlet {
                 Account param = new Account();
                 param.setMail(mail);
                 param.setPassword(password);
-                account = db.get(param);
+                account = db.getAccount(mail, password);
                 if (account != null) {
                     request.getSession().setAttribute("account", account);
                     return true;
