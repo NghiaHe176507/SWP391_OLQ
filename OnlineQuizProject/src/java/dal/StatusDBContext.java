@@ -4,7 +4,7 @@
  */
 package dal;
 
-import entity.Role;
+import entity.Status;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,28 +15,27 @@ import java.util.logging.Logger;
  *
  * @author PC
  */
-public class RoleDBContext extends DBContext<Role> {
+public class StatusDBContext extends DBContext<Status> {
 
     @Override
-    public Role getById(String Id) {
+    public Status getById(String Id) {
         try {
-            String sql = """
-                         SELECT [role_id]
-                               ,[role_name]
-                           FROM [Role]
-                           WHERE [role_id] = ?""";
+            String sql = "SELECT [status_id]\n"
+                    + "      ,[status_name]\n"
+                    + "  FROM [Status]\n"
+                    + "  WHERE [status_id] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, Id);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Role role = new Role();
-                role.setRoleId(rs.getInt("role_id"));
-                role.setRoleName(rs.getString("role_name"));
-                return role;
+                Status status = new Status();
+                status.setStatusId(rs.getInt("status_id"));
+                status.setStatusName(rs.getString("status_name"));
+                return status;
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(RoleDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StatusDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
