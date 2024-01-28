@@ -19,7 +19,11 @@
             .main {
                 background: linear-gradient(135deg, #71b7e6, #9b59b6);
             }
-
+            .error {
+                color: red;
+                font-size: 10px;
+                text-align: left;
+            }
         </style>
     </head>
 
@@ -38,25 +42,25 @@
                     <div class="form-group">
                         <label for="username" class="form-label">Username:<span class="required">(*)</span></label>
                         <input type="text" id="username" name="username" placeholder="Enter your username" class="form-control">
-                        <div id="usernameError" class="form-message"></div>
+                        <div id="usernameError" class="error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="gmail" class="form-label">Gmail:<span class="required">(*)</span></label>
                         <input type="text" id="gmail" name="gmail" placeholder="Enter your Gmail address" class="form-control">
-                        <div id="gmailError"  class="form-message"></div>
+                        <div id="gmailError" class="error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="password" class="form-label">Password:<span class="required">(*)</span></label>
                         <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control">
-                        <div id="passwordError"  class="form-message"></div>
+                        <div id="passwordError" class="error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="confirmPassword" class="form-label">Confirm Password:<span class="required">(*)</span></label>
                         <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" class="form-control">
-                        <div id="confirmPasswordError"  class="form-message"></div>
+                        <div id="confirmPasswordError" class="error"></div>
                     </div>
 
                     <div class="policy">
@@ -71,22 +75,19 @@
                         function validateForm() {
                             var username = document.getElementById('username').value;
                             var password = document.getElementById('password').value;
-                            var confirmPassword = document.getElementById('confirmPassword').value;
+                            var confirmPassword = document.getElementById('confirmPassword').value; // Fix here
                             var gmail = document.getElementById('gmail').value;
-                            var acceptTerms = document.getElementById('acceptTerms').checked;
 
                             var usernameError = document.getElementById('usernameError');
                             var passwordError = document.getElementById('passwordError');
-                            var confirmPasswordError = document.getElementById('confirmPasswordError');
+                            var confirmPasswordError = document.getElementById('confirmPasswordError'); // Fix here
                             var gmailError = document.getElementById('gmailError');
-                            var acceptTermsError = document.getElementById('acceptTermsError');
 
                             // Reset previous errors
                             usernameError.innerHTML = "";
                             passwordError.innerHTML = "";
-                            confirmPasswordError.innerHTML = "";
+                            confirmPasswordError.innerHTML = ""; // Fix here
                             gmailError.innerHTML = "";
-                            acceptTermsError.innerHTML = "";
 
                             // Validate username
                             if (username.trim() === "") {
@@ -118,19 +119,10 @@
                                 return false;
                             }
 
-                            // Validate acceptance of terms
-                            if (!acceptTerms) {
-                                acceptTermsError.innerHTML = "Please accept the terms and conditions";
-                                return false;
-                            }
-
                             return true;
                         }
                     </script>
             </div>
         </div>
-
     </body>
-</body>
-
 </html>

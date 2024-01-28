@@ -15,6 +15,13 @@
         <title>Forgot Password</title>
         <link href="css/registerstyle.css" rel="stylesheet" type="text/css"/>
         <script src="js/validation.js" type="text/javascript"></script>
+        <style>
+            .error {
+                color: red;
+                font-size: 10px;
+                text-align: left;
+            }
+        </style>
     </head>
 
     <body>
@@ -32,20 +39,20 @@
                     <div class="form-group">
                         <label for="gmail" class="form-label">Gmail:<span class="required">(*)</span></label>
                         <input type="text" id="gmail" name="gmail" placeholder="Enter your Gmail address" class="form-control">
-                        <div id="gmailError" class="form-message"></div>
+                        <div id="gmailError" class="error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="password" class="form-label">New Password:<span class="required">(*)</span></label>
                         <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control">
-                        <div id="passwordError" class="form-message"></div>
+                        <div id="passwordError" class="error"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="confirmPassword" class="form-label">Confirm New Password:<span class="required">(*)</span></label>
                         <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" class="form-control">
-                        <div id="confirmPasswordError" class="form-message"></div>
-                    </div>
+                        <div id="confirmPasswordError" class="error"></div>
+                    </div> 
 
                     <div class="policy">
                         <input type="checkbox" id="acceptTerms">
@@ -60,25 +67,22 @@
                             var password = document.getElementById('password').value;
                             var confirmPassword = document.getElementById('confirmPassword').value;
                             var gmail = document.getElementById('gmail').value;
-                            var acceptTerms = document.getElementById('acceptTerms').checked;
 
                             var passwordError = document.getElementById('passwordError');
-                            var confirmPasswordError = document.getElementById('confirmPasswordError');
+                            var confirmPasswordError = document.getElementById('confirmPasswordError'); // Fix here
                             var gmailError = document.getElementById('gmailError');
-                            var acceptTermsError = document.getElementById('acceptTermsError');
 
-                            // Reset previous errors
-                            usernameError.innerHTML = "";
-                            passwordError.innerHTML = "";
-                            confirmPasswordError.innerHTML = "";
-                            gmailError.innerHTML = "";
-                            acceptTermsError.innerHTML = "";
                             // Validate Gmail
                             var gmailRegex = /^[a-zA-Z0-9._-]+@gmail\.com$/;
                             if (!gmail.match(gmailRegex)) {
                                 gmailError.innerHTML = "Please enter a valid Gmail address";
                                 return false;
                             }
+
+                            // Reset previous errors
+                            passwordError.innerHTML = "";
+                            confirmPasswordError.innerHTML = ""; // Fix here
+                            gmailError.innerHTML = "";
 
                             // Validate password
                             if (password.trim() === "") {
@@ -97,15 +101,10 @@
                                 return false;
                             }
 
-                            // Validate acceptance of terms
-                            if (!acceptTerms) {
-                                acceptTermsError.innerHTML = "Please accept the terms and conditions";
-                                return false;
-                            }
-
                             return true;
                         }
                     </script>
+
             </div>
         </div>
     </body>
