@@ -118,6 +118,49 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
     }
 
+    public void registerNewAccount(Account account) {
+        try {
+            connection.setAutoCommit(false);
+
+            String sql_insert = """
+                                INSERT INTO [Account]
+                                           ([mail]
+                                           ,[password]
+                                           ,[displayname]
+                                           )
+                                     VALUES
+                                           (?,?,?)""";
+            PreparedStatement stm = connection.prepareStatement(sql_insert);
+            stm.setString(1, account.getMail());
+            stm.setString(2, account.getPassword());
+            stm.setString(3, account.getDisplayName());
+            stm.executeUpdate();
+
+            String sql_getid = "SELECT @@IDENTITY as [account_id]";
+            PreparedStatement stm2 = connection.prepareStatement(sql_getid);
+            ResultSet rs = stm2.executeQuery();
+            if (rs.next()) {
+                account.setAccountId(rs.getInt("account_id"));
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
     @Override
     public BaseEntity getById(String Id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
