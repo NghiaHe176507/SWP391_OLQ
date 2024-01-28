@@ -8,39 +8,39 @@ package entity;
  *
  * @author PC
  */
-public class Class extends BaseEntity {
+public class Group extends BaseEntity {
 
-    private int classId;
-    private String className;
+    private int groupId;
+    private String groupName;
     private AccountInfo lectureInfo;
     private Topic topic;
     private Status status;
 
-    public Class() {
+    public Group() {
     }
 
-    public Class(int classId, String className, AccountInfo lectureInfo, Topic topic, Status status) {
-        this.classId = classId;
-        this.className = className;
+    public Group(int classId, String className, AccountInfo lectureInfo, Topic topic, Status status) {
+        this.groupId = classId;
+        this.groupName = className;
         this.lectureInfo = lectureInfo;
         this.topic = topic;
         this.status = status;
     }
 
-    public int getClassId() {
-        return classId;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setClassId(int classId) {
-        this.classId = classId;
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 
-    public String getClassName() {
-        return className;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public AccountInfo getLectureInfo() {
