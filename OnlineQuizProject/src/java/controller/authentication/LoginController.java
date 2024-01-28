@@ -55,7 +55,7 @@ public class LoginController extends HttpServlet {
                 response.addCookie(c_mail);
                 response.addCookie(c_pass);
             }
-            response.sendRedirect("home");
+           response.sendRedirect(request.getContextPath() + "/home");
     }
     }
 
