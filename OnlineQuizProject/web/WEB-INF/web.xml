@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
+        <servlet-name>ForgotPassword</servlet-name>
+        <servlet-class>controller.authentication.ForgotPassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Register</servlet-name>
+        <servlet-class>controller.authentication.Register</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>CreateAccount</servlet-name>
         <servlet-class>controller.account.CreateAccount</servlet-class>
     </servlet>
@@ -17,17 +25,29 @@
         <servlet-class>controller.account.ViewListAccount</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>HomePageController</servlet-name>
+        <servlet-class>controller.home.HomePageController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeStudent</servlet-name>
+        <servlet-class>controller.home.HomeStudent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeLecture</servlet-name>
+        <servlet-class>controller.home.HomeLecture</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controller.account.LoginController</servlet-class>
+        <servlet-class>controller.authentication.LoginController</servlet-class>
     </servlet>
-    <servlet>
+    <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
-        <servlet-class>controller.authentication.ForgotPassword</servlet-class>
-    </servlet>
-    <servlet>
+        <url-pattern>/forgotpassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Register</servlet-name>
-        <servlet-class>controller.authentication.Register</servlet-class>
-    </servlet>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateAccount</servlet-name>
         <url-pattern>/createaccount</url-pattern>
@@ -45,15 +65,19 @@
         <url-pattern>/listaccount</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>HomePageController</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeStudent</servlet-name>
+        <url-pattern>/homeStudent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeLecture</servlet-name>
+        <url-pattern>/homeLecture</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ForgotPassword</servlet-name>
-        <url-pattern>/forgotpassword</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Register</servlet-name>
-        <url-pattern>/register</url-pattern>
     </servlet-mapping>
 </web-app>
