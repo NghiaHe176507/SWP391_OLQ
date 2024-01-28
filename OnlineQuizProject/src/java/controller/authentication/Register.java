@@ -5,6 +5,7 @@
 package controller.authentication;
 
 import dal.AccountDBContext;
+import dal.ControllerDBContext;
 import entity.Account;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -30,7 +31,7 @@ public class Register extends HttpServlet {
         String displayname = request.getParameter("username");
         String password = request.getParameter("password");
         String mail = request.getParameter("gmail");
-        AccountDBContext acc = new AccountDBContext();
+        ControllerDBContext acc = new ControllerDBContext();
         if (acc.isEmailExists(mail)) {
             // Email already exists, redirect back to register page with an error message
             request.setAttribute("errorMessage", "Gmail has already been registered");

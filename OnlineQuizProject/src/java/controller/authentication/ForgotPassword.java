@@ -5,6 +5,7 @@
 package controller.authentication;
 
 import dal.AccountDBContext;
+import dal.ControllerDBContext;
 import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -38,7 +39,7 @@ public class ForgotPassword extends HttpServlet {
             throws ServletException, IOException {
         String password = request.getParameter("password");
         String mail = request.getParameter("gmail");
-        AccountDBContext acc = new AccountDBContext();
+        ControllerDBContext acc = new ControllerDBContext();
 
         try {
             if (acc.isEmailExists(mail)) {
