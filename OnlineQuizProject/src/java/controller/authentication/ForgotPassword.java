@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author tuann
  */
 public class ForgotPassword extends HttpServlet {
-    ControllerDBContext db = new ControllerDBContext();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -43,10 +43,11 @@ public class ForgotPassword extends HttpServlet {
 
         try {
             if (acc.isEmailExists(mail)) {
-                Account accountUpdated = db.getAccountByMail(mail);
+                Account accountUpdated = new Account();
+                accountUpdated.setMail(mail);
                 accountUpdated.setPassword(password);
-                db.updateAccount(accountUpdated);
-                response.sendRedirect(request.getContextPath() + "/login");
+                acc.updatePasswordAccount(accountUpdated);
+                request.getRequestDispatcher("view/authentication/register.jsp").forward(request, response); // Redirect to a success page
             } else {
                 request.setAttribute("errorMessage", "Email not found");
                 request.getRequestDispatcher("view/authentication/forgot.jsp").forward(request, response);
