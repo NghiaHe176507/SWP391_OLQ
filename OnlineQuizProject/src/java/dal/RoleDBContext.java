@@ -20,17 +20,18 @@ public class RoleDBContext extends DBContext<Role> {
     @Override
     public Role getById(String Id) {
         try {
-            String sql = "SELECT [role_id]\n"
-                    + "      ,[role_name]\n"
-                    + "  FROM [dbo].[Role]\n"
-                    + "  WHERE [role_id] = ?";
+            String sql = """
+                         SELECT [role_id]
+                               ,[role_name]
+                           FROM [Role]
+                           WHERE [role_id] = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, Id);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 Role role = new Role();
-                role.setRoleId(rs.getInt(""));
-                role.setRoleName(rs.getString(""));
+                role.setRoleId(rs.getInt("role_id"));
+                role.setRoleName(rs.getString("role_name"));
                 return role;
             }
 
