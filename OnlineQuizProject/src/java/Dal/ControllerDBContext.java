@@ -123,4 +123,42 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    // This method checks if the email already exists in the database
+    public boolean isEmailExists(String email) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM Account WHERE mail = ?")) {
+            preparedStatement.setString(1, email);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            // Handle any SQL exceptions, log them, or throw an exception
+        }
+
+        return false; // Return false in case of an error
+    }
+
+    public void updatePasswordAccount(Account account) {
+        try {
+            String sql_update = """
+                            UPDATE [Account]
+                               SET [mail] = ?
+                                  ,[password] = ?
+                             WHERE [mail]=?""";
+            try (PreparedStatement stm = connection.prepareStatement(sql_update)) {
+                stm.setString(1, account.getMail());
+                stm.setString(2, account.getPassword());
+                stm.setString(3, account.getMail()); // Assuming mail is the primary key
+                stm.executeUpdate();
+            }
+
+            // Commit the changes
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
