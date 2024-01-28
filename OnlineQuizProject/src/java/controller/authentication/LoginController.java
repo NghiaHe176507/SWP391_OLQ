@@ -2,16 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.account;
+package controller.authentication;
 
+import controller.account.*;
 import dal.AccountDBContext;
 import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -32,12 +35,6 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("password");
         AccountDBContext db = new AccountDBContext();
         Account account = db.getAccount(mail, password);
-<<<<<<< Updated upstream:OnlineQuizProject/src/java/controller/account/LoginController.java
-        if (account != null) { //login succesful
-            request.getSession().setAttribute("account", account);
-            response.getWriter().println("Login successful");
-            
-=======
         Account param = new Account();
         param.setMail(mail);
         param.setPassword(password);
@@ -45,13 +42,21 @@ public class LoginController extends HttpServlet {
         
           if (loggedUser == null ) {
             request.setAttribute("checkAuthentication", "F");
-            request.getRequestDispatcher("view/login.jsp").forward(request, response);
->>>>>>> Stashed changes:OnlineQuizProject/src/java/controller/authentication/LoginController.java
+            request.getRequestDispatcher("view/login/login.jsp").forward(request, response);
         } else {
-            request.getSession().setAttribute("account", null);
-            response.getWriter().println("Login failed");
-
-        }
+            String remember = request.getParameter("remember");
+            HttpSession session = request.getSession();
+            session.setAttribute("account", loggedUser);
+            if (remember != null) {
+                Cookie c_mail = new Cookie("user", mail);
+                Cookie c_pass = new Cookie("pass", password);
+                c_mail.setMaxAge(3600 * 24);
+                c_pass.setMaxAge(3600 * 24);
+                response.addCookie(c_mail);
+                response.addCookie(c_pass);
+            }
+            response.sendRedirect("home");
+    }
     }
 
     @Override
