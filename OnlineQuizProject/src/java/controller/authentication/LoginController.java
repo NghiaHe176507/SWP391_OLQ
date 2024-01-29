@@ -40,7 +40,7 @@ public class LoginController extends HttpServlet {
 
         if (loggedUser == null) {
             request.setAttribute("checkAuthentication", "F");
-            request.getRequestDispatcher("view/login/login.jsp").forward(request, response);
+            request.getRequestDispatcher("view/authentication/login.jsp").forward(request, response);
         } else {
             loggedUser = dB.getAccountByMail(mail);
             String remember = request.getParameter("remember");
