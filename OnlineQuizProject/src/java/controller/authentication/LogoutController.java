@@ -8,9 +8,11 @@ package controller.authentication;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -27,9 +29,14 @@ public class LogoutController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-       
-       response.sendRedirect("home.jsp");
+        request.getSession().setAttribute("account", null);
+        Cookie c_user = new Cookie("user", null);
+        Cookie c_pass = new Cookie("pass",null);
+        c_user.setMaxAge(-1);
+        c_pass.setMaxAge(-1);
+        response.addCookie(c_pass);
+        response.addCookie(c_user);
+        response.sendRedirect(request.getContextPath());
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

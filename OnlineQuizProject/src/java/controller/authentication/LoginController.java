@@ -48,7 +48,7 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", loggedUser);
             if (remember != null) {
-                Cookie c_mail = new Cookie("user", mail);
+                Cookie c_mail = new Cookie("mail", mail);
                 Cookie c_pass = new Cookie("pass", password);
                 c_mail.setMaxAge(3600 * 24);
                 c_pass.setMaxAge(3600 * 24);
