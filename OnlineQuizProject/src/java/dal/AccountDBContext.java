@@ -16,7 +16,8 @@ import java.util.logging.Logger;
  * @author PC
  */
 public class AccountDBContext extends DBContext<Account> {
-@Override
+
+    @Override
     public Account getById(String Id) {
         try {
             String sql = """
@@ -71,4 +72,6 @@ public class AccountDBContext extends DBContext<Account> {
         }
         return null;
     }
+
+
 }
