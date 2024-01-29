@@ -26,7 +26,7 @@
     </head>
 
     <body>
-        <form action="homeLecture" method="POST">
+        <form action="home" method="POST">
             <!-- Main container div -->
             <div class="container">
                 <!-- Header section -->
@@ -34,7 +34,7 @@
                     <div class="header">
                         <!-- Logo -->
                         <div class="logo col-md-2">
-                            <a href="#home">QUIZWIZ</a>
+                            <a href="#">QUIZWIZ</a>
                         </div>
 
                         <div class="create col-md-1">
@@ -59,7 +59,7 @@
                                         <li><a href="#"><i class="fa-solid fa-user"></i> User Details</a></li>
                                         <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                         <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                        <li><a href="<%= request.getContextPath() %>/logout" %>/l""><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
                                     </ul>
                                 </li>

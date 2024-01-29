@@ -13,7 +13,7 @@
         <meta charset="UTF-8">
         <title>QuizWiz</title>
         <!-- Favicon -->
-        <link rel="icon" href="../image/iconlogo.PNG" type="image/x-icon" />
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <!-- Stylesheets -->
         <link rel="stylesheet" href="css/home.css">
         <!-- Link to your javascripts -->
@@ -35,7 +35,7 @@
                     <div class="header">
                         <!-- Logo -->
                         <div class="logo col-md-2">
-                            <a href="#">QUIZWIZ</a>
+                            <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                         </div>
 
                         <!-- Search container -->
@@ -48,7 +48,7 @@
                         <div class="login column-gap-md-2">
                             <ul id="nav">
                                 <li><a href="<%= request.getContextPath() %>/login">Sign In</a></li>
-                                <li><a href="<%= request.getContextPath() %>/register   ">Sign Up</a></li>
+                                <li><a href="<%= request.getContextPath() %>/register">Sign Up</a></li>
                             </ul>
                         </div>
                     </div>
@@ -114,6 +114,7 @@
             <!-- End of footer section -->
 
             <!-- End of main container div -->
+            /* 
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     // Get the logo element
