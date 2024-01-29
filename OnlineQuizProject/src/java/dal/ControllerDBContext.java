@@ -206,4 +206,32 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
     }
 
+    public Account getAccountByMail(String mail) {
+        try {
+            String sql = """
+                         SELECT [account_id]
+                               ,[mail]
+                               ,[password]
+                               ,[displayname]
+                               ,[account_status]
+                           FROM [Account]
+                           WHERE [mail] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, mail);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Account account = new Account();
+                account.setAccountId(rs.getInt("account_id"));
+                account.setMail(rs.getString("mail"));
+                account.setPassword(rs.getString("password"));
+                account.setDisplayName(rs.getString("displayname"));
+                account.setAccountStatus(rs.getString("account_status"));
+                return account;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
