@@ -47,8 +47,8 @@
                         <!-- Login section -->
                         <div class="login column-gap-md-2">
                             <ul id="nav">
-                                <li><a href="#">Sign In</a></li>
-                                <li><a href="#">Sign Up</a></li>
+                                <li><a href="<%= request.getContextPath() %>/login">Sign In</a></li>
+                                <li><a href="<%= request.getContextPath() %>/register   ">Sign Up</a></li>
                             </ul>
                         </div>
                     </div>
@@ -114,6 +114,18 @@
             <!-- End of footer section -->
 
             <!-- End of main container div -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Get the logo element
+                    var logo = document.querySelector('.logo a');
+
+                    // Add click event listener to the logo
+                    logo.addEventListener('click', function () {
+                        // Reload the page
+                        location.reload();
+                    });
+                });
+            </script>
         </form>
     </body>
 

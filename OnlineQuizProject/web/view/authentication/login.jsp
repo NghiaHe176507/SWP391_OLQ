@@ -28,7 +28,7 @@
                        <c:if test="${checkAuthentication eq 'F'}">
                             <div style="color: red">Sai thông tin đăng nhập</div>
                         </c:if>
-                        <input type="text" name="mail" placeholder="Email" required style="background-color: white">
+                            <input type="text" name="mail" placeholder="yourname@gmail.com" required style="background-color: white" pattern="/^[a-zA-Z0-9._-]+@gmail\.com$/">
                         <input type="password" name="password" placeholder="Password" required style="background-color: white" >
                         <input type="submit" value="Login">
                     </div>
