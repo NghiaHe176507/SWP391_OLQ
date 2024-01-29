@@ -6,6 +6,7 @@ package controller.authentication;
 
 import controller.account.*;
 import dal.AccountDBContext;
+import dal.ControllerDBContext;
 import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,6 +23,7 @@ import jakarta.servlet.http.HttpSession;
  */
 public class LoginController extends HttpServlet {
 
+    ControllerDBContext dB = new ControllerDBContext();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,16 +36,13 @@ public class LoginController extends HttpServlet {
         String mail = request.getParameter("mail");
         String password = request.getParameter("password");
         AccountDBContext db = new AccountDBContext();
-        Account account = db.getAccount(mail, password);
-        Account param = new Account();
-        param.setMail(mail);
-        param.setPassword(password);
         Account loggedUser = db.getAccount(mail, password);
-        
-          if (loggedUser == null ) {
+
+        if (loggedUser == null) {
             request.setAttribute("checkAuthentication", "F");
             request.getRequestDispatcher("view/login/login.jsp").forward(request, response);
         } else {
+            loggedUser = dB.getAccountByMail(mail);
             String remember = request.getParameter("remember");
             HttpSession session = request.getSession();
             session.setAttribute("account", loggedUser);
@@ -55,8 +54,8 @@ public class LoginController extends HttpServlet {
                 response.addCookie(c_mail);
                 response.addCookie(c_pass);
             }
-           response.sendRedirect(request.getContextPath() + "/home");
-    }
+            response.sendRedirect(request.getContextPath() + "/home");
+        }
     }
 
     @Override
