@@ -3,21 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.authentication;
+package controller.user;
 
+import dal.AccountDetailDBContext;
+import entity.Account;
+import entity.AccountInfo;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Đạt Phạm
+ * @author Admin
  */
-public class LogoutController extends HttpServlet {
+public class UserDetailController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -28,15 +29,25 @@ public class LogoutController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-       request.getSession().setAttribute("account", null);
-        Cookie c_user = new Cookie("user", null);
-        Cookie c_pass = new Cookie("pass",null);
-        c_user.setMaxAge(-1);
-        c_pass.setMaxAge(-1);
-        response.addCookie(c_pass);
-        response.addCookie(c_user);
-       response.sendRedirect(request.getContextPath()+ "/default");
+        Account account = (Account) request.getSession().getAttribute("account");
+        
+        if (account != null) {
+            AccountDetailDBContext accountInfoDB = new AccountDetailDBContext();
+            AccountInfo accountInfo = accountInfoDB.getAccountInfoByAccount_Id(account.getAccountId());
+
+            if (accountInfo != null) {
+                request.setAttribute("displayname", account.getDisplayName());
+                request.setAttribute("mail", account.getMail());
+                request.setAttribute("fullname", accountInfo.getFullName());
+                request.setAttribute("dob", accountInfo.getDob());
+
+                request.getRequestDispatcher("view/user/UserDetail.jsp").forward(request, response);
+            } else {
+                response.getWriter().println("AccountInfo not found for the user");
+            }
+        } else {
+            response.getWriter().println("User not logged in");
+        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

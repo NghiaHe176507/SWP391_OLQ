@@ -67,7 +67,7 @@ public abstract class BaseRequiredAuthenController extends HttpServlet {
             //login
             doGet(request, response, (Account) request.getSession().getAttribute("account"));
         } else {
-           response.sendRedirect("access denied");
+           response.sendRedirect(request.getContextPath() + "/login");
         }
     }
 

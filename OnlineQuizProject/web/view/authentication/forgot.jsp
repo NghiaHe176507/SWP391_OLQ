@@ -60,7 +60,7 @@
                     </div>
                     <button class="form-submit" type="submit">Reset Password</button>
                     <div class="text">
-                        <h3>Back to login? <a href="#">Login</a></h3>
+                        <h3>Back to login? <a href="<%= request.getContextPath() %>/login">Login</a></h3>
                     </div>
                     <script>
                         function validateForm() {

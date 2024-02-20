@@ -100,7 +100,7 @@ public class UpdateAccount extends HttpServlet {
         accountNeedToUpdate.setPassword(password);
         accountNeedToUpdate.setDisplayName(displayname);
         accountNeedToUpdate.setAccountStatus(status);
-        
+
         accountInfoNeedToUpdate.setAccountInfoId(db.getAccountInfoByAccountId(accountId).getAccountInfoId());
         accountInfoNeedToUpdate.setFullName(fullname);
         accountInfoNeedToUpdate.setDob(dob);
@@ -113,7 +113,9 @@ public class UpdateAccount extends HttpServlet {
         db.updateAccount(accountNeedToUpdate);
         db.updateAccountInfo(accountInfoNeedToUpdate);
         db.updateRoleFeature(roleFeatureNeedToUpdate);
-        response.sendRedirect("listaccount");
+//        request.getRequestDispatcher("/home").forward(request, response);
+response.sendRedirect(request.getContextPath() + "/home");
+
     }
 
     /**

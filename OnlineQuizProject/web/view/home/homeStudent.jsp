@@ -13,7 +13,7 @@
         <meta charset="UTF-8">
         <title>QuizWiz</title>
         <!-- Favicon -->
-        <link rel="icon" href="imgage/iconlogo.PNG" type="image/x-icon" />
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <!-- Stylesheets -->
         <link rel="stylesheet" href="css/homeStudent.css">
         <!-- Font Awesome Icons -->
@@ -34,7 +34,7 @@
                     <div class="header">
                         <!-- Logo -->
                         <div class="logo col-md-2">
-                            <a href="#home">QUIZWIZ</a>
+                            <a href="#">QUIZWIZ</a>
                         </div>
 
                         <!-- Search container -->
@@ -52,7 +52,7 @@
                                         <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
                                     </div>
                                     <ul class="subnav">
-                                        <li><a href="#"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
                                         <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                         <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                         <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>

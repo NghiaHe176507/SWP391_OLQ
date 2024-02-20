@@ -8,11 +8,14 @@ import controller.authentication.BaseRequiredAuthenController;
 import dal.AccountDBContext;
 import dal.ControllerDBContext;
 import entity.Account;
+import entity.AccountInfo;
+import entity.RoleFeature;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,19 +35,23 @@ public class HomePageController extends BaseRequiredAuthenController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
         ControllerDBContext cdb = new ControllerDBContext();
-//        System.out.println(cdb.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId());
         switch (cdb.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId()) {
             case 1:
-                request.getRequestDispatcher("view/home/home.jsp").forward(request, response);
+                ControllerDBContext db = new ControllerDBContext();
+                ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
+                ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
+                request.setAttribute("listAccountWithInfo", listAccount);
+                request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
+                request.getRequestDispatcher("view/home/homeAdmin.jsp").forward(request, response);
                 break;
             case 2:
-                request.getRequestDispatcher("view/home/homeLecture.jsp").forward(request, response);
+                request.getRequestDispatcher("view/home/homeLecturer.jsp").forward(request, response);
                 break;
             case 3:
                 request.getRequestDispatcher("view/home/homeStudent.jsp").forward(request, response);
                 break;
             default:
-                break;
+                request.getRequestDispatcher("view/home/home.jsp").forward(request, response);
         }
     }
 
