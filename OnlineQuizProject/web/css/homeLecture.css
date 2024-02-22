@@ -310,6 +310,7 @@ html {
   padding: 10px; /* Khoảng cách lề bên trong div con */
 }
 
+
 .show-all {
   width: 100%;
   margin-top: 15px; /* Khoảng cách giữa div con và div show-all */
@@ -321,3 +322,4 @@ html {
   text-decoration: none;
   color: #007BFF;
 }
+

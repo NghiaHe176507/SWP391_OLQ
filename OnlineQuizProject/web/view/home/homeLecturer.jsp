@@ -4,6 +4,7 @@
     Author     : nghia
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,71 +75,32 @@
                 </div>
 
                 <div class="topic" id="topicContainer">
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
+                    <c:forEach var="group" items="${requestScope.listGroup}" varStatus="loop">
+                        <div class="col-md-4 mb-3">
+                            <div class="topic-info" style="width: 18rem;">
+                                <div class="topic-info-body">
+                                    <h5 class="topic-info-title">Class Name: ${group.groupName}</h5>
+                                    <h6 class="topic-info-subtitle mb-2">${group.topic.topicName}</h6>
+                                    <c:choose>
+                                        <c:when test="${group.status.statusName eq 'Active'}">
+                                            <p class="topic-info-text text-success" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:when test="${group.status.statusName eq 'Pendding'}">
+                                            <p class="topic-info-text text-secondary" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:when test="${group.status.statusName eq 'Closed'}">
+                                            <p class="topic-info-text text-danger" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p class="topic-info-text" style="margin-bottom: 0">${group.status.statusName}</p>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <a href="#" class="topic-info-link">More Details</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </c:forEach>
 
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
 
                     <div class="show-all">
                         <a href="#" id="showAllBtn">Show all topic</a>

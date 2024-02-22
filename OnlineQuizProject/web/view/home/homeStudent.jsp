@@ -4,6 +4,7 @@
     Author     : nghia
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,71 +71,19 @@
                 </div>
 
                 <div class="topic" id="topicContainer">
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
+                    <c:forEach var="register" items="${requestScope.listRegister}" varStatus="loop">
+                        <div class="col-md-4 mb-3">
+                            <div class="topic-info" style="width: 18rem;">
+                                <div class="topic-info-body">
+                                    <h4 class="topic-info-title">Class Name: ${register.classRegister.groupName}</h4>
+                                    <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.topic.topicName}</h6>
+                                    <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.classRegister.lectureInfo.fullName}</h6>
+                                    <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
+                                    <a href="#" class="topic-info-link">More Details</a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
+                    </c:forEach>
 
                     <div class="show-all">
                         <a href="#" id="showAllBtn">Show all topic</a>

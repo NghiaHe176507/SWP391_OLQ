@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * @author PC
  */
 public class AccountInfoDBContext extends DBContext<AccountInfo> {
-    
+
     @Override
     public AccountInfo getById(String Id) {
         AccountDBContext accountDb = new AccountDBContext();
@@ -38,11 +38,26 @@ public class AccountInfoDBContext extends DBContext<AccountInfo> {
                 accountInfo.setAccount(accountDb.getById(String.valueOf(rs.getInt("account_id"))));
                 return accountInfo;
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(AccountInfoDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
+    public int getAccountInfoIdByAccountId(int accountId) {
+        try {
+            String sql = "SELECT [accountInfo_id] FROM [AccountInfo] WHERE [account_id] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, accountId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("accountInfo_id");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountInfoDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1; // Trả về -1 nếu không tìm thấy
+    }
+
 }
