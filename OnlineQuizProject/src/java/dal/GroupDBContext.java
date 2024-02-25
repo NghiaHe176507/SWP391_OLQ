@@ -15,7 +15,6 @@ import java.util.logging.Logger;
  *
  * @author PC
  */
-
 public class GroupDBContext extends DBContext<Group> {
 
     @Override
@@ -30,6 +29,7 @@ public class GroupDBContext extends DBContext<Group> {
                                ,[lecture_id]
                                ,[topic_id]
                                ,[status_id]
+                               ,[group_invite_code]
                            FROM [Group]
                            WHERE [group_id] =?""";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -42,6 +42,7 @@ public class GroupDBContext extends DBContext<Group> {
                 newClass.setLectureInfo(accountInfoDB.getById(String.valueOf(rs.getInt("lecture_id"))));
                 newClass.setTopic(topicDB.getById(String.valueOf(rs.getInt("topic_id"))));
                 newClass.setStatus(statusDB.getById(String.valueOf(rs.getInt("status_id"))));
+                newClass.setGroupInviteCode(rs.getString("group_invite_code"));
                 return newClass;
             }
 

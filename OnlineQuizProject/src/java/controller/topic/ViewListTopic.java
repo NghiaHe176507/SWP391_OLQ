@@ -3,14 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.account;
+package controller.topic;
 
 import dal.ControllerDBContext;
-import entity.Account;
-import entity.AccountInfo;
-import entity.RoleFeature;
+import entity.Topic;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class ViewListAccount extends HttpServlet {
+public class ViewListTopic extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,11 +30,9 @@ public class ViewListAccount extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
-        ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
-        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
-        request.setAttribute("listAccountWithInfo", listAccount);
-        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
-        request.getRequestDispatcher("/view/ControllerAccount/ViewListAccount.jsp").forward(request, response);
+        ArrayList<Topic> listTopic = db.getListTopic();
+        request.setAttribute("listTopic", listTopic);
+        request.getRequestDispatcher("/view/ControllerTopic/ViewListTopic.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
