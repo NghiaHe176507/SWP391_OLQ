@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -47,7 +48,11 @@ public class CreateTopic extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/view/ControllerTopic/CreateTopic.jsp").forward(request, response);
+        ControllerDBContext db = new ControllerDBContext();
+        ArrayList<Topic> listTopic = db.getListTopic();
+        request.setAttribute("listTopic", listTopic);
+        request.setAttribute("url", "create");
+        request.getRequestDispatcher("/view/controllerTopic/TopicManagement.jsp").forward(request, response);
     }
 
     /**
@@ -66,7 +71,7 @@ public class CreateTopic extends HttpServlet {
 
         newTopic.setTopicName(topicName);
         db.createNewTopic(newTopic);
-        response.sendRedirect("listTopic");
+        response.sendRedirect(request.getContextPath()+"/admin/topic-management");
     }
 
     /**

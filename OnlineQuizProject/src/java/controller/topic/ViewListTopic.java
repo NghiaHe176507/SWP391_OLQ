@@ -32,7 +32,7 @@ public class ViewListTopic extends HttpServlet {
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<Topic> listTopic = db.getListTopic();
         request.setAttribute("listTopic", listTopic);
-        request.getRequestDispatcher("/view/ControllerTopic/ViewListTopic.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/controllerTopic/TopicManagement.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

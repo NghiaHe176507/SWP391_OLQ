@@ -31,7 +31,7 @@ public class DeleteTopic extends HttpServlet {
         int topicId = Integer.parseInt((request.getParameter("topicId")));
         ControllerDBContext db = new ControllerDBContext();
         db.deleteTopicById(topicId);
-        response.sendRedirect("listTopic");
+        response.sendRedirect(request.getContextPath()+"/admin/topic-management");
 
     }
 

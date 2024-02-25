@@ -37,7 +37,7 @@ public class ViewListAccount extends HttpServlet {
         ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
         request.setAttribute("listAccountWithInfo", listAccount);
         request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
-        request.getRequestDispatcher("/view/ControllerAccount/ViewListAccount.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/controllerAccount/AccountManagement.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

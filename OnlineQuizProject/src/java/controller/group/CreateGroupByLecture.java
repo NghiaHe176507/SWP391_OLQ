@@ -63,7 +63,7 @@ public class CreateGroupByLecture extends BasedRequiredAuthenticationController 
         ArrayList<Status> listStatus = db.getListStatus();
         ArrayList<Topic> listTopic = db.getListTopic();
         request.setAttribute("listTopic", listTopic);
-        request.getRequestDispatcher("/view/ControllerGroup/CreateGroupByLecture.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/controllerGroup/CreateGroupByLecture.jsp").forward(request, response);
     }
 
     @Override

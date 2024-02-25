@@ -33,7 +33,7 @@ public class ViewListGroupForAdmin extends HttpServlet {
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<Group> listGroup = db.getListGroup();
         request.setAttribute("listGroup", listGroup);
-        request.getRequestDispatcher("/view/ControllerGroup/ViewListGroup.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/controllerGroup/ViewListGroup.jsp").forward(request, response);
     }
 
     /**

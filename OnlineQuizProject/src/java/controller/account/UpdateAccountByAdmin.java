@@ -66,7 +66,13 @@ public class UpdateAccountByAdmin extends HttpServlet {
         request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
         request.setAttribute("infoAbountAccountNeedToUpdate", infoAbountAccountNeedToUpdate);
         request.setAttribute("roleFeatureAbountAccountNeedToUpdate", roleFeatureAbountAccountNeedToUpdate);
-        request.getRequestDispatcher("/view/ControllerAccount/EditAccountByAdmin.jsp").forward(request, response);
+        request.setAttribute("url", "update");
+        
+        ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
+        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
+        request.setAttribute("listAccountWithInfo", listAccount);
+        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
+        request.getRequestDispatcher("/view/controllerAccount/AccountManagement.jsp").forward(request, response);
 
     }
 
@@ -113,7 +119,7 @@ public class UpdateAccountByAdmin extends HttpServlet {
         db.updateAccount(accountNeedToUpdate);
         db.updateAccountInfo(accountInfoNeedToUpdate);
         db.updateRoleFeature(roleFeatureNeedToUpdate);
-        response.sendRedirect("listaccount");
+        response.sendRedirect(request.getContextPath()+"/admin/account-management");
     }
 
     /**

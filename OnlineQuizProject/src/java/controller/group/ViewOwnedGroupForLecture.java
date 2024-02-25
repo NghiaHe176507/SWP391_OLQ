@@ -35,7 +35,7 @@ public class ViewOwnedGroupForLecture extends BasedRequiredAuthenticationControl
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<Group> listGroup = db.getListGroupOwnedByLecture(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
         request.setAttribute("listGroup", listGroup);
-        request.getRequestDispatcher("/view/ControllerGroup/ViewOwnedGroupForLecture.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/controllerGroup/ViewOwnedGroupForLecture.jsp").forward(request, response);
         }
 
     @Override
