@@ -13,7 +13,13 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Form and Table</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
+        <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/homeStudent.js"></script>
+        <title>Topic</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -21,56 +27,65 @@
                 padding: 0;
                 display: flex;
                 height: 100vh;
+                justify-content: center;
+                align-items: center; /* Center items vertically */
             }
 
             .container {
-                flex: 1;
+
                 display: flex;
-                justify-content: flex-end;
-                /* Align items to the right side of the container */
+                max-width: 800px;
+                width: 100%;
+                justify-content: center;
+                /* Add margin for spacing on both sides */
             }
 
             .left-side,
             .right-side {
                 padding: 20px;
                 box-sizing: border-box;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                width: 48%; /* Adjust the width to leave some space between left and right sides */
             }
 
             .left-side {
                 overflow: auto;
-                width: 50%;
+                margin-right: 10px; /* Add margin between left and right sides */
             }
 
             .right-side {
                 overflow: auto;
-                width: 50%;
-                /* Initially hide the right-side form */
+                margin-left: 10px; /* Add margin between left and right sides */
             }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
+            .left-side h2 {
+                color: #007bff;
+                margin-bottom: 20px;
             }
 
-            th,
-            td {
-                padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
+            .left-side a.btn {
+                color: #fff;
             }
 
-            #toggleFormLink {
-                margin-left: 20px;
-                align-self: flex-start;
-                cursor: pointer;
-                color: blue;
-                text-decoration: underline;
+            .left-side a.btn:hover {
+                text-decoration: none;
+            }
+
+            .left-side .btn-danger {
+                background-color: #dc3545;
+                border-color: #dc3545;
+            }
+
+            .left-side .btn-danger:hover {
+                background-color: #bd2130;
+                border-color: #bd2130;
             }
         </style>
         <script>
             function DeleteTopic(id)
             {
-                var conf = confirm("are you sure?");
+                var conf = confirm("Are you sure?");
                 if (conf) {
                     window.location.href = '<%=request.getContextPath()%>/admin/topic-management/delete-topic?topicId=' + id;
                 }
@@ -83,39 +98,44 @@
 
             <div class="right-side" id="formContainer">
                 <c:if test="${requestScope.url == 'create'}">
-                    <h2>Create Topic</h2>
-                    <form action="create-topic" method="POST"> 
-                        Topic Name: <input type="text" name="topicName" /> <br/>
-                        <input type="submit" value="Save"/>
-                    </form>
+                    <div class="container-fluid">
+                        <h2 class="mb-4">Create Topic</h2>
+                        <form action="create-topic" method="POST" class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label for="topicName">Topic Name:</label>
+                                <input type="text" class="form-control" id="topicName" name="topicName" required>
+                                <div class="invalid-feedback">Please enter a topic name.</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </form>
+                    </div>
                 </c:if>
             </div>
             <div class="left-side">
-                <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" id="toggleFormLink">Create</a>
-                <h2>Display Table</h2>
-                <table id="myTable">
-                    <thead>
-                        <tr>
-                            <td>Topic Id</td>
-                            <td>Topic Name</td>
-                            <td>Action</td>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <c:forEach items="${requestScope.listTopic}" var="topic">
+                <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
+                <div class="container-fluid">
+                    <h2 class="mb-4">View List Topic</h2>
+                    <table class="table table-striped" id="myTable">
+                        <thead class="thead-dark">
                             <tr>
-                                <td>${topic.topicId}</td>
-                                <td>${topic.topicName}</td>
-                                <td>
-                                    <c:if test="true">
-                                        <input type="button" value="Delete" onclick="DeleteTopic(${topic.topicId})"/>
-                                    </c:if>
-                                </td>
+                                <th>Topic Id</th>
+                                <th>Topic Name</th>
+                                <th>Action</th>
                             </tr>
-                        </c:forEach>
-                </table>
-                </tbody>
-                </table>
+                        </thead>
+                        <tbody id="tableBody">
+                            <c:forEach items="${requestScope.listTopic}" var="topic">
+                                <tr>
+                                    <td>${topic.topicId}</td>
+                                    <td>${topic.topicName}</td>
+                                    <td>
+                                        <button class="btn btn-danger" onclick="DeleteTopic(${topic.topicId})">Delete</button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
