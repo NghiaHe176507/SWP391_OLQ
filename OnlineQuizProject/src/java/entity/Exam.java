@@ -4,7 +4,7 @@
  */
 package entity;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
  *
@@ -15,9 +15,9 @@ public class Exam extends BaseEntity {
     private int examId;
     private String examTitle;
     private Group classExam;
-    private Timestamp examStartDate;
-    private Timestamp examEndDate;
-    private Timestamp examTime;
+    private Date examStartDate;
+    private Date examEndDate;
+    private String examTime;
     private Status status;
     private AccountInfo lectureInfo;
     private int examAttemp;
@@ -26,7 +26,7 @@ public class Exam extends BaseEntity {
     public Exam() {
     }
 
-    public Exam(int examId, String examTitle, Group classExam, Timestamp examStartDate, Timestamp examEndDate, Timestamp examTime, Status status, AccountInfo lectureInfo, int examAttemp, boolean isPractice) {
+    public Exam(int examId, String examTitle, Group classExam, Date examStartDate, Date examEndDate, String examTime, Status status, AccountInfo lectureInfo, int examAttemp, boolean isPractice) {
         this.examId = examId;
         this.examTitle = examTitle;
         this.classExam = classExam;
@@ -63,27 +63,27 @@ public class Exam extends BaseEntity {
         this.classExam = classExam;
     }
 
-    public Timestamp getExamStartDate() {
+    public Date getExamStartDate() {
         return examStartDate;
     }
 
-    public void setExamStartDate(Timestamp examStartDate) {
+    public void setExamStartDate(Date examStartDate) {
         this.examStartDate = examStartDate;
     }
 
-    public Timestamp getExamEndDate() {
+    public Date getExamEndDate() {
         return examEndDate;
     }
 
-    public void setExamEndDate(Timestamp examEndDate) {
+    public void setExamEndDate(Date examEndDate) {
         this.examEndDate = examEndDate;
     }
 
-    public Timestamp getExamTime() {
+    public String getExamTime() {
         return examTime;
     }
 
-    public void setExamTime(Timestamp examTime) {
+    public void setExamTime(String examTime) {
         this.examTime = examTime;
     }
 

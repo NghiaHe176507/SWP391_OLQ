@@ -12,6 +12,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <title>Student Test Scores</title>
         <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -69,6 +70,15 @@
                 color: #fff;
                 border-radius: 3px;
             }
+            /* CSS for the title */
+            .title {
+                font-family: Arial, sans-serif;
+                font-size: 24px;
+                text-align: center;
+                margin-top: 20px;
+                color: #333;
+                text-transform: uppercase;
+            }
         </style>
     </head>
 
@@ -82,10 +92,10 @@
                     </div>
 
                     <!-- Search container -->
-                    <div class="search-container col-md-6">
+                    <div class="search-container col-md-5">
                         <input type="text" id="searchName" class="form-control mb-3"
                                placeholder="Search by student name">
-                        <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+
                     </div>
 
                     <div class="login col-md-2">
@@ -116,7 +126,9 @@
                 <div class="space"></div>
             </div>
             <div class="row">
-                <h1>Student Test Scores</h1>
+                <div class="return-home" style="margin-bottom: 10px">
+                    <a href="${pageContext.request.contextPath}/homeLecture" class="btn btn-primary">Return to Home Page</a>
+                </div>
 
                 <table id="studentTable" class="table table-bordered">
                     <thead class="thead-light">

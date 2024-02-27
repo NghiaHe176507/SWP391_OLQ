@@ -88,6 +88,10 @@
         <servlet-name>SearchStudentByname</servlet-name>
         <servlet-class>controller.test.SearchStudentByname</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewResultExamOfStudent</servlet-name>
+        <servlet-class>controller.test.ViewResultExamOfStudent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -175,5 +179,9 @@
     <servlet-mapping>
         <servlet-name>SearchStudentByname</servlet-name>
         <url-pattern>/search-student</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewResultExamOfStudent</servlet-name>
+        <url-pattern>/view-total</url-pattern>
     </servlet-mapping>
 </web-app>
