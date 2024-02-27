@@ -414,7 +414,7 @@
                     <h2 class="mb-4">Create Form</h2>
                     <form action="create-account" method="POST" class="needs-validation" onsubmit="return validateForm()"> 
                         Mail: <input type="email" name="mail" required /> <br/>
-                        Password: <input type="password" name="password" required minlength="3" /> <br/>
+                        Password: <input type="password" name="password" required minlength="8" /> <br/>
                         Display Name: <input type="text" name="displayname" required /> <br/>
                         Full Name: <input type="text" name="fullname" required /> <br/>
                         Dob: <input type="date" name="dob" value="1999-01-01" /> <br/>
