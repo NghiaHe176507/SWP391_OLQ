@@ -369,9 +369,6 @@
                 border-color: #bd2130;
             }
         </style>
-
-
-
         <script>
             function DeleteTopic(id)
             {
