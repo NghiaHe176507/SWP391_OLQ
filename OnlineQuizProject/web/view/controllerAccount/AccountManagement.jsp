@@ -13,6 +13,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/homeStudent.js"></script>
         <title>Mange Account</title>
         <style>
             *{
@@ -353,7 +357,7 @@
         <script>
             function deleteAccount(id)
             {
-                var conf = confirm("are you sure?");
+                var conf = confirm("Are you sure?");
                 if (conf) {
                     window.location.href = '<%=request.getContextPath()%>/admin/account-management/delete-account?accountId=' + id;
                 }
@@ -408,28 +412,39 @@
             <div class="right-side" id="formContainer">
                 <c:if test="${requestScope.url == 'create'}">
                     <h2 class="mb-4">Create Form</h2>
-                    <form action="create-account" method="POST" class="needs-validation" novalidate> 
-                        Mail: <input type="text" name="mail" /> <br/>
-                        Password: <input type="text" name="password" /> <br/>
-                        Display Name: <input type="text" name="displayname" /> <br/>
-                        Full Name: <input type="text" name="fullname" /> <br/>
-                        Dob: <input type="date" name="dob" value="1999-01-01"/> <br/>
-                        Status: <input type="text" name="status" /> <br/>
+                    <form action="create-account" method="POST" class="needs-validation" onsubmit="return validateForm()"> 
+                        Mail: <input type="email" name="mail" required /> <br/>
+                        Password: <input type="password" name="password" required minlength="3" /> <br/>
+                        Display Name: <input type="text" name="displayname" required /> <br/>
+                        Full Name: <input type="text" name="fullname" required /> <br/>
+                        Dob: <input type="date" name="dob" value="1999-01-01" /> <br/>
+                        Status: <input type="text" name="status" required /> <br/>
                         Role: 
                         <c:forEach items="${requestScope.listRole}" var="role">
                             <c:if test="${role.roleId != 1}">
-                                <input type="radio" value="${role.roleId}" name="roleId"/> ${role.roleName}
+                                <input type="radio" value="${role.roleId}" name="roleId" required/> ${role.roleName}
                             </c:if>
                         </c:forEach><br/>
                         <input type="submit" id="toggleFormLink" value="Save"/>
                     </form>
+                    <script>
+                        function validateForm() {
+                            var form = document.forms[0];
+
+                            if (!form.checkValidity()) {
+                                alert("Please fill out all required fields.");
+                                return false;
+                            }
+                            return true;
+                        }
+                    </script>
                 </c:if>
                 <c:if test="${requestScope.url == 'update'}">
                     <h2 class="mb-4">Update Form</h2>
                     <form action="update-account" method="POST" class="needs-validation" novalidate> 
                         Id: <input name="accountId" type="text" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/> <br/>
                         Mail: <input type="text" name="mail" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
-                        Password: <input type="text" name="password" value="${requestScope.accountNeedToUpdate.password}"/> <br/>
+                        Password: <input type="password" name="password" value="${requestScope.accountNeedToUpdate.password}"/> <br/>
                         Display Name: <input type="text" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/> <br/>
                         Full Name: <input type="text" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/> <br/>
                         Dob: <input type="date" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/> <br/>
