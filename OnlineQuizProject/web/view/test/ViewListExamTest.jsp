@@ -129,6 +129,17 @@
                 <div class="return-home" style="margin-bottom: 10px">
                     <a href="${pageContext.request.contextPath}/homeLecture" class="btn btn-primary">Return to Home Page</a>
                 </div>
+                <form action="${pageContext.request.contextPath}/view-list-exam" method="GET" class="form-inline mb-3" style="padding-left: 21rem">
+                    <label for="examNameFilter" class="mr-2">Filter by Examination Name:</label>
+                    <select id="examNameFilter" name="examName" class="form-control mr-2">
+                        <option value="">All Examinations</option>
+                        <!-- Iterate through available examination names -->
+                        <c:forEach var="examName" items="${requestScope.listTopic}">
+                            <option value="${examName.topicName}" ${examName.topicName eq examName ? 'selected' : ''}>${examName.topicName}</option>
+                        </c:forEach>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
 
                 <table id="studentTable" class="table table-bordered">
                     <thead class="thead-light">
@@ -159,8 +170,8 @@
             <div class="pagination-container">
                 <c:if test="${not empty totalPages}">
                     <c:if test="${currentPage > 1}">
-                        <a href="?page=1">&laquo; First</a>
-                        <a href="?page=${currentPage - 1}">&lsaquo; Previous</a>
+                        <a href="?page=1&examName=${param.examName}">&laquo; First</a>
+                        <a href="?page=${currentPage - 1}&examName=${param.examName}">&lsaquo; Previous</a>
                     </c:if>
                     <c:forEach var="pageNum" begin="1" end="${totalPages}">
                         <c:choose>
@@ -168,13 +179,13 @@
                                 <span class="current-page">${pageNum}</span>
                             </c:when>
                             <c:otherwise>
-                                <a href="?page=${pageNum}">${pageNum}</a>
+                                <a href="?page=${pageNum}&examName=${param.examName}">${pageNum}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                     <c:if test="${currentPage < totalPages}">
-                        <a href="?page=${currentPage + 1}">Next &rsaquo;</a>
-                        <a href="?page=${totalPages}">Last &raquo;</a>
+                        <a href="?page=${currentPage + 1}&examName=${param.examName}">Next &rsaquo;</a>
+                        <a href="?page=${totalPages}&examName=${param.examName}">Last &raquo;</a>
                     </c:if>
                 </c:if>
             </div>

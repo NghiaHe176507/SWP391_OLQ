@@ -5,8 +5,10 @@
 package controller.test;
 
 import dal.TestDBContext;
+import dal.TopicDBContext;
 import entity.OptionAnswer;
 import entity.Result;
+import entity.Topic;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,26 +23,24 @@ import java.util.ArrayList;
  */
 public class ViewResultTestStudent extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int pageSize = 4; // Number of items per page
         int page = 1; // Default page number
+        String examNameFilter = request.getParameter("examName"); // Get exam name filter from request
+
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
         TestDBContext test = new TestDBContext();
         ArrayList<Result> listExaminationOfStudent = test.getListExaminationOfStudent();
+
+        // Filter by exam name if applicable
+        if (examNameFilter != null && !examNameFilter.isEmpty()) {
+            listExaminationOfStudent = filterByExamName(listExaminationOfStudent, examNameFilter);
+        }
 
         // Paginate the data
         int totalItems = listExaminationOfStudent.size();
@@ -51,49 +51,36 @@ public class ViewResultTestStudent extends HttpServlet {
 
         ArrayList<Result> paginatedList = new ArrayList<>(listExaminationOfStudent.subList(startIndex, endIndex));
 
+        TopicDBContext topic = new TopicDBContext();
+        ArrayList<Topic> listTopic = topic.getAllTopics();
         request.setAttribute("listStudent", paginatedList);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
+        request.setAttribute("listTopic", listTopic);
         request.getRequestDispatcher("view/test/ViewListExamTest.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+// Method to filter the list of results by examination name
+    private ArrayList<Result> filterByExamName(ArrayList<Result> resultList, String examName) {
+        ArrayList<Result> filteredList = new ArrayList<>();
+        for (Result result : resultList) {
+            if (result.getExam().getClassExam().getTopic().getTopicName().equalsIgnoreCase(examName)) {
+                filteredList.add(result);
+            }
+        }
+        return filteredList;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }
