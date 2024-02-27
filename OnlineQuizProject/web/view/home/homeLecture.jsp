@@ -4,6 +4,7 @@
     Author     : nghia
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,10 +24,25 @@
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/homeLecture.js"></script>
+        <style>
+            /* CSS cho button */
+            .btn-primary {
+                background-color: white; /* Màu nền trắng */
+                color: #007bff; /* Màu chữ mặc định */
+                border: 1px solid #007bff; /* Viền button */
+                transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
+            }
+
+            .btn-primary:hover {
+                background-color: #007bff; /* Màu nền khi hover */
+                color: white; /* Màu chữ khi hover */
+            }
+
+        </style>
     </head>
 
     <body>
-        <form action="homeLecture" method="POST">
+        <form action="home" method="POST">
             <!-- Main container div -->
             <div class="container">
                 <!-- Header section -->
@@ -34,7 +50,7 @@
                     <div class="header">
                         <!-- Logo -->
                         <div class="logo col-md-2">
-                            <a href="#home">QUIZWIZ</a>
+                            <a href="#">QUIZWIZ</a>
                         </div>
 
                         <div class="create col-md-1">
@@ -48,7 +64,7 @@
                         </div>
 
                         <!-- Login section -->
-                        <div class="login col-md-2">
+                        <div class="login col-md-3">
                             <ul id="nav" class="nav nav-pills">
                                 <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                 <li class="nav-item dropdown">
@@ -56,10 +72,10 @@
                                         <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
                                     </div>
                                     <ul class="subnav">
-                                        <li><a href="#"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
                                         <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                         <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                        <li><a href="#"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
                                     </ul>
                                 </li>
@@ -74,71 +90,73 @@
                 </div>
 
                 <div class="topic" id="topicContainer">
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
+                    <c:forEach var="group" items="${requestScope.listGroup}" varStatus="loop">
+                        <div class="col-md-4 mb-3">
+                            <div class="topic-info" style="width: 18rem;">
+                                <div class="topic-info-body">
+                                    <h5 class="topic-info-title">Class Name: ${group.groupName}</h5>
+                                    <h6 class="topic-info-subtitle mb-2">Topic: ${group.topic.topicName}</h6>
+
+                                    <c:choose>
+                                        <c:when test="${group.groupInvite == null}">
+                                            <!-- Button khi chưa có Invite Code -->
+                                            <button class="btn btn-primary mb-2" onclick="this.parentNode.submit();return false; showInput(${group.groupId})">Add Invite Code</button>
+                                            <!-- Ô input và nút submit, ẩn ban đầu -->
+                                            <div id="inviteCode_${group.groupId}" style="display: none;">
+                                                <input type="text" id="inviteInput_${group.groupId}" class="form-control mb-2" name="inviteCode" placeholder="Enter Invite Code">
+                                                <button class="btn btn-success" onclick="submitInviteCode(${group.groupId})">Submit</button>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- Hiển thị Invite Code nếu đã có -->
+                                            <h6 class="topic-info-subtitle mb-2">Invite Code: ${group.groupInviteCode}</h6>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <c:choose>
+                                        <c:when test="${group.status.statusName eq 'Active'}">
+                                            <p class="topic-info-text text-success" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:when test="${group.status.statusName eq 'Pending'}">
+                                            <p class="topic-info-text text-secondary" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:when test="${group.status.statusName eq 'Closed'}">
+                                            <p class="topic-info-text text-danger" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p class="topic-info-text" style="margin-bottom: 0">${group.status.statusName}</p>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <a href="#" class="topic-info-link">More Details</a>
+                                </div>
+                            </div>
                         </div>
+                    </c:forEach>
+
+                    <div class="pagination-container">
+                        <c:if test="${not empty totalPages}">
+                            <c:if test="${currentPage > 1}">
+                                <a href="?page=1">&laquo; First</a>
+                                <a href="?page=${currentPage - 1}">&lsaquo; Previous</a>
+                            </c:if>
+                            <c:forEach var="pageNum" begin="1" end="${totalPages}">
+                                <c:choose>
+                                    <c:when test="${pageNum == currentPage}">
+                                        <span class="current-page">${pageNum}</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="?page=${pageNum}">${pageNum}</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <c:if test="${currentPage < totalPages}">
+                                <a href="?page=${currentPage + 1}">Next &rsaquo;</a>
+                                <a href="?page=${totalPages}">Last &raquo;</a>
+                            </c:if>
+                        </c:if>
                     </div>
 
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
 
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
-
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h5 class="topic-info-title">Card title</h5>
-                            <h6 class="topic-info-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                            <p class="topic-info-text">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                            <a href="#" class="topic-info-link">Card link</a>
-                            <a href="#" class="topic-info-link">Another link</a>
-                        </div>
-                    </div>
 
                     <div class="show-all">
                         <a href="#" id="showAllBtn">Show all topic</a>
@@ -169,6 +187,19 @@
             <!-- End of footer section -->
 
             <!-- End of main container div -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Get the logo element
+                    var logo = document.querySelector('.logo a');
+
+                    // Add click event listener to the logo
+                    logo.addEventListener('click', function () {
+                        // Reload the page
+                        location.reload();
+                    });
+                });
+            </script>
+
         </form>
     </body>
 

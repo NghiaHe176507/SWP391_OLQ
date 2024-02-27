@@ -18,13 +18,6 @@ public class OptionAnswer extends BaseEntity {
     public OptionAnswer() {
     }
 
-    public OptionAnswer(int optionAnswerId, String answerOption, boolean isCorrect, Question question) {
-        this.optionAnswerId = optionAnswerId;
-        this.answerOption = answerOption;
-        this.isCorrect = isCorrect;
-        this.question = question;
-    }
-
     public int getOptionAnswerId() {
         return optionAnswerId;
     }

@@ -10,11 +10,11 @@
     </servlet>
     <servlet>
         <servlet-name>CreateAccount</servlet-name>
-        <servlet-class>controller.account.CreateAccount</servlet-class>
+        <servlet-class>controller.account.CreateAccountByAdmin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteAccount</servlet-name>
-        <servlet-class>controller.account.DeleteAccount</servlet-class>
+        <servlet-class>controller.account.DeleteAccountByAdmin</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateAccountByAdmin</servlet-name>
@@ -76,6 +76,18 @@
         <servlet-name>ViewOwnedGroupForLecture</servlet-name>
         <servlet-class>controller.group.ViewOwnedGroupForLecture</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewAnswerQuestionController</servlet-name>
+        <servlet-class>controller.test.ViewAnswerQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewResultTestStudent</servlet-name>
+        <servlet-class>controller.test.ViewResultTestStudent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchStudentByname</servlet-name>
+        <servlet-class>controller.test.SearchStudentByname</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -83,18 +95,6 @@
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/register</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateAccount</servlet-name>
-        <url-pattern>/createaccount</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeleteAccount</servlet-name>
-        <url-pattern>/deleteaccount</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewListAccount</servlet-name>
-        <url-pattern>/listaccount</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomePageController</servlet-name>
@@ -113,43 +113,67 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UpdateAccountByAdmin</servlet-name>
-        <url-pattern>/updateaccountbyadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>UpdateAccountByStudent</servlet-name>
         <url-pattern>/updateaccount</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateTopic</servlet-name>
-        <url-pattern>/createtopic</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateGroupByLecture</servlet-name>
         <url-pattern>/CreateGroup</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteTopic</servlet-name>
-        <url-pattern>/DeleteTopic</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewListTopic</servlet-name>
-        <url-pattern>/listTopic</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DeleteGroupByLecture</servlet-name>
         <url-pattern>/DeleteGroupByLecture</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ViewOwnedGroupForLecture</servlet-name>
+        <url-pattern>/GroupOwned</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewListAccount</servlet-name>
+        <url-pattern>/admin/account-management</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAccountByAdmin</servlet-name>
+        <url-pattern>/admin/account-management/update-account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAccount</servlet-name>
+        <url-pattern>/admin/account-management/delete-account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateAccount</servlet-name>
+        <url-pattern>/admin/account-management/create-account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DeleteGroupByAdmin</servlet-name>
-        <url-pattern>/DeleteGroupByAdmin</url-pattern>
+        <url-pattern>/admin/group-management/delete-group</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewListTopic</servlet-name>
+        <url-pattern>/admin/topic-management</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewListGroupForAdmin</servlet-name>
-        <url-pattern>/listGroup</url-pattern>
+        <url-pattern>/admin/group-management</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViewOwnedGroupForLecture</servlet-name>
-        <url-pattern>/GroupOwned</url-pattern>
+        <servlet-name>DeleteTopic</servlet-name>
+        <url-pattern>/admin/topic-management/delete-topic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTopic</servlet-name>
+        <url-pattern>/admin/topic-management/create-topic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAnswerQuestionController</servlet-name>
+        <url-pattern>/show-result</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewResultTestStudent</servlet-name>
+        <url-pattern>/view-list-exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchStudentByname</servlet-name>
+        <url-pattern>/search-student</url-pattern>
     </servlet-mapping>
 </web-app>

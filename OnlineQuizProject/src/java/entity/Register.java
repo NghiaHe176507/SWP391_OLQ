@@ -16,15 +16,9 @@ public class Register extends BaseEntity {
     private Date registerDate;
     private AccountInfo studentInfo;
     private Group classRegister;
+    private Topic topic;
 
     public Register() {
-    }
-
-    public Register(int registerId, Date registerDate, AccountInfo studentInfo, Group classRegister) {
-        this.registerId = registerId;
-        this.registerDate = registerDate;
-        this.studentInfo = studentInfo;
-        this.classRegister = classRegister;
     }
 
     public int getRegisterId() {
@@ -57,6 +51,14 @@ public class Register extends BaseEntity {
 
     public void setClassRegister(Group classRegister) {
         this.classRegister = classRegister;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
 }
