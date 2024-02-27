@@ -66,7 +66,7 @@ public class UpdateAccountByStudent extends BasedRequiredAuthenticationControlle
 
         request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
         request.setAttribute("infoAbountAccountNeedToUpdate", accountInfoNeedToUpdate);
-        request.getRequestDispatcher("/view/controllerAccount/EditAccountByStudent.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/controllerAccount/UpdateAccountByStudent.jsp").forward(request, response);
     }
 
     @Override

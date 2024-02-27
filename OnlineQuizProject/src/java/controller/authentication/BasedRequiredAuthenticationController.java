@@ -67,7 +67,7 @@ public abstract class BasedRequiredAuthenticationController extends HttpServlet 
             //login
             doGet(request, response, (Account) request.getSession().getAttribute("account"));
         } else {
-           response.sendRedirect("login");
+           response.sendRedirect(request.getContextPath()+"/login");
         }
     }
 
@@ -83,7 +83,7 @@ public abstract class BasedRequiredAuthenticationController extends HttpServlet 
         if (isAuthenticated(request)) {
             doPost(request, response, (Account) request.getSession().getAttribute("account"));
         } else {
-            response.sendRedirect("login");
+            response.sendRedirect(request.getContextPath()+"/login");
         }
     }
 
