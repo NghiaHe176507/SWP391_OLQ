@@ -1,30 +1,29 @@
 <%-- 
-    Document   : viewListTopic
-    Created on : Feb 19, 2024, 12:31:49 AM
-    Author     : PC
+    Document   : footer
+    Created on : Feb 27, 2024, 2:04:20 PM
+    Author     : Đạt Phạm
 --%>
 
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
-    <head>
+<html>
+     <head>
+        <!-- Metadata -->
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <!<!-- add boostrap -->
         <title>QuizWiz</title>
+        <!-- Favicon -->
         <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
+        <!-- Stylesheets -->
         <link rel="stylesheet" href="css/header.css">
+        <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
+        <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/homeStudent.js"></script>
-        <title>Form and Table</title>
         <style>
-            *{
+              *{
                 padding: 0;
                 margin: 0;
                 box-sizing: border-box;
@@ -306,178 +305,12 @@
                 display: block;
                 text-align: right;
                 text-decoration: none;
-                color: #007BFF;
-            }
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                height: 100vh;
-                justify-content: center;
-                align-items: center; /* Center items vertically */
-            }
-
-            .container {
-
-                display: flex;
-                max-width: 800px;
-                width: 100%;
-                justify-content: center;
-                /* Add margin for spacing on both sides */
-            }
-
-            .left-side,
-            .right-side {
-                padding: 20px;
-                box-sizing: border-box;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                width: 48%; /* Adjust the width to leave some space between left and right sides */
-            }
-
-            .left-side {
-                overflow: auto;
-                margin-right: 10px; /* Add margin between left and right sides */
-            }
-
-            .right-side {
-                overflow: auto;
-                margin-left: 10px; /* Add margin between left and right sides */
-            }
-
-            .left-side h2 {
-                color: #007bff;
-                margin-bottom: 20px;
-            }
-
-            .left-side a.btn {
-                color: #fff;
-            }
-
-            .left-side a.btn:hover {
-                text-decoration: none;
-            }
-
-            .left-side .btn-danger {
-                background-color: #dc3545;
-                border-color: #dc3545;
-            }
-
-            .left-side .btn-danger:hover {
-                background-color: #bd2130;
-                border-color: #bd2130;
-            }
+                color: #007BFF;}
         </style>
-
-
-
-        <script>
-            function DeleteTopic(id)
-            {
-                var conf = confirm("Are you sure?");
-                if (conf) {
-                    window.location.href = '<%=request.getContextPath()%>/admin/topic-management/delete-topic?topicId=' + id;
-                }
-            }
-        </script>
-
     </head>
 
     <body>
-        <header>
-            <form action="home" method="POST">
-                <!-- Main container div -->
-                <div class="container">
-                    <!-- Header section -->
-                    <div class="row">
-                        <div class="header">
-                            <!-- Logo -->
-                            <div class="logo col-md-2">
-                                <a href="#">QUIZWIZ</a>
-                            </div>
-
-                            <!-- Search container -->
-                            <div class="search-container col-md-6">
-                                <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
-                                <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </div>
-
-                            <!-- Login section -->
-                            <div class="login col-md-2">
-                                <ul id="nav" class="nav nav-pills">
-                                    <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
-                                    <li class="nav-item dropdown">
-                                        <div class="circle-background">
-                                            <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
-                                        </div>
-                                        <ul class="subnav">
-                                            <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                            <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                            <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                            <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
-
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Empty space -->
-                   
-
-
-
-                </div>
-
-        </header>
-
-        <div class="container">
-
-            <div class="right-side" id="formContainer">
-                <c:if test="${requestScope.url == 'create'}">
-                    <div class="container-fluid">
-                        <h2 class="mb-4">Create Topic</h2>
-                        <form action="create-topic" method="POST" class="needs-validation" novalidate>
-                            <div class="form-group">
-                                <label for="topicName">Topic Name:</label>
-                                <input type="text" class="form-control" id="topicName" name="topicName" required>
-                                <div class="invalid-feedback">Please enter a topic name.</div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </form>
-                    </div>
-                </c:if>
-            </div>
-            <div class="left-side">
-                <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
-                <div class="container-fluid">
-                    <h2 class="mb-4">View List Topic</h2>
-                    <table class="table table-striped" id="myTable">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Topic Id</th>
-                                <th>Topic Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <c:forEach items="${requestScope.listTopic}" var="topic">
-                                <tr>
-                                    <td>${topic.topicId}</td>
-                                    <td>${topic.topicName}</td>
-                                    <td>
-                                        <button class="btn btn-danger" onclick="DeleteTopic(${topic.topicId})">Delete</button>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-                <footer>
-                    <div id="footer">
+        <div id="footer">
                 <!-- Social Icons -->
                 <div class="socials-list">
                     <a href=""><i class="fa-brands fa-facebook"></i></a>
@@ -503,6 +336,5 @@
                 });
             </script>
 
-                </footer>
     </body>
 </html>
