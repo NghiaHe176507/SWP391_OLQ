@@ -105,18 +105,6 @@
         <url-pattern>/updateaccount</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CreateGroupByLecture</servlet-name>
-        <url-pattern>/CreateGroup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeleteGroupByLecture</servlet-name>
-        <url-pattern>/DeleteGroupByLecture</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewOwnedGroupForLecture</servlet-name>
-        <url-pattern>/GroupOwned</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ViewListAccount</servlet-name>
         <url-pattern>/admin/account-management</url-pattern>
     </servlet-mapping>
@@ -151,5 +139,17 @@
     <servlet-mapping>
         <servlet-name>CreateTopic</servlet-name>
         <url-pattern>/admin/topic-management/create-topic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewOwnedGroupForLecture</servlet-name>
+        <url-pattern>/group-management</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteGroupByLecture</servlet-name>
+        <url-pattern>/group-management/delete-group</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateGroupByLecture</servlet-name>
+        <url-pattern>/group-management/create-group</url-pattern>
     </servlet-mapping>
 </web-app>

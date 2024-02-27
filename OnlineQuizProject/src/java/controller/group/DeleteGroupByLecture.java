@@ -34,7 +34,7 @@ public class DeleteGroupByLecture extends BasedRequiredAuthenticationController 
         int groupId = Integer.parseInt((request.getParameter("groupId")));
         ControllerDBContext db = new ControllerDBContext();
         db.deletePendingGroup(groupId);
-        response.sendRedirect("GroupOwned");
+        response.sendRedirect(request.getContextPath()+"/group-management");
     }
 
     /**

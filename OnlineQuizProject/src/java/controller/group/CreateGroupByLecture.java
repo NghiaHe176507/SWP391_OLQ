@@ -62,8 +62,12 @@ public class CreateGroupByLecture extends BasedRequiredAuthenticationController 
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         ArrayList<Status> listStatus = db.getListStatus();
         ArrayList<Topic> listTopic = db.getListTopic();
+        request.setAttribute("url", "create");
         request.setAttribute("listTopic", listTopic);
-        request.getRequestDispatcher("/view/controllerGroup/CreateGroupByLecture.jsp").forward(request, response);
+        ControllerDBContext db = new ControllerDBContext();
+        ArrayList<Group> listGroup = db.getListGroupOwnedByLecture(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
+        request.setAttribute("listGroup", listGroup);
+        request.getRequestDispatcher("/view/controllerGroup/GroupManagementForLecture.jsp").forward(request, response);
     }
 
     @Override
@@ -81,7 +85,7 @@ public class CreateGroupByLecture extends BasedRequiredAuthenticationController 
         
         db.createNewGroupByLecture(newGroup);
         
-        response.sendRedirect("GroupOwned");
+        response.sendRedirect("group-management");
     }
 
 }
