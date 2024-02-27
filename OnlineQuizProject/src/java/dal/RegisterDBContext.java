@@ -32,7 +32,7 @@ public class RegisterDBContext extends DBContext<Register> {
                      SELECT [register_id]
                            ,[register_date]
                            ,[student_id]
-                           ,[class_id]
+                           ,[group_id]
                        FROM [Register]
                        WHERE [register_id] = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -43,7 +43,7 @@ public class RegisterDBContext extends DBContext<Register> {
                 register.setRegisterId(rs.getInt("register_id"));
                 register.setRegisterDate(rs.getDate("register_date"));
                 register.setStudentInfo(accountInfoDB.getById(String.valueOf(rs.getInt("student_id"))));
-                register.setClassRegister(groupDB.getById(String.valueOf(rs.getInt("class_id"))));
+                register.setClassRegister(groupDB.getById(String.valueOf(rs.getInt("group_id"))));
                 return register;
             }
 
@@ -56,20 +56,12 @@ public class RegisterDBContext extends DBContext<Register> {
     public ArrayList<Register> getByStudentId(int studentId) {
         ArrayList<Register> registers = new ArrayList<>();
         try {
-            String sql = """
-                     SELECT r.register_id,
-                                                   r.register_date,
-                                                   r.student_id,
-                                                   r.class_id,
-                                                   g.group_name,
-                                                   g.lecture_id,
-                                                   g.topic_id,
-                                                   t.topic_name
-                                            FROM Register r
-                                            INNER JOIN [Group] g ON r.class_id = g.group_id
-                                            INNER JOIN Topic t ON g.topic_id = t.topic_id
-                                            WHERE r.student_id =  ?   
-                     """;
+            String sql = "SELECT r.register_id, r.register_date, r.student_id, "
+                    + "r.group_id, g.group_name, g.lecture_id, g.topic_id, t.topic_name "
+                    + "FROM Register r "
+                    + "INNER JOIN [Group] g ON r.group_id = g.group_id "
+                    + "INNER JOIN Topic t ON g.topic_id = t.topic_id "
+                    + "WHERE r.student_id = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, studentId);
             ResultSet rs = stm.executeQuery();
@@ -77,9 +69,15 @@ public class RegisterDBContext extends DBContext<Register> {
                 Register register = new Register();
                 register.setRegisterId(rs.getInt("register_id"));
                 register.setRegisterDate(rs.getDate("register_date"));
-                register.setStudentInfo(accountInfoDB.getById(String.valueOf(rs.getInt("student_id"))));
-                register.setClassRegister(groupDB.getById(String.valueOf(rs.getString("class_id"))));
-                register.setTopic(topicDB.getById(String.valueOf(rs.getString("topic_id"))));
+                // Lấy thông tin của Student từ AccountInfoDBContext
+                int studentInfoId = rs.getInt("student_id");
+                register.setStudentInfo(accountInfoDB.getById(String.valueOf(studentInfoId)));
+                // Lấy thông tin của Class từ GroupDBContext
+                int classId = rs.getInt("group_id");
+                register.setClassRegister(groupDB.getById(String.valueOf(classId)));
+                // Lấy thông tin của Topic từ TopicDBContext
+                int topicId = rs.getInt("topic_id");
+                register.setTopic(topicDB.getById(String.valueOf(topicId)));
                 registers.add(register);
             }
         } catch (SQLException ex) {

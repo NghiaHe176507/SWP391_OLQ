@@ -37,7 +37,7 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("password");
         AccountDBContext db = new AccountDBContext();
         Account loggedUser = db.getAccount(mail, password);
-
+        loggedUser.getMail();
         if (loggedUser == null) {
             request.setAttribute("checkAuthentication", "F");
             request.getRequestDispatcher("view/login/login.jsp").forward(request, response);

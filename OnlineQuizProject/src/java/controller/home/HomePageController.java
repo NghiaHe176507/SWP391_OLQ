@@ -46,9 +46,27 @@ public class HomePageController extends BaseRequiredAuthenController {
         switch (cdb.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId()) {
             case 1:
                 ControllerDBContext db = new ControllerDBContext();
+                AccountInfoDBContext acountInfo = new AccountInfoDBContext();
+                int pageSize = 5; // Number of items per page
+                int page = 1; // Default page number
+                if (request.getParameter("page") != null) {
+                    page = Integer.parseInt(request.getParameter("page"));
+                }
+
                 ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
                 ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
                 request.setAttribute("listAccountWithInfo", listAccount);
+
+                // Paginate the data
+                int totalItems = listAccount.size();
+                int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+                request.setAttribute("totalPages", totalPages);
+                request.setAttribute("currentPage", page);
+
+                int startIndex = (page - 1) * pageSize;
+                int endIndex = Math.min(startIndex + pageSize, totalItems);
+                ArrayList<AccountInfo> paginatedList = new ArrayList<>(listAccount.subList(startIndex, endIndex));
+                request.setAttribute("paginatedList", paginatedList);
                 request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
                 request.getRequestDispatcher("view/home/homeAdmin.jsp").forward(request, response);
                 break;
@@ -62,6 +80,18 @@ public class HomePageController extends BaseRequiredAuthenController {
                 request.getRequestDispatcher("view/home/homeLecturer.jsp").forward(request, response);
                 break;
             case 3:
+                String keyword = request.getParameter("searchQuery");
+
+                // Gọi hàm searchGroup từ GroupDBContext để tìm kiếm
+//                GroupDBContext gb = new GroupDBContext();
+                GroupDBContext gdb = new GroupDBContext();
+                ArrayList<Group> searchResults = gdb.searchGroup(keyword);
+
+                // Đặt kết quả tìm kiếm vào attribute của request để truyền cho JSP
+                request.setAttribute("searchResults", searchResults);
+
+                // Chuyển hướng đến trang JSP để hiển thị kết quả
+//                response.sendRedirect("result.jsp");
                 TopicDBContext tb = new TopicDBContext();
                 ArrayList<Topic> listTopic = tb.getAllTopics();
                 request.setAttribute("listTopic", listTopic);
@@ -69,14 +99,14 @@ public class HomePageController extends BaseRequiredAuthenController {
                 int studentId = LoggedUser.getAccountId();
                 RegisterDBContext rg = new RegisterDBContext();
                 ArrayList<Register> listRegister = rg.getByStudentId(studentId);
+                listRegister.size();
                 request.setAttribute("listRegister", listRegister);
-                
+
                 AccountInfoDBContext abi = new AccountInfoDBContext();
                 int accountId = abi.getAccountInfoIdByAccountId(studentId);
-                GroupDBContext gdb = new GroupDBContext();
                 ArrayList<Group> groups = gdb.getGroupByLectureId(accountId);
                 request.setAttribute("groups", groups);
-                
+
                 request.getRequestDispatcher("view/home/homeStudent.jsp").forward(request, response);
                 break;
             default:

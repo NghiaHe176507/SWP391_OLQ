@@ -23,7 +23,34 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
         <script src="js/homeStudent.js"></script>
+        <style>
+            .create {
+                text-align: center;
+            }
+
+            .create a {
+                text-decoration: none;
+                font-family: "Poppins", sans-serif;
+                font-weight: bold;
+                font-size: 16px;
+                color: #fff;
+                padding: 10px 20px;
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                border-radius: 5px;
+                transition: background 0.3s ease, transform 0.2s ease-in-out;
+            }
+
+            .create a:hover {
+                background: linear-gradient(135deg, #4397ce, #9a3cbf);
+                transform: scale(1.05);
+            }
+
+            .create a:active {
+                transform: scale(0.95);
+            }
+        </style>
     </head>
 
     <body>
@@ -38,14 +65,22 @@
                             <a href="#">QUIZWIZ</a>
                         </div>
 
-                        <!-- Search container -->
-                        <div class="search-container col-md-6">
-                            <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
-                            <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <div class="create col-md-1">
+                            <a href="#"><i class="fa-solid fa-plus"></i> Join group</a>
                         </div>
 
+                        <!-- Search container -->
+                        <form id="searchForm" action="home" method="POST"> 
+                            <div class="search-container col-md-5">
+                                <input type="text" id="searchInput" name="searchQuery" placeholder="Tìm kiếm lớp, chủ đề...">
+                                <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
+
+
+
                         <!-- Login section -->
-                        <div class="login col-md-2">
+                        <div class="login col-md-3">
                             <ul id="nav" class="nav nav-pills">
                                 <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                 <li class="nav-item dropdown">
@@ -114,6 +149,35 @@
             <!-- End of footer section -->
 
             <!-- End of main container div -->
+            <script>
+                document.getElementById("searchForm").addEventListener("submit", function (event) {
+                    event.preventDefault(); // Ngăn form submit mặc định
+
+                    var searchInputValue = document.getElementById("searchInput").value.trim(); // Lấy giá trị từ ô input và loại bỏ khoảng trắng đầu cuối
+
+                    if (searchInputValue !== "") { // Chỉ thực hiện khi ô input không trống
+                        var formAction = "search?searchQuery=" + encodeURIComponent(searchInputValue);
+                        this.action = formAction;
+                        this.submit(); // Gửi form
+                    }
+                });
+
+                // Xử lý khi người dùng nhấn Enter trong ô input
+                document.getElementById("searchInput").addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") { // Kiểm tra nếu phím Enter được nhấn
+                        event.preventDefault(); // Ngăn mặc định hành động của phím Enter
+                        var searchInputValue = this.value.trim(); // Lấy giá trị từ ô input và loại bỏ khoảng trắng đầu cuối
+
+                        if (searchInputValue !== "") { // Chỉ thực hiện khi ô input không trống
+                            var formAction = "search?searchQuery=" + encodeURIComponent(searchInputValue);
+                            document.getElementById("searchForm").action = formAction;
+                            document.getElementById("searchForm").submit(); // Gửi form
+                        }
+                    }
+                });
+            </script>
+
+
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     // Get the logo element

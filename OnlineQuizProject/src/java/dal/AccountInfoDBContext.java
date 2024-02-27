@@ -8,6 +8,7 @@ import entity.AccountInfo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,6 +59,41 @@ public class AccountInfoDBContext extends DBContext<AccountInfo> {
             Logger.getLogger(AccountInfoDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1; // Trả về -1 nếu không tìm thấy
+    }
+
+    public ArrayList<AccountInfo> getListAccountLimit(int idPage) {
+        ArrayList<AccountInfo> accountList = new ArrayList<>();
+        AccountDBContext accountDb = new AccountDBContext();
+        int pageSize = 5;
+        int offset = (idPage - 1) * pageSize;
+
+        try {
+            String sql = "SELECT [accountInfo_id]\n"
+                    + "      ,[fullname]\n"
+                    + "      ,[dob]\n"
+                    + "      ,[account_id]\n"
+                    + "  FROM [AccountInfo]\n"
+                    + "  ORDER BY [accountInfo_id] ASC\n"
+                    + "  OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, offset);
+            stm.setInt(2, pageSize + offset);
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                AccountInfo accountInfo = new AccountInfo();
+                accountInfo.setAccountInfoId(rs.getInt("accountInfo_id"));
+                accountInfo.setFullName(rs.getString("fullname"));
+                accountInfo.setDob(rs.getDate("dob"));
+                accountInfo.setAccount(accountDb.getById(String.valueOf(rs.getInt("account_id"))));
+                accountList.add(accountInfo);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountInfoDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return accountList;
     }
 
 }

@@ -24,6 +24,21 @@
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/homeLecture.js"></script>
+        <style>
+            /* CSS cho button */
+            .btn-primary {
+                background-color: white; /* Màu nền trắng */
+                color: #007bff; /* Màu chữ mặc định */
+                border: 1px solid #007bff; /* Viền button */
+                transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
+            }
+
+            .btn-primary:hover {
+                background-color: #007bff; /* Màu nền khi hover */
+                color: white; /* Màu chữ khi hover */
+            }
+
+        </style>
     </head>
 
     <body>
@@ -49,7 +64,7 @@
                         </div>
 
                         <!-- Login section -->
-                        <div class="login col-md-2">
+                        <div class="login col-md-3">
                             <ul id="nav" class="nav nav-pills">
                                 <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                 <li class="nav-item dropdown">
@@ -80,12 +95,29 @@
                             <div class="topic-info" style="width: 18rem;">
                                 <div class="topic-info-body">
                                     <h5 class="topic-info-title">Class Name: ${group.groupName}</h5>
-                                    <h6 class="topic-info-subtitle mb-2">${group.topic.topicName}</h6>
+                                    <h6 class="topic-info-subtitle mb-2">Topic: ${group.topic.topicName}</h6>
+
+                                    <c:choose>
+                                        <c:when test="${group.groupInvite == null}">
+                                            <!-- Button khi chưa có Invite Code -->
+                                            <button class="btn btn-primary mb-2" onclick="this.parentNode.submit();return false; showInput(${group.groupId})">Add Invite Code</button>
+                                            <!-- Ô input và nút submit, ẩn ban đầu -->
+                                            <div id="inviteCode_${group.groupId}" style="display: none;">
+                                                <input type="text" id="inviteInput_${group.groupId}" class="form-control mb-2" name="inviteCode" placeholder="Enter Invite Code">
+                                                <button class="btn btn-success" onclick="submitInviteCode(${group.groupId})">Submit</button>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- Hiển thị Invite Code nếu đã có -->
+                                            <h6 class="topic-info-subtitle mb-2">Invite Code: ${group.groupInvite}</h6>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                     <c:choose>
                                         <c:when test="${group.status.statusName eq 'Active'}">
                                             <p class="topic-info-text text-success" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
                                         </c:when>
-                                        <c:when test="${group.status.statusName eq 'Pendding'}">
+                                        <c:when test="${group.status.statusName eq 'Pending'}">
                                             <p class="topic-info-text text-secondary" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
                                         </c:when>
                                         <c:when test="${group.status.statusName eq 'Closed'}">
@@ -100,6 +132,7 @@
                             </div>
                         </div>
                     </c:forEach>
+
 
 
                     <div class="show-all">
@@ -143,6 +176,7 @@
                     });
                 });
             </script>
+
         </form>
     </body>
 
