@@ -328,7 +328,7 @@
         <form action="updateaccount" method="POST">
             <div class="container bootstrap snippets bootdeys">
                 <div class="row">
-                  <div class="row-1">
+                    <div class="row-1" style="display:flex">
                     <form class="form-horizontal">
                         <div class="panel panel-default panel-1">
                           <div class="panel-body text-center">
