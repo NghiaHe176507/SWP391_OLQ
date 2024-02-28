@@ -500,7 +500,12 @@
                                     <tr>
                                         <td>${accountInfo.account.accountId}</td>
                                         <td>${accountInfo.account.mail}</td>
-                                        <td>${accountInfo.account.password}</td>
+                                        <td>
+                                        <c:choose>
+                                        <c:when test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName() eq 'Admin'}">*****</c:when>
+                                        <c:otherwise>${accountInfo.account.password}</c:otherwise>
+                                        </c:choose>
+                                        </td>
                                         <td>${accountInfo.account.displayName}</td>
                                         <td>${accountInfo.fullName}</td>
                                         <td>${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName()}</td>
