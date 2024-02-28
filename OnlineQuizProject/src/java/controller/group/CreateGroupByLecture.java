@@ -85,7 +85,7 @@ public class CreateGroupByLecture extends BasedRequiredAuthenticationController 
         
         db.createNewGroupByLecture(newGroup);
         
-        response.sendRedirect("group-management");
+        response.sendRedirect("../group-management");
     }
 
 }

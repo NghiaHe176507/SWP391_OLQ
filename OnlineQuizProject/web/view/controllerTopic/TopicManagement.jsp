@@ -431,7 +431,10 @@
                                 <input type="text" class="form-control" id="topicName" name="topicName" required>
                                 <div class="invalid-feedback">Please enter a topic name.</div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <div class="btn-container d-flex">
+                                <button type="submit" class="btn btn-primary" value="Save">Save</button><br/>
+                                <a href="<%=request.getContextPath()%>/admin/topic-management" class="btn btn-default">Cancel</a>
+                            </div>
                         </form>
                     </div>
                 </c:if>

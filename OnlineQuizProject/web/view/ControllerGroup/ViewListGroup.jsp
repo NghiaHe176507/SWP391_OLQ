@@ -23,7 +23,7 @@
             {
                 var conf = confirm("Are you sure?");
                 if (conf) {
-                    window.location.href = 'DeleteGroupByAdmin?groupId=' + id;
+                    window.location.href = '<%=request.getContextPath()%>/admin/group-management/delete-group?groupId=' + id;
                 }
             }
         </script>
