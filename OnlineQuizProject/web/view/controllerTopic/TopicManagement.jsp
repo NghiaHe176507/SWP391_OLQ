@@ -377,7 +377,7 @@
     </head>
 
     <body>
-        
+
         <header>
             <form action="home" method="POST">
                 <!-- Main container div -->
@@ -463,8 +463,8 @@
                 </div>
             </div>
         </div>
-<footer>
-                    <div id="footer">
+        <footer>
+            <div id="footer">
                 <!-- Social Icons -->
                 <div class="socials-list">
                     <a href=""><i class="fa-brands fa-facebook"></i></a>
@@ -490,7 +490,7 @@
                 });
             </script>
 
-                </footer>
+        </footer>
     </body>
 
 </html>

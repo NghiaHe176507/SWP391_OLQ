@@ -13,6 +13,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -328,8 +329,8 @@
                 box-sizing: border-box;
                 border: 1px solid #ddd;
                 border-radius: 8px;
-                width: 150%;
-                margin: 10px auto; /* Add margin for spacing */
+                width: 130%; /* Adjust the width as needed */
+                margin: 10px 5px; /* Add margin for spacing */
             }
 
             .left-side h2 {
@@ -353,185 +354,210 @@
             .action-links a {
                 margin-right: 10px;
             }
-        </style>
-        <script>
-            function deleteAccount(id)
-            {
-                var conf = confirm("Are you sure?");
-                if (conf) {
-                    window.location.href = '<%=request.getContextPath()%>/admin/account-management/delete-account?accountId=' + id;
+            @media (max-width: 600px) {
+                .right-side {
+                    display: none;
                 }
-            }
-        </script>
-    </head>
+            </style>
+            <script>
+                function deleteAccount(id)
+                {
+                    var conf = confirm("Are you sure?");
+                    if (conf) {
+                        window.location.href = '<%=request.getContextPath()%>/admin/account-management/delete-account?accountId=' + id;
+                    }
+                }
+            </script>
+        </head>
 
-    <body>
-        <header>
-            <form action="home" method="POST">
-                <!-- Main container div -->
-                <div class="container">
-                    <!-- Header section -->
-                    <div class="row">
-                        <div class="header">
-                            <!-- Logo -->
-                            <div class="logo col-md-2">
-                                <a href="#">QUIZWIZ</a>
-                            </div>
+        <body>
+            <header>
+                <form action="home" method="POST">
+                    <!-- Main container div -->
+                    <div class="container">
+                        <!-- Header section -->
+                        <div class="row">
+                            <div class="header">
+                                <!-- Logo -->
+                                <div class="logo col-md-2">
+                                    <a href="#">QUIZWIZ</a>
+                                </div>
 
-                            <!-- Search container -->
-                            <div class="search-container col-md-6">
-                                <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
-                                <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </div>
+                                <!-- Search container -->
+                                <div class="search-container col-md-6">
+                                    <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
+                                    <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
 
-                            <!-- Login section -->
-                            <div class="login col-md-2">
-                                <ul id="nav" class="nav nav-pills">
-                                    <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
-                                    <li class="nav-item dropdown">
-                                        <div class="circle-background">
-                                            <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
-                                        </div>
-                                        <ul class="subnav">
-                                            <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                            <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                            <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                            <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+                                <!-- Login section -->
+                                <div class="login col-md-2">
+                                    <ul id="nav" class="nav nav-pills">
+                                        <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
+                                        <li class="nav-item dropdown">
+                                            <div class="circle-background">
+                                                <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
+                                            </div>
+                                            <ul class="subnav">
+                                                <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                                <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                                <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
+                                                <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
-                                        </ul>
-                                    </li>
-                                </ul>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </header>
-        <div class="container">
+                </form>
+            </header>
+            <div class="container">
 
-            <div class="right-side" id="formContainer">
-                <c:if test="${requestScope.url == 'create'}">
-                    <h2 class="mb-4">Create Form</h2>
-                    <form action="create-account" method="POST" class="needs-validation" onsubmit="return validateForm()"> 
-                        Mail: <input type="email" name="mail" required /> <br/>
-                        Password: <input type="password" name="password" required minlength="8" /> <br/>
-                        Display Name: <input type="text" name="displayname" required /> <br/>
-                        Full Name: <input type="text" name="fullname" required /> <br/>
-                        Dob: <input type="date" name="dob" value="1999-01-01" /> <br/>
-                        Status: <input type="text" name="status" required /> <br/>
-                        Role: 
-                        <c:forEach items="${requestScope.listRole}" var="role">
-                            <c:if test="${role.roleId != 1}">
-                                <input type="radio" value="${role.roleId}" name="roleId" required/> ${role.roleName}
-                            </c:if>
-                        </c:forEach><br/>
-                        <input type="submit" id="toggleFormLink" value="Save"/>
-                    </form>
-                    <script>
-                        function validateForm() {
-                            var form = document.forms[0];
+                <div class="right-side" id="formContainer">
+                    <c:if test="${requestScope.url == 'create'}">
+                        <h2 class="mb-4">Create Form</h2>
+                        <form action="create-account" method="POST" class="needs-validation" onsubmit="return validateForm()"> 
+                            Mail: <input type="email" name="mail" required /> <br/>
+                            Password: <input type="password" name="password" required minlength="8" /> <br/>
+                            Display Name: <input type="text" name="displayname" required /> <br/>
+                            Full Name: <input type="text" name="fullname" required /> <br/>
+                            Dob: <input type="date" name="dob" value="1999-01-01" /> <br/>
+                            Status: <input type="text" name="status" required /> <br/>
+                            Role: 
+                            <c:forEach items="${requestScope.listRole}" var="role">
+                                <c:if test="${role.roleId != 1}">
+                                    <input type="radio" value="${role.roleId}" name="roleId" required/> ${role.roleName}
+                                </c:if>
+                            </c:forEach><br/>
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <div class="btn-container d-flex">
+                                <button type="submit" class="btn btn-primary" value="Save">Submit</button><br/>
+                                <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
+                            </div>
+                            </div>
+                        </form>
+                        <script>
+                            function validateForm() {
+                                var form = document.forms[0];
 
-                            if (!form.checkValidity()) {
-                                alert("Please fill out all required fields.");
-                                return false;
+                                if (!form.checkValidity()) {
+                                    alert("Please fill out all required fields.");
+                                    return false;
+                                }
+                                return true;
                             }
-                            return true;
-                        }
-                    </script>
-                </c:if>
-                <c:if test="${requestScope.url == 'update'}">
-                    <h2 class="mb-4">Update Form</h2>
-                    <form action="update-account" method="POST" class="needs-validation" novalidate> 
-                        Id: <input name="accountId" type="text" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/> <br/>
-                        Mail: <input type="text" name="mail" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
-                        Password: <input type="password" name="password" value="${requestScope.accountNeedToUpdate.password}"/> <br/>
-                        Display Name: <input type="text" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/> <br/>
-                        Full Name: <input type="text" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/> <br/>
-                        Dob: <input type="date" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/> <br/>
-                        Status: <input type="text" name="status" value="${requestScope.accountNeedToUpdate.accountStatus}"/> <br/>
-                        Role: 
-                        <c:forEach items="${requestScope.listRole}" var="role">
-                            <c:if test="${role.roleId != 1}">
-                                <input <c:if test="${requestScope.roleFeatureAbountAccountNeedToUpdate.role.roleId==role.roleId}">
-                                        checked="checked"
-                                    </c:if>
-                                    type="radio" value="${role.roleId}" name="roleId"/> ${role.roleName}
-                            </c:if>
-                        </c:forEach><br/>
-                        <input type="submit" value="Save"/>
-                    </form>
-                </c:if>
-
-            </div>
-            <div class="left-side">
-                <a href="<%=request.getContextPath()%>/admin/account-management/create-account" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
-                <h2>List of Account</h2>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="myTable">
-                        <thead>
-                            <tr>
-                                <td>Id</td>
-                                <td>Mail</td>
-                                <td>Password</td>
-                                <td>Display Name</td>
-                                <td>Full Name</td>
-                                <td>Role</td>
-                                <td>Status</td>
-                                <td>Action</td>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <c:forEach items="${requestScope.listAccountWithInfo}" var="accountInfo">
-                                <tr>
-                                    <td>${accountInfo.account.accountId}</td>
-                                    <td>${accountInfo.account.mail}</td>
-                                    <td>${accountInfo.account.password}</td>
-                                    <td>${accountInfo.account.displayName}</td>
-                                    <td>${accountInfo.fullName}</td>
-                                    <td>${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName()}</td>
-                                    <td>${accountInfo.account.accountStatus}</td>
-                                    <td>
-                                        <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleId() != 1}">
-                                            <a href="<%=request.getContextPath()%>/admin/account-management/update-account?accountId=${accountInfo.account.accountId}" class="btn btn-warning btn-sm b">Edit</a>
-                                            <input type="button" value="Delete" onclick="deleteAccount(${accountInfo.account.accountId})" class="btn btn-danger btn-sm"/>
+                        </script>
+                    </c:if>
+                    <c:if test="${requestScope.url == 'update'}">
+                        <h2 class="mb-4">Update Form</h2>
+                        <form action="update-account" method="POST" class="needs-validation" novalidate> 
+                            Id: <input name="accountId" type="text" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/> <br/>
+                            Mail: <input type="text" name="mail" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
+                            Password: <input type="password" name="password" value="${requestScope.accountNeedToUpdate.password}"/> <br/>
+                            Display Name: <input type="text" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/> <br/>
+                            Full Name: <input type="text" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/> <br/>
+                            Dob: <input type="date" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/> <br/>
+                            Status: <input type="text" name="status" value="${requestScope.accountNeedToUpdate.accountStatus}"/> <br/>
+                            Role: 
+                            <c:forEach items="${requestScope.listRole}" var="role">
+                                <c:if test="${role.roleId != 1}">
+                                    <input <c:if test="${requestScope.roleFeatureAbountAccountNeedToUpdate.role.roleId==role.roleId}">
+                                            checked="checked"
                                         </c:if>
-                                    </td>
+                                        type="radio" value="${role.roleId}" name="roleId"/> ${role.roleName}
+                                </c:if>
+                            </c:forEach><br/>
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <div class="btn-container d-flex">
+                                <button type="submit" class="btn btn-primary" value="Save">Submit</button>
+                                <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </c:if>
+
+                </div>
+                <div class="left-side">
+                    <a href="<%=request.getContextPath()%>/admin/account-management/create-account" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
+                    <h2>List of Account</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="myTable">
+                            <thead>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Mail</td>
+                                    <td>Password</td>
+                                    <td>Display Name</td>
+                                    <td>Full Name</td>
+                                    <td>Role</td>
+                                    <td>Status</td>
+                                    <td>Action</td>
                                 </tr>
-                            </c:forEach>
-                    </table>
-                    </tbody>
-                    </table>
+                            </thead>
+                            <tbody id="tableBody">
+                                <c:forEach items="${requestScope.listAccountWithInfo}" var="accountInfo">
+                                    <tr>
+                                        <td>${accountInfo.account.accountId}</td>
+                                        <td>${accountInfo.account.mail}</td>
+                                        <td>${accountInfo.account.password}</td>
+                                        <td>${accountInfo.account.displayName}</td>
+                                        <td>${accountInfo.fullName}</td>
+                                        <td>${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName()}</td>
+                                        <td>${accountInfo.account.accountStatus}</td>
+                                        <td>
+                                            <div class="btn-container d-flex">
+                                            <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleId() != 1}">
+                                                <a href="<%=request.getContextPath()%>/admin/account-management/update-account?accountId=${accountInfo.account.accountId}" class="btn btn-warning btn-sm b">Edit</a>
+                                                <input type="button" value="Delete" onclick="deleteAccount(${accountInfo.account.accountId})" class="btn btn-danger btn-sm"/>
+                                            </c:if>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                        </table>
+                        </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <footer>
-            <div id="footer">
-                <!-- Social Icons -->
-                <div class="socials-list">
-                    <a href=""><i class="fa-brands fa-facebook"></i></a>
-                    <a href=""><i class="fa-brands fa-instagram"></i></a>
-                    <a href=""><i class="fa-solid fa-bell"></i></a>
+            <footer>
+                <div id="footer">
+                    <!-- Social Icons -->
+                    <div class="socials-list">
+                        <a href=""><i class="fa-brands fa-facebook"></i></a>
+                        <a href=""><i class="fa-brands fa-instagram"></i></a>
+                        <a href=""><i class="fa-solid fa-bell"></i></a>
+                    </div>
+                    <!-- Slogan -->
+                    <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
                 </div>
-                <!-- Slogan -->
-                <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
-            </div>
-            <!-- End of footer section -->
+                <!-- End of footer section -->
 
-            <!-- End of main container div -->
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    // Get the logo element
-                    var logo = document.querySelector('.logo a');
+                <!-- End of main container div -->
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        // Get the logo element
+                        var logo = document.querySelector('.logo a');
 
-                    // Add click event listener to the logo
-                    logo.addEventListener('click', function () {
-                        // Reload the page
-                        location.reload();
+                        // Add click event listener to the logo
+                        logo.addEventListener('click', function () {
+                            // Reload the page
+                            location.reload();
+                        });
                     });
-                });
-            </script>
+                </script>
 
-        </footer>
-    </body>
+            </footer>
+        </body>
 
-</html>
+    </html>
+
+
+
+
+
+
+
+
+
