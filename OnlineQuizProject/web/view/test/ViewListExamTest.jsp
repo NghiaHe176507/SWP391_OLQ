@@ -173,6 +173,7 @@
                         <a href="?page=1&examName=${param.examName}">&laquo; First</a>
                         <a href="?page=${currentPage - 1}&examName=${param.examName}">&lsaquo; Previous</a>
                     </c:if>
+
                     <c:forEach var="pageNum" begin="1" end="${totalPages}">
                         <c:choose>
                             <c:when test="${pageNum == currentPage}">
@@ -183,12 +184,27 @@
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
+
                     <c:if test="${currentPage < totalPages}">
                         <a href="?page=${currentPage + 1}&examName=${param.examName}">Next &rsaquo;</a>
                         <a href="?page=${totalPages}&examName=${param.examName}">Last &raquo;</a>
                     </c:if>
+
+                    <!-- Allow user to enter page number -->
+                    <form action="${pageContext.request.contextPath}/view-list-exam" method="GET" style="display: inline-block;">
+                        <input type="text" name="page"  style="    width: 50px;
+                               margin: 0 5px;
+                               padding: 3px 5px;
+                               border-radius: 4px">
+                        <input type="hidden" name="examName" value="${param.examName}">
+                        <button type="submit" style="    width: 50px;
+                                margin: 0 -4px;
+                                padding: 3px 5px;
+                                border-radius: 4px">Go</button>
+                    </form>
                 </c:if>
             </div>
+
         </div>
         <div id="footer">
             <!-- Social Icons -->
