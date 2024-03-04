@@ -4,7 +4,7 @@
  */
 package controller.home;
 
-import controller.authentication.BaseRequiredAuthenController;
+import controller.authentication.BasedRequiredAuthenticationController;
 import dal.AccountDBContext;
 import dal.AccountInfoDBContext;
 import dal.ControllerDBContext;
@@ -27,7 +27,9 @@ import java.util.ArrayList;
  *
  * @author nghia
  */
-public class HomePageController extends BaseRequiredAuthenController {
+public class HomePageController extends BasedRequiredAuthenticationController {
+
+    ControllerDBContext db = new ControllerDBContext();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,11 +43,9 @@ public class HomePageController extends BaseRequiredAuthenController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
-        ControllerDBContext cdb = new ControllerDBContext();
 
-        switch (cdb.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId()) {
+        switch (db.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId()) {
             case 1:
-                ControllerDBContext db = new ControllerDBContext();
                 AccountInfoDBContext acountInfo = new AccountInfoDBContext();
                 int pageSize = 5; // Number of items per page
                 int page = 1; // Default page number
@@ -74,18 +74,14 @@ public class HomePageController extends BaseRequiredAuthenController {
                 int lecturerId = LoggedUser.getAccountId();
                 AccountInfoDBContext ab = new AccountInfoDBContext();
                 int accountInfoId = ab.getAccountInfoIdByAccountId(lecturerId);
-                GroupDBContext gb = new GroupDBContext();
-                ArrayList<Group> listGroup = gb.getGroupByLectureId(accountInfoId);
+                ArrayList<Group> listGroup = db.getGroupByLectureId(accountInfoId);
                 request.setAttribute("listGroup", listGroup);
                 request.getRequestDispatcher("view/home/homeLecturer.jsp").forward(request, response);
                 break;
             case 3:
                 String keyword = request.getParameter("searchQuery");
 
-                // Gọi hàm searchGroup từ GroupDBContext để tìm kiếm
-//                GroupDBContext gb = new GroupDBContext();
-                GroupDBContext gdb = new GroupDBContext();
-                ArrayList<Group> searchResults = gdb.searchGroup(keyword);
+                ArrayList<Group> searchResults = db.searchGroup(keyword);
 
                 // Đặt kết quả tìm kiếm vào attribute của request để truyền cho JSP
                 request.setAttribute("searchResults", searchResults);
@@ -104,7 +100,7 @@ public class HomePageController extends BaseRequiredAuthenController {
 
                 AccountInfoDBContext abi = new AccountInfoDBContext();
                 int accountId = abi.getAccountInfoIdByAccountId(studentId);
-                ArrayList<Group> groups = gdb.getGroupByLectureId(accountId);
+                ArrayList<Group> groups = db.getGroupByLectureId(accountId);
                 request.setAttribute("groups", groups);
 
                 request.getRequestDispatcher("view/home/homeStudent.jsp").forward(request, response);
