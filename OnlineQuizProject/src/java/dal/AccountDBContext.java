@@ -5,7 +5,6 @@
 package dal;
 
 import entity.Account;
-import entity.AccountInfo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,33 +68,6 @@ public class AccountDBContext extends DBContext<Account> {
 
         } catch (SQLException ex) {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    public AccountInfo getAccountInfoByAccount_Id(int Id) {
-        AccountDBContext accountDb = new AccountDBContext();
-        try {
-            String sql = "SELECT [accountInfo_id]\n"
-                    + "      ,[fullname]\n"
-                    + "      ,[dob]\n"
-                    + "      ,[account_id]\n"
-                    + "  FROM [AccountInfo]\n"
-                    + "	WHERE [account_id] = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, Id);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                AccountInfo accountInfo = new AccountInfo();
-                accountInfo.setAccountInfoId(rs.getInt("accountInfo_id"));
-                accountInfo.setFullName(rs.getString("fullname"));
-                accountInfo.setDob(rs.getDate("dob"));
-                accountInfo.setAccount(accountDb.getById(String.valueOf(rs.getInt("account_id"))));
-                return accountInfo;
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountInfoDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

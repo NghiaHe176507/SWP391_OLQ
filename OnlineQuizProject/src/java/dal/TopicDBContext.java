@@ -8,7 +8,6 @@ import entity.Topic;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,24 +38,6 @@ public class TopicDBContext extends DBContext<Topic> {
             Logger.getLogger(TopicDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-
-    public ArrayList<Topic> getAllTopics() {
-        ArrayList<Topic> topics = new ArrayList<>();
-        try {
-            String sql = "SELECT [topic_id], [topic_name] FROM [Topic]";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Topic topic = new Topic();
-                topic.setTopicId(rs.getInt("topic_id"));
-                topic.setTopicName(rs.getString("topic_name"));
-                topics.add(topic);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TopicDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return topics;
     }
 
 }
