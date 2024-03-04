@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Đạt Phạm
  */
 @WebServlet(name = "BaseRequiredAuthenController", urlPatterns = {"/BaseRequiredAuthenController"})
-public abstract class BaseRequiredAuthenController extends HttpServlet {
+public abstract class BasedRequiredAuthenticationController extends HttpServlet {
 
     private boolean isAuthenticated(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
@@ -67,7 +67,7 @@ public abstract class BaseRequiredAuthenController extends HttpServlet {
             //login
             doGet(request, response, (Account) request.getSession().getAttribute("account"));
         } else {
-           response.sendRedirect("access denied");
+           response.sendRedirect(request.getContextPath()+"/login");
         }
     }
 
@@ -83,7 +83,7 @@ public abstract class BaseRequiredAuthenController extends HttpServlet {
         if (isAuthenticated(request)) {
             doPost(request, response, (Account) request.getSession().getAttribute("account"));
         } else {
-            response.sendRedirect("login");
+            response.sendRedirect(request.getContextPath()+"/login");
         }
     }
 

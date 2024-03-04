@@ -26,7 +26,7 @@
     </head>
 
     <body>
-        <form action="home" method="POST">
+        <form action="homeLecture" method="POST">
             <!-- Main container div -->
             <div class="container">
                 <!-- Header section -->
@@ -34,7 +34,7 @@
                     <div class="header">
                         <!-- Logo -->
                         <div class="logo col-md-2">
-                            <a href="#">QUIZWIZ</a>
+                            <a href="#home">QUIZWIZ</a>
                         </div>
 
                         <div class="create col-md-1">
@@ -59,7 +59,7 @@
                                         <li><a href="#"><i class="fa-solid fa-user"></i> User Details</a></li>
                                         <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                         <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+                                        <li><a href="#"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
                                     </ul>
                                 </li>
@@ -169,18 +169,6 @@
             <!-- End of footer section -->
 
             <!-- End of main container div -->
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    // Get the logo element
-                    var logo = document.querySelector('.logo a');
-
-                    // Add click event listener to the logo
-                    logo.addEventListener('click', function () {
-                        // Reload the page
-                        location.reload();
-                    });
-                });
-            </script>
         </form>
     </body>
 
