@@ -1,6 +1,5 @@
 package controller.home;
 
-import dal.ControllerDBContext;
 import dal.GroupDBContext;
 import entity.Group;
 import java.io.IOException;
@@ -11,8 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class SearchController extends HttpServlet {
-    
-    ControllerDBContext db = new ControllerDBContext();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -21,7 +18,7 @@ public class SearchController extends HttpServlet {
 
         // Gọi hàm searchGroup từ GroupDBContext để tìm kiếm
         GroupDBContext gb = new GroupDBContext();
-        ArrayList<Group> searchResults = db.searchGroup(keyword);
+        ArrayList<Group> searchResults = gb.searchGroup(keyword);
 
         // Đặt kết quả tìm kiếm vào attribute của request để truyền cho JSP
         request.setAttribute("searchResults", searchResults);
