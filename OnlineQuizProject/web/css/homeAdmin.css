@@ -3,10 +3,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
 */
 /* 
-    Created on : Jan 28, 2024, 12:40:45 AM
+    Created on : Feb 21, 2024, 12:50:36 AM
     Author     : nghia
 */
-
 /* Reset CSS */
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
 
@@ -105,20 +104,6 @@ body {
     transform: scale(0.95);
 }
 
-
-/* CSS cho button */
-.btn-primary {
-    background-color: white; /* Màu nền trắng */
-    color: #007bff; /* Màu chữ mặc định */
-    border: 1px solid #007bff; /* Viền button */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
-}
-
-.btn-primary:hover {
-    background-color: #007bff; /* Màu nền khi hover */
-    color: white; /* Màu chữ khi hover */
-}
-
 /* Navigation menu styles */
 .custom-icon {
     display: flex;
@@ -148,20 +133,6 @@ body {
 /*  */
 
 .login {
-
-}
-
-/* CSS cho button */
-.btn-primary {
-    background-color: white; /* Màu nền trắng */
-    color: #007bff; /* Màu chữ mặc định */
-    border: 1px solid #007bff; /* Viền button */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
-}
-
-.btn-primary:hover {
-    background-color: #007bff; /* Màu nền khi hover */
-    color: white; /* Màu chữ khi hover */
 }
 
 #nav {
@@ -169,7 +140,7 @@ body {
     justify-content: space-around;
 }
 
-#nav>li {
+#nav > li {
     display: inline-block; /* Hiển thị các li trên cùng một dòng */
 }
 
@@ -188,13 +159,18 @@ body {
 }
 
 #nav .fa-bell::after {
-    content: ''; /* Tạo một pseudo-element để làm hình nền của hiệu ứng nhấp chuột */
+    content: ""; /* Tạo một pseudo-element để làm hình nền của hiệu ứng nhấp chuột */
     position: absolute; /* Đặt vị trí tuyệt đối để che phủ biểu tượng */
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.2); /* Màu nền của hiệu ứng khi nhấp chuột */
+    background-color: rgba(
+        0,
+        0,
+        0,
+        0.2
+        ); /* Màu nền của hiệu ứng khi nhấp chuột */
     border-radius: 50%; /* Tạo hình tròn */
     opacity: 0; /* Ẩn mặc định */
     transition: opacity 0.3s; /* Tạo hiệu ứng độ mờ */
@@ -203,7 +179,6 @@ body {
 #nav .fa-bell:active::after {
     opacity: 1; /* Hiển thị hiệu ứng khi nhấp chuột */
 }
-
 
 .subnav {
     list-style-type: none;
@@ -267,6 +242,7 @@ body {
 }
 
 /* Footer Section Styles */
+
 #footer {
     position: relative;
     bottom: 0;
@@ -279,7 +255,7 @@ body {
     padding: 5px;
 }
 
-#footer a{
+#footer a {
     color: #000;
 }
 
@@ -307,60 +283,111 @@ body {
     max-width: 100%;
 }
 
-
-/*  */
-/* .topic {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start; 
-}
-
-.topic-info {
-  flex: 1; 
-  border: 1px solid #ccc; 
-  padding: 10px; 
-}
-
-.show-all {
-  margin-top: 10px;
-}
-
-.show-all a {
-  display: block;
-  text-align: right; 
-  text-decoration: none;
-  color: #007BFF;
-} */
-
-
-.topic {
-    display: flex;
-    flex-wrap: wrap; /* Cho phép các div con xuống dòng khi không đủ không gian */
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 15px; /* Khoảng cách lề bên trong div topic */
-    border: 1px solid #ccc; /* Đường viền của div topic */
-    border-radius: 10px; /* Bo góc cho div topic */
-}
-
-.topic-info {
-    flex: 0 0 calc(25% - 15px); /* Chia cột cho 4 div con, với khoảng cách giữa chúng là 15px */
-    margin: 15px; /* Khoảng cách giữa các div con */
-    border: 1px solid #ccc; /* Đường viền của div con */
-    border-radius: 5px; /* Bo góc cho div con */
-    padding: 10px; /* Khoảng cách lề bên trong div con */
+/* */
+.custom{
+    border: 1px solid #000;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 
-.show-all {
-    width: 100%;
-    margin-top: 15px; /* Khoảng cách giữa div con và div show-all */
+
+h2 {
+    text-align: center;
+    border-bottom: 1px solid #000;
+    padding-top: .5rem;
+    padding-bottom: 20px;
 }
 
-.show-all a {
-    display: block;
-    text-align: right;
+.admin {
+    border-left: 1px solid #000;
+}
+
+.admin-functions td {
+    border-bottom: 1px solid #000;
+    text-align: center;
+}
+
+.admin-functions td:last-child {
+    border-right: none;
+}
+
+.admin-functions td:hover {
+    background-color: #f0f0f0;
+}
+
+.admin-functions td a {
     text-decoration: none;
-    color: #007BFF;
+    color: black;
 }
+
+.admin-functions td a:hover {
+    color: #007bff;
+}
+
+.admin-functions td a:active {
+    color: #0056b3;
+}
+
+.admin-functions td:hover {
+    background-color: #f0f0f0;
+}
+
+.admin-content {
+    display: none;
+}
+
+.custom-table {
+    border-collapse: collapse;
+    width: 98%;
+    table-layout: fixed; /* Sử dụng table-layout: fixed để đảm bảo chiều rộng cố định của cột */
+}
+
+.custom-table th,
+.custom-table td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+    word-wrap: break-word; /* Đặt word-wrap: break-word để cho phép nội dung xuống dòng nếu quá dài */
+    max-width: 250px; /* Tùy chỉnh giới hạn chiều rộng tối đa của mỗi ô */
+}
+
+.custom-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+a.edit-link {
+    display: inline-block;
+    padding: 1px;
+    background-color: #ccc; /* Màu nền */
+    color: #000; /* Màu chữ */
+    border: none;
+    margin: 0;
+    border-radius: 4px;
+    text-decoration: none; /* Loại bỏ gạch chân */
+}
+
+a.edit-link:hover {
+    background-color: #ccc; /* Màu nền khi di chuột qua */
+}
+
+.admin-content p {
+    font-size: 10px; /* Đặt kích thước chữ cho phần tử <p> */
+}
+
+/* CSS cho thẻ <a> */
+.detail-link {
+    text-decoration: none; /* Bỏ gạch chân */
+    color: black; /* Đổi màu thành đen */
+    border: 1px solid black; /* Thêm viền */
+    display: inline-block; /* Hiển thị như block */
+    padding: 5px 10px; /* Tăng padding để tạo khoảng trống xung quanh nút */
+    transition: border-color 0.3s ease; /* Hiệu ứng khi hover */
+}
+
+.detail-link:hover {
+    border-color: gray; /* Thay đổi màu viền khi hover */
+}
+
 

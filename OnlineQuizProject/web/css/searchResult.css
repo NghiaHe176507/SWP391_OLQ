@@ -3,6 +3,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
 */
 /* 
+    Created on : Feb 28, 2024, 12:28:29 AM
+    Author     : nghia
+*/
+
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
     Created on : Jan 28, 2024, 12:40:45 AM
     Author     : nghia
 */
@@ -19,19 +28,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 html {
     font-family: "Poppins", sans-serif;
     scroll-behavior: smooth;
-}
-.container {
-    min-height: 100%;
-    position: relative;
-}
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.container {
-    flex: 1;
 }
 
 /* Common Styles */
@@ -275,7 +271,6 @@ body {
     background: linear-gradient(135deg, #4397ce, #9a3cbf);
     color: white;
     text-align: center;
-    transition: transform 0.5s ease-in-out;
     padding: 5px;
 }
 
@@ -306,31 +301,6 @@ body {
     height: auto;
     max-width: 100%;
 }
-
-
-/*  */
-/* .topic {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start; 
-}
-
-.topic-info {
-  flex: 1; 
-  border: 1px solid #ccc; 
-  padding: 10px; 
-}
-
-.show-all {
-  margin-top: 10px;
-}
-
-.show-all a {
-  display: block;
-  text-align: right; 
-  text-decoration: none;
-  color: #007BFF;
-} */
 
 
 .topic {
@@ -364,3 +334,21 @@ body {
     color: #007BFF;
 }
 
+
+.group {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các div con xuống dòng khi không đủ không gian */
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px; /* Khoảng cách lề bên trong div topic */
+    border: 1px solid #ccc; /* Đường viền của div topic */
+    border-radius: 10px; /* Bo góc cho div topic */
+}
+
+.group-info {
+    flex: 0 0 calc(25% - 15px); /* Chia cột cho 4 div con, với khoảng cách giữa chúng là 15px */
+    margin: 15px; /* Khoảng cách giữa các div con */
+    border: 1px solid #ccc; /* Đường viền của div con */
+    border-radius: 5px; /* Bo góc cho div con */
+    padding: 10px; /* Khoảng cách lề bên trong div con */
+}
