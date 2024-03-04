@@ -33,7 +33,7 @@ public class DeleteGroupByAdmin extends HttpServlet {
         int groupId = Integer.parseInt((request.getParameter("groupId")));
         ControllerDBContext db = new ControllerDBContext();
         db.deletePendingGroup(groupId);
-        response.sendRedirect("listGroup");
+        response.sendRedirect(request.getContextPath()+"/admin/group-management");
 
     } 
 
@@ -44,7 +44,7 @@ public class DeleteGroupByAdmin extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Short dcription";
     }// </editor-fold>
 
     @Override

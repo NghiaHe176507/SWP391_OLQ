@@ -68,7 +68,7 @@ public class UpdateAccountByStudent extends BasedRequiredAuthenticationControlle
         request.setAttribute("infoAbountAccountNeedToUpdate", accountInfoNeedToUpdate);
         request.getRequestDispatcher("/view/controllerAccount/UpdateAccountByStudent.jsp").forward(request, response);
     }
-
+ 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
