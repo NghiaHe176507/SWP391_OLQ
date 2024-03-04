@@ -1,6 +1,6 @@
 <%-- 
-    Document   : homeStudent
-    Created on : Jan 27, 2024, 1:27:21 AM
+    Document   : homeLecture
+    Created on : Jan 28, 2024, 12:37:46 AM
     Author     : nghia
 --%>
 
@@ -16,40 +16,28 @@
         <!-- Favicon -->
         <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <!-- Stylesheets -->
-        <link rel="stylesheet" href="css/homeStudent.css">
+        <link rel="stylesheet" href="css/homeLecture.css">
         <!-- Font Awesome Icons -->
         <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
-        <script src="js/homeStudent.js"></script>
+        <script src="js/homeLecture.js"></script>
         <style>
-            .create {
-                text-align: center;
+            /* CSS cho button */
+            .btn-primary {
+                background-color: white; /* Màu nền trắng */
+                color: #007bff; /* Màu chữ mặc định */
+                border: 1px solid #007bff; /* Viền button */
+                transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
             }
 
-            .create a {
-                text-decoration: none;
-                font-family: "Poppins", sans-serif;
-                font-weight: bold;
-                font-size: 16px;
-                color: #fff;
-                padding: 10px 20px;
-                background: linear-gradient(135deg, #9a3cbf, #4397ce);
-                border-radius: 5px;
-                transition: background 0.3s ease, transform 0.2s ease-in-out;
+            .btn-primary:hover {
+                background-color: #007bff; /* Màu nền khi hover */
+                color: white; /* Màu chữ khi hover */
             }
 
-            .create a:hover {
-                background: linear-gradient(135deg, #4397ce, #9a3cbf);
-                transform: scale(1.05);
-            }
-
-            .create a:active {
-                transform: scale(0.95);
-            }
         </style>
     </head>
 
@@ -66,18 +54,14 @@
                         </div>
 
                         <div class="create col-md-1">
-                            <a href="#"><i class="fa-solid fa-plus"></i> Join group</a>
+                            <a href="#"><i class="fa-solid fa-plus"></i> Tạo đề thi</a>
                         </div>
 
                         <!-- Search container -->
-                        <form id="searchForm" action="home" method="POST"> 
-                            <div class="search-container col-md-5">
-                                <input type="text" id="searchInput" name="searchQuery" placeholder="Tìm kiếm lớp, chủ đề...">
-                                <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </div>
-                        </form>
-
-
+                        <div class="search-container col-md-5">
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
+                            <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
 
                         <!-- Login section -->
                         <div class="login col-md-3">
@@ -106,19 +90,50 @@
                 </div>
 
                 <div class="topic" id="topicContainer">
-                    <c:forEach var="register" items="${requestScope.listRegister}" varStatus="loop">
+                    <c:forEach var="group" items="${requestScope.listGroup}" varStatus="loop">
                         <div class="col-md-4 mb-3">
                             <div class="topic-info" style="width: 18rem;">
                                 <div class="topic-info-body">
-                                    <h4 class="topic-info-title">Class Name: ${register.classRegister.groupName}</h4>
-                                    <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.topic.topicName}</h6>
-                                    <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.classRegister.lectureInfo.fullName}</h6>
-                                    <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
+                                    <h5 class="topic-info-title">Class Name: ${group.groupName}</h5>
+                                    <h6 class="topic-info-subtitle mb-2">Topic: ${group.topic.topicName}</h6>
+
+                                    <c:choose>
+                                        <c:when test="${group.groupInvite == null}">
+                                            <!-- Button khi chưa có Invite Code -->
+                                            <button class="btn btn-primary mb-2" onclick="this.parentNode.submit();return false; showInput(${group.groupId})">Add Invite Code</button>
+                                            <!-- Ô input và nút submit, ẩn ban đầu -->
+                                            <div id="inviteCode_${group.groupId}" style="display: none;">
+                                                <input type="text" id="inviteInput_${group.groupId}" class="form-control mb-2" name="inviteCode" placeholder="Enter Invite Code">
+                                                <button class="btn btn-success" onclick="submitInviteCode(${group.groupId})">Submit</button>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- Hiển thị Invite Code nếu đã có -->
+                                            <h6 class="topic-info-subtitle mb-2">Invite Code: ${group.groupInvite}</h6>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <c:choose>
+                                        <c:when test="${group.status.statusName eq 'Active'}">
+                                            <p class="topic-info-text text-success" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:when test="${group.status.statusName eq 'Pending'}">
+                                            <p class="topic-info-text text-secondary" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:when test="${group.status.statusName eq 'Closed'}">
+                                            <p class="topic-info-text text-danger" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p class="topic-info-text" style="margin-bottom: 0">${group.status.statusName}</p>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <a href="#" class="topic-info-link">More Details</a>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
+
+
 
                     <div class="show-all">
                         <a href="#" id="showAllBtn">Show all topic</a>
@@ -150,35 +165,6 @@
 
             <!-- End of main container div -->
             <script>
-                document.getElementById("searchForm").addEventListener("submit", function (event) {
-                    event.preventDefault(); // Ngăn form submit mặc định
-
-                    var searchInputValue = document.getElementById("searchInput").value.trim(); // Lấy giá trị từ ô input và loại bỏ khoảng trắng đầu cuối
-
-                    if (searchInputValue !== "") { // Chỉ thực hiện khi ô input không trống
-                        var formAction = "search?searchQuery=" + encodeURIComponent(searchInputValue);
-                        this.action = formAction;
-                        this.submit(); // Gửi form
-                    }
-                });
-
-                // Xử lý khi người dùng nhấn Enter trong ô input
-                document.getElementById("searchInput").addEventListener("keydown", function (event) {
-                    if (event.key === "Enter") { // Kiểm tra nếu phím Enter được nhấn
-                        event.preventDefault(); // Ngăn mặc định hành động của phím Enter
-                        var searchInputValue = this.value.trim(); // Lấy giá trị từ ô input và loại bỏ khoảng trắng đầu cuối
-
-                        if (searchInputValue !== "") { // Chỉ thực hiện khi ô input không trống
-                            var formAction = "search?searchQuery=" + encodeURIComponent(searchInputValue);
-                            document.getElementById("searchForm").action = formAction;
-                            document.getElementById("searchForm").submit(); // Gửi form
-                        }
-                    }
-                });
-            </script>
-
-
-            <script>
                 document.addEventListener("DOMContentLoaded", function () {
                     // Get the logo element
                     var logo = document.querySelector('.logo a');
@@ -190,6 +176,7 @@
                     });
                 });
             </script>
+
         </form>
     </body>
 

@@ -25,7 +25,7 @@
                 <div class="row">
                     <h2 style="text-align:center; font-family: Poppins ">Welcome to Quiz Online, please login to continue</h2>
                     <div class="col">
-                       <c:if test="${checkAuthentication eq 'F'}">
+                        <c:if test="${checkAuthentication eq 'F'}">
                             <div style="color: red">Sai thông tin đăng nhập</div>
                         </c:if>
                         <input type="text" name="mail" placeholder="Email" required style="background-color: white">
@@ -36,21 +36,30 @@
                 </div>
             </form>
         </div>
-
-
-
         <div class="bottom-container">
             <div class="row">
                 <div class="col">
-                    <form action="signup" method="post"  >
-                        <input type="submit" value="Sign Up" style="background-color: #ffffff; color: #000">
-                    </form>
-
+                    <!--                    <form method="post" action="forgot">
+                                            <input type="submit" value="Forgot password?" style="background-color: #ffffff; color: #000"  />
+                                            <a href="fogotPassword.jsp" style="color:rgb(0, 0, 0)" class="btn">Forgot password?</a>
+                                        </form>-->
+                    <a href="<%= request.getContextPath() %>/forgotpassword" style="background-color: #ffffff; color: #000" class="btn">Forgot password?</a>
                 </div>
             </div>
-        </div>
 
-        <!-- Button to open the modal -->
+
+            <div class="bottom-container">
+                <div class="row">
+                    <div class="col">
+<!--                        <form action="signup" method="post"  >
+                            <input type="submit" value="Sign Up" style="background-color: #ffffff; color: #000">
+                        </form>-->
+                        <a href="<%= request.getContextPath() %>/register" style="background-color: #ffffff; color: #000" class="btn">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Button to open the modal -->
 
 
 
