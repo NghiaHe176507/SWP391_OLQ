@@ -13,7 +13,8 @@
         <meta charset="UTF-8">
         <title>QuizWiz</title>
         <!-- Favicon -->
-        <link rel="icon" href="imgage/iconlogo.PNG" type="image/x-icon" />
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
+
         <!-- Stylesheets -->
         <link rel="stylesheet" href="css/homeAdmin.css">
         <!-- Font Awesome Icons -->
@@ -42,6 +43,10 @@
             .center-div {
                 display: flex;
                 justify-content: center;
+            }
+
+            h2{
+                padding-top: .5rem;
             }
         </style>
 
@@ -95,84 +100,56 @@
             </div>
 
             <div class="custom">
-                <h2 class="text-center">Admin Dashboard</h2>
+                <h2 class="text-center">Update Information Account</h2>
                 <div class="row">
-                    <div class="col-md-3">
-                        <table class="table admin-functions table-admin">
-                            <tbody>
+                    <form action="updateaccount" method="POST"> 
+                        <div class="center-div">
+                            <table>
                                 <tr>
-                                    <td><a href="#" data-content-id="viewAccountContent">View List Account</a></td>
+                                    <td>Id:</td>
+                                    <td><input name="accountId" type="text" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="#" data-content-id="createAccountContent">Create Account</a></td>
+                                    <td>Mail:</td>
+                                    <td><input type="text" name="mail" value="${requestScope.accountNeedToUpdate.mail}"/></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="#" data-content-id="updateAccountContent">Update Account</a></td>
+                                    <td>Password:</td>
+                                    <td><input type="text" name="password" value="${requestScope.accountNeedToUpdate.password}"/></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="#" data-content-id="deleteAccountContent">Delete Account</a></td>
+                                    <td>Display Name:</td>
+                                    <td><input type="text" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="#" data-content-id="createTopicContent">Create a topic</a></td>
+                                    <td>Full Name:</td>
+                                    <td><input type="text" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="#" data-content-id="deleteTopicContent">Delete a topic</a></td>
+                                    <td>Dob:</td>
+                                    <td><input type="date" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/></td>
                                 </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-9 admin">
-                        <form action="updateaccount" method="POST"> 
-                            <div class="center-div">
-                                <table>
-                                    <tr>
-                                        <td>Id:</td>
-                                        <td><input name="accountId" type="text" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mail:</td>
-                                        <td><input type="text" name="mail" value="${requestScope.accountNeedToUpdate.mail}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Password:</td>
-                                        <td><input type="text" name="password" value="${requestScope.accountNeedToUpdate.password}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Display Name:</td>
-                                        <td><input type="text" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Full Name:</td>
-                                        <td><input type="text" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dob:</td>
-                                        <td><input type="date" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status:</td>
-                                        <td><input type="text" name="status" value="${requestScope.accountNeedToUpdate.accountStatus}"/></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Role:</td>
-                                        <td>
-                                            <c:forEach items="${requestScope.listRole}" var="role">
-                                                <c:if test="${role.roleId != 1}">
-                                                    <input <c:if test="${requestScope.roleFeatureAbountAccountNeedToUpdate.role.roleId==role.roleId}">
-                                                            checked="checked"
-                                                        </c:if>
-                                                        type="radio" value="${role.roleId}" name="roleId"/> ${role.roleName}<br/>
-                                                </c:if>
-                                            </c:forEach>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <input type="submit" value="Save"style="margin: 5px 0; padding: 3px;"/>
-                        </form>
-
-
-                    </div>
+                                <tr>
+                                    <td>Status:</td>
+                                    <td><input id="status" type="text" name="status" value="${requestScope.accountNeedToUpdate.accountStatus}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Role:</td>
+                                    <td>
+                                        <c:forEach items="${requestScope.listRole}" var="role">
+                                            <c:if test="${role.roleId != 1}">
+                                                <input <c:if test="${requestScope.roleFeatureAbountAccountNeedToUpdate.role.roleId==role.roleId}">
+                                                        checked="checked"
+                                                    </c:if>
+                                                    type="radio" value="${role.roleId}" name="roleId"/> ${role.roleName}<br/>
+                                            </c:if>
+                                        </c:forEach>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <input type="submit" value="Save"style="margin: 5px; padding: 5px;"/>
+                    </form>
                 </div>
             </div>
 

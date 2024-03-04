@@ -1,7 +1,11 @@
 package controller.home;
 
 import dal.GroupDBContext;
+import dal.RegisterDBContext;
+import dal.TopicDBContext;
 import entity.Group;
+import entity.Register;
+import entity.Topic;
 import java.io.IOException;
 import java.util.ArrayList;
 import jakarta.servlet.ServletException;
@@ -14,17 +18,23 @@ public class SearchController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String keyword = request.getParameter("searchQuery");
-
+        String keyword = request.getParameter("query");
         // Gọi hàm searchGroup từ GroupDBContext để tìm kiếm
         GroupDBContext gb = new GroupDBContext();
         ArrayList<Group> searchResults = gb.searchGroup(keyword);
+        TopicDBContext tb = new TopicDBContext();
+        ArrayList<Topic> searchTopic = tb.searchTopic(keyword);
+        RegisterDBContext rb = new RegisterDBContext();
+        ArrayList<Register> searchRegister = rb.searchRegister(keyword);
+        
 
         // Đặt kết quả tìm kiếm vào attribute của request để truyền cho JSP
+        request.setAttribute("searchTopic", searchTopic);
         request.setAttribute("searchResults", searchResults);
+        request.setAttribute("searchRegister", searchRegister);
 
         // Chuyển hướng đến trang JSP để hiển thị kết quả
-        response.sendRedirect("result.jsp");
+        request.getRequestDispatcher("view/home/result.jsp").forward(request, response);
     }
 
     @Override

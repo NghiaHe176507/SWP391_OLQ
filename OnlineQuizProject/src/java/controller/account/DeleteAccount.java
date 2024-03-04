@@ -31,7 +31,7 @@ public class DeleteAccount extends HttpServlet {
         int accountId = Integer.parseInt((request.getParameter("accountId")));
         ControllerDBContext db = new ControllerDBContext();
         db.deleteAccountById(accountId);
-        response.sendRedirect("listaccount");
+        response.sendRedirect("home");
         
         
     }

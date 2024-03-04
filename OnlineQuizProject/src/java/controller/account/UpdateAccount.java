@@ -8,10 +8,12 @@ import dal.AccountDBContext;
 import dal.AccountInfoDBContext;
 import dal.ControllerDBContext;
 import dal.RoleDBContext;
+import dal.StatusDBContext;
 import entity.Account;
 import entity.AccountInfo;
 import entity.Role;
 import entity.RoleFeature;
+import entity.Status;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -63,8 +65,11 @@ public class UpdateAccount extends HttpServlet {
 
         ArrayList<Role> listRole = db.getListRole();
         request.setAttribute("listRole", listRole);
+        StatusDBContext sb = new StatusDBContext();
+        Status listStatus = sb.getByAccountId(accountId);
         request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
         request.setAttribute("infoAbountAccountNeedToUpdate", infoAbountAccountNeedToUpdate);
+        request.setAttribute("listStatus", listStatus);
         request.setAttribute("roleFeatureAbountAccountNeedToUpdate", roleFeatureAbountAccountNeedToUpdate);
         request.getRequestDispatcher("/view/ControlAccount/EditAccount.jsp").forward(request, response);
 
@@ -114,7 +119,7 @@ public class UpdateAccount extends HttpServlet {
         db.updateAccountInfo(accountInfoNeedToUpdate);
         db.updateRoleFeature(roleFeatureNeedToUpdate);
 //        request.getRequestDispatcher("/home").forward(request, response);
-response.sendRedirect(request.getContextPath() + "/home");
+        response.sendRedirect(request.getContextPath() + "/home");
 
     }
 

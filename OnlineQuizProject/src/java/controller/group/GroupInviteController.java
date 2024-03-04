@@ -2,33 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.account;
+package controller.group;
 
-import dal.ControllerDBContext;
-import dal.RoleDBContext;
-import dal.StatusDBContext;
+import controller.authentication.BaseRequiredAuthenController;
+import dal.GroupDBContext;
 import entity.Account;
-import entity.AccountInfo;
-import entity.Role;
-import entity.RoleFeature;
-import entity.Status;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.sql.Date;
 
 /**
  *
- * @author PC
+ * @author nghia
  */
-public class CreateAccount extends HttpServlet {
-
-    RoleDBContext roleDB = new RoleDBContext();
-    ControllerDBContext db = new ControllerDBContext();
+public class GroupInviteController extends BaseRequiredAuthenController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +31,19 @@ public class CreateAccount extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet GroupInviteController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet GroupInviteController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,12 +58,7 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Role> listRole = db.getListRole();
-        request.setAttribute("listRole", listRole);
-        StatusDBContext sb = new StatusDBContext();
-        ArrayList<Status> listStatus = sb.getAllStatus();
-        request.setAttribute("listStatus", listStatus); 
-        request.getRequestDispatcher("/view/ControlAccount/CreateAccount.jsp").forward(request, response);
+        
     }
 
     /**
@@ -75,34 +72,7 @@ public class CreateAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account newAccount = new Account();
-        AccountInfo newAccountInfo = new AccountInfo();
-        RoleFeature newRoleFeature = new RoleFeature();
-
-        String mail = request.getParameter("mail");
-        String password = request.getParameter("password");
-        String displayname = request.getParameter("displayname");
-        String fullname = request.getParameter("fullname");
-        Date dob = Date.valueOf(request.getParameter("dob"));
-        String status = request.getParameter("status");
-        String roleId = request.getParameter("roleId");
-
-        newAccount.setMail(mail);
-        newAccount.setPassword(password);
-        newAccount.setDisplayName(displayname);
-        newAccount.setAccountStatus(status);
-
-        newAccountInfo.setFullName(fullname);
-        newAccountInfo.setDob(dob);
-        newAccountInfo.setAccount(newAccount);
-        newRoleFeature.setRole(roleDB.getById(roleId));
-        newRoleFeature.setAccount(newAccount);
-
-        db.createNewAccount(newAccount);
-        db.createNewAccountInfo(newAccountInfo);
-        db.createNewRoleFeature(newRoleFeature);
-        response.sendRedirect("home");
-//        response.getWriter().println("Account created successful!");
+        processRequest(request, response);
     }
 
     /**
@@ -114,5 +84,18 @@ public class CreateAccount extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        String groupInviteCode = request.getParameter("groupInviteCode");
+        GroupDBContext gb = new GroupDBContext();
+        gb.joinGroup(LoggedUser.getAccountId(), groupInviteCode);
+        request.getRequestDispatcher("view/home/group.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

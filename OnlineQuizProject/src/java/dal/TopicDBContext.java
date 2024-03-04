@@ -59,4 +59,45 @@ public class TopicDBContext extends DBContext<Topic> {
         return topics;
     }
 
+    public ArrayList<Topic> searchTopic(String keyword) {
+        ArrayList<Topic> topics = new ArrayList<>();
+        String sql = "SELECT [topic_id], [topic_name] FROM [Topic] WHERE [topic_name] LIKE ?";
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, "%" + keyword + "%");
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Topic topic = new Topic();
+                    topic.setTopicId(rs.getInt("topic_id"));
+                    topic.setTopicName(rs.getString("topic_name"));
+                    topics.add(topic);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TopicDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return topics;
+    }
+
+    public int getTotalTopics() {
+        int totalTopics = 0;
+
+        try {
+            String sql = "SELECT COUNT(*) AS totalTopic FROM [Topic]";
+
+            try (PreparedStatement stm = connection.prepareStatement(sql)) {
+                try (ResultSet rs = stm.executeQuery()) {
+                    if (rs.next()) {
+                        totalTopics = rs.getInt("totalTopic");
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return totalTopics;
+    }
+
 }
