@@ -65,7 +65,7 @@ public class CreateGroupByLecture extends BasedRequiredAuthenticationController 
         request.setAttribute("url", "create");
         request.setAttribute("listTopic", listTopic);
         ControllerDBContext db = new ControllerDBContext();
-        ArrayList<Group> listGroup = db.getListGroupOwnedByLecture(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
+        ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
         request.setAttribute("listGroup", listGroup);
         request.getRequestDispatcher("/view/controllerGroup/GroupManagementForLecture.jsp").forward(request, response);
     }

@@ -1,5 +1,6 @@
 package controller.home;
 
+import dal.ControllerDBContext;
 import dal.GroupDBContext;
 import dal.RegisterDBContext;
 import dal.TopicDBContext;
@@ -15,18 +16,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class SearchController extends HttpServlet {
 
+    ControllerDBContext db = new ControllerDBContext();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String keyword = request.getParameter("query");
-        // Gọi hàm searchGroup từ GroupDBContext để tìm kiếm
-        GroupDBContext gb = new GroupDBContext();
-        ArrayList<Group> searchResults = gb.searchGroup(keyword);
-        TopicDBContext tb = new TopicDBContext();
-        ArrayList<Topic> searchTopic = tb.searchTopic(keyword);
-        RegisterDBContext rb = new RegisterDBContext();
-        ArrayList<Register> searchRegister = rb.searchRegister(keyword);
         
+        ArrayList<Group> searchResults = db.searchGroup(keyword);
+        ArrayList<Topic> searchTopic = db.searchTopic(keyword);
+        ArrayList<Register> searchRegister = db.searchRegister(keyword);
 
         // Đặt kết quả tìm kiếm vào attribute của request để truyền cho JSP
         request.setAttribute("searchTopic", searchTopic);

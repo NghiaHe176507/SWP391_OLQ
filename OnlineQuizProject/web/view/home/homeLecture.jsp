@@ -99,7 +99,7 @@
                                 <h6 class="topic-info-subtitle mb-2">Topic: ${group.topic.topicName}</h6>
 
                                 <c:choose>
-                                    <c:when test="${group.groupInvite == null}">
+                                    <c:when test="${group.groupInviteCode == null}">
                                         <!-- Button khi chưa có Invite Code -->
                                         <button class="btn btn-primary mb-2" onclick="this.parentNode.submit();return false; showInput(${group.groupId})">Add Invite Code</button>
                                         <!-- Ô input và nút submit, ẩn ban đầu -->
@@ -110,7 +110,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <!-- Hiển thị Invite Code nếu đã có -->
-                                        <h6 class="topic-info-subtitle mb-2">Invite Code: ${group.groupInvite}</h6>
+                                        <h6 class="topic-info-subtitle mb-2">Invite Code: ${group.groupInviteCode}</h6>
                                     </c:otherwise>
                                 </c:choose>
 

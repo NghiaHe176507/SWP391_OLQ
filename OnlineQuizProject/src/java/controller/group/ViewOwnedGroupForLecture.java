@@ -33,7 +33,7 @@ public class ViewOwnedGroupForLecture extends BasedRequiredAuthenticationControl
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
     throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
-        ArrayList<Group> listGroup = db.getListGroupOwnedByLecture(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
+        ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
         request.setAttribute("listGroup", listGroup);
         request.getRequestDispatcher("/view/controllerGroup/GroupManagementForLecture.jsp").forward(request, response);
         }
