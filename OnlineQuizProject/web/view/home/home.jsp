@@ -39,8 +39,8 @@
                         </div>
 
                         <!-- Search container -->
-                        <form action="search" method="GET" class=" col-md-5">
-                            <div class="search-container">
+                        <form action="search" method="GET">       
+                            <div class="search-container col-md-6">
                                 <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
                                 <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
