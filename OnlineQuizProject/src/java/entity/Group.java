@@ -15,26 +15,26 @@ public class Group extends BaseEntity {
     private AccountInfo lectureInfo;
     private Topic topic;
     private Status status;
-    private String groupInvite;
+    private String groupInviteCode;
 
     public Group() {
     }
 
-    public Group(int classId, String className, AccountInfo lectureInfo, Topic topic, Status status, String groupInvite) {
+    public Group(int classId, String className, AccountInfo lectureInfo, Topic topic, Status status, String groupInviteCode) {
         this.groupId = classId;
         this.groupName = className;
         this.lectureInfo = lectureInfo;
         this.topic = topic;
         this.status = status;
-        this.groupInvite = groupInvite;
+        this.groupInviteCode = groupInviteCode;
     }
 
-    public String getGroupInvite() {
-        return groupInvite;
+    public String getGroupInviteCode() {
+        return groupInviteCode;
     }
 
-    public void setGroupInvite(String groupInvite) {
-        this.groupInvite = groupInvite;
+    public void setGroupInviteCode(String groupInvite) {
+        this.groupInviteCode = groupInvite;
     }
    
 

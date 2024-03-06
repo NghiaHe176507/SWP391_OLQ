@@ -18,31 +18,6 @@ import java.util.logging.Logger;
  */
 public class AccountDBContext extends DBContext<Account> {
 
-    public Account getAccount(String mail, String password) {
-        try {
-            String sql = "SELECT *"
-                    + "  FROM [Account]\n"
-                    + "  WHERE [mail] = ? AND [password] = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, mail);
-            stm.setString(2, password);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                Account account = new Account();
-                account.setAccountId(rs.getInt("account_id"));
-                account.setMail(rs.getString("mail"));
-                account.setPassword(rs.getString("password"));
-                account.setDisplayName(rs.getString("displayname"));
-                account.setAccountStatus(rs.getString("account_status"));
-                return account;
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
     @Override
     public Account getById(String Id) {
         try {
@@ -72,30 +47,28 @@ public class AccountDBContext extends DBContext<Account> {
         }
         return null;
     }
-    
-    public AccountInfo getAccountInfoByAccount_Id(int Id) {
-        AccountDBContext accountDb = new AccountDBContext();
+
+    public Account getAccount(String mail, String password) {
         try {
-            String sql = "SELECT [accountInfo_id]\n"
-                    + "      ,[fullname]\n"
-                    + "      ,[dob]\n"
-                    + "      ,[account_id]\n"
-                    + "  FROM [AccountInfo]\n"
-                    + "	WHERE [account_id] = ?";
+            String sql = "SELECT *"
+                    + "  FROM [Account]\n"
+                    + "  WHERE [mail] = ? AND [password] = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, Id);
+            stm.setString(1, mail);
+            stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                AccountInfo accountInfo = new AccountInfo();
-                accountInfo.setAccountInfoId(rs.getInt("accountInfo_id"));
-                accountInfo.setFullName(rs.getString("fullname"));
-                accountInfo.setDob(rs.getDate("dob"));
-                accountInfo.setAccount(accountDb.getById(String.valueOf(rs.getInt("account_id"))));
-                return accountInfo;
+                Account account = new Account();
+                account.setAccountId(rs.getInt("account_id"));
+                account.setMail(rs.getString("mail"));
+                account.setPassword(rs.getString("password"));
+                account.setDisplayName(rs.getString("displayname"));
+                account.setAccountStatus(rs.getString("account_status"));
+                return account;
             }
-            
+
         } catch (SQLException ex) {
-            Logger.getLogger(AccountInfoDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

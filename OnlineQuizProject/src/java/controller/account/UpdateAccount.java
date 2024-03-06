@@ -65,8 +65,7 @@ public class UpdateAccount extends HttpServlet {
 
         ArrayList<Role> listRole = db.getListRole();
         request.setAttribute("listRole", listRole);
-        StatusDBContext sb = new StatusDBContext();
-        Status listStatus = sb.getByAccountId(accountId);
+        Status listStatus = db.getByAccountId(accountId);
         request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
         request.setAttribute("infoAbountAccountNeedToUpdate", infoAbountAccountNeedToUpdate);
         request.setAttribute("listStatus", listStatus);

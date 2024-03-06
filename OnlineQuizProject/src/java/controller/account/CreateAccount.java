@@ -26,7 +26,6 @@ import java.sql.Date;
  * @author PC
  */
 public class CreateAccount extends HttpServlet {
-
     RoleDBContext roleDB = new RoleDBContext();
     ControllerDBContext db = new ControllerDBContext();
 
@@ -58,8 +57,7 @@ public class CreateAccount extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<Role> listRole = db.getListRole();
         request.setAttribute("listRole", listRole);
-        StatusDBContext sb = new StatusDBContext();
-        ArrayList<Status> listStatus = sb.getAllStatus();
+        ArrayList<Status> listStatus = db.getAllStatus();
         request.setAttribute("listStatus", listStatus); 
         request.getRequestDispatcher("/view/ControlAccount/CreateAccount.jsp").forward(request, response);
     }
