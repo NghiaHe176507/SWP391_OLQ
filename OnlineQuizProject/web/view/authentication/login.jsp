@@ -18,7 +18,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">    </head>
     <body>
         <div class="logo" style="margin-top: 5% ">    
-            <a style="font-size: 55px; font-family: 'Poppins', cursive; text-decoration: none; color: black" href="home">Home</a>
+            <a style="font-size: 55px; font-family: 'Poppins', cursive; text-decoration: none; color: black" href="${pageContext.request.contextPath}/default">Home</a>
         </div>
         <div class="container">
             <form action="login" method="post">
@@ -42,9 +42,9 @@
         <div class="bottom-container">
             <div class="row">
                 <div class="col">
-                    <form action="signup" method="post"  >
-                        <input type="submit" value="Sign Up" style="background-color: #ffffff; color: #000">
-                    </form>
+                    <a href="${pageContext.request.contextPath}/register"  style="background-color: #ffffff; color: #000; text-decoration: none">
+                         Sign Up
+                    </a>
 
                 </div>
             </div>
