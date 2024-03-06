@@ -29,12 +29,13 @@ public class HomeWelcome extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(!hasSession(request)){
-            
+        if (request.getSession().getAttribute("user") == null) {
+
             request.getRequestDispatcher("view/home/home.jsp").forward(request, response);
-        }
+        } else {
             response.sendRedirect(request.getContextPath() + "/home");
-       
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,18 +67,4 @@ public class HomeWelcome extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
-    private boolean hasSession(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        return session != null ;
-    }
 }
