@@ -4,7 +4,6 @@
  */
 package dal;
 
-import entity.AccountInfo;
 import entity.RoleFeature;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

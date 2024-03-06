@@ -39,10 +39,12 @@
                         </div>
 
                         <!-- Search container -->
-                        <div class="search-container col-md-6">
-                            <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
-                            <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </div>
+                        <form action="search" method="GET" class=" col-md-5">
+                            <div class="search-container">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
+                                <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
 
                         <!-- Login section -->
                         <div class="login column-gap-md-2">
