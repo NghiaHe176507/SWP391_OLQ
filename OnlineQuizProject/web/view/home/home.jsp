@@ -13,7 +13,7 @@
         <meta charset="UTF-8">
         <title>QuizWiz</title>
         <!-- Favicon -->
-        <link rel="icon" href="../image/iconlogo.PNG" type="image/x-icon" />
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <!-- Stylesheets -->
         <link rel="stylesheet" href="css/home.css">
         <!-- Link to your javascripts -->
@@ -35,12 +35,12 @@
                     <div class="header">
                         <!-- Logo -->
                         <div class="logo col-md-2">
-                            <a href="#">QUIZWIZ</a>
+                            <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                         </div>
 
                         <!-- Search container -->
-                        <form action="search" method="GET" class=" col-md-5">
-                            <div class="search-container">
+                        <form action="search" method="GET">       
+                            <div class="search-container col-md-6">
                                 <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
                                 <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
@@ -49,8 +49,8 @@
                         <!-- Login section -->
                         <div class="login column-gap-md-2">
                             <ul id="nav">
-                                <li><a href="#">Sign In</a></li>
-                                <li><a href="#">Sign Up</a></li>
+                                <li><a href="<%= request.getContextPath() %>/login">Sign In</a></li>
+                                <li><a href="<%= request.getContextPath() %>/register">Sign Up</a></li>
                             </ul>
                         </div>
                     </div>
@@ -116,6 +116,19 @@
             <!-- End of footer section -->
 
             <!-- End of main container div -->
+            /* 
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Get the logo element
+                    var logo = document.querySelector('.logo a');
+
+                    // Add click event listener to the logo
+                    logo.addEventListener('click', function () {
+                        // Reload the page
+                        location.reload();
+                    });
+                });
+            </script>
         </form>
     </body>
 

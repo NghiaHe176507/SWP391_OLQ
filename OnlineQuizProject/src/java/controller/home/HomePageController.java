@@ -18,7 +18,9 @@ import java.util.ArrayList;
  * @author nghia
  */
 public class HomePageController extends BasedRequiredAuthenticationController {
+
     ControllerDBContext db = new ControllerDBContext();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,14 +33,15 @@ public class HomePageController extends BasedRequiredAuthenticationController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
-        
+        ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
+        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
+        ArrayList<Role> listRole = db.getListRole();
+        ArrayList<Status> listStatus = db.getListStatus();
+        ArrayList<Topic> listTopic = db.getListTopic();
+        ArrayList<Group> listAllGroup = db.getListGroup();
+
         switch (db.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId()) {
             case 1:
-
-                ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
-                ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
-                ArrayList<Role> listRole = db.getListRole();
-                ArrayList<Status> listStatus = db.getListStatus();
 
 //                String keyword = request.getParameter("query");
 //                ArrayList<AccountInfo> searchAccount = acountInfo.searchAccount(keyword);
@@ -94,10 +97,11 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 int totalLectures = db.getTotalLectures();
                 int totalGroupsOnline = db.getTotalGroupsOnline();
 
+                request.setAttribute("listTopic", listTopic);
+                request.setAttribute("listGroup", listAllGroup);
                 request.setAttribute("totalGroupsOnline", totalGroupsOnline);
                 request.setAttribute("totalLectures", totalLectures);
                 request.setAttribute("totalStudents", totalStudents);
-// Set the paginated list to request attribute
                 request.setAttribute("paginatedList", paginatedList);
                 request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
                 request.setAttribute("listAccountWithInfo", listAccount);
@@ -109,35 +113,20 @@ public class HomePageController extends BasedRequiredAuthenticationController {
 
                 int lecturerId = LoggedUser.getAccountId();
                 AccountInfo accountInfo = db.getAccountInfoByAccountId(lecturerId);
-                ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(accountInfo.getAccountInfoId());
+                ArrayList<Group> listGroupOwned = db.getListGroupOwnedByLectureId(accountInfo.getAccountInfoId());
 
-                request.setAttribute("listGroup", listGroup);
+                request.setAttribute("listGroup", listGroupOwned);
                 request.getRequestDispatcher("view/home/homeLecture.jsp").forward(request, response);
                 break;
             case 3:
                 String keywords = request.getParameter("searchQuery");
-
-                // Gọi hàm searchGroup từ GroupDBContext để tìm kiếm
-//                GroupDBContext gb = new GroupDBContext();
                 ArrayList<Group> searchResults = db.searchGroup(keywords);
-
-                // Đặt kết quả tìm kiếm vào attribute của request để truyền cho JSP
                 request.setAttribute("searchResults", searchResults);
-
-                // Chuyển hướng đến trang JSP để hiển thị kết quả
-//                response.sendRedirect("result.jsp");
-                ArrayList<Topic> listTopic = db.getListTopic();
                 request.setAttribute("listTopic", listTopic);
-
                 int studentId = LoggedUser.getAccountId();
                 ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
                 listRegister.size();
                 request.setAttribute("listRegister", listRegister);
-//
-//                AccountInfoDBContext abi = new AccountInfoDBContext();
-//                int accountId = abi.getAccountInfoIdByAccountId(studentId);
-//                ArrayList<Group> groups = gdb.getGroupByLectureId(accountId);
-//                request.setAttribute("groups", groups);
 
                 request.getRequestDispatcher("view/home/homeStudent.jsp").forward(request, response);
                 break;
