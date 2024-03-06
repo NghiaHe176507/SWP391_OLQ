@@ -43,7 +43,7 @@ public class GroupDBContext extends DBContext<Group> {
                 newClass.setLectureInfo(accountInfoDB.getById(String.valueOf(rs.getInt("lecture_id"))));
                 newClass.setTopic(topicDB.getById(String.valueOf(rs.getInt("topic_id"))));
                 newClass.setStatus(statusDB.getById(String.valueOf(rs.getInt("status_id"))));
-                newClass.setGroupInvite(rs.getString("group_invite_code"));
+                newClass.setGroupInviteCode(rs.getString("group_invite_code"));
                 return newClass;
             }
 
