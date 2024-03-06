@@ -262,7 +262,7 @@
                                         <h5 class="card-title">Group</h5>
                                         <p>Number of classes currently available</p>
                                         <div class="card-item row">
-                                            <h7 class="col-md-5">${requestScope.totalGroups} groups <i class="fa-solid fa-users"></i></i></h7>
+                                            <h7 class="col-md-5">${requestScope.listGroup.size()} groups <i class="fa-solid fa-users"></i></i></h7>
                                             <h7 class="col-md-5">${requestScope.totalGroupsOnline} is active <i class="fa-regular fa-circle-check"></i></h7>
                                         </div>
                                     </div>
@@ -275,7 +275,7 @@
                                         <h5 class="card-title">Topic</h5>
                                         <p>Current subject number information is provided</p>
                                         <div class="card-item row">
-                                            <h7 class="col-md-5">${requestScope.totalTopics} topics <i class="fa-solid fa-book-open"></i></h7>
+                                            <h7 class="col-md-5">${requestScope.listTopic.size()} topics <i class="fa-solid fa-book-open"></i></h7>
                                             <!--<h7 class="col-md-5">95 người online <i class="fa-solid fa-circle-user"></i></h7>--> 
                                         </div>
                                     </div>
