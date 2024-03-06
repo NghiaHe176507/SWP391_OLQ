@@ -20,6 +20,19 @@ html {
     font-family: "Poppins", sans-serif;
     scroll-behavior: smooth;
 }
+.container {
+    min-height: 100%;
+    position: relative;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
 
 /* Common Styles */
 .header {
@@ -255,13 +268,14 @@ html {
 
 /* Footer Section Styles */
 #footer {
-    position: fixed;
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
     background: linear-gradient(135deg, #4397ce, #9a3cbf);
     color: white;
     text-align: center;
+    transition: transform 0.5s ease-in-out;
     padding: 5px;
 }
 
@@ -349,3 +363,4 @@ html {
     text-decoration: none;
     color: #007BFF;
 }
+
