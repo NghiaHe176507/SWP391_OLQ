@@ -11,198 +11,183 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-family: "Poppins", sans-serif;
-    scroll-behavior: smooth;
-}
-.container {
-    min-height: 100%;
-    position: relative;
-}
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.container {
-    flex: 1;
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
 }
 
 /* Common Styles */
 .header {
-    background-color: #000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  background-color: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 /* Logo Styles */
 .logo {
-    text-align: justify;
+  text-align: justify;
 }
 
 .logo a {
-    text-decoration: none;
-    font-family: "Poppins", sans-serif;
-    font-weight: bold;
-    font-size: 36px;
-    background: linear-gradient(135deg, #9a3cbf, #4397ce);
-    -webkit-background-clip: text;
-    color: transparent;
-    transition: transform 0.2s ease-in-out;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+  font-size: 36px;
+  background: linear-gradient(135deg, #9a3cbf, #4397ce);
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: transform 0.2s ease-in-out;
 }
 
 .logo:active {
-    transform: scale(0.9);
+  transform: scale(0.9);
 }
 
 /* Search Container Styles */
 .search-container {
-    display: flex;
-    width: 80%;
+  display: flex;
+  width: 80%;
 }
 
 /* Search Input Styles */
 #searchInput {
-    flex-grow: 1;
-    padding: 10px;
-    border: 2px solid #fff;
-    border-radius: 5px 0 0 5px;
-    outline: none;
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid #fff;
+  border-radius: 5px 0 0 5px;
+  outline: none;
 }
 
 /* Search Button Styles */
 #searchButton {
-    padding: 15px;
-    background: linear-gradient(135deg, #9a3cbf, #4397ce);
-    color: #fff;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    transition: background 0.3s ease;
+  padding: 15px;
+  background: linear-gradient(135deg, #9a3cbf, #4397ce);
+  color: #fff;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 #searchButton:hover {
-    background: linear-gradient(135deg, #4397ce, #9a3cbf);
-    transform: scale(1.05);
+  background: linear-gradient(135deg, #4397ce, #9a3cbf);
+  transform: scale(1.05);
 }
 
 #searchButton:active {
-    transform: scale(0.95);
+  transform: scale(0.95);
 }
 
 /* Navigation menu styles */
 #nav {
-    margin-top: 15px;
-    margin-right: 15px;
-    list-style-type: none;
-    background: linear-gradient(135deg, #4397ce, #9a3cbf);
-    color: #fff;
-    border-radius: 5px;
-    padding: 0;
+  margin-top: 15px;
+  margin-right: 15px;
+  list-style-type: none;
+  background: linear-gradient(135deg, #4397ce, #9a3cbf);
+  color: #fff;
+  border-radius: 5px;
+  padding: 0;
 
 }
 
 #nav li {
-    transition: background 0.3s ease, transform 0.2s ease; /* Hiệu ứng chuyển động */
+  transition: background 0.3s ease, transform 0.2s ease; /* Hiệu ứng chuyển động */
 }
 
 #nav li:hover {
-    transform: scale(1.05); /* Phóng to khi hover */
-    border: 1px solid #000; /* Border khi hover */
+  transform: scale(1.05); /* Phóng to khi hover */
+  border: 1px solid #000; /* Border khi hover */
 }
 
 #nav > li {
-    display: inline-block;
-    position: relative;
-    border: 1px solid transparent;
-    transition: border 0.3s ease;
+  display: inline-block;
+  position: relative;
+  border: 1px solid transparent;
+  transition: border 0.3s ease;
 }
 
 
 #nav li:hover .subnav {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    border: 0.5px solid #000; /* Border khi hover */
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border: 0.5px solid #000; /* Border khi hover */
 
 }
 
 #nav > li > a {
-    text-decoration: none;
-    font-family: "Poppins", sans-serif;
-    font-size: 24px;
-    display: block;
-    color: #fff;
-    padding: 0px 24px;
-    line-height: 46px;
-    text-align: center; /* Canh giữa nội dung theo chiều ngang */
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  display: block;
+  color: #fff;
+  padding: 0px 24px;
+  line-height: 46px;
+  text-align: center; /* Canh giữa nội dung theo chiều ngang */
 }
 
 #nav li a {
-    text-decoration: none;
-    border: 1px solid transparent;
-    transition: border 0.3s ease;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: border 0.3s ease;
 }
 
 #nav > li:hover > a {
-    text-decoration: none;
-    font-family: "Poppins", sans-serif;
-    font-size: 24px;
-    font-weight: bold;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 #nav li:hover {
-    background: linear-gradient(135deg, #4397ce, #9a3cbf);
-    border-radius: 5px;
+  background: linear-gradient(135deg, #4397ce, #9a3cbf);
+  border-radius: 5px;
 }
 
 /* Footer Section Styles */
 #footer {
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(135deg, #4397ce, #9a3cbf);
-    color: white;
-    text-align: center;
-    transition: transform 0.5s ease-in-out;
-    padding: 5px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #4397ce, #9a3cbf);
+  color: white;
+  text-align: center;
+  padding: 5px;
 }
 
 .slogan {
-    margin: 0;
-    font-size: 16px;
+  margin: 0;
+  font-size: 16px;
 }
 
 /* ... (Continued) ... */
 
 /* Space Styles */
 .space {
-    padding: 39px;
+  padding: 39px;
 }
 
 /* Slider Section Styles */
 #carouselExampleIndicators {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
 }
 
 /* Custom styles for carousel images */
 #carouselExampleIndicators img {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
 }

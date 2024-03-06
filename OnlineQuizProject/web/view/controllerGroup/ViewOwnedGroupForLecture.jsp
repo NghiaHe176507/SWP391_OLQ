@@ -1,6 +1,6 @@
 <%-- 
-    Document   : viewListGroup
-    Created on : Feb 19, 2024, 12:32:14 AM
+    Document   : ViewOwnedGroupForLecture
+    Created on : Feb 25, 2024, 4:22:57 PM
     Author     : PC
 --%>
 
@@ -16,7 +16,7 @@
             {
                 var conf = confirm("are you sure?");
                 if (conf) {
-                    window.location.href = 'DeleteGroupByAdmin?groupId=' + id;
+                    window.location.href = 'DeleteGroupByLecture?groupId=' + id;
                 }
             }
         </script>
@@ -24,18 +24,14 @@
     <body>
         <table border="1px">
             <tr>
-                <td>Group Id</td>
                 <td>Group Name</td>
-                <td>Lecture Name</td>
                 <td>Topic Name</td>
                 <td>Status</td>
                 <td>Action</td>
             </tr>
             <c:forEach items="${requestScope.listGroup}" var="group">
                 <tr>
-                    <td>${group.groupId}</td>
                     <td>${group.groupName}</td>
-                    <td>${group.lectureInfo.fullName}</td>
                     <td>${group.topic.topicName}</td>
                     <td>${group.status.statusName}</td>
                     <td>

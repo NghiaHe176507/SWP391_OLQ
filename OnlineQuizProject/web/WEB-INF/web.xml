@@ -77,8 +77,24 @@
         <servlet-class>controller.group.ViewOwnedGroupForLecture</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>GroupInviteController</servlet-name>
-        <servlet-class>controller.group.GroupInviteController</servlet-class>
+        <servlet-name>ViewAnswerQuestionController</servlet-name>
+        <servlet-class>controller.test.ViewAnswerQuestionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewResultTestStudent</servlet-name>
+        <servlet-class>controller.test.ViewResultTestStudent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchStudentByname</servlet-name>
+        <servlet-class>controller.test.SearchStudentByname</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewResultExamOfStudent</servlet-name>
+        <servlet-class>controller.test.ViewResultExamOfStudent</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>controller.authentication.LogoutController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
@@ -107,6 +123,14 @@
     <servlet-mapping>
         <servlet-name>UpdateAccountByStudent</servlet-name>
         <url-pattern>/updateaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateGroupByLecture</servlet-name>
+        <url-pattern>/CreateGroup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteGroupByLecture</servlet-name>
+        <url-pattern>/DeleteGroupByLecture</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewListAccount</servlet-name>
@@ -145,20 +169,28 @@
         <url-pattern>/admin/topic-management/create-topic</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ViewAnswerQuestionController</servlet-name>
+        <url-pattern>/show-result</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewResultTestStudent</servlet-name>
+        <url-pattern>/view-list-exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchStudentByname</servlet-name>
+        <url-pattern>/search-student</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewResultExamOfStudent</servlet-name>
+        <url-pattern>/view-total</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewOwnedGroupForLecture</servlet-name>
         <url-pattern>/group-management</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteGroupByLecture</servlet-name>
-        <url-pattern>/group-management/delete-group</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateGroupByLecture</servlet-name>
-        <url-pattern>/group-management/create-group</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>GroupInviteController</servlet-name>
-        <url-pattern>/joingroup</url-pattern>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>default</welcome-file>
