@@ -42,6 +42,8 @@ public class UserDetail extends HttpServlet {
                 request.setAttribute("mail", account.getMail());
                 request.setAttribute("fullname", accountInfo.getFullName());
                 request.setAttribute("dob", accountInfo.getDob());
+                request.setAttribute("account_id", account.getAccountId());
+                request.setAttribute("account_status",account.getAccountStatus());
 
                 request.getRequestDispatcher("view/userdetails/UserDetail.jsp").forward(request, response);
             } else {
