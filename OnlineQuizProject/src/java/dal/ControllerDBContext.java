@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -624,16 +625,14 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                                            ([group_name]
                                            ,[lecture_id]
                                            ,[topic_id]
-                                           ,[status_id]
-                                           ,[group_invite_code])
+                                           ,[status_id])
                                      VALUES
-                                           (?,?,?,?,?)""";
+                                           (?,?,?,?)""";
             PreparedStatement stm = connection.prepareStatement(sql_insert);
             stm.setString(1, newGroup.getGroupName());
             stm.setInt(2, newGroup.getLectureInfo().getAccountInfoId());
             stm.setInt(3, newGroup.getTopic().getTopicId());
             stm.setInt(4, newGroup.getStatus().getStatusId());
-            stm.setString(5, newGroup.getGroupName());
             stm.executeUpdate();
 
             String sql_getid = "SELECT @@IDENTITY as [group_id]";
@@ -679,7 +678,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
         return listStatus;
     }
-
 
     public ArrayList<AccountInfo> getListAccountLimit(int idPage) {
         ArrayList<AccountInfo> accountList = new ArrayList<>();
@@ -765,7 +763,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return accountInfos;
     }
 
-
     public ArrayList<Group> searchGroup(String keyword) {
         ArrayList<Group> groups = new ArrayList<>();
 
@@ -834,8 +831,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 //            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
-
     public int getTotalGroupsOnline() {
         int totalGroupsOnline = 0;
 
@@ -855,7 +850,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 
         return totalGroupsOnline;
     }
-
 
     public ArrayList<Topic> searchTopic(String keyword) {
         ArrayList<Topic> topics = new ArrayList<>();
@@ -878,8 +872,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return topics;
     }
 
- 
-
     public ArrayList<Register> getRegisterByStudentId(int studentId) {
         ArrayList<Register> registers = new ArrayList<>();
         try {
@@ -901,10 +893,10 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                 register.setStudentInfo(accountInfoDB.getById(String.valueOf(studentInfoId)));
                 // Lấy thông tin của Class từ GroupDBContext
                 int classId = rs.getInt("group_id");
-                register.setClassRegister(groupDB.getById(String.valueOf(classId)));
+                register.setGroup(groupDB.getById(String.valueOf(classId)));
                 // Lấy thông tin của Topic từ TopicDBContext
                 int topicId = rs.getInt("topic_id");
-                register.getClassRegister().setTopic(topicDB.getById(String.valueOf(topicId)));
+                register.getGroup().setTopic(topicDB.getById(String.valueOf(topicId)));
                 registers.add(register);
             }
         } catch (SQLException ex) {
@@ -936,10 +928,10 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                     register.setStudentInfo(accountInfoDB.getById(String.valueOf(studentInfoId)));
                     // Lấy thông tin của Class từ GroupDBContext
                     int classId = rs.getInt("group_id");
-                    register.setClassRegister(groupDB.getById(String.valueOf(classId)));
+                    register.setGroup(groupDB.getById(String.valueOf(classId)));
                     // Lấy thông tin của Topic từ TopicDBContext
                     int topicId = rs.getInt("topic_id");
-                    register.getClassRegister().setTopic(topicDB.getById(String.valueOf(topicId)));
+                    register.getGroup().setTopic(topicDB.getById(String.valueOf(topicId)));
                     registers.add(register);
                 }
             }
@@ -977,7 +969,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return totalStudents;
     }
 
-     public int getTotalLectures() {
+    public int getTotalLectures() {
         int totalLectures = 0;
         RoleDBContext roleDB = new RoleDBContext();
         AccountDBContext accountDb = new AccountDBContext();
@@ -1000,4 +992,104 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return totalLectures;
     }
 
+    public void updateGroupInviteCode(Group groupNeedToUpdate) {
+        try {
+            String sql_update = """
+                                UPDATE [dbo].[Group]
+                                   SET [group_invite_code] = ?
+                                 WHERE [group_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql_update);
+            stm.setString(1, groupNeedToUpdate.getGroupInviteCode());
+            stm.setInt(2, groupNeedToUpdate.getGroupId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String generateRandomString(int length) {
+        Random RANDOM = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            char randomChar;
+            if (RANDOM.nextBoolean()) {
+                randomChar = (char) (RANDOM.nextInt(26) + 'A');
+            } else {
+                randomChar = (char) (RANDOM.nextInt(10) + '0');
+            }
+            sb.append(randomChar);
+        }
+        return sb.toString();
+    }
+
+    public boolean checkContainGroupInviteCode(String inviteCode) {
+        ArrayList<String> listInviteCode = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT[group_invite_code]
+                           FROM [Group]""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                listInviteCode.add(rs.getString("group_invite_code"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listInviteCode.contains(inviteCode);
+    }
+
+    public Group getGroupByInviteCode(String inviteCode) {
+        ArrayList<Group> listGroup = getListGroup();
+        for (Group group : listGroup) {
+            if (group.getGroupInviteCode().equals(inviteCode)) {
+                return group;
+            }
+        }
+        return null;
+    }
+
+    public void createNewRegister(Register newRegister) {
+        try {
+            connection.setAutoCommit(false);
+
+            String sql_insert = """
+                                INSERT INTO [Register]
+                                           ([register_date]
+                                           ,[student_id]
+                                           ,[group_id])
+                                     VALUES
+                                           (?
+                                           ,?
+                                           ,?)""";
+            PreparedStatement stm = connection.prepareStatement(sql_insert);
+            stm.setDate(1, newRegister.getRegisterDate());
+            stm.setInt(2, newRegister.getStudentInfo().getAccountInfoId());
+            stm.setInt(3, newRegister.getGroup().getGroupId());
+            stm.executeUpdate();
+
+            String sql_getid = "SELECT @@IDENTITY as [register_id]";
+            PreparedStatement stm2 = connection.prepareStatement(sql_getid);
+            ResultSet rs = stm2.executeQuery();
+            if (rs.next()) {
+                newRegister.setRegisterId(rs.getInt("register_id"));
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }

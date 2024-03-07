@@ -36,7 +36,7 @@
         <servlet-name>HomeLecture</servlet-name>
         <servlet-class>controller.home.HomeLecture</servlet-class>
     </servlet>
-      <servlet>
+    <servlet>
         <servlet-name>SearchController</servlet-name>
         <servlet-class>controller.home.SearchController</servlet-class>
     </servlet>
@@ -104,11 +104,23 @@
         <servlet-name>HomeWelcome</servlet-name>
         <servlet-class>controller.home.HomeWelcome</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateGroupInviteCode</servlet-name>
+        <servlet-class>controller.group.CreateGroupInviteCode</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteGroupInviteCode</servlet-name>
+        <servlet-class>controller.group.DeleteGroupInviteCode</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JoinGroupForStudent</servlet-name>
+        <servlet-class>controller.group.JoinGroupForStudent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SearchController</servlet-name>
         <url-pattern>/search</url-pattern>
     </servlet-mapping>
@@ -135,14 +147,6 @@
     <servlet-mapping>
         <servlet-name>UpdateAccountByStudent</servlet-name>
         <url-pattern>/updateaccount</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateGroupByLecture</servlet-name>
-        <url-pattern>/CreateGroup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeleteGroupByLecture</servlet-name>
-        <url-pattern>/DeleteGroupByLecture</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewListAccount</servlet-name>
@@ -207,6 +211,26 @@
     <servlet-mapping>
         <servlet-name>HomeWelcome</servlet-name>
         <url-pattern>/default</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateGroupInviteCode</servlet-name>
+        <url-pattern>/group-management/create-invite-code</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteGroupByLecture</servlet-name>
+        <url-pattern>/group-management/delete-group</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateGroupByLecture</servlet-name>
+        <url-pattern>/group-management/create-group</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteGroupInviteCode</servlet-name>
+        <url-pattern>/group-management/delete-invite-code</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JoinGroupForStudent</servlet-name>
+        <url-pattern>/join-group</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>default</welcome-file>
