@@ -22,15 +22,17 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="js/homeStudent.js"></script>
         <style>
             .create {
                 text-align: center;
             }
 
-            .create a {
+
+            #joinGroupButton {
                 text-decoration: none;
                 font-family: "Poppins", sans-serif;
                 font-weight: bold;
@@ -42,12 +44,44 @@
                 transition: background 0.3s ease, transform 0.2s ease-in-out;
             }
 
-            .create a:hover {
+            #joinGroupButton:hover {
                 background: linear-gradient(135deg, #4397ce, #9a3cbf);
                 transform: scale(1.05);
             }
 
-            .create a:active {
+            #joinGroupButton:active {
+                transform: scale(0.95);
+            }
+            /* CSS */
+
+            .code {
+                margin-top: 20px;
+                display: inline block;
+                text-align: center;
+                width: 100%;
+            }
+
+            #groupNameInput{
+                width: 80%;
+                padding: 20px;
+            }
+
+            #joinGroupButton {
+                padding: 11px;
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+            #joinGroupButton:hover {
+                background: linear-gradient(135deg, #4397ce, #9a3cbf);
+                transform: scale(1.05);
+            }
+
+            #joinGroupButton  :active {
                 transform: scale(0.95);
             }
         </style>
@@ -67,7 +101,11 @@
 
 
                     <div class="create col-md-1">
-                        <a href="#" id="joinGroupBtn"><i class="fa-solid fa-plus"></i> Join group</a>
+                        <button type="button" class="btn btn-primary" id="joinGroupButton" data-toggle="modal" data-target="#exampleModal"
+                                data-whatever="@mdo">Join group</button>
+
+
+
                     </div>
 
                     <!-- Search container -->
@@ -131,6 +169,33 @@
 
         </div>
         <!-- End of header section -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Join group by code</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div> 
+                    <form>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Code:</label>
+                                <input type="text" class="form-control" id="codegroup" placeholder="Enter code here........">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="joinButton">Join <i class="fa-solid fa-right-to-bracket"></i> </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
 
         <div>
 
@@ -172,23 +237,17 @@
         </script>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-// Lấy nút "Join group" và ô input
-            var joinGroupBtn = document.getElementById("joinGroupBtn");
-                    var joinGroupInput = document.getElementById("joinGroupInput");
-// Thêm sự kiện click vào nút "Join group"
-                    joinGroupBtn.addEventListener("click", function (event) {
-                    event.preventDefault(); // Ngăn chặn hành động mặc định của nút "Join group"
-
-                            // Hiển thị ô input khi click vào nút "Join group"
-                            joinGroupInput.style.display = "inline-block";
-                    });
-                    // Sau khi xử lý xong, có thể ẩn ô input đi
-            });
-            }
-            );
-
+            $('#exampleModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('whatever') // Extract info from data-* attributes
+                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                // modal.find('.modal-title').text('New message to ' + recipient)
+//                 modal.find('.modal-body input').val(recipient)
+            })
         </script>
+
     </body>
 
 </html>
