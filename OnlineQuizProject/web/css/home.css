@@ -22,7 +22,6 @@ html {
 }
 .container {
     min-height: 100%;
-    position: relative;
 }
 body {
     display: flex;
@@ -170,7 +169,7 @@ body {
 
 /* Footer Section Styles */
 #footer {
-    position: relative;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
