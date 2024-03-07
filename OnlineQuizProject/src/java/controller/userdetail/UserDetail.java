@@ -5,6 +5,10 @@
 
 package controller.userdetail;
 
+import dal.AccountDetailDBContext;
+import dal.AccountInfoDBContext;
+import entity.Account;
+import entity.AccountInfo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -27,7 +31,24 @@ public class UserDetail extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-      
+      Account account = (Account) request.getSession().getAttribute("account");
+        
+        if (account != null) {
+            AccountDetailDBContext accountInfoDB = new AccountDetailDBContext();
+            AccountInfo accountInfo = accountInfoDB.getAccountInfoByAccount_Id(account.getAccountId());
+
+            if (accountInfo != null) {
+                request.setAttribute("displayname", account.getDisplayName());
+                request.setAttribute("mail", account.getMail());
+                request.setAttribute("fullname", accountInfo.getFullName());
+                request.setAttribute("dob", accountInfo.getDob());
+
+                request.getRequestDispatcher("view/userdetails/UserDetail.jsp").forward(request, response);
+            } else {
+                response.getWriter().println("AccountInfo not found for the user");
+            }
+        } else {
+            response.getWriter().println("User not logged in");
         }
     } 
 
