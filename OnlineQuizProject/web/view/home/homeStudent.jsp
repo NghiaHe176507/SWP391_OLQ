@@ -111,9 +111,9 @@
                     <div class="col-md-4 mb-3">
                         <div class="topic-info" style="width: 18rem;">
                             <div class="topic-info-body">
-                                <h4 class="topic-info-title">Class Name: ${register.classRegister.groupName}</h4>
-                                <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.classRegister.topic.topicName}</h6>
-                                <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.classRegister.lectureInfo.fullName}</h6>
+                                <h4 class="topic-info-title">Class Name: ${register.group.groupName}</h4>
+                                <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.group.topic.topicName}</h6>
+                                <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.group.lectureInfo.fullName}</h6>
                                 <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
                                 <a href="#" class="topic-info-link">More Details</a>
                             </div>

@@ -7,36 +7,37 @@ package controller.group;
 
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
+import dal.GroupDBContext;
 import entity.Account;
 import entity.Group;
+import entity.Register;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
  * @author PC
  */
-public class ViewOwnedGroupForLecture extends BasedRequiredAuthenticationController {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class UnenrollGroupForStudent extends BasedRequiredAuthenticationController {
+
+    ControllerDBContext db = new ControllerDBContext();
+    GroupDBContext GroupDB = new GroupDBContext();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
-    throws ServletException, IOException {
-        ControllerDBContext db = new ControllerDBContext();
-        ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
-        request.setAttribute("listGroup", listGroup);
-        request.getRequestDispatcher("view/controllerGroup/GroupManagementForLecture.jsp").forward(request, response);
-        }
+            throws ServletException, IOException {
+            Register newRegister = new Register();
+            Group groupNeedToJoin = GroupDB.getById(request.getParameter("groupId"));
+            
+            newRegister.setGroup(groupNeedToJoin);
+            newRegister.setStudentInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
+            db.unEnrollForStudent(newRegister);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
@@ -47,5 +48,5 @@ public class ViewOwnedGroupForLecture extends BasedRequiredAuthenticationControl
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
     }
-     
+
 }
