@@ -39,7 +39,7 @@ public class RegisterDBContext extends DBContext<Register> {
                 register.setRegisterId(rs.getInt("register_id"));
                 register.setRegisterDate(rs.getDate("register_date"));
                 register.setStudentInfo(accountInfoDB.getById(String.valueOf(rs.getInt("student_id"))));
-                register.setClassRegister(groupDB.getById(String.valueOf(rs.getInt("group_id"))));
+                register.setGroup(groupDB.getById(String.valueOf(rs.getInt("group_id"))));
                 return register;
             }
 

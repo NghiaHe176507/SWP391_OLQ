@@ -894,10 +894,10 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                 register.setStudentInfo(accountInfoDB.getById(String.valueOf(studentInfoId)));
                 // Lấy thông tin của Class từ GroupDBContext
                 int classId = rs.getInt("group_id");
-                register.setClassRegister(groupDB.getById(String.valueOf(classId)));
+                register.setGroup(groupDB.getById(String.valueOf(classId)));
                 // Lấy thông tin của Topic từ TopicDBContext
                 int topicId = rs.getInt("topic_id");
-                register.getClassRegister().setTopic(topicDB.getById(String.valueOf(topicId)));
+                register.getGroup().setTopic(topicDB.getById(String.valueOf(topicId)));
                 registers.add(register);
             }
         } catch (SQLException ex) {
@@ -929,10 +929,10 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                     register.setStudentInfo(accountInfoDB.getById(String.valueOf(studentInfoId)));
                     // Lấy thông tin của Class từ GroupDBContext
                     int classId = rs.getInt("group_id");
-                    register.setClassRegister(groupDB.getById(String.valueOf(classId)));
+                    register.setGroup(groupDB.getById(String.valueOf(classId)));
                     // Lấy thông tin của Topic từ TopicDBContext
                     int topicId = rs.getInt("topic_id");
-                    register.getClassRegister().setTopic(topicDB.getById(String.valueOf(topicId)));
+                    register.getGroup().setTopic(topicDB.getById(String.valueOf(topicId)));
                     registers.add(register);
                 }
             }

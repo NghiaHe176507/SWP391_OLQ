@@ -149,9 +149,9 @@
                     <div class="col-md-4 mb-3">
                         <div class="topic-info" style="width: 18rem;">
                             <div class="topic-info-body">
-                                <h4 class="topic-info-title">Class Name: ${register.classRegister.groupName}</h4>
-                                <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.classRegister.topic.topicName}</h6>
-                                <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.classRegister.lectureInfo.fullName}</h6>
+                                <h4 class="topic-info-title">Class Name: ${register.group.groupName}</h4>
+                                <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.group.topic.topicName}</h6>
+                                <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.group.lectureInfo.fullName}</h6>
                                 <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
                                 <a href="#" class="topic-info-link">More Details</a>
                             </div>
@@ -179,12 +179,11 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div> 
-                    <form>
+                    <form action="join-group" method="GET">
                         <div class="modal-body">
-
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Code:</label>
-                                <input type="text" class="form-control" id="codegroup" placeholder="Enter code here........">
+                                <input name="inviteCode" type="text" class="form-control" id="codegroup" placeholder="Enter code here........">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -244,7 +243,7 @@
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
                 // modal.find('.modal-title').text('New message to ' + recipient)
-//                 modal.find('.modal-body input').val(recipient)
+    //                 modal.find('.modal-body input').val(recipient)
             })
         </script>
 
