@@ -84,6 +84,87 @@
             #joinGroupButton  :active {
                 transform: scale(0.95);
             }
+
+            .unenrollButton{
+                align-items: center;
+                display: block;
+                /*                background-color: red;
+                                border-radius: 10px;
+                                padding: 5px;
+                                color: white;
+                                text-decoration: none;
+                                font-family: "Poppins", sans-serif;
+                                font-weight: bold;
+                                font-size: 15px;
+                                transition: background 0.3s ease, transform 0.2s ease-in-out;
+                                margin: 10px 10px;*/
+            }
+
+            .btn-1 {
+                font-family: "Poppins", sans-serif;
+                font-weight: 100;
+                transition: all .25s;
+                border: 1px solid #000;
+                border-radius: 0;
+
+                svg {
+                    height: 39px;
+                    left: 0;
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+                }
+
+                rect {
+                    fill: none;
+                    stroke: #fff;
+                    stroke-width: 2;
+                    stroke-dasharray: 422, 0;
+                    transition-delay: none;
+                }
+            }
+
+            .btn-1:hover {
+                font-weight: 900;
+                letter-spacing: 2px;
+                rect {
+                    stroke-width: 5;
+                    stroke-dasharray: 15, 310;
+                    stroke-dashoffset: 48;
+                    transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+                }
+            }
+
+            .btn-1.color-red:hover {
+                color: red;
+                rect {
+                    stroke: red;
+                }
+            }
+
+            .btn-1.color-black:hover {
+                color: black;
+                rect {
+                    stroke: black;
+                }
+            }
+
+            .btn {
+                color: #000;
+                cursor: pointer;
+                display: block;
+                font-size:16px;
+                font-weight: 400;
+                line-height: 24px;
+                /*margin: 10px 10px;*/
+                /*margin: 0 0 2em;*/
+                /*max-width: 160px;*/
+                position: relative;
+                text-decoration: none;
+                text-transform: uppercase;
+                /*width: 100%;*/
+            }
+
         </style>
     </head>
 
@@ -153,7 +234,25 @@
                                 <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.group.topic.topicName}</h6>
                                 <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.group.lectureInfo.fullName}</h6>
                                 <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
-                                <a href="#" class="topic-info-link">More Details</a>
+                                <div class="row">
+                                    <div class="row" style="padding-left: 40px;margin-bottom: 5px;">
+                                        <a href="#" class="btn btn-1 color-black topic-info-link">
+                                            <svg>
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                            </svg>
+                                            More Details
+                                        </a>
+                                    </div>
+                                    <div class="row" style="padding-left: 40px;margin-bottom: 5px;">
+                                        <button class="unenrollButton btn btn-1 color-red">
+                                            <svg>
+                                            <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                            </svg>
+                                            Unenroll group <i class="fa-solid fa-ban"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -243,7 +342,7 @@
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
                 // modal.find('.modal-title').text('New message to ' + recipient)
-    //                 modal.find('.modal-body input').val(recipient)
+                //                 modal.find('.modal-body input').val(recipient)
             })
         </script>
 
