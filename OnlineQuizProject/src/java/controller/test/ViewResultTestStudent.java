@@ -4,13 +4,14 @@
  */
 package controller.test;
 
+import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import dal.TestDBContext;
+import entity.Account;
 import entity.Result;
 import entity.Topic;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ import java.util.ArrayList;
  *
  * @author tuann
  */
-public class ViewResultTestStudent extends HttpServlet {
+public class ViewResultTestStudent extends BasedRequiredAuthenticationController {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int pageSize = 4; // Number of items per page
@@ -70,15 +71,13 @@ public class ViewResultTestStudent extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser);
     }
 
 }

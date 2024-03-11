@@ -129,7 +129,7 @@
                 <div class="return-home" style="margin-bottom: 10px">
                     <a href="${pageContext.request.contextPath}/homeLecture" class="btn btn-primary">Return to Home Page</a>
                 </div>
-                <form action="${pageContext.request.contextPath}/view-list-exam" method="GET" class="form-inline mb-3" style="padding-left: 21rem">
+                <form action="${pageContext.request.contextPath}/view-total-result-of-students" method="GET" class="form-inline mb-3" style="padding-left: 21rem">
                     <label for="examNameFilter" class="mr-2">Filter by Examination Name:</label>
                     <select id="examNameFilter" name="examName" class="form-control mr-2">
                         <option value="">All Examinations</option>

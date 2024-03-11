@@ -58,7 +58,6 @@
                                         <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                         <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i>
                                                 Log out</a></li>
-
                                     </ul>
                                 </li>
                             </ul>
@@ -92,11 +91,24 @@
                                     <h3>Grading Details</h3>
                                     <p><strong>Time Exam</strong> ${resultTotalExam.exam.examTime}</p>
                                     <p><strong>Score:</strong> ${resultTotalExam.score}</p>
-                                    <p><strong>Comments:</strong> </p>
+                                    <p><strong>Comments:</strong> 
+                                    <c:choose>
+                                        <c:when test="${resultTotalExam.score >= 9}">
+                                            Excellent performance! Keep up the great work!
+                                        </c:when>
+                                        <c:when test="${resultTotalExam.score >= 8}">
+                                            Well done! You've achieved a commendable score.
+                                        </c:when>
+                                        <c:when test="${resultTotalExam.score >= 4}">
+                                            You've passed the exam. Keep practicing to improve further.
+                                        </c:when>
+                                        <c:otherwise>
+                                            Your score is below passing. Keep studying and aim for improvement.
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </p>
                                 </div>
                             </div>
-                            <!-- End of Student Work Details Section -->
-                            <!-- Button to go back to home page or view detailed results -->
                             <div class="actions">
                                 <a href="${pageContext.request.contextPath}/homeStudent" class="btn btn-primary">Back to Home</a>
                                 <a href="#" class="btn btn-secondary">View Detailed Results</a>

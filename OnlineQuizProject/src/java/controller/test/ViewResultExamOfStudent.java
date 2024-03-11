@@ -4,7 +4,9 @@
  */
 package controller.test;
 
+import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ResultTotalExamDBContext;
+import entity.Account;
 import entity.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,18 +19,9 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author tuann
  */
-public class ViewResultExamOfStudent extends HttpServlet {
+public class ViewResultExamOfStudent extends BasedRequiredAuthenticationController {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
 //        int studentID = Integer.parseInt(request.getParameter("studentID"));
         ResultTotalExamDBContext resultExam = new ResultTotalExamDBContext();
@@ -38,15 +31,13 @@ public class ViewResultExamOfStudent extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser);
     }
 
 }

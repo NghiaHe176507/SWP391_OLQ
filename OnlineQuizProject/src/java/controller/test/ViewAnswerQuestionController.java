@@ -15,9 +15,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-public class ViewAnswerQuestionController extends HttpServlet {
+public class ViewAnswerQuestionController extends BasedRequiredAuthenticationController {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
         TestDBContext test = new TestDBContext();
         ArrayList<OptionAnswer> listQuestionAndAnswer = test.getListQuestionAndAnswer();
@@ -29,13 +29,13 @@ public class ViewAnswerQuestionController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser);
     }
 
 }
