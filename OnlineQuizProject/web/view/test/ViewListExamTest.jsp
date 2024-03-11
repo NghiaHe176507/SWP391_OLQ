@@ -162,7 +162,14 @@
                                 <td class="${list.score >= 9 ? 'excellent' : (list.score >= 8 ? 'good' : 'average')}">
                                     ${list.score >= 9 ? 'Excellent' : (list.score >= 8 ? 'Good' : 'Average')}
                                 </td>
-                                <td>${list.lectureComment}</td>
+                                <td>
+                                    <!-- Add a form to submit Lecture Comments -->
+                                    <form action="${pageContext.request.contextPath}/update-lecture-comment" method="POST">
+                                        <input type="hidden" name="resultId" value="${list.resultId}">
+                                        <textarea name="lectureComment" rows="3" cols="30">${list.commentContent}</textarea>
+                                        <button type="submit">Submit</button>
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>

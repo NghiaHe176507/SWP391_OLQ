@@ -79,6 +79,18 @@ public class ResultTotalExamDBContext extends DBContext<Result> {
         return null;
     }
 
+    public void updateLectureComment(int resultId, String lectureComment) {
+        try {
+            String sql = "UPDATE Result SET comment_content = ? WHERE result_id = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, lectureComment);
+            stm.setInt(2, resultId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ResultTotalExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public Result getById(String Id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
