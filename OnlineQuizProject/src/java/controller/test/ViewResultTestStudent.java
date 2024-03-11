@@ -51,6 +51,11 @@ public class ViewResultTestStudent extends HttpServlet {
 
         ControllerDBContext topicDB = new ControllerDBContext();
         ArrayList<Topic> listTopic = topicDB.getListTopic();
+        for (Result result : paginatedList) {
+            // You might need to adjust this based on your data model
+            String lectureComment = getLectureCommentForResult(result);
+            result.setLectureComment(lectureComment);
+        }
         request.setAttribute("listStudent", paginatedList);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
@@ -67,6 +72,13 @@ public class ViewResultTestStudent extends HttpServlet {
             }
         }
         return filteredList;
+    }
+
+    private String getLectureCommentForResult(Result result) {
+        // Logic to retrieve lecture comment based on your data model
+        // For example, you might query a database or use a service to get the comment
+        // Return an empty string if not found or customize based on your requirements
+        return ""; // Update this with actual logic to get lecture comment
     }
 
     @Override

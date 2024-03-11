@@ -10,12 +10,17 @@ package entity;
  */
 public class Result extends BaseEntity {
 
+    private String lectureComment;
     private int resultId;
     private Exam exam;
     private AccountInfo studentInfo;
     private Double score;
 
     public Result() {
+    }
+
+    public void setLectureComment(String lectureComment) {
+        this.lectureComment = lectureComment;
     }
 
     public Result(int resultId, Exam exam, AccountInfo studentInfo, Double score) {
@@ -57,4 +62,7 @@ public class Result extends BaseEntity {
         this.score = score;
     }
 
+    public String getLectureComment() {
+        return lectureComment;
+    }
 }

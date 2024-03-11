@@ -54,13 +54,29 @@ public class CreateAccountByAdmin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int pageSize = 4; // Number of items per page
+        int page = 1; // Default page number
+
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+
+        ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
+
+        // Paginate the data
+        int totalItems = listAccount.size();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+
+        int startIndex = (page - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalItems);
+
+        ArrayList<AccountInfo> paginatedList = new ArrayList<>(listAccount.subList(startIndex, endIndex));
         ArrayList<Role> listRole = db.getListRole();
         request.setAttribute("listRole", listRole);
         request.setAttribute("url", "create");
-        ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
-        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
-        request.setAttribute("listAccountWithInfo", listAccount);
-        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
+        request.setAttribute("listAccountWithInfo", paginatedList);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
         request.getRequestDispatcher("/view/controllerAccount/AccountManagement.jsp").forward(request, response);
     }
 
@@ -102,8 +118,8 @@ public class CreateAccountByAdmin extends HttpServlet {
         db.createNewAccount(newAccount);
         db.createNewAccountInfo(newAccountInfo);
         db.createNewRoleFeature(newRoleFeature);
-        
-        response.sendRedirect(request.getContextPath()+"/admin/account-management");
+
+        response.sendRedirect(request.getContextPath() + "/admin/account-management");
     }
 
     /**

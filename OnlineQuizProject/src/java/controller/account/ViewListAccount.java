@@ -33,12 +33,14 @@ public class ViewListAccount extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int pageSize = 4; // Number of items per page
-        int page = 1; // Default page number
+        int pageSize = 3; // Number of items per page
 
+        // Determine the current page from the request parameter
+        int page = 1; // Default page number
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
+
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
 
@@ -51,13 +53,14 @@ public class ViewListAccount extends HttpServlet {
 
         ArrayList<AccountInfo> paginatedList = new ArrayList<>(listAccount.subList(startIndex, endIndex));
 
+        // Pass the paginated data to the JSP page
+        request.setAttribute("listAccountWithInfo", paginatedList);
 
-        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
-        request.setAttribute("listAccountWithInfo", listAccount);
-        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
-        request.setAttribute("listStudent", paginatedList);
+        // Pass pagination information
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
+
+        // Forward the request to the JSP page
         request.getRequestDispatcher("/view/controllerAccount/AccountManagement.jsp").forward(request, response);
     }
 

@@ -149,6 +149,7 @@
                             <th>Examination Name</th>
                             <th>Score</th>
                             <th>Status</th>
+                            <th>Lecture Comment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,6 +162,7 @@
                                 <td class="${list.score >= 9 ? 'excellent' : (list.score >= 8 ? 'good' : 'average')}">
                                     ${list.score >= 9 ? 'Excellent' : (list.score >= 8 ? 'Good' : 'Average')}
                                 </td>
+                                <td>${list.lectureComment}</td>
                             </tr>
                         </c:forEach>
                     </tbody>

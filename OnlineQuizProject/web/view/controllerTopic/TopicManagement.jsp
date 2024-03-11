@@ -463,6 +463,18 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <c:if test="${requestScope.totalPages > 1}">
+                            <ul class="pagination justify-content-center">
+                                <c:forEach begin="1" end="${requestScope.totalPages}" var="pageNumber">
+                                    <li class="page-item ${pageNumber eq requestScope.currentPage ? 'active' : ''}">
+                                        <a class="page-link" href="?page=${pageNumber}">${pageNumber}</a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </c:if>
+                    </div>
                 </div>
             </div>
         </div>

@@ -18,6 +18,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/homeStudent.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <title>Mange Account</title>
         <style>
             *{
@@ -354,6 +355,39 @@
             .action-links a {
                 margin-right: 10px;
             }
+
+            .pagination {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            .pagination {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            /* Pagination links */
+            .pagination a {
+                display: inline-block;
+                padding: 5px 10px;
+                margin: 0 2px;
+                border: 1px solid #ccc;
+                background-color: #f7f7f7;
+                color: #333;
+                text-decoration: none;
+                border-radius: 3px;
+            }
+
+            /* Current page */
+            .pagination .current {
+                display: inline-block;
+                padding: 5px 10px;
+                margin: 0 2px;
+                background-color: #333;
+                color: #fff;
+                border-radius: 3px;
+            }
             @media (max-width: 600px) {
                 .right-side {
                     display: none;
@@ -432,11 +466,11 @@
                             </c:forEach><br/>
                             <div class="col-sm-10 col-sm-offset-2">
                                 <div class="btn-container d-flex">
-                                <button type="submit" class="btn btn-primary" value="Save">Submit</button><br/>
-                                <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
+                                    <button type="submit" class="btn btn-primary" value="Save">Submit</button><br/>
+                                    <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
+                                </div>
                             </div>
-                            </div>
-                        </form>
+                        </form>                              
                         <script>
                             function validateForm() {
                                 var form = document.forms[0];
@@ -470,8 +504,8 @@
                             </c:forEach><br/>
                             <div class="col-sm-10 col-sm-offset-2">
                                 <div class="btn-container d-flex">
-                                <button type="submit" class="btn btn-primary" value="Save">Submit</button>
-                                <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
+                                    <button type="submit" class="btn btn-primary" value="Save">Submit</button>
+                                    <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -482,7 +516,7 @@
                     <a href="<%=request.getContextPath()%>/admin/account-management/create-account" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
                     <h2>List of Account</h2>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="myTable">
+                        <table class="table table-bordered table-hover table-striped" id="myTable">
                             <thead>
                                 <tr>
                                     <td>Id</td>
@@ -501,10 +535,10 @@
                                         <td>${accountInfo.account.accountId}</td>
                                         <td>${accountInfo.account.mail}</td>
                                         <td>
-                                        <c:choose>
-                                        <c:when test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName() eq 'Admin'}">*****</c:when>
-                                        <c:otherwise>${accountInfo.account.password}</c:otherwise>
-                                        </c:choose>
+                                            <c:choose>
+                                                <c:when test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName() eq 'Admin'}">*****</c:when>
+                                                <c:otherwise>${accountInfo.account.password}</c:otherwise>
+                                            </c:choose>
                                         </td>
                                         <td>${accountInfo.account.displayName}</td>
                                         <td>${accountInfo.fullName}</td>
@@ -512,10 +546,10 @@
                                         <td>${accountInfo.account.accountStatus}</td>
                                         <td>
                                             <div class="btn-container d-flex">
-                                            <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleId() != 1}">
-                                                <a href="<%=request.getContextPath()%>/admin/account-management/update-account?accountId=${accountInfo.account.accountId}" class="btn btn-warning btn-sm b">Edit</a>
-                                                <input type="button" value="Delete" onclick="deleteAccount(${accountInfo.account.accountId})" class="btn btn-danger btn-sm"/>
-                                            </c:if>
+                                                <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleId() != 1}">
+                                                    <a href="<%=request.getContextPath()%>/admin/account-management/update-account?accountId=${accountInfo.account.accountId}" class="btn btn-warning btn-sm b">Edit</a>
+                                                    <input type="button" value="Delete" onclick="deleteAccount(${accountInfo.account.accountId})" class="btn btn-danger btn-sm"/>
+                                                </c:if>
                                             </div>
                                         </td>
                                     </tr>
@@ -523,6 +557,30 @@
                         </table>
                         </tbody>
                         </table>
+                        <c:if test="${requestScope.totalPages > 1 && requestScope.url != 'create'}">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <c:url value="${requestScope.pageContext.request.servletPath}" var="baseURL">
+                                        <c:param name="page" value=""/>
+                                    </c:url>
+
+                                    <li class="page-item <c:if test="${requestScope.currentPage == 1}">disabled</c:if>">
+                                        <a class="page-link" href="<c:url value="${baseURL}"><c:param name="page" value="${requestScope.currentPage - 1}"/></c:url>" tabindex="-1">Previous</a>
+                                        </li>
+
+                                    <c:forEach var="i" begin="1" end="${requestScope.totalPages}">
+                                        <li class="page-item <c:if test="${i eq requestScope.currentPage}">active</c:if>">
+                                            <a class="page-link" href="<c:url value="${baseURL}"><c:param name="page" value="${i}"/></c:url>">${i}</a>
+                                            </li>
+                                    </c:forEach>
+
+                                    <li class="page-item <c:if test="${requestScope.currentPage == requestScope.totalPages}">disabled</c:if>">
+                                        <a class="page-link" href="<c:url value="${baseURL}"><c:param name="page" value="${requestScope.currentPage + 1}"/></c:url>">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
+                        </c:if>
                     </div>
                 </div>
             </div>
