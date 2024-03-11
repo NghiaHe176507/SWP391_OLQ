@@ -37,7 +37,6 @@ public class JoinGroupForStudent extends BasedRequiredAuthenticationController {
             newRegister.setRegisterDate(Date.valueOf(currentDate));
             newRegister.setStudentInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
             db.createNewRegister(newRegister);
-            request.getRequestDispatcher("view/home/group.jsp").forward(request, response);
         }
     }
 

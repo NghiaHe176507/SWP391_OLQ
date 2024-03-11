@@ -7,45 +7,44 @@ package controller.group;
 
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
+import dal.GroupDBContext;
 import entity.Account;
 import entity.Group;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 /**
  *
  * @author PC
  */
-public class ViewOwnedGroupForLecture extends BasedRequiredAuthenticationController {
+@WebServlet(name="CreateGroupInviteCode", urlPatterns={"/group-management/create-invite-code"})
+public class CreateGroupInviteCode extends BasedRequiredAuthenticationController {
    
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    ControllerDBContext db = new ControllerDBContext();
+    GroupDBContext GroupDB = new GroupDBContext();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
     throws ServletException, IOException {
-        ControllerDBContext db = new ControllerDBContext();
-        ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
-        request.setAttribute("listGroup", listGroup);
-        request.getRequestDispatcher("view/controllerGroup/GroupManagementForLecture.jsp").forward(request, response);
+        Group groupNeedToCreateInviteCode = GroupDB.getById(request.getParameter("groupId"));
+        while (true){
+            String newInviteCode = db.generateRandomString(6);
+            if(!db.checkContainGroupInviteCode(newInviteCode)){
+                groupNeedToCreateInviteCode.setGroupInviteCode(newInviteCode);
+                db.updateGroupInviteCode(groupNeedToCreateInviteCode);
+                break;
+            }
         }
+        response.sendRedirect(request.getContextPath()+"/group-management");
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
-    }
+        processRequest(request, response, LoggedUser);    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
-    }
-     
+        processRequest(request, response, LoggedUser);    }
+
 }

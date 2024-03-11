@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -624,16 +625,14 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                                            ([group_name]
                                            ,[lecture_id]
                                            ,[topic_id]
-                                           ,[status_id]
-                                           ,[group_invite_code])
+                                           ,[status_id])
                                      VALUES
-                                           (?,?,?,?,?)""";
+                                           (?,?,?,?)""";
             PreparedStatement stm = connection.prepareStatement(sql_insert);
             stm.setString(1, newGroup.getGroupName());
             stm.setInt(2, newGroup.getLectureInfo().getAccountInfoId());
             stm.setInt(3, newGroup.getTopic().getTopicId());
             stm.setInt(4, newGroup.getStatus().getStatusId());
-            stm.setString(5, newGroup.getGroupName());
             stm.executeUpdate();
 
             String sql_getid = "SELECT @@IDENTITY as [group_id]";
@@ -993,6 +992,36 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return totalLectures;
     }
 
+    public void updateGroupInviteCode(Group groupNeedToUpdate) {
+        try {
+            String sql_update = """
+                                UPDATE [dbo].[Group]
+                                   SET [group_invite_code] = ?
+                                 WHERE [group_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql_update);
+            stm.setString(1, groupNeedToUpdate.getGroupInviteCode());
+            stm.setInt(2, groupNeedToUpdate.getGroupId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String generateRandomString(int length) {
+        Random RANDOM = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            char randomChar;
+            if (RANDOM.nextBoolean()) {
+                randomChar = (char) (RANDOM.nextInt(26) + 'A');
+            } else {
+                randomChar = (char) (RANDOM.nextInt(10) + '0');
+            }
+            sb.append(randomChar);
+        }
+        return sb.toString();
+    }
+
     public boolean checkContainGroupInviteCode(String inviteCode) {
         ArrayList<String> listInviteCode = new ArrayList<>();
         try {
@@ -1022,6 +1051,9 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     }
 
     public void createNewRegister(Register newRegister) {
+        if (checkRegister(newRegister)) {
+            return;
+        }
         try {
             connection.setAutoCommit(false);
 
@@ -1062,5 +1094,62 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                 Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public boolean checkRegister(Register register) {
+        try {
+            String sql = """
+                         SELECT [register_id]
+                               ,[student_id]
+                               ,[group_id]
+                           FROM [Register]
+                           WHERE [student_id]=? AND [group_id]=? """;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, register.getStudentInfo().getAccountInfoId());
+            stm.setInt(2, register.getGroup().getGroupId());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public void unEnrollForStudent(Register register) {
+        if (!checkStudentActivitiesInGroupByRegister(register)) {
+            try {
+                String sql_delete = """
+                                    DELETE FROM [Register]
+                                          WHERE [student_id]=? AND [group_id]=?""";
+                PreparedStatement stm = connection.prepareStatement(sql_delete);
+                stm.setInt(1, register.getStudentInfo().getAccountInfoId());
+                stm.setInt(2, register.getGroup().getGroupId());
+                stm.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public boolean checkStudentActivitiesInGroupByRegister(Register register) {
+        try {
+            String sql = """
+                         SELECT r.[result_id] 
+                           FROM [Result] r
+                           INNER JOIN [Exam] e ON e.exam_id=r.exam_id
+                           WHERE r.[student_id]=? AND e.[group_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, register.getStudentInfo().getAccountInfoId());
+            stm.setInt(2, register.getGroup().getGroupId());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
