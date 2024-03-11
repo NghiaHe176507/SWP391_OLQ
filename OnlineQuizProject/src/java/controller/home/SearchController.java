@@ -25,7 +25,7 @@ public class SearchController extends HttpServlet {
         request.setAttribute("searchResults", searchResults);
         request.setAttribute("searchRegister", searchRegister);
 
-        request.getRequestDispatcher("view/home/result.jsp").forward(request, response);
+        request.getRequestDispatcher("view/controllerHome/result.jsp").forward(request, response);
     }
 
     @Override

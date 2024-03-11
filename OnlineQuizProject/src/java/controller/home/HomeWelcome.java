@@ -31,7 +31,7 @@ public class HomeWelcome extends HttpServlet {
             throws ServletException, IOException {
         if (request.getSession().getAttribute("user") == null) {
 
-            request.getRequestDispatcher("view/home/home.jsp").forward(request, response);
+            request.getRequestDispatcher("view/controllerHome/home.jsp").forward(request, response);
         } else {
             response.sendRedirect(request.getContextPath() + "/home");
         }

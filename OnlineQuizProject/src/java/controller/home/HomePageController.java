@@ -107,7 +107,7 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 request.setAttribute("listAccountWithInfo", listAccount);
                 request.setAttribute("listRole", listRole);
                 request.setAttribute("listStatus", listStatus);
-                request.getRequestDispatcher("view/home/homeAdmin.jsp").forward(request, response);
+                request.getRequestDispatcher("view/controllerHome/homeAdmin.jsp").forward(request, response);
                 break;
             case 2:
 
@@ -116,7 +116,7 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 ArrayList<Group> listGroupOwned = db.getListGroupOwnedByLectureId(accountInfo.getAccountInfoId());
 
                 request.setAttribute("listGroup", listGroupOwned);
-                request.getRequestDispatcher("view/home/homeLecture.jsp").forward(request, response);
+                request.getRequestDispatcher("view/controllerHome/homeLecture.jsp").forward(request, response);
                 break;
             case 3:
                 String keywords = request.getParameter("searchQuery");
@@ -126,13 +126,13 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 int studentId = LoggedUser.getAccountId();
                 ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
                 listRegister.size();
-                
+
                 request.setAttribute("listRegister", listRegister);
 
-                request.getRequestDispatcher("view/home/homeStudent.jsp").forward(request, response);
+                request.getRequestDispatcher("view/controllerHome/homeStudent.jsp").forward(request, response);
                 break;
             default:
-                request.getRequestDispatcher("view/home/home.jsp").forward(request, response);
+                request.getRequestDispatcher("view/controllerHome/home.jsp").forward(request, response);
         }
     }
 
