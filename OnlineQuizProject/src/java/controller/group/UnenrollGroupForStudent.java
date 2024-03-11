@@ -37,11 +37,11 @@ public class UnenrollGroupForStudent extends BasedRequiredAuthenticationControll
             newRegister.setGroup(groupNeedToJoin);
             newRegister.setStudentInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
             db.unEnrollForStudent(newRegister);
+            response.sendRedirect(request.getContextPath() + "/home");
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
     }
 
     @Override

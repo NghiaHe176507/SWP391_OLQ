@@ -39,7 +39,7 @@ public class HomePageController extends BasedRequiredAuthenticationController {
         ArrayList<Status> listStatus = db.getListStatus();
         ArrayList<Topic> listTopic = db.getListTopic();
         ArrayList<Group> listAllGroup = db.getListGroup();
-
+        request.setAttribute("db", db);
         switch (db.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId()) {
             case 1:
 
@@ -126,6 +126,7 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 int studentId = LoggedUser.getAccountId();
                 ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
                 listRegister.size();
+                
                 request.setAttribute("listRegister", listRegister);
 
                 request.getRequestDispatcher("view/home/homeStudent.jsp").forward(request, response);
