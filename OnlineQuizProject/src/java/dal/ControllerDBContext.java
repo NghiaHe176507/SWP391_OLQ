@@ -1152,4 +1152,51 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
         return false;
     }
+    
+    public boolean checkExistedExamQuestionMapping(ExamQuestionMapping examQuestionMapping) {
+        try {
+            String sql = """
+                         SELECT [mapping_id]
+                               ,[question_id]
+                               ,[exam_id]
+                           FROM [ExamQuestionMapping]
+                           WHERE [question_id] = ? AND [exam_id] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, examQuestionMapping.getQuestion().getQuestionId());
+            stm.setInt(2, examQuestionMapping.getExam().getExamId());
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public ArrayList<Group> getListActiveGroupByLectureId(int LectureId) {
+        ArrayList<Group> listGroup = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT  [group_id]
+                                ,[group_name]
+                                ,[lecture_id]
+                                ,[topic_id]
+                                ,[status_id]
+                            FROM [Group]
+                            WHERE [lecture_id] = ? AND [status_id] =1""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, String.valueOf(LectureId));
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Group group = new Group();
+                group = groupDB.getById(String.valueOf(rs.getInt("group_id")));
+                listGroup.add(group);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listGroup;
+    }
 }
