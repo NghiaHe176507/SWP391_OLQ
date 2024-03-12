@@ -15,7 +15,7 @@ public class Exam extends BaseEntity {
 
     private int examId;
     private String examTitle;
-    private Group classExam;
+    private Group group;
     private Timestamp examStartDate;
     private Timestamp examEndDate;
     private Time examTime;
@@ -30,7 +30,7 @@ public class Exam extends BaseEntity {
     public Exam(int examId, String examTitle, Group classExam, Timestamp examStartDate, Timestamp examEndDate, Time examTime, Status status, AccountInfo lectureInfo, int examAttemp, boolean isPractice) {
         this.examId = examId;
         this.examTitle = examTitle;
-        this.classExam = classExam;
+        this.group = classExam;
         this.examStartDate = examStartDate;
         this.examEndDate = examEndDate;
         this.examTime = examTime;
@@ -57,11 +57,11 @@ public class Exam extends BaseEntity {
     }
 
     public Group getClassExam() {
-        return classExam;
+        return group;
     }
 
     public void setClassExam(Group classExam) {
-        this.classExam = classExam;
+        this.group = classExam;
     }
 
     public Timestamp getExamStartDate() {
