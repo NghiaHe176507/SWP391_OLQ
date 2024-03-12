@@ -23,18 +23,19 @@ public class ExamQuestionMappingDBContext extends DBContext<ExamQuestionMapping>
         QuestionDBContext questionDB = new QuestionDBContext();
         try {
             String sql = """
-                         SELECT [optionAnswer_id]
-                               ,[answer_content]
-                               ,[isCorrect]
+                         SELECT [mapping_id]
                                ,[question_id]
-                           FROM [OptionAnswer]
-                           WHERE [optionAnswer_id] =?""";
+                               ,[exam_id]
+                           FROM [ExamQuestionMapping]
+                           WHERE [mapping_id] =?""";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, Id);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 ExamQuestionMapping examQuestionMapping = new ExamQuestionMapping();
+                examQuestionMapping.setExamQuestionMappingId(rs.getInt("mapping_id"));
                 examQuestionMapping.setQuestion(questionDB.getById(String.valueOf(rs.getString("question_id"))));
+                examQuestionMapping.setExam(examDB.getById(String.valueOf(rs.getString("question_id"))));
                 return examQuestionMapping;
             }
 

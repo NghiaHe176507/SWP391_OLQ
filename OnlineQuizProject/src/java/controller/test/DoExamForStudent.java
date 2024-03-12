@@ -2,14 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.group;
+package controller.test;
 
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import entity.Account;
-import entity.Group;
+import entity.ExamQuestionMapping;
+import entity.OptionAnswer;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -18,7 +21,7 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class ViewOwnedGroupForLecture extends BasedRequiredAuthenticationController {
+public class DoExamForStudent extends BasedRequiredAuthenticationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
@@ -34,14 +37,20 @@ public class ViewOwnedGroupForLecture extends BasedRequiredAuthenticationControl
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
 
-        ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId());
-        request.setAttribute("listGroup", listGroup);
-        request.getRequestDispatcher("view/controllerGroup/GroupManagementForLecture.jsp").forward(request, response);
+        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(11);
+        request.setAttribute("listQuestion", listExamQuestionMapping);
+        for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
+            ArrayList<OptionAnswer> listOptionAnswerByQuestion = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
+            int index = listExamQuestionMapping.indexOf(examQuestionMapping);
+            request.setAttribute("optionAnswerOfQuestion" + index, listOptionAnswerByQuestion);
+        }
+        request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
+
     }
 
     @Override
