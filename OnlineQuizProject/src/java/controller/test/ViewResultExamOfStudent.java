@@ -4,7 +4,7 @@
  */
 package controller.test;
 
-import dal.ResultTotalExamDBContext;
+import dal.ResultDBContext;
 import entity.Result;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,7 +31,7 @@ public class ViewResultExamOfStudent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        int studentID = Integer.parseInt(request.getParameter("studentID"));
-        ResultTotalExamDBContext resultExam = new ResultTotalExamDBContext();
+        ResultDBContext resultExam = new ResultDBContext();
         Result result = resultExam.getByStudentId(11);
         request.setAttribute("resultTotalExam", result);
         request.getRequestDispatcher("view/test/ViewTotalResultTest.jsp").forward(request, response);

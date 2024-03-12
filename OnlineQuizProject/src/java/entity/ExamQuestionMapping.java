@@ -13,16 +13,14 @@ public class ExamQuestionMapping extends BaseEntity {
     private int examQuestionMappingId;
     private Question question;
     private Exam exam;
-    private boolean splitScore;
 
     public ExamQuestionMapping() {
     }
 
-    public ExamQuestionMapping(int examQuestionMappingId, Question question, Exam exam, boolean splitScore) {
+    public ExamQuestionMapping(int examQuestionMappingId, Question question, Exam exam) {
         this.examQuestionMappingId = examQuestionMappingId;
         this.question = question;
         this.exam = exam;
-        this.splitScore = splitScore;
     }
 
     public int getExamQuestionMappingId() {
@@ -47,14 +45,6 @@ public class ExamQuestionMapping extends BaseEntity {
 
     public void setExam(Exam exam) {
         this.exam = exam;
-    }
-
-    public boolean isSplitScore() {
-        return splitScore;
-    }
-
-    public void setSplitScore(boolean splitScore) {
-        this.splitScore = splitScore;
     }
 
 }

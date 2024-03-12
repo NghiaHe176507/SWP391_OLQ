@@ -14,15 +14,25 @@ public class Question extends BaseEntity {
     private String questionContent;
     private Topic topic;
     private boolean inBank;
+    private String questionAnswerDetail;
 
     public Question() {
     }
 
-    public Question(int questionId, String questionContent, Topic topic, boolean inBank) {
+    public Question(int questionId, String questionContent, Topic topic, boolean inBank, String questionAnswerDetail) {
         this.questionId = questionId;
         this.questionContent = questionContent;
         this.topic = topic;
         this.inBank = inBank;
+        this.questionAnswerDetail = questionAnswerDetail;
+    }
+
+    public String getQuestionAnswerDetail() {
+        return questionAnswerDetail;
+    }
+
+    public void setQuestionAnswerDetail(String questionAnswerDetail) {
+        this.questionAnswerDetail = questionAnswerDetail;
     }
 
     public int getQuestionId() {
