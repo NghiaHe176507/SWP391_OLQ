@@ -57,9 +57,11 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
         int studentId = LoggedUser.getAccountId();
         ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
         listRegister.size();
-        
-        ArrayList<Exam> listExamOfGroup = db.getListExamByGroupId(1);
-        
+        String groupIdStr = request.getParameter("groupId");
+        int groupId = Integer.parseInt(groupIdStr);
+
+        ArrayList<Exam> listExamOfGroup = db.getListExamByGroupId(groupId);
+
         request.setAttribute("listExamOfGroup", listExamOfGroup);
 
         request.setAttribute("listRegister", listRegister);

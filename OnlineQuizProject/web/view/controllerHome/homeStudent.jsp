@@ -249,8 +249,7 @@
                                             More Details
                                         </button>
                                     </div>
-                                </div>
-                                <input type="hidden" name="groupId" value="${register.group.groupId}" />
+                                    <input type="hidden" name="groupId" value="${register.group.groupId}" />
                             </form>
 
                             <form action="unenroll" method="POST"> 
