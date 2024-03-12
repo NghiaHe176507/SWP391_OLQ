@@ -97,7 +97,7 @@ public class TestDBContext extends DBContext<OptionAnswer> {
                 Group g = new Group();
                 g.setTopic(t);
                 Exam e = new Exam();
-                e.setClassExam(g);
+                e.setGroup(g);
                 r.setStudentInfo(acc);
                 r.setExam(e);
                 listStudentExamResult.add(r);
@@ -138,7 +138,7 @@ public class TestDBContext extends DBContext<OptionAnswer> {
                 Group g = new Group();
                 g.setTopic(t);
                 Exam e = new Exam();
-                e.setClassExam(g);
+                e.setGroup(g);
                 r.setStudentInfo(acc);
                 r.setExam(e);
                 searchStudentExamResult.add(r);

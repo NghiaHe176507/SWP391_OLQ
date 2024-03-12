@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author tuann
  */
-public class ResultTotalExamDBContext extends DBContext<Result> {
+public class ResultDBContext extends DBContext<Result> {
 
     public Result getByStudentId(int studentID) {
         try {
@@ -50,11 +50,11 @@ public class ResultTotalExamDBContext extends DBContext<Result> {
                 Exam e = new Exam();
                 e.setExamId(rs.getInt("exam_id"));
                 e.setExamTitle(rs.getString("exam_title"));
-                e.setExamEndDate(rs.getDate("endDate"));
-                e.setExamTime(rs.getDate("time"));
+                e.setExamEndDate(rs.getTimestamp("endDate"));
+                e.setExamTime(rs.getTime("time"));
                 e.setExamAttemp(rs.getInt("attempt"));
                 e.setIsPractice(rs.getBoolean("isPractice"));
-                e.setExamStartDate(rs.getDate("startDate"));
+                e.setExamStartDate(rs.getTimestamp("startDate"));
                 Status s = new Status();
                 s.setStatusName(rs.getString("status_name"));
                 e.setStatus(s);
@@ -63,7 +63,7 @@ public class ResultTotalExamDBContext extends DBContext<Result> {
                 Group g = new Group();
                 g.setGroupName(rs.getString("group_name"));
                 g.setTopic(t);
-                e.setClassExam(g);
+                e.setGroup(g);
                 Result r = new Result();
                 r.setScore(rs.getDouble("score"));
                 AccountInfo ac = new AccountInfo();
@@ -74,7 +74,7 @@ public class ResultTotalExamDBContext extends DBContext<Result> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ResultTotalExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
