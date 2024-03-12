@@ -42,7 +42,6 @@ public class HomePageController extends BasedRequiredAuthenticationController {
         request.setAttribute("db", db);
         switch (db.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId()) {
             case 1:
-
 //                String keyword = request.getParameter("query");
 //                ArrayList<AccountInfo> searchAccount = acountInfo.searchAccount(keyword);
 //                int pageSize = 5; // Number of items per page                                                                                       
