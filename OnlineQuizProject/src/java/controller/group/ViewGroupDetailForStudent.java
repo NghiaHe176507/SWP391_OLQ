@@ -8,6 +8,7 @@ import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import entity.Account;
 import entity.AccountInfo;
+import entity.Exam;
 import entity.Group;
 import entity.Register;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author nghia
  */
-public class ViewGroupDetailForLecture extends BasedRequiredAuthenticationController {
+public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
@@ -56,9 +57,13 @@ public class ViewGroupDetailForLecture extends BasedRequiredAuthenticationContro
         int studentId = LoggedUser.getAccountId();
         ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
         listRegister.size();
+        
+        ArrayList<Exam> listExamOfGroup = db.getListExamByGroupId(1);
+        
+        request.setAttribute("listExamOfGroup", listExamOfGroup);
 
         request.setAttribute("listRegister", listRegister);
-        request.getRequestDispatcher("view/controllerGroup/GroupDetailForLecture.jsp").forward(request, response);
+        request.getRequestDispatcher("view/controllerGroup/GroupDetailForStudent.jsp").forward(request, response);
     }
 
     @Override

@@ -126,7 +126,7 @@
     </servlet>
     <servlet>
         <servlet-name>ViewGroupDetailForLecture</servlet-name>
-        <servlet-class>controller.group.ViewGroupDetailForLecture</servlet-class>
+        <servlet-class>controller.group.ViewGroupDetailForStudent</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>

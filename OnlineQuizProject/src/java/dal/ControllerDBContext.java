@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Types;
 
 /**
  *
@@ -26,6 +27,9 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     GroupDBContext groupDB = new GroupDBContext();
     RoleDBContext roleDB = new RoleDBContext();
     TopicDBContext topicDB = new TopicDBContext();
+    ExamQuestionMappingDBContext examQuestionMappingDB = new ExamQuestionMappingDBContext();
+    ExamDBContext examDB = new ExamDBContext();
+    OptionAnswerDBContext optionAnswerDB = new OptionAnswerDBContext();
 
     public ArrayList<AccountInfo> getListAccountWithInfo() {
         ArrayList<AccountInfo> listAccount = new ArrayList<>();
@@ -594,13 +598,14 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     public ArrayList<Group> getListGroupOwnedByLectureId(int LectureId) {
         ArrayList<Group> listGroup = new ArrayList<>();
         try {
-            String sql = "SELECT [group_id]\n"
-                    + "                               ,[group_name]\n"
-                    + "                               ,[lecture_id]\n"
-                    + "                               ,[topic_id]\n"
-                    + "                               ,[status_id]\n"
-                    + "                           FROM [Group]\n"
-                    + "                           WHERE [lecture_id] = ?";
+            String sql = """
+                         SELECT  [group_id]
+                                ,[group_name]
+                                ,[lecture_id]
+                                ,[topic_id]
+                                ,[status_id]
+                            FROM [Group]
+                            WHERE [lecture_id] = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, String.valueOf(LectureId));
             ResultSet rs = stm.executeQuery();
@@ -795,42 +800,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return groups;
     }
 
-//    public void joinGroup(int accountId, String groupCode) {
-//        try {
-//            // Tìm group_id dựa vào group_invite_code
-//            String groupQuery = "SELECT [group_id] FROM [Group] WHERE [group_invite_code] = ?";
-//            PreparedStatement groupStm = connection.prepareStatement(groupQuery);
-//            groupStm.setString(1, groupCode);
-//            ResultSet groupRs = groupStm.executeQuery();
-//
-//            if (groupRs.next()) {
-//                int groupId = groupRs.getInt("group_id");
-//
-//                // Kiểm tra xem sinh viên đã đăng ký vào nhóm chưa
-//                String checkQuery = "SELECT COUNT(*) AS count FROM [Register] WHERE [student_id] = ? AND [group_id] = ?";
-//                PreparedStatement checkStm = connection.prepareStatement(checkQuery);
-//                checkStm.setInt(1, accountId);
-//                checkStm.setInt(2, groupId);
-//                ResultSet checkRs = checkStm.executeQuery();
-//
-//                if (checkRs.next() && checkRs.getInt("count") == 0) {
-//                    // Nếu sinh viên chưa đăng ký vào nhóm, thêm vào bảng Register
-//                    String insertQuery = "INSERT INTO [Register] ([register_date], [student_id], [group_id]) VALUES (GETDATE(), ?, ?)";
-//                    PreparedStatement insertStm = connection.prepareStatement(insertQuery);
-//                    insertStm.setInt(1, accountId);
-//                    insertStm.setInt(2, groupId);
-//                    insertStm.executeUpdate();
-//                    System.out.println("Student with ID " + accountId + " has joined the group.");
-//                } else {
-//                    System.out.println("Student with ID " + accountId + " is already registered in the group.");
-//                }
-//            } else {
-//                System.out.println("Group with code " + groupCode + " does not exist.");
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
     public int getTotalGroupsOnline() {
         int totalGroupsOnline = 0;
 
@@ -948,8 +917,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 
     public int getTotalStudents() {
         int totalStudents = 0;
-        RoleDBContext roleDB = new RoleDBContext();
-        AccountDBContext accountDb = new AccountDBContext();
         try {
             String sql = """
                      SELECT COUNT(*) AS TotalStudents
@@ -971,8 +938,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 
     public int getTotalLectures() {
         int totalLectures = 0;
-        RoleDBContext roleDB = new RoleDBContext();
-        AccountDBContext accountDb = new AccountDBContext();
         try {
             String sql = """
                  SELECT COUNT(*) AS TotalLectures
@@ -1152,7 +1117,260 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
         return false;
     }
-    
+
+    public ArrayList<ExamQuestionMapping> getListExamQuestionMappingByExamId(int ExamId) {
+        ArrayList<ExamQuestionMapping> listExamQuestionMapping = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [mapping_id]
+                           FROM [ExamQuestionMapping] WHERE[exam_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, ExamId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                ExamQuestionMapping examQuestionMapping = new ExamQuestionMapping();
+                examQuestionMapping = examQuestionMappingDB.getById(String.valueOf(rs.getInt("mapping_id")));
+                listExamQuestionMapping.add(examQuestionMapping);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listExamQuestionMapping;
+    }
+
+    public ArrayList<OptionAnswer> getListOptionAnswerByQuestionId(int questionId) {
+        ArrayList<OptionAnswer> listOptionAnswer = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [optionAnswer_id]
+                               ,[answer_content]
+                               ,[isCorrect]
+                               ,[question_id]
+                           FROM [OptionAnswer]
+                           WHERE [question_id] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                OptionAnswer optionAnswer = new OptionAnswer();
+                optionAnswer = optionAnswerDB.getById(String.valueOf(rs.getInt("optionAnswer_id")));
+                listOptionAnswer.add(optionAnswer);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listOptionAnswer;
+    }
+
+    public ArrayList<Exam> getListExamByGroupId(int groupId) {
+        ArrayList<Exam> listExam = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [exam_id]
+                             FROM [Exam]
+                             WHERE [group_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, groupId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Exam exam = new Exam();
+                exam = examDB.getById(String.valueOf(rs.getInt("exam_id")));
+                listExam.add(exam);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listExam;
+    }
+
+    public void createNewOptionAnswer(OptionAnswer newOptionAnswer) {
+        try {
+            connection.setAutoCommit(false);
+
+            String sql_insert = """
+                                INSERT INTO [OptionAnswer]
+                                           ([answer_content]
+                                           ,[isCorrect]
+                                           ,[question_id])
+                                     VALUES
+                                           (?,?,?)""";
+            PreparedStatement stm = connection.prepareStatement(sql_insert);
+            stm.setString(1, newOptionAnswer.getAnswerContent());
+            stm.setBoolean(2, newOptionAnswer.isIsCorrect());
+            stm.setInt(3, newOptionAnswer.getQuestion().getQuestionId());
+            stm.executeUpdate();
+
+            String sql_getid = "SELECT @@IDENTITY as [optionAnswer_id]";
+            PreparedStatement stm2 = connection.prepareStatement(sql_getid);
+            ResultSet rs = stm2.executeQuery();
+            if (rs.next()) {
+                newOptionAnswer.setOptionAnswerId(rs.getInt("optionAnswer_id"));
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void createNewQuestion(Question newQuestion) {
+        try {
+            connection.setAutoCommit(false);
+
+            String sql_insert = """
+                                INSERT INTO [Question]
+                                           ([topic_id]
+                                           ,[question_content]
+                                           ,[inBank]
+                                           ,[question_answer_detail])
+                                     VALUES
+                                           (?,?,?,?)""";
+            PreparedStatement stm = connection.prepareStatement(sql_insert);
+            stm.setInt(1, newQuestion.getTopic().getTopicId());
+            stm.setString(2, newQuestion.getQuestionContent());
+            stm.setBoolean(3, newQuestion.isInBank());
+            stm.setString(4, newQuestion.getQuestionAnswerDetail());
+            stm.executeUpdate();
+
+            String sql_getid = "SELECT @@IDENTITY as [question_id]";
+            PreparedStatement stm2 = connection.prepareStatement(sql_getid);
+            ResultSet rs = stm2.executeQuery();
+            if (rs.next()) {
+                newQuestion.setQuestionId(rs.getInt("question_id"));
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public Exam createNewExam(Exam newExam) {
+        try {
+            connection.setAutoCommit(false);
+
+            String sql_insert = """
+                                INSERT INTO [Exam]
+                                           ([exam_title]
+                                           ,[group_id]
+                                           ,[startDate]
+                                           ,[endDate]
+                                           ,[time]
+                                           ,[status_id]
+                                           ,[lecture_id]
+                                           ,[attempt]
+                                           ,[isPractice])
+                                     VALUES
+                                           (?,?,?,?,?,?,?,?,?)""";
+            PreparedStatement stm = connection.prepareStatement(sql_insert);
+            stm.setString(1, newExam.getExamTitle());
+            stm.setInt(2, newExam.getGroup().getGroupId());
+            stm.setTimestamp(3, newExam.getExamStartDate());
+            stm.setTimestamp(4, newExam.getExamEndDate());
+            stm.setTime(5, newExam.getExamTime());
+            stm.setInt(6, newExam.getStatus().getStatusId());
+            stm.setInt(7, newExam.getLectureInfo().getAccountInfoId());
+            Integer examAttempt = newExam.getExamAttemp();
+            if (examAttempt != null) {
+                stm.setInt(8, examAttempt.intValue());
+            } else {
+                stm.setNull(8, Types.INTEGER);
+            }
+            stm.setBoolean(9, newExam.isIsPractice());
+            stm.executeUpdate();
+
+            String sql_getid = "SELECT @@IDENTITY as [exam_id]";
+            PreparedStatement stm2 = connection.prepareStatement(sql_getid);
+            ResultSet rs = stm2.executeQuery();
+            if (rs.next()) {
+                newExam.setExamId(rs.getInt("exam_id"));
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return examDB.getById(String.valueOf(newExam.getExamId()));
+    }
+
+    public void createNewExamQuestionMapping(ExamQuestionMapping newExamQuestionMapping) {
+        if (checkExistedExamQuestionMapping(newExamQuestionMapping)) {
+            return;
+        }
+        try {
+            connection.setAutoCommit(false);
+
+            String sql_insert = """
+                                INSERT INTO [ExamQuestionMapping]
+                                           ([question_id]
+                                           ,[exam_id])
+                                     VALUES
+                                           (?,?)""";
+            PreparedStatement stm = connection.prepareStatement(sql_insert);
+            stm.setInt(1, newExamQuestionMapping.getQuestion().getQuestionId());
+            stm.setInt(2, newExamQuestionMapping.getExam().getExamId());
+            stm.executeUpdate();
+
+            String sql_getid = "SELECT @@IDENTITY as [mapping_id]";
+            PreparedStatement stm2 = connection.prepareStatement(sql_getid);
+            ResultSet rs = stm2.executeQuery();
+            if (rs.next()) {
+                newExamQuestionMapping.setExamQuestionMappingId(rs.getInt("mapping_id"));
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public boolean checkExistedExamQuestionMapping(ExamQuestionMapping examQuestionMapping) {
         try {
             String sql = """
@@ -1173,7 +1391,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
         return false;
     }
-    
+
     public ArrayList<Group> getListActiveGroupByLectureId(int LectureId) {
         ArrayList<Group> listGroup = new ArrayList<>();
         try {
@@ -1199,4 +1417,5 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
         return listGroup;
     }
+
 }

@@ -239,26 +239,28 @@
                             <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.group.topic.topicName}</h6>
                             <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.group.lectureInfo.fullName}</h6>
                             <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
-                            <div class="row">
-                                <div class="row" style="padding-left: 40px;margin-bottom: 5px;">
-                                    <a href="#" class="btn btn-1 color-black topic-info-link">
-                                        <svg>
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        More Details
-                                    </a>
-                                </div>
-                                <form action="unenroll" method="POST"> 
-                                    <div class="row" style="padding-left: 27px;margin-bottom: 5px;    margin-right: 11px;">
-                                        <input type="hidden" name="groupId" id="groupId" value="${register.group.groupId}"> 
-                                        <button class="unenrollButton btn btn-1 color-red">
+                            <form action="viewGroupDetail" method="GET"> 
+                                <div class="row">
+                                    <div class="row" style="padding-left: 40px;margin-bottom: 5px;">
+                                        <a href="#" class="btn btn-1 color-black topic-info-link">
                                             <svg>
                                             <rect x="0" y="0" fill="none" width="100%" height="100%"/>
                                             </svg>
-                                            Unenroll group</i>
-                                        </button>
-                                </form>
-                            </div>
+                                            More Details
+                                        </a>
+                                    </div>
+                            </form>
+                                    <form action="unenroll" method="POST"> 
+                                        <div class="row" style="padding-left: 27px;margin-bottom: 5px;    margin-right: 11px;">
+                                            <input type="hidden" name="groupId" id="groupId" value="${register.group.groupId}"> 
+                                            <button class="unenrollButton btn btn-1 color-red">
+                                                <svg>
+                                                <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                                </svg>
+                                                Unenroll group</i>
+                                            </button>
+                                    </form>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -284,8 +286,8 @@
         <c:choose>
             <c:when test="${checkRegister eq 'true'}">
                 <script>
-                        alert("${message}");
-                        redirectHome();
+                    alert("${message}");
+                    redirectHome();
                 </script>
             </c:when>
             <c:otherwise>

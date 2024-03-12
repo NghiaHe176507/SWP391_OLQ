@@ -122,29 +122,25 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">Tên Exam</th>
-                            <th scope="col">Ngày Tạo</th>
-                            <th scope="col">Ngày Kết Thúc</th>
-                            <th scope="col">Thời Gian Làm Bài</th>
+                            <th scope="col">Exam Title</th>
+                            <th scope="col">StartDate</th>
+                            <th scope="col">EndDate</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Status</th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Exam Toán 1</td>
-                            <td>01/01/2024</td>
-                            <td>10/01/2024</td>
-                            <td>60 phút</td>
-                            <td><button type="button" class="btn btn-primary">Do Exam</button></td>
-                        </tr>
-                        <tr>
-                            <td>Exam Văn 1</td>
-                            <td>05/01/2024</td>
-                            <td>15/01/2024</td>
-                            <td>45 phút</td>
-                            <td><button type="button" class="btn btn-primary">Do Exam</button></td>
-                        </tr>
-                        <!-- Thêm dòng này cho mỗi Exam khác -->
+                        <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
+                            <tr>
+                                <td>${exam.examTitle}</td>
+                                <td>${exam.examStartDate}</td>
+                                <td>${exam.examEndDate}</td>
+                                <td>${exam.examTime}</td>
+                                <td>${exam.status.statusName}</td>
+                                <td><a href="#"class="btn btn-primary">Do Exam</a></td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </form>
