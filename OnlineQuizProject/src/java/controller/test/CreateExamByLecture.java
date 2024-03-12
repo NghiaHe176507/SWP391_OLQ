@@ -11,7 +11,6 @@ import dal.StatusDBContext;
 import entity.Account;
 import entity.Exam;
 import entity.ExamQuestionMapping;
-import entity.Group;
 import entity.OptionAnswer;
 import entity.Question;
 import java.io.IOException;
@@ -20,7 +19,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.sql.Time;
-import java.util.ArrayList;
 
 /**
  *

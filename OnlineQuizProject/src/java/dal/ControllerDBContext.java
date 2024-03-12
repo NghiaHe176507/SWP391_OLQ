@@ -29,6 +29,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     TopicDBContext topicDB = new TopicDBContext();
     ExamQuestionMappingDBContext examQuestionMappingDB = new ExamQuestionMappingDBContext();
     ExamDBContext examDB = new ExamDBContext();
+    OptionAnswerDBContext optionAnswerDB = new OptionAnswerDBContext();
 
     public ArrayList<AccountInfo> getListAccountWithInfo() {
         ArrayList<AccountInfo> listAccount = new ArrayList<>();
@@ -1138,6 +1139,31 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listExamQuestionMapping;
     }
 
+    public ArrayList<OptionAnswer> getListOptionAnswerByQuestionId(int questionId) {
+        ArrayList<OptionAnswer> listOptionAnswer = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [optionAnswer_id]
+                               ,[answer_content]
+                               ,[isCorrect]
+                               ,[question_id]
+                           FROM [OptionAnswer]
+                           WHERE [question_id] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                OptionAnswer optionAnswer = new OptionAnswer();
+                optionAnswer = optionAnswerDB.getById(String.valueOf(rs.getInt("optionAnswer_id")));
+                listOptionAnswer.add(optionAnswer);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listOptionAnswer;
+    }
+
     public ArrayList<Exam> getListExamByGroupId(int groupId) {
         ArrayList<Exam> listExam = new ArrayList<>();
         try {
@@ -1158,7 +1184,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listExam;
-
     }
 
     public void createNewOptionAnswer(OptionAnswer newOptionAnswer) {
