@@ -63,7 +63,7 @@ public class ResultTotalExamDBContext extends DBContext<Result> {
                 Group g = new Group();
                 g.setGroupName(rs.getString("group_name"));
                 g.setTopic(t);
-                e.setClassExam(g);
+                e.setGroup(g);
                 Result r = new Result();
                 r.setScore(rs.getDouble("score"));
                 AccountInfo ac = new AccountInfo();
