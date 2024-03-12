@@ -1,8 +1,3 @@
-<%-- 
-    Document   : CreateExamByLecture
-    Created on : Mar 12, 2024, 2:41:41 PM
-    Author     : PC
---%>
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -62,13 +57,15 @@
         </style>
     </head>
     <body>
-        <form method="POST">
+        <form method="GET">
             Enter number of questions: <input type="number" name="numQuestion">
             <input type="submit" value="Submit">
         </form>
-
+        
         <c:if test="${not empty param.numQuestion}">
+
             <c:set var="numQuestion" value="${param.numQuestion}" />
+
             <c:if test="${numQuestion > 0}">
                 <form id="questionForm" method="POST">
                     <c:forEach var="i" begin="1" end="${numQuestion}">
@@ -89,6 +86,7 @@
                         <button type="button" onclick="addAnswer(${i})">Add Answer</button>
                         <hr> <!-- Line to split questions -->
                     </c:forEach>
+                    <button type="button" onclick="submitForm()">Submit</button>
                 </form>
             </c:if>
         </c:if>
@@ -116,7 +114,24 @@
                 var br = document.createElement('br');
                 answerContainer.appendChild(br);
             }
-        </script>
 
+            function submitForm() {
+                var selectedQuestions = [];
+                var checkboxes = document.querySelectorAll('input[name^="addToBank"]:checked');
+                checkboxes.forEach(function (checkbox) {
+                    selectedQuestions.push(checkbox.value);
+                });
+
+                if (selectedQuestions.length === 0) {
+                    alert("Please select at least one question to add to the question bank.");
+                    return;
+                }
+
+                var confirmation = confirm("Are you sure you want to add the selected questions to the question bank?");
+                if (confirmation) {
+                    document.getElementById("questionForm").submit();
+                }
+            }
+        </script>
     </body>
 </html>

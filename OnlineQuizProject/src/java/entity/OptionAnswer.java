@@ -11,7 +11,7 @@ package entity;
 public class OptionAnswer extends BaseEntity {
 
     private int optionAnswerId;
-    private String answerOption;
+    private String answerContent;
     private boolean isCorrect;
     private Question question;
 
@@ -20,7 +20,7 @@ public class OptionAnswer extends BaseEntity {
 
     public OptionAnswer(int optionAnswerId, String answerOption, boolean isCorrect, Question question) {
         this.optionAnswerId = optionAnswerId;
-        this.answerOption = answerOption;
+        this.answerContent = answerOption;
         this.isCorrect = isCorrect;
         this.question = question;
     }
@@ -33,12 +33,12 @@ public class OptionAnswer extends BaseEntity {
         this.optionAnswerId = optionAnswerId;
     }
 
-    public String getAnswerOption() {
-        return answerOption;
+    public String getAnswerContent() {
+        return answerContent;
     }
 
-    public void setAnswerOption(String answerOption) {
-        this.answerOption = answerOption;
+    public void setAnswerContent(String answerContent) {
+        this.answerContent = answerContent;
     }
 
     public boolean isIsCorrect() {

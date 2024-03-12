@@ -33,7 +33,7 @@ public class TestDBContext extends DBContext<OptionAnswer> {
             while (rs.next()) {
                 OptionAnswer op = new OptionAnswer();
                 op.setOptionAnswerId(rs.getInt("optionAnswer_id"));
-                op.setAnswerOption(rs.getString("answer_content"));
+                op.setAnswerContent(rs.getString("answer_content"));
                 op.setIsCorrect(rs.getBoolean("isCorrect"));
                 Question q = new Question();
                 q.setQuestionId(rs.getInt("question_id"));
