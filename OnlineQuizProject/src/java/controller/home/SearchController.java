@@ -29,7 +29,7 @@ public class SearchController extends HttpServlet {
         request.setAttribute("searchRegister", searchRegister);
 
         // Chuyển hướng đến trang JSP để hiển thị kết quả
-        request.getRequestDispatcher("view/home/result.jsp").forward(request, response);
+        request.getRequestDispatcher("view/controllerHome/result.jsp").forward(request, response);
     }
 
     @Override

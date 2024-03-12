@@ -4,24 +4,24 @@
  */
 package controller.test;
 
-import controller.authentication.BasedRequiredAuthenticationController;
+import controller.authentication.BasedAuthorizationController;
 import dal.ResultTotalExamDBContext;
 import entity.Account;
 import entity.Result;
+import entity.RoleAccess;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
  * @author tuann
  */
-public class ViewResultExamOfStudent extends BasedRequiredAuthenticationController {
+public class ViewResultExamOfStudent extends BasedAuthorizationController {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
 //        int studentID = Integer.parseInt(request.getParameter("studentID"));
         ResultTotalExamDBContext resultExam = new ResultTotalExamDBContext();
@@ -31,13 +31,13 @@ public class ViewResultExamOfStudent extends BasedRequiredAuthenticationControll
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
     }
 
 }

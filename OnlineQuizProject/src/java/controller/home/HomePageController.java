@@ -21,16 +21,6 @@ public class HomePageController extends BasedRequiredAuthenticationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @param LoggedUser
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
         ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
@@ -107,7 +97,7 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 request.setAttribute("listAccountWithInfo", listAccount);
                 request.setAttribute("listRole", listRole);
                 request.setAttribute("listStatus", listStatus);
-                request.getRequestDispatcher("view/home/homeAdmin.jsp").forward(request, response);
+                request.getRequestDispatcher("view/controllerHome/homeAdmin.jsp").forward(request, response);
                 break;
             case 2:
 
@@ -128,20 +118,20 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 listRegister.size();
                 request.setAttribute("listRegister", listRegister);
 
-                request.getRequestDispatcher("view/home/homeStudent.jsp").forward(request, response);
+                request.getRequestDispatcher("view/controllerHome/homeStudent.jsp").forward(request, response);
                 break;
             default:
-                request.getRequestDispatcher("view/home/home.jsp").forward(request, response);
+                request.getRequestDispatcher("view/controllerHome/home.jsp").forward(request, response);
         }
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
     }
 

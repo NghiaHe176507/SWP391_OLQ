@@ -4,11 +4,13 @@
  */
 package controller.test;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import dal.TestDBContext;
 import entity.Account;
 import entity.Result;
+import entity.RoleAccess;
 import entity.Topic;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -20,9 +22,9 @@ import java.util.ArrayList;
  *
  * @author tuann
  */
-public class ViewResultTestStudent extends BasedRequiredAuthenticationController {
+public class ViewResultTestStudent extends BasedAuthorizationController {
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int pageSize = 4; // Number of items per page
@@ -59,7 +61,6 @@ public class ViewResultTestStudent extends BasedRequiredAuthenticationController
         request.getRequestDispatcher("view/test/ViewListExamTest.jsp").forward(request, response);
     }
 
-// Method to filter the list of results by examination name
     private ArrayList<Result> filterByExamName(ArrayList<Result> resultList, String examName) {
         ArrayList<Result> filteredList = new ArrayList<>();
         for (Result result : resultList) {
@@ -70,14 +71,15 @@ public class ViewResultTestStudent extends BasedRequiredAuthenticationController
         return filteredList;
     }
 
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
     }
 
 }

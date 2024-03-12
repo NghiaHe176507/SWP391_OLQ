@@ -79,6 +79,45 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return null;
     }
 
+    public ArrayList<RoleAccess> getRolesAndFeatures(String username, String url) {
+        ArrayList<RoleAccess> roles = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT r.[role_id]
+                               ,r.[role_name]
+                         \t  ,u.url_id
+                         \t  ,u.[url]
+                           FROM [Role] r INNER JOIN [RoleAccess] ra ON r.role_id = ra.role_id
+                           INNER JOIN [Url] u ON ra.url_id = u.url_id
+                           INNER JOIN [RoleFeature] rf ON r.role_id = rf.role_id
+                           INNER JOIN [Account] a ON a.account_id = rf.account_id
+                           WHERE a.displayname = ? AND u.[url] = ?""";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setString(2, url);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Role r = new Role();
+                r.setRoleId(rs.getInt("role_id"));
+                r.setRoleName(rs.getString("role_name"));
+
+                Url u = new Url();
+                u.setUrlId(rs.getString("url_id"));
+                u.setUrl(rs.getString("url"));
+
+                RoleAccess ra = new RoleAccess();
+                ra.setRole(r);
+                ra.setUrl(u);
+                roles.add(ra);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return roles;
+    }
+
     public void createNewAccount(Account account) {
         try {
             connection.setAutoCommit(false);
@@ -680,7 +719,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listStatus;
     }
 
-
     public ArrayList<AccountInfo> getListAccountLimit(int idPage) {
         ArrayList<AccountInfo> accountList = new ArrayList<>();
         AccountDBContext accountDb = new AccountDBContext();
@@ -765,7 +803,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return accountInfos;
     }
 
-
     public ArrayList<Group> searchGroup(String keyword) {
         ArrayList<Group> groups = new ArrayList<>();
 
@@ -834,8 +871,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 //            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-
-
     public int getTotalGroupsOnline() {
         int totalGroupsOnline = 0;
 
@@ -855,7 +890,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 
         return totalGroupsOnline;
     }
-
 
     public ArrayList<Topic> searchTopic(String keyword) {
         ArrayList<Topic> topics = new ArrayList<>();
@@ -877,8 +911,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
         return topics;
     }
-
- 
 
     public ArrayList<Register> getRegisterByStudentId(int studentId) {
         ArrayList<Register> registers = new ArrayList<>();
@@ -977,7 +1009,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return totalStudents;
     }
 
-     public int getTotalLectures() {
+    public int getTotalLectures() {
         int totalLectures = 0;
         RoleDBContext roleDB = new RoleDBContext();
         AccountDBContext accountDb = new AccountDBContext();
