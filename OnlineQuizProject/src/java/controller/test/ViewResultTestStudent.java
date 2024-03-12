@@ -62,7 +62,7 @@ public class ViewResultTestStudent extends HttpServlet {
     private ArrayList<Result> filterByExamName(ArrayList<Result> resultList, String examName) {
         ArrayList<Result> filteredList = new ArrayList<>();
         for (Result result : resultList) {
-            if (result.getExam().getClassExam().getTopic().getTopicName().equalsIgnoreCase(examName)) {
+            if (result.getExam().getExamTitle().equalsIgnoreCase(examName)) {
                 filteredList.add(result);
             }
         }

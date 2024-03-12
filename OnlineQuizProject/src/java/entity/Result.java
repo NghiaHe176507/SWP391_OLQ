@@ -17,6 +17,7 @@ public class Result extends BaseEntity {
     private AccountInfo studentInfo;
     private Double score;
 
+
     public Result() {
     }
 

@@ -74,30 +74,29 @@ public class TestDBContext extends DBContext<OptionAnswer> {
         ArrayList<Result> listStudentExamResult = new ArrayList<>();
         try {
             String sql = """
-                        SELECT [result_id]
-                              ,t.topic_name
-                              ,acI.fullname
-                              ,[score]
-                          FROM [Result] r INNER JOIN Exam e ON r.exam_id = e.exam_id
-                          INNER JOIN Account a ON r.student_id = a.account_id
-                          INNER JOIN AccountInfo acI ON a.account_id = acI.account_id
-                          INNER JOIN [Group] g ON e.group_id = g.group_id
-                          INNER JOIN [Topic] t ON g.topic_id = t.topic_id""";
+                       SELECT [result_id]
+                             ,e.exam_title
+                       	     ,acI.fullname
+                             ,[score]
+                       	     ,e.isPractice
+                             ,[comment_content]
+                       FROM [dbo].[Result]  r INNER JOIN Exam e ON r.exam_id = e.exam_id
+                       INNER JOIN AccountInfo acI ON r.student_id = acI.accountInfo_id
+                       INNER JOIN [Group] g ON e.group_id = g.group_id
+                       INNER JOIN [Topic] t ON g.topic_id = t.topic_id""";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Result r = new Result();
                 r.setResultId(rs.getInt("result_id"));
                 r.setScore(rs.getDouble("score"));
+                r.setCommentContent(rs.getString("comment_content"));
                 AccountInfo acc = new AccountInfo();
                 acc.setFullName(rs.getString("fullname"));
                 r.setStudentInfo(acc);
-                Topic t = new Topic();
-                t.setTopicName(rs.getString("topic_name"));
-                Group g = new Group();
-                g.setTopic(t);
+
                 Exam e = new Exam();
-                e.setClassExam(g);
+                e.setExamTitle(rs.getString("exam_title"));
                 r.setStudentInfo(acc);
                 r.setExam(e);
                 listStudentExamResult.add(r);

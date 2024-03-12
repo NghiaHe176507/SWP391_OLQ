@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>UserDetails</title>
+        <title>User Details</title>
         <link rel="icon" href="../image/iconlogo.PNG" type="image/x-icon" />
         <link rel="stylesheet" href="css/home.css">
         <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
@@ -46,7 +46,7 @@
             </div>
         </div>
         <section class="vh-100" style="background-color: #f4f5f7;">
-            <div class="container py-5 h-100">
+            <div class="container py-5 h-100 ">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col col-lg-6 mb-4 mb-lg-0">
                         <div class="card mb-3" style="border-radius: .5rem;">
