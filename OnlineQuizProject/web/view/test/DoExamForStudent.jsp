@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,152 +85,164 @@
             </div>
 
             <div class="quiz">
-                <div class="question">
-                    <div class="question-text">Câu hỏi 1: Đâu là thành phố đông dân nhất thế giới?</div>
-                    <div class="answer">
-                        <input type="checkbox" id="q1a" name="q1" value="a">
-                        <label for="q1a">A. Tokyo</label><br>
-                        <input type="checkbox" id="q1b" name="q1" value="b">
-                        <label for="q1b">B. Mumbai</label><br>
-                        <input type="checkbox" id="q1c" name="q1" value="c">
-                        <label for="q1c">C. Seoul</label><br>
-                        <input type="checkbox" id="q1d" name="q1" value="d">
-                        <label for="q1d">D. Jakarta</label>
-                    </div>
-                </div>
+                <!--                <div class="question">
+                                    <div class="question-text">Câu hỏi 1: Đâu là thành phố đông dân nhất thế giới?</div>
+                                    <div class="answer">
+                                        <input type="checkbox" id="q1a" name="q1" value="a">
+                                        <label for="q1a">A. Tokyo</label><br>
+                                        <input type="checkbox" id="q1b" name="q1" value="b">
+                                        <label for="q1b">B. Mumbai</label><br>
+                                        <input type="checkbox" id="q1c" name="q1" value="c">
+                                        <label for="q1c">C. Seoul</label><br>
+                                        <input type="checkbox" id="q1d" name="q1" value="d">
+                                        <label for="q1d">D. Jakarta</label>
+                                    </div>
+                                </div>
+                
+                                <div class="question">
+                                    <div class="question-text">Câu hỏi 2: Ai là nhà văn viết "Tôi thấy hoa vàng trên cỏ xanh"?</div>
+                                    <div class="answer">
+                                        <input type="checkbox" id="q2a" name="q2" value="a">
+                                        <label for="q2a">A. Nguyễn Du</label><br>
+                                        <input type="checkbox" id="q2b" name="q2" value="b">
+                                        <label for="q2b">B. Tố Hữu</label><br>
+                                        <input type="checkbox" id="q2c" name="q2" value="c">
+                                        <label for="q2c">C. Nguyễn Khắc Huy</label><br>
+                                        <input type="checkbox" id="q2d" name="q2" value="d">
+                                        <label for="q2d">D. Xuân Diệu</label>
+                                    </div>
+                                </div>
+                
+                                <div class="question">
+                                    <div class="question-text">Câu hỏi 3: Tác giả của cuốn sách "Nghìn lẻ một đêm" là ai?</div>
+                                    <div class="answer">
+                                        <input type="checkbox" id="q3a" name="q3" value="a">
+                                        <label for="q3a">A. Homer</label><br>
+                                        <input type="checkbox" id="q3b" name="q3" value="b">
+                                        <label for="q3b">B. Shakespeare</label><br>
+                                        <input type="checkbox" id="q3c" name="q3" value="c">
+                                        <label for="q3c">C. Alexandre Dumas</label><br>
+                                        <input type="checkbox" id="q3d" name="q3" value="d">
+                                        <label for="q3d">D. Antoine Galland</label>
+                                    </div>
+                                </div>
+                
+                                <div class="question">
+                                    <div class="question-text">Câu hỏi 4: Thành phố nào được biết đến với tượng Nữ thần Tự do?</div>
+                                    <div class="answer">
+                                        <input type="checkbox" id="q4a" name="q4" value="a">
+                                        <label for="q4a">A. New York City</label><br>
+                                        <input type="checkbox" id="q4b" name="q4" value="b">
+                                        <label for="q4b">B. Paris</label><br>
+                                        <input type="checkbox" id="q4c" name="q4" value="c">
+                                        <label for="q4c">C. London</label><br>
+                                        <input type="checkbox" id="q4d" name="q4" value="d">
+                                        <label for="q4d">D. Tokyo</label>
+                                    </div>
+                                </div>
+                
+                                <div class="question">
+                                    <div class="question-text">Câu hỏi 5: Ai là người phát minh ra bóng đèn điện?</div>
+                                    <div class="answer">
+                                        <input type="checkbox" id="q5a" name="q5" value="a">
+                                        <label for="q5a">A. Thomas Edison</label><br>
+                                        <input type="checkbox" id="q5b" name="q5" value="b">
+                                        <label for="q5b">B. Nikola Tesla</label><br>
+                                        <input type="checkbox" id="q5c" name="q5" value="c">
+                                        <label for="q5c">C. Alexander Graham Bell</label><br>
+                                        <input type="checkbox" id="q5d" name="q5" value="d">
+                                        <label for="q5d">D. Galileo Galilei</label>
+                                    </div>
+                                </div>
+                
+                                <div class="question">
+                                    <div class="question-text">Câu hỏi 6: Ai là người phát minh ra bóng đèn điện?</div>
+                                    <div class="answer">
+                                        <input type="checkbox" id="q6a" name="q6" value="a">
+                                        <label for="q6a">A. Thomas Edison</label><br>
+                                        <input type="checkbox" id="q6b" name="q6" value="b">
+                                        <label for="q6b">B. Nikola Tesla</label><br>
+                                        <input type="checkbox" id="q6c" name="q6" value="c">
+                                        <label for="q6c">C. Alexander Graham Bell</label><br>
+                                        <input type="checkbox" id="q6d" name="q6" value="d">
+                                        <label for="q6d">D. Galileo Galilei</label>
+                                    </div>
+                                </div>
+                
+                                <div class="question">
+                                    <div class="question-text">Câu hỏi 7: Ai là người phát minh ra bóng đèn điện?</div>
+                                    <div class="answer">
+                                        <input type="checkbox" id="q7a" name="q7" value="a">
+                                        <label for="q7a">A. Thomas Edison</label><br>
+                                        <input type="checkbox" id="q7b" name="q7" value="b">
+                                        <label for="q7b">B. Nikola Tesla</label><br>
+                                        <input type="checkbox" id="q7c" name="q7" value="c">
+                                        <label for="q7c">C. Alexander Graham Bell</label><br>
+                                        <input type="checkbox" id="q7d" name="q7" value="d">
+                                        <label for="q7d">D. Galileo Galilei</label>
+                                    </div>
+                                </div>
+                
+                                <div class="question">
+                                    <div class="question-text">Câu hỏi 8: Ai là người phát minh ra bóng đèn điện?</div>
+                                    <div class="answer">
+                                        <input type="checkbox" id="q8a" name="q8" value="a">
+                                        <label for="q8a">A. Thomas Edison</label><br>
+                                        <input type="checkbox" id="q8b" name="q8" value="b">
+                                        <label for="q8b">B. Nikola Tesla</label><br>
+                                        <input type="checkbox" id="q8c" name="q8" value="c">
+                                        <label for="q8c">C. Alexander Graham Bell</label><br>
+                                        <input type="checkbox" id="q8d" name="q8" value="d">
+                                        <label for="q8d">D. Galileo Galilei</label>
+                                    </div>
+                                </div>
+                                <button class="submit-button" onclick="submitQuiz()">Finish Quiz!!!</button>
+                            </div>-->
 
-                <div class="question">
-                    <div class="question-text">Câu hỏi 2: Ai là nhà văn viết "Tôi thấy hoa vàng trên cỏ xanh"?</div>
-                    <div class="answer">
-                        <input type="checkbox" id="q2a" name="q2" value="a">
-                        <label for="q2a">A. Nguyễn Du</label><br>
-                        <input type="checkbox" id="q2b" name="q2" value="b">
-                        <label for="q2b">B. Tố Hữu</label><br>
-                        <input type="checkbox" id="q2c" name="q2" value="c">
-                        <label for="q2c">C. Nguyễn Khắc Huy</label><br>
-                        <input type="checkbox" id="q2d" name="q2" value="d">
-                        <label for="q2d">D. Xuân Diệu</label>
+                <% int questionNumber = 1; %>
+                <c:forEach var="mappingId" items="${requestScope.listMappingQuestionId}">
+                    <%-- Retrieve question and answers based on mappingId, you can modify this part --%>
+                    <%-- Here we use placeholder data for demonstration --%>
+                    <div class="question">
+                        <div class="question-text">
+                            Câu hỏi <%= questionNumber %>: ${mappingId.question.questionContent}
+                        </div>
                     </div>
-                </div>
-
-                <div class="question">
-                    <div class="question-text">Câu hỏi 3: Tác giả của cuốn sách "Nghìn lẻ một đêm" là ai?</div>
-                    <div class="answer">
-                        <input type="checkbox" id="q3a" name="q3" value="a">
-                        <label for="q3a">A. Homer</label><br>
-                        <input type="checkbox" id="q3b" name="q3" value="b">
-                        <label for="q3b">B. Shakespeare</label><br>
-                        <input type="checkbox" id="q3c" name="q3" value="c">
-                        <label for="q3c">C. Alexandre Dumas</label><br>
-                        <input type="checkbox" id="q3d" name="q3" value="d">
-                        <label for="q3d">D. Antoine Galland</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <div class="question-text">Câu hỏi 4: Thành phố nào được biết đến với tượng Nữ thần Tự do?</div>
-                    <div class="answer">
-                        <input type="checkbox" id="q4a" name="q4" value="a">
-                        <label for="q4a">A. New York City</label><br>
-                        <input type="checkbox" id="q4b" name="q4" value="b">
-                        <label for="q4b">B. Paris</label><br>
-                        <input type="checkbox" id="q4c" name="q4" value="c">
-                        <label for="q4c">C. London</label><br>
-                        <input type="checkbox" id="q4d" name="q4" value="d">
-                        <label for="q4d">D. Tokyo</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <div class="question-text">Câu hỏi 5: Ai là người phát minh ra bóng đèn điện?</div>
-                    <div class="answer">
-                        <input type="checkbox" id="q5a" name="q5" value="a">
-                        <label for="q5a">A. Thomas Edison</label><br>
-                        <input type="checkbox" id="q5b" name="q5" value="b">
-                        <label for="q5b">B. Nikola Tesla</label><br>
-                        <input type="checkbox" id="q5c" name="q5" value="c">
-                        <label for="q5c">C. Alexander Graham Bell</label><br>
-                        <input type="checkbox" id="q5d" name="q5" value="d">
-                        <label for="q5d">D. Galileo Galilei</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <div class="question-text">Câu hỏi 6: Ai là người phát minh ra bóng đèn điện?</div>
-                    <div class="answer">
-                        <input type="checkbox" id="q6a" name="q6" value="a">
-                        <label for="q6a">A. Thomas Edison</label><br>
-                        <input type="checkbox" id="q6b" name="q6" value="b">
-                        <label for="q6b">B. Nikola Tesla</label><br>
-                        <input type="checkbox" id="q6c" name="q6" value="c">
-                        <label for="q6c">C. Alexander Graham Bell</label><br>
-                        <input type="checkbox" id="q6d" name="q6" value="d">
-                        <label for="q6d">D. Galileo Galilei</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <div class="question-text">Câu hỏi 7: Ai là người phát minh ra bóng đèn điện?</div>
-                    <div class="answer">
-                        <input type="checkbox" id="q7a" name="q7" value="a">
-                        <label for="q7a">A. Thomas Edison</label><br>
-                        <input type="checkbox" id="q7b" name="q7" value="b">
-                        <label for="q7b">B. Nikola Tesla</label><br>
-                        <input type="checkbox" id="q7c" name="q7" value="c">
-                        <label for="q7c">C. Alexander Graham Bell</label><br>
-                        <input type="checkbox" id="q7d" name="q7" value="d">
-                        <label for="q7d">D. Galileo Galilei</label>
-                    </div>
-                </div>
-
-                <div class="question">
-                    <div class="question-text">Câu hỏi 8: Ai là người phát minh ra bóng đèn điện?</div>
-                    <div class="answer">
-                        <input type="checkbox" id="q8a" name="q8" value="a">
-                        <label for="q8a">A. Thomas Edison</label><br>
-                        <input type="checkbox" id="q8b" name="q8" value="b">
-                        <label for="q8b">B. Nikola Tesla</label><br>
-                        <input type="checkbox" id="q8c" name="q8" value="c">
-                        <label for="q8c">C. Alexander Graham Bell</label><br>
-                        <input type="checkbox" id="q8d" name="q8" value="d">
-                        <label for="q8d">D. Galileo Galilei</label>
-                    </div>
-                </div>
-                <button class="submit-button" onclick="submitQuiz()">Finish Quiz!!!</button>
+                    <% questionNumber++; %>
+                </c:forEach>
+                <button class="submit-button" onclick="submitQuiz()">Hoàn thành bài thi!!!</button>
             </div>
 
-        </div>
+            <!-- End of header section -->
 
-        <!-- End of header section -->
+            <!-- Admin content section -->
 
-        <!-- Admin content section -->
-
-        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Join group by code</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form>
-                  <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Code:</label>
-                    <input type="text" class="form-control" id="recipient-name" placeholder="Enter code here........">
+            <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Join group by code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                   </div>
-                </form>
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Code:</label>
+                        <input type="text" class="form-control" id="recipient-name" placeholder="Enter code here........">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Join <i class="fa-solid fa-right-to-bracket"></i> </button>
+                  </div>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Join <i class="fa-solid fa-right-to-bracket"></i> </button>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
+            </div> -->
+        </div>
         <!-- Footer section -->
         <div id="footer">
             <!-- Social Icons -->
