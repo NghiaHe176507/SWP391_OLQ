@@ -4,7 +4,8 @@
  */
 package entity;
 
-import java.util.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 /**
  *
@@ -15,9 +16,9 @@ public class Exam extends BaseEntity {
     private int examId;
     private String examTitle;
     private Group classExam;
-    private Date examStartDate;
-    private Date examEndDate;
-    private Date examTime;
+    private Timestamp examStartDate;
+    private Timestamp examEndDate;
+    private Time examTime;
     private Status status;
     private AccountInfo lectureInfo;
     private int examAttemp;
@@ -26,7 +27,7 @@ public class Exam extends BaseEntity {
     public Exam() {
     }
 
-    public Exam(int examId, String examTitle, Group classExam, Date examStartDate, Date examEndDate, Date examTime, Status status, AccountInfo lectureInfo, int examAttemp, boolean isPractice) {
+    public Exam(int examId, String examTitle, Group classExam, Timestamp examStartDate, Timestamp examEndDate, Time examTime, Status status, AccountInfo lectureInfo, int examAttemp, boolean isPractice) {
         this.examId = examId;
         this.examTitle = examTitle;
         this.classExam = classExam;
@@ -63,27 +64,27 @@ public class Exam extends BaseEntity {
         this.classExam = classExam;
     }
 
-    public Date getExamStartDate() {
+    public Timestamp getExamStartDate() {
         return examStartDate;
     }
 
-    public void setExamStartDate(Date examStartDate) {
+    public void setExamStartDate(Timestamp examStartDate) {
         this.examStartDate = examStartDate;
     }
 
-    public Date getExamEndDate() {
+    public Timestamp getExamEndDate() {
         return examEndDate;
     }
 
-    public void setExamEndDate(Date examEndDate) {
+    public void setExamEndDate(Timestamp examEndDate) {
         this.examEndDate = examEndDate;
     }
 
-    public Date getExamTime() {
+    public Time getExamTime() {
         return examTime;
     }
 
-    public void setExamTime(Date examTime) {
+    public void setExamTime(Time examTime) {
         this.examTime = examTime;
     }
 

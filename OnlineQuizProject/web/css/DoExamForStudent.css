@@ -1,0 +1,496 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 12, 2024, 9:05:19 AM
+    Author     : nghia
+*/
+
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jan 27, 2024, 1:21:22 AM
+    Author     : nghia
+*/
+
+/* Reset CSS */
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Poppins", sans-serif;
+    scroll-behavior: smooth;
+}
+.container {
+    min-height: 100%;
+    position: relative;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+/* Common Styles */
+.header {
+    background-color: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Logo Styles */
+.logo {
+    text-align: justify;
+}
+
+.logo a {
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-size: 36px;
+    background: linear-gradient(135deg, #9a3cbf, #4397ce);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: transform 0.2s ease-in-out;
+}
+
+.logo:active {
+    transform: scale(0.9);
+}
+
+/* Search Container Styles */
+.search-container {
+    display: flex;
+    width: 80%;
+}
+
+/* Search Input Styles */
+.search-container {
+    padding: 10px;
+}
+#searchInput {
+    flex-grow: 1;
+    padding: 10px;
+    border: 2px solid #fff;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+}
+
+/* Search Button Styles */
+#searchButton {
+    padding: 10px;
+    background: linear-gradient(135deg, #9a3cbf, #4397ce);
+    color: #fff;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#searchButton:hover {
+    background: linear-gradient(135deg, #4397ce, #9a3cbf);
+    transform: scale(1.05);
+}
+
+#searchButton:active {
+    transform: scale(0.95);
+}
+
+/* Navigation menu styles */
+.custom-icon {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.circle-background {
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ccc;
+    width: 45px;
+    height: 45px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-icon:hover .circle-background {
+    background-color: #ddd;
+}
+
+.profile-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+/*  */
+
+.login {
+
+}
+
+#nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+#nav>li {
+    display: inline-block; /* Hiển thị các li trên cùng một dòng */
+}
+
+#nav .fa-bell {
+    font-size: 36px; /* Đặt kích thước của biểu tượng chuông */
+    position: relative; /* Đặt vị trí tương đối để thực hiện hiệu ứng */
+    cursor: pointer; /* Biến con trỏ thành dạng bàn tay khi di chuột qua */
+    transition: color 0.3s; /* Tạo hiệu ứng màu khi hover */
+    color: #fff;
+    background-color: #000;
+    padding-top: 5px;
+}
+
+#nav .fa-bell:hover {
+    color: palevioletred; /* Màu khi di chuột qua */
+}
+
+#nav .fa-bell::after {
+    content: ''; /* Tạo một pseudo-element để làm hình nền của hiệu ứng nhấp chuột */
+    position: absolute; /* Đặt vị trí tuyệt đối để che phủ biểu tượng */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2); /* Màu nền của hiệu ứng khi nhấp chuột */
+    border-radius: 50%; /* Tạo hình tròn */
+    opacity: 0; /* Ẩn mặc định */
+    transition: opacity 0.3s; /* Tạo hiệu ứng độ mờ */
+}
+
+#nav .fa-bell:active::after {
+    opacity: 1; /* Hiển thị hiệu ứng khi nhấp chuột */
+}
+
+
+.subnav {
+    list-style-type: none;
+    padding: 15px;
+}
+
+#nav .subnav {
+    display: none;
+    min-width: 160px;
+    background-color: #000;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+#nav .subnav a {
+    color: white;
+    line-height: 38px;
+    text-decoration: none;
+}
+
+#nav .nav-arraow-down {
+    font-size: 14px;
+}
+
+#nav li:hover .subnav {
+    display: block;
+}
+
+#nav .subnav li:hover a,
+#nav > li:hover > a {
+    color: palevioletred;
+}
+
+/* Create Styles */
+.create {
+    text-align: center;
+}
+
+.create a {
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #9a3cbf, #4397ce);
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.create a:hover {
+    background: linear-gradient(135deg, #4397ce, #9a3cbf);
+    transform: scale(1.05);
+}
+
+.create a:active {
+    transform: scale(0.95);
+}
+/* Footer Section Styles */
+#footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #4397ce, #9a3cbf);
+    color: white;
+    text-align: center;
+    transition: transform 0.5s ease-in-out;
+    padding: 5px;
+}
+
+#footer a{
+    color: #000;
+}
+
+.slogan {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Space Styles */
+.space {
+    padding: 39px;
+}
+
+/* Slider Section Styles */
+#carouselExampleIndicators {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
+/* Custom styles for carousel images */
+#carouselExampleIndicators img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
+.topic {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các div con xuống dòng khi không đủ không gian */
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px; /* Khoảng cách lề bên trong div topic */
+    border: 1px solid #ccc; /* Đường viền của div topic */
+    border-radius: 10px; /* Bo góc cho div topic */
+}
+
+.topic-info {
+    flex: 0 0 calc(25% - 15px); /* Chia cột cho 4 div con, với khoảng cách giữa chúng là 15px */
+    margin: 15px; /* Khoảng cách giữa các div con */
+    border: 1px solid #ccc; /* Đường viền của div con */
+    border-radius: 5px; /* Bo góc cho div con */
+    padding: 10px; /* Khoảng cách lề bên trong div con */
+}
+
+.show-all {
+    width: 100%;
+    margin-top: 15px; /* Khoảng cách giữa div con và div show-all */
+}
+
+.show-all a {
+    display: block;
+    text-align: right;
+    text-decoration: none;
+    color: #007BFF;
+}
+
+/*  */
+.main-div {
+    position: relative;
+}
+
+.dropdown {
+    position: relative;
+    z-index: 1;
+}
+
+.dropdown-title {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.dropdown-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.dropdown-list.show {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.other-content {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+/* CSS để xóa viền và thêm border */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.quiz {
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.question {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.question-text {
+    font-weight: bold;
+}
+
+.answer {
+    margin-left: 20px;
+}
+
+/* CSS để thay đổi giao diện khi hover */
+.question:hover {
+    background-color: #f5f5f5;
+}
+
+/* CSS để thay đổi giao diện khi chọn */
+.answer input[type="checkbox"]:checked+label {
+    background-color: #e0e0e0;
+}
+
+/* CSS cho label và input cùng một hàng */
+.answer label,
+.answer input[type="checkbox"] {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Khoảng cách giữa checkbox và label */
+.answer label {
+    margin-left: 5px;
+}
+
+
+/* CSS cho nút Nộp bài */
+.submit-button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: rgb(223, 58, 58);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: rgb(119, 33, 33);
+}
+
+
+.create {
+    text-align: center;
+}
+
+
+#joinGroupButton {
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: #fff;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #9a3cbf, #4397ce);
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
+}
+
+#joinGroupButton:hover {
+    background: linear-gradient(135deg, #4397ce, #9a3cbf);
+    transform: scale(1.05);
+}
+
+#joinGroupButton:active {
+    transform: scale(0.95);
+}
+/* CSS */
+
+.code {
+    margin-top: 20px;
+    display: inline block;
+    text-align: center;
+    width: 100%;
+}
+
+#groupNameInput{
+    width: 80%;
+    padding: 20px;
+}
+
+#joinGroupButton {
+    padding: 11px;
+    background: linear-gradient(135deg, #9a3cbf, #4397ce);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#joinGroupButton:hover {
+    background: linear-gradient(135deg, #4397ce, #9a3cbf);
+    transform: scale(1.05);
+}
+
+#joinGroupButton  :active {
+    transform: scale(0.95);
+}

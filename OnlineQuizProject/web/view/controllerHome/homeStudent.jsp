@@ -192,9 +192,6 @@
                 <div class="create col-md-1">
                     <button type="button" class="btn btn-primary" id="joinGroupButton" data-toggle="modal" data-target="#exampleModal"
                             data-whatever="@mdo">Join group</button>
-
-
-
                 </div>
 
                 <!-- Search container -->
