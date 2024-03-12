@@ -21,6 +21,16 @@ public class HomePageController extends BasedRequiredAuthenticationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @param LoggedUser
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
         ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
@@ -29,27 +39,9 @@ public class HomePageController extends BasedRequiredAuthenticationController {
         ArrayList<Status> listStatus = db.getListStatus();
         ArrayList<Topic> listTopic = db.getListTopic();
         ArrayList<Group> listAllGroup = db.getListGroup();
-
+        request.setAttribute("db", db);
         switch (db.getRoleFeatureByAccountId(LoggedUser.getAccountId()).getRole().getRoleId()) {
             case 1:
-
-//                String keyword = request.getParameter("query");
-//                ArrayList<AccountInfo> searchAccount = acountInfo.searchAccount(keyword);
-//                int pageSize = 5; // Number of items per page                                                                                       
-//                int page = 1; // Default page number
-//                if (request.getParameter("page") != null) {
-//                    page = Integer.parseInt(request.getParameter("page"));
-//                }
-//
-//                // Paginate the data
-//                int totalItems = listAccount.size();
-//                int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-//                request.setAttribute("totalPages", totalPages);
-//                request.setAttribute("currentPage", page);
-//
-//                int startIndex = (page - 1) * pageSize;
-//                int endIndex = Math.min(startIndex + pageSize, totalItems);
-//                ArrayList<AccountInfo> paginatedList = new ArrayList<>(listAccount.subList(startIndex, endIndex));
                 String keyword = request.getParameter("query");
 
                 int pageSize = 10; // Number of items per page
@@ -57,8 +49,6 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 if (request.getParameter("page") != null) {
                     page = Integer.parseInt(request.getParameter("page"));
                 }
-
-//              Paginate the data
                 int totalItems;
                 ArrayList<AccountInfo> paginatedList = new ArrayList<>();
 
@@ -106,7 +96,7 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 ArrayList<Group> listGroupOwned = db.getListGroupOwnedByLectureId(accountInfo.getAccountInfoId());
 
                 request.setAttribute("listGroup", listGroupOwned);
-                request.getRequestDispatcher("view/home/homeLecture.jsp").forward(request, response);
+                request.getRequestDispatcher("view/controllerHome/homeLecture.jsp").forward(request, response);
                 break;
             case 3:
                 String keywords = request.getParameter("searchQuery");
@@ -116,6 +106,7 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 int studentId = LoggedUser.getAccountId();
                 ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
                 listRegister.size();
+
                 request.setAttribute("listRegister", listRegister);
 
                 request.getRequestDispatcher("view/controllerHome/homeStudent.jsp").forward(request, response);
@@ -126,12 +117,12 @@ public class HomePageController extends BasedRequiredAuthenticationController {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
     }
 

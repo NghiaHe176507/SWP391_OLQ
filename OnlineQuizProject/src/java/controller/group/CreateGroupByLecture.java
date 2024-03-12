@@ -5,7 +5,6 @@
 package controller.group;
 
 import controller.authentication.BasedAuthorizationController;
-import controller.authentication.BasedRequiredAuthenticationController;
 import dal.AccountDBContext;
 import dal.AccountInfoDBContext;
 import dal.ControllerDBContext;

@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.topic;
 
 import controller.authentication.BasedAuthorizationController;
@@ -23,12 +22,35 @@ import java.util.ArrayList;
 public class ViewListTopic extends BasedAuthorizationController {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<Topic> listTopic = db.getListTopic();
-        request.setAttribute("listTopic", listTopic);
+
+        // Pagination parameters
+        int pageSize = 5; // Number of items per page
+        int currentPage = 1; // Default current page number
+
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        // Calculate startIndex and endIndex for pagination
+        int totalItems = listTopic.size();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalItems);
+
+        // Retrieve sublist of topics based on pagination
+        ArrayList<Topic> paginatedList = new ArrayList<>(listTopic.subList(startIndex, endIndex));
+
+        // Set attributes for pagination and paginated list
+        request.setAttribute("listTopic", paginatedList);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", currentPage);
+
+        // Forward the request to the JSP page
         request.getRequestDispatcher("/view/controllerTopic/TopicManagement.jsp").forward(request, response);
-    } 
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
@@ -40,5 +62,4 @@ public class ViewListTopic extends BasedAuthorizationController {
         processRequest(request, response, LoggedUser, roles);
     }
 
-    
 }

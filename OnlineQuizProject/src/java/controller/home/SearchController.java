@@ -12,23 +12,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class SearchController extends HttpServlet {
+
     ControllerDBContext db = new ControllerDBContext();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String keyword = request.getParameter("query");
-        // Gọi hàm searchGroup từ GroupDBContext để tìm kiếm
         ArrayList<Group> searchResults = db.searchGroup(keyword);
         ArrayList<Topic> searchTopic = db.searchTopic(keyword);
         ArrayList<Register> searchRegister = db.searchRegister(keyword);
-        
 
-        // Đặt kết quả tìm kiếm vào attribute của request để truyền cho JSP
         request.setAttribute("searchTopic", searchTopic);
         request.setAttribute("searchResults", searchResults);
         request.setAttribute("searchRegister", searchRegister);
 
-        // Chuyển hướng đến trang JSP để hiển thị kết quả
         request.getRequestDispatcher("view/controllerHome/result.jsp").forward(request, response);
     }
 
