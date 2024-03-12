@@ -201,8 +201,6 @@
 
                 <% int questionNumber = 1; %>
                 <c:forEach var="mappingId" items="${requestScope.listMappingQuestionId}">
-                    <%-- Retrieve question and answers based on mappingId, you can modify this part --%>
-                    <%-- Here we use placeholder data for demonstration --%>
                     <div class="question">
                         <div class="question-text">
                             Câu hỏi <%= questionNumber %>: ${mappingId.question.questionContent}
