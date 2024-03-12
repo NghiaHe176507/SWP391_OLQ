@@ -35,8 +35,8 @@ public class DoExamForStudent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ArrayList<ExamQuestionMapping> listMappingQuestionId = db.getListExamQuestionMappingByExamId(1);
-        request.setAttribute("listMappingQuestionId", listMappingQuestionId);
+//        ArrayList<ExamQuestionMapping> listMappingQuestionId = db.getListExamQuestionMappingByExamId(1);
+//        request.setAttribute("listMappingQuestionId", listMappingQuestionId);
         request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
     }
     

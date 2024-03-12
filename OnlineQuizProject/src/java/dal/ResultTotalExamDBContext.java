@@ -20,9 +20,9 @@ import java.util.logging.Logger;
  *
  * @author tuann
  */
-public class ResultDBContext extends DBContext<Result> {
+public class ResultTotalExamDBContext extends DBContext<Result> {
 
-    public Result getByStudentId(int studentID) {
+   public Result getByStudentId(int studentID) {
         try {
             String sql = """
                          SELECT e.[exam_id]
@@ -54,7 +54,7 @@ public class ResultDBContext extends DBContext<Result> {
                 e.setExamTime(rs.getTime("time"));
                 e.setExamAttemp(rs.getInt("attempt"));
                 e.setIsPractice(rs.getBoolean("isPractice"));
-                e.setExamStartDate(rs.getTimestamp("startDate"));
+                e.setExamStartDate(rs.getTimestamp( "startDate"));
                 Status s = new Status();
                 s.setStatusName(rs.getString("status_name"));
                 e.setStatus(s);
@@ -63,7 +63,7 @@ public class ResultDBContext extends DBContext<Result> {
                 Group g = new Group();
                 g.setGroupName(rs.getString("group_name"));
                 g.setTopic(t);
-                e.setGroup(g);
+                e.setClassExam(g);
                 Result r = new Result();
                 r.setScore(rs.getDouble("score"));
                 AccountInfo ac = new AccountInfo();
@@ -74,7 +74,7 @@ public class ResultDBContext extends DBContext<Result> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ResultDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultTotalExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

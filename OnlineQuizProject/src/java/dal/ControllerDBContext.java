@@ -26,8 +26,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     GroupDBContext groupDB = new GroupDBContext();
     RoleDBContext roleDB = new RoleDBContext();
     TopicDBContext topicDB = new TopicDBContext();
-    ExamQuestionMappingDBContext examQuestionMappingDB = new ExamQuestionMappingDBContext();
-    ExamDBContext examDB = new ExamDBContext();
 
     public ArrayList<AccountInfo> getListAccountWithInfo() {
         ArrayList<AccountInfo> listAccount = new ArrayList<>();
@@ -797,6 +795,42 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return groups;
     }
 
+//    public void joinGroup(int accountId, String groupCode) {
+//        try {
+//            // Tìm group_id dựa vào group_invite_code
+//            String groupQuery = "SELECT [group_id] FROM [Group] WHERE [group_invite_code] = ?";
+//            PreparedStatement groupStm = connection.prepareStatement(groupQuery);
+//            groupStm.setString(1, groupCode);
+//            ResultSet groupRs = groupStm.executeQuery();
+//
+//            if (groupRs.next()) {
+//                int groupId = groupRs.getInt("group_id");
+//
+//                // Kiểm tra xem sinh viên đã đăng ký vào nhóm chưa
+//                String checkQuery = "SELECT COUNT(*) AS count FROM [Register] WHERE [student_id] = ? AND [group_id] = ?";
+//                PreparedStatement checkStm = connection.prepareStatement(checkQuery);
+//                checkStm.setInt(1, accountId);
+//                checkStm.setInt(2, groupId);
+//                ResultSet checkRs = checkStm.executeQuery();
+//
+//                if (checkRs.next() && checkRs.getInt("count") == 0) {
+//                    // Nếu sinh viên chưa đăng ký vào nhóm, thêm vào bảng Register
+//                    String insertQuery = "INSERT INTO [Register] ([register_date], [student_id], [group_id]) VALUES (GETDATE(), ?, ?)";
+//                    PreparedStatement insertStm = connection.prepareStatement(insertQuery);
+//                    insertStm.setInt(1, accountId);
+//                    insertStm.setInt(2, groupId);
+//                    insertStm.executeUpdate();
+//                    System.out.println("Student with ID " + accountId + " has joined the group.");
+//                } else {
+//                    System.out.println("Student with ID " + accountId + " is already registered in the group.");
+//                }
+//            } else {
+//                System.out.println("Group with code " + groupCode + " does not exist.");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     public int getTotalGroupsOnline() {
         int totalGroupsOnline = 0;
 
@@ -914,6 +948,8 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 
     public int getTotalStudents() {
         int totalStudents = 0;
+        RoleDBContext roleDB = new RoleDBContext();
+        AccountDBContext accountDb = new AccountDBContext();
         try {
             String sql = """
                      SELECT COUNT(*) AS TotalStudents
@@ -935,6 +971,8 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 
     public int getTotalLectures() {
         int totalLectures = 0;
+        RoleDBContext roleDB = new RoleDBContext();
+        AccountDBContext accountDb = new AccountDBContext();
         try {
             String sql = """
                  SELECT COUNT(*) AS TotalLectures
@@ -1113,50 +1151,5 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-    }
-
-    public ArrayList<ExamQuestionMapping> getListExamQuestionMappingByExamId(int ExamId) {
-        ArrayList<ExamQuestionMapping> listExamQuestionMapping = new ArrayList<>();
-        try {
-            String sql = """
-                         SELECT [mapping_id]
-                           FROM [ExamQuestionMapping] WHERE[exam_id]=?""";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, ExamId);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                ExamQuestionMapping examQuestionMapping = new ExamQuestionMapping();
-                examQuestionMapping = examQuestionMappingDB.getById(String.valueOf(rs.getInt("mapping_id")));
-                listExamQuestionMapping.add(examQuestionMapping);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listExamQuestionMapping;
-
-    }
-
-    public ArrayList<Exam> getListExamByGroupId(int groupId) {
-        ArrayList<Exam> listExam = new ArrayList<>();
-        try {
-            String sql = """
-                         SELECT [exam_id]
-                             FROM [Exam]
-                             WHERE [group_id]=?""";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, groupId);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Exam exam = new Exam();
-                exam = examDB.getById(String.valueOf(rs.getInt("exam_id")));
-                listExam.add(exam);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listExam;
-
     }
 }
