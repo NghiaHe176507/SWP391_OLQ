@@ -242,62 +242,65 @@
                             <form action="viewGroupDetail" method="GET"> 
                                 <div class="row">
                                     <div class="row" style="padding-left: 40px;margin-bottom: 5px;">
-                                        <a href="#" class="btn btn-1 color-black topic-info-link">
+                                        <button type="submit" class="btn btn-1 color-black topic-info-link">
                                             <svg>
                                             <rect x="0" y="0" fill="none" width="100%" height="100%"/>
                                             </svg>
                                             More Details
-                                        </a>
+                                        </button>
                                     </div>
-                            </form>
-                                    <form action="unenroll" method="POST"> 
-                                        <div class="row" style="padding-left: 27px;margin-bottom: 5px;    margin-right: 11px;">
-                                            <input type="hidden" name="groupId" id="groupId" value="${register.group.groupId}"> 
-                                            <button class="unenrollButton btn btn-1 color-red">
-                                                <svg>
-                                                <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                                </svg>
-                                                Unenroll group</i>
-                                            </button>
-                                    </form>
                                 </div>
+                                <input type="hidden" name="groupId" value="${register.group.groupId}" />
+                            </form>
+
+                            <form action="unenroll" method="POST"> 
+                                <div class="row" style="padding-left: 27px;margin-bottom: 5px;    margin-right: 11px;">
+                                    <input type="hidden" name="groupId" id="groupId" value="${register.group.groupId}"> 
+                                    <button class="unenrollButton btn btn-1 color-red">
+                                        <svg>
+                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                        </svg>
+                                        Unenroll group</i>
+                                    </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </c:forEach>
-
-        <div class="show-all">
-            <a href="#" id="showAllBtn">Show all group</a>
-            <a href="#" id="showLessBtn" style="display: none;">Show less</a>
         </div>
+    </c:forEach>
+
+    <div class="show-all">
+        <a href="#" id="showAllBtn">Show all group</a>
+        <a href="#" id="showLessBtn" style="display: none;">Show less</a>
     </div>
+</div>
 
-    <% String alertMessage = (String) request.getAttribute("alertMessage"); %>
-    <% if (alertMessage != null && !alertMessage.isEmpty()) { %>
-    <script>
-        alert("<%= alertMessage %>");
-        var baseUrl = "<%= request.getContextPath() %>";
-        window.location.href = baseUrl + "/home";
-    </script>
-    <% } %>
+<% String alertMessage = (String) request.getAttribute("alertMessage"); %>
+<% if (alertMessage != null && !alertMessage.isEmpty()) { %>
+<script>
+    alert("<%= alertMessage %>");
+    var baseUrl = "<%= request.getContextPath() %>";
+    window.location.href = baseUrl + "/home";
+</script>
+<% } %>
 
-    <c:if test="${not empty message}">
-        <c:choose>
-            <c:when test="${checkRegister eq 'true'}">
-                <script>
-                    alert("${message}");
-                    redirectHome();
-                </script>
-            </c:when>
-            <c:otherwise>
-                <script>
-                    alert("${message}");
-                    redirectHome();
-                </script>
-            </c:otherwise>
-        </c:choose>
-    </c:if>
+<c:if test="${not empty message}">
+    <c:choose>
+        <c:when test="${checkRegister eq 'true'}">
+            <script>
+                alert("${message}");
+                redirectHome();
+            </script>
+        </c:when>
+        <c:otherwise>
+            <script>
+                alert("${message}");
+                redirectHome();
+            </script>
+        </c:otherwise>
+    </c:choose>
+</c:if>
 </div>
 <!-- End of header section -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
