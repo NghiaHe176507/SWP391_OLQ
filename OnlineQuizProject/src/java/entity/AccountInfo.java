@@ -17,6 +17,7 @@ public class AccountInfo extends BaseEntity {
     private Date dob;
     private Account account;
 
+
     public AccountInfo() {
     }
 
