@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class ResultTotalExamDBContext extends DBContext<Result> {
 
-    public Result getByStudentId(int studentID) {
+   public Result getByStudentId(int studentID) {
         try {
             String sql = """
                          SELECT e.[exam_id]
@@ -50,11 +50,11 @@ public class ResultTotalExamDBContext extends DBContext<Result> {
                 Exam e = new Exam();
                 e.setExamId(rs.getInt("exam_id"));
                 e.setExamTitle(rs.getString("exam_title"));
-                e.setExamEndDate(rs.getDate("endDate"));
-                e.setExamTime(rs.getDate("time"));
+                e.setExamEndDate(rs.getTimestamp("endDate"));
+                e.setExamTime(rs.getTime("time"));
                 e.setExamAttemp(rs.getInt("attempt"));
                 e.setIsPractice(rs.getBoolean("isPractice"));
-                e.setExamStartDate(rs.getDate("startDate"));
+                e.setExamStartDate(rs.getTimestamp( "startDate"));
                 Status s = new Status();
                 s.setStatusName(rs.getString("status_name"));
                 e.setStatus(s);

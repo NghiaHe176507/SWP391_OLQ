@@ -266,7 +266,7 @@
         </c:forEach>
 
         <div class="show-all">
-            <a href="#" id="showAllBtn">Show all topic</a>
+            <a href="#" id="showAllBtn">Show all group</a>
             <a href="#" id="showLessBtn" style="display: none;">Show less</a>
         </div>
     </div>
@@ -274,9 +274,9 @@
     <% String alertMessage = (String) request.getAttribute("alertMessage"); %>
     <% if (alertMessage != null && !alertMessage.isEmpty()) { %>
     <script>
-            alert("<%= alertMessage %>");
-            var baseUrl = "<%= request.getContextPath() %>";
-            window.location.href = baseUrl + "/home";
+        alert("<%= alertMessage %>");
+        var baseUrl = "<%= request.getContextPath() %>";
+        window.location.href = baseUrl + "/home";
     </script>
     <% } %>
 
@@ -290,8 +290,8 @@
             </c:when>
             <c:otherwise>
                 <script>
-                        alert("${message}");
-                        redirectHome();
+                    alert("${message}");
+                    redirectHome();
                 </script>
             </c:otherwise>
         </c:choose>
@@ -401,8 +401,7 @@
             var baseUrl = "<%= request.getContextPath() %>";
             window.location.href = baseUrl + "/home";
         });
-    });
-</script>
+    });</script>
 
 <script>
     $('#exampleModal').on('show.bs.modal', function (event) {

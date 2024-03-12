@@ -212,10 +212,8 @@
                 </div>
             </div>
 
-            <!-- Empty space -->
-            <div class="row">
-                <div class="space"></div>
-            </div>
+            <!-- Empty space --> 
+            <div class="space"></div>
 
         </div>
         <!-- End of header section -->
@@ -228,7 +226,7 @@
                         <!-- Content for the 1/4 width column -->
                         <h2>Admin Menu</h2>
                         <ul>
-                            <li><a href="#"><i class="fa-solid fa-list-ul"></i> View List Account</a></li>
+                            <li><a href="#viewListAccount" id="viewListAccount"><i class="fa-solid fa-list-ul"></i> View List Account</a></li>
                             <li><a href="#"><i class="fa-regular fa-folder-open"></i> Update Account</a></li>
                             <li><a href="#"><i class="fa-solid fa-book"></i> View List Topic</a></li>
                             <li><a href="#"><i class="fa-solid fa-people-group"></i> View List Group</a></li>
@@ -284,7 +282,7 @@
                             <!-- End of Row with 3 cards -->
 
                             <!-- Row with table -->
-                            <div class="row mt-4">
+                            <div class="row mt-4" id="listAccountRow">
                                 <div class="col-md-12">
                                     <!--                                    <table class="table table-bordered">-->
                                     <div class="custom">
@@ -364,51 +362,44 @@
                                     <!-- End of Row with table -->
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-                <!-- End of header section -->
 
-                <div>
+            </div>
+        </div>
+        <!-- End of header section -->
 
-                </div>
+        <div>
 
-                <!-- Footer section -->
-                <div id="footer">
-                    <!-- Social Icons -->
-                    <div class="socials-list">
-                        <a href=""><i class="fa-brands fa-facebook"></i></a>
-                        <a href=""><i class="fa-brands fa-instagram"></i></a>
-                        <a href=""><i class="fa-solid fa-bell"></i></a>
-                    </div>
-                    <!-- Slogan -->
-                    <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
-                </div>
-                <!-- End of footer section -->
+        </div>
 
-                <!-- End of main container div -->
+        <!-- Footer section -->
+        <div id="footer">
+            <!-- Social Icons -->
+            <div class="socials-list">
+                <a href=""><i class="fa-brands fa-facebook"></i></a>
+                <a href=""><i class="fa-brands fa-instagram"></i></a>
+                <a href=""><i class="fa-solid fa-bell"></i></a>
+            </div>
+            <!-- Slogan -->
+            <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+        </div>
+        <!-- End of footer section -->
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        // Get the logo element
-                        var logo = document.querySelector('.logo a');
+        <!-- End of main container div -->
 
-                        // Add click event listener to the logo
-                        logo.addEventListener('click', function (event) {
-                            // Prevent the default action of the link
-                            event.preventDefault();
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get the logo element
+                var logo = document.querySelector('.logo a');
+                logo.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var baseUrl = "<%= request.getContextPath() %>";
+                    window.location.href = baseUrl + "/home";
+                });
+            });
+        </script>
 
-                            // Get the base URL
-                            var baseUrl = "<%= request.getContextPath() %>";
-
-                            // Navigate to the home page
-                            window.location.href = baseUrl + "/home";
-                        });
-                    });
-                </script>
-
-
-                </body>
-
-                </html>
+    </body>
+</html>

@@ -47,34 +47,21 @@ public class JoinGroupForStudent extends BasedRequiredAuthenticationController {
             newRegister.setGroup(groupNeedToJoin);
             newRegister.setRegisterDate(Date.valueOf(currentDate));
             newRegister.setStudentInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
-
-//            if (db.checkRegister(newRegister)) {
-//                request.setAttribute("checkRegister", "true");
-//            } else {
-//                db.createNewRegister(newRegister);
-//                request.setAttribute("checkRegisters", "false");
-//            }
-//            request.getRequestDispatcher("/home").forward(request, response);
-//            request.removeAttribute("checkRegister");
             if (db.checkRegister(newRegister)) {
                 request.setAttribute("checkRegister", "true");
-                String message = "Bạn đã tham gia lớp học.";
+                String message = "The group has been joined, please check the code again.";
                 request.setAttribute("message", message);
             } else {
                 db.createNewRegister(newRegister);
                 request.setAttribute("checkRegister", "false");
-                String message = "Join successful.";
+                String message = "Join group successful.";
                 request.setAttribute("message", message);
             }
-//            request.getRequestDispatcher("/home").forward(request, response);
-//            response.sendRedirect(request.getContextPath() + "/home");
             request.removeAttribute("checkRegister");
 
         } else {
-            // Mã inviteCode không tồn tại, hiển thị thông báo alert trên trang JSP
-            String alertMessage = "Mã Code không tồn tại";
-            request.setAttribute("alertMessage", alertMessage);
-//            request.getRequestDispatcher("/home").forward(request, response);
+            String alertMessage = "Error! Code Code does not exist.";
+            request.setAttribute("alertMessage", alertMessage);;
 
         }
         request.getRequestDispatcher("/home").forward(request, response);
