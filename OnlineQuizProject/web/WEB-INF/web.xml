@@ -132,6 +132,14 @@
         <servlet-name>DoExamForStudent</servlet-name>
         <servlet-class>controller.test.DoExamForStudent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserDetail</servlet-name>
+        <servlet-class>controller.userdetail.UserDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateLectureComment</servlet-name>
+        <servlet-class>controller.comment.UpdateLectureComment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -263,6 +271,14 @@
     <servlet-mapping>
         <servlet-name>DoExamForStudent</servlet-name>
         <url-pattern>/take-exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserDetail</servlet-name>
+        <url-pattern>/UserDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateLectureComment</servlet-name>
+        <url-pattern>/update-lecture-comment</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>default</welcome-file>

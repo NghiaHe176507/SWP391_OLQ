@@ -22,7 +22,6 @@ html {
 }
 .container {
     min-height: 100%;
-    position: relative;
 }
 body {
     display: flex;
@@ -33,7 +32,9 @@ body {
 .container {
     flex: 1;
 }
-
+.img-fluid {
+    border-radius: 50%;
+}
 /* Common Styles */
 .header {
     background-color: #000;
@@ -170,7 +171,7 @@ body {
 
 /* Footer Section Styles */
 #footer {
-    position: relative;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -205,4 +206,34 @@ body {
     width: 100%;
     height: auto;
     max-width: 100%;
+}
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #f6d365;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+}
+
+/* Center the user detail section */
+.vh-100 {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    min-height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
 }

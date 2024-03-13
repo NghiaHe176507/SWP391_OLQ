@@ -14,7 +14,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="js/homeStudent.js"></script>
+
+        <script src="js/UpdateProfile.js"></script>
+
 
         <style>
             @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
@@ -241,7 +243,7 @@
             .panel-1 {
                 grid-column: 1/3;
             }
-           /* Footer Section Styles */
+            /* Footer Section Styles */
             #footer {
                 position: fixed;
                 bottom: 0;
@@ -280,7 +282,20 @@
                 height: auto;
                 max-width: 100%;
             }
-
+            .card {
+                max-width: 600px; /* Đặt chiều rộng tối đa của form */
+                margin: 0 auto; /* Căn giữa theo trục ngang */
+            }
+            header, footer {
+                height: 60px; /* Có thể điều chỉnh theo ý muốn */
+            }
+            section {
+                height: calc(100vh - 120px);
+                overflow-y: auto;
+                display: flex;
+                justify-content: center; /* Căn giữa theo chiều ngang */
+                align-items: center; /* Căn giữa theo chiều dọc */
+            }
         </style>
     </head>
     <body>
@@ -325,70 +340,88 @@
                 </div>
             </form>
         </header>
-        <form action="updateaccount" method="POST">
-            <div class="container bootstrap snippets bootdeys">
-                <div class="row">
-                    <div class="row-1" style="display:flex">
-                    <form class="form-horizontal">
-                        <div class="panel panel-default panel-1">
-                          <div class="panel-body text-center">
-                           <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar" alt="User avatar">
-                          </div>
-                        </div>
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                        <h4 class="panel-title">User info</h4>
-                        </div>
-                        <div class="panel-body">
-                          
-                          <div class="form-group">
-                            <label class="col-sm-2 control-label">Display name</label>
-                            <div class="col-sm-10">
-                              <input type="text" name="displayname" class="form-control" value="${requestScope.accountNeedToUpdate.displayName}">
+        <form class="container" action="updateaccount" method="POST">
+            <section class="min-vh-100 bg-light">
+                <div class="container">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-lg-8">
+                            <div class="card border-0 shadow-sm rounded">
+                                <div class="card-body p-5">
+                                    <h2 class="text-center mb-5">Edit Profile</h2>
+                                    <form action="./update" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="uid" value="${requestScope.user.id}">
+                                        <!-- Image section -->
+                                        <div class="text-center mb-4">
+                                            <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQlj3rCfLHry58AtJ8ZyBEAFPtChMddDSUSjt7C7nV3Nhsni9RIx5b0-n7LxfgerrPS6b-P-u3BOM3abuY"
+                                                 class="img-fluid rounded-circle" alt="User avatar" style="width: 150px; height: 150px">
+                                            <div class="mt-2">
+                                                <input type="file" class="form-control" name="avatar" id="avatar">
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input type="text" name="fullname" placeholder="Fullname"
+                                                       class="form-control" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa-solid fa-address-card"></i></span>
+                                                <input type="text" name="displayname" placeholder="Display Name"
+                                                       class="form-control" value="${requestScope.accountNeedToUpdate.displayName}" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                <input type="date" name="dob" placeholder="Day of Birthday"
+                                                       class="form-control" value="${requestScope.infoAbountAccountNeedToUpdate.dob}" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock-open"></i></span>
+                                                <input type="password" id="current_password" name="current_password"
+                                                       placeholder="Current Password" class="form-control"
+                                                       value="${requestScope.accountNeedToUpdate.password}" required readonly>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                <input type="password" class="form-control rounded mt-1 password"
+                                                       placeholder="Type your password" aria-label="password"
+                                                       aria-describedby="password" name="password" required>
+                                            </div>
+                                            <div class="alert alert-warning mt-2 d-none" role="alert" id="password-alert">
+                                                <ul class="list-unstyled mb-0">
+                                                    <li class="requirements leng">Your password must have at least 8 characters
+                                                    </li>
+                                                    <li class="requirements big-letter">Your password must have at least 1 big
+                                                        letter.</li>
+                                                    <li class="requirements num">Your password must have at least 1 number.</li>
+                                                    <li class="requirements special-char">Your password must have at least 1
+                                                        special character.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <a href="<%=request.getContextPath()%>/home" class="btn btn-default">Cancel</a>
+
+                                        </div>
+                                    </form>
+                                    <div id="success-alert" class="alert alert-success mt-2 d-none" role="alert">
+                                        Thông tin của bạn đã được cập nhật.
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                         
-                          <div class="form-group">
-                            <label class="col-sm-2 control-label">Fullname</label>
-                            <div class="col-sm-10">
-                              <input type="text" name="fullname" class="form-control" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}">
-                            </div>
-                          </div>
-                          <div class="form-group">
-                            <label class="col-sm-2 control-label">Dob</label>
-                            <div class="col-sm-10">
-                              <input type="date" name="dob" class="form-control" value="${requestScope.infoAbountAccountNeedToUpdate.dob}">
-                            </div>
-                          </div>
                         </div>
-                      </div>
-                
-                      
-                
-                      <div class="panel panel-default">
-                        <div class="panel-heading">
-                        <h4 class="panel-title">Security</h4>
-                        </div>
-                        <div class="panel-body">
-                          <div class="form-group">
-                            <label class="col-sm-2 control-label">Password</label>
-                            <div class="col-sm-10">
-                              <input type="password" name="password" class="form-control" value="${requestScope.accountNeedToUpdate.password}" >
-                            </div>
-                          </div>                  
-                          <div class="form-group">
-                            <div class="col-sm-10 col-sm-offset-2">
-                              <button type="submit" class="btn btn-primary" value="Save">Submit</button>
-                              <a href="${pageContext.request.contextPath}/homeStudent" class="btn btn-default">Cancel</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
+                    </div>
                 </div>
-                </div>
-              </form>
+            </section>
+        </form>
         <footer>
             <div id="footer">
                 <!-- Social Icons -->
@@ -407,7 +440,6 @@
                 document.addEventListener("DOMContentLoaded", function () {
                     // Get the logo element
                     var logo = document.querySelector('.logo a');
-
                     // Add click event listener to the logo
                     logo.addEventListener('click', function () {
                         // Reload the page
@@ -415,6 +447,21 @@
                     });
                 });
             </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Lấy form
+                    var form = document.querySelector('form[action="updateaccount"]');
+
+                    // Thêm sự kiện submit cho form
+                    form.addEventListener('submit', function (event) {
+                        // Hiển thị cửa sổ cảnh báo khi submit thành công
+                        alert("Thông tin của bạn đã được cập nhật.");
+                    });
+                });
+            </script>
+    
 
         </footer>
     </body>

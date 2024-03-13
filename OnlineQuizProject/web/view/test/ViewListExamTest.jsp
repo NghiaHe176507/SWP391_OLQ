@@ -149,6 +149,8 @@
                             <th>Examination Name</th>
                             <th>Score</th>
                             <th>Status</th>
+                            <th>Lecture Comment</th>
+                            <th>Edit Comment by Lecture</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -156,10 +158,19 @@
                             <tr>
                                 <td>${list.resultId}</td>
                                 <td>${list.studentInfo.fullName}</td>
-                                <td>${list.exam.classExam.topic.topicName}</td>
+                                <td>${list.exam.examTitle}</td>
                                 <td>${list.score}</td>
-                                <td class="${list.score >= 9 ? 'excellent' : (list.score >= 8 ? 'good' : 'average')}">
-                                    ${list.score >= 9 ? 'Excellent' : (list.score >= 8 ? 'Good' : 'Average')}
+                                <td>${list.exam.isPractice}</td>
+                                <td>${list.commentContent}</td>
+                                <td>
+                                    <!-- Add a form to submit Lecture Comments -->
+                                    <form action="${pageContext.request.contextPath}/update-lecture-comment" method="POST" class="form-inline">
+                                        <input type="hidden" name="resultId" value="${list.resultId}">
+                                        <div class="form-group mx-sm-3 mb-2">
+                                            <textarea class="form-control" name="lectureComment" rows="1" cols="30">${list.commentContent}</textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mb-2">Save</button>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>

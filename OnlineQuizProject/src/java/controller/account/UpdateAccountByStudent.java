@@ -14,6 +14,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 
 
@@ -40,11 +46,11 @@ public class UpdateAccountByStudent extends BasedRequiredAuthenticationControlle
             throws ServletException, IOException {
         Account accountNeedToUpdate = LoggedUser;
         AccountInfo accountInfoNeedToUpdate = db.getAccountInfoByAccountId(accountNeedToUpdate.getAccountId());
+
         String password = request.getParameter("password");
         String displayname = request.getParameter("displayname");
         String fullname = request.getParameter("fullname");
         Date dob = Date.valueOf(request.getParameter("dob"));
-
         accountNeedToUpdate.setPassword(password);
         accountNeedToUpdate.setDisplayName(displayname);
 
@@ -66,7 +72,7 @@ public class UpdateAccountByStudent extends BasedRequiredAuthenticationControlle
         request.setAttribute("infoAbountAccountNeedToUpdate", accountInfoNeedToUpdate);
         request.getRequestDispatcher("/view/controllerAccount/UpdateAccountByStudent.jsp").forward(request, response);
     }
- 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
