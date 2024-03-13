@@ -125,7 +125,7 @@
         <servlet-class>controller.test.DoExamForStudent</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ViewGroupDetailForLecture</servlet-name>
+        <servlet-name>ViewGroupDetailForStudent</servlet-name>
         <servlet-class>controller.group.ViewGroupDetailForStudent</servlet-class>
     </servlet>
     <servlet-mapping>
@@ -253,7 +253,7 @@
         <url-pattern>/doExam</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViewGroupDetailForLecture</servlet-name>
+        <servlet-name>ViewGroupDetailForStudent</servlet-name>
         <url-pattern>/viewGroupDetail</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
