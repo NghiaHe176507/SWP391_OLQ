@@ -180,14 +180,14 @@
                 <div class="header">
                     <!-- Logo -->
                     <div class="logo col-md-2">
-                        <a href="#home">QUIZWIZ</a>
+                        <a href="home">QUIZWIZ</a>
                     </div>
 
                     <!-- Search container -->
                     <form action="search" method="GET" class="col-md-6">
                         <div class="search-container">
                             <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
-                            <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
 
@@ -212,13 +212,13 @@
                 </div>
             </div>
 
-            <!-- Empty space --> 
-            <div class="space"></div>
+            <!-- Empty space -->
+            <div class="row">
+                <div class="space"></div>
+            </div>
 
         </div>
-        <!-- End of header section -->
 
-        <!-- Admin content section -->
         <div class="body-admin">
             <div class="row">
                 <div class="col-md-2">
@@ -226,10 +226,10 @@
                         <!-- Content for the 1/4 width column -->
                         <h2>Admin Menu</h2>
                         <ul>
-                            <li><a href="#viewListAccount" id="viewListAccount"><i class="fa-solid fa-list-ul"></i> View List Account</a></li>
-                            <li><a href="#"><i class="fa-regular fa-folder-open"></i> Update Account</a></li>
-                            <li><a href="#"><i class="fa-solid fa-book"></i> View List Topic</a></li>
-                            <li><a href="#"><i class="fa-solid fa-people-group"></i> View List Group</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-solid fa-list-ul"></i> View List Account</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-regular fa-folder-open"></i> Update Account</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/topic-management"><i class="fa-solid fa-book"></i> View List Topic</a></li>
+                            <li><a href="<%= request.getContextPath() %>/admin/group-management"><i class="fa-solid fa-people-group"></i> View List Group</a></li>
                             <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                             <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
                         </ul>
@@ -282,7 +282,7 @@
                             <!-- End of Row with 3 cards -->
 
                             <!-- Row with table -->
-                            <div class="row mt-4" id="listAccountRow">
+                            <div class="row mt-4">
                                 <div class="col-md-12">
                                     <!--                                    <table class="table table-bordered">-->
                                     <div class="custom">
@@ -362,44 +362,51 @@
                                     <!-- End of Row with table -->
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
+                <!-- End of header section -->
 
-            </div>
-        </div>
-        <!-- End of header section -->
+                <div>
 
-        <div>
+                </div>
 
-        </div>
+                <!-- Footer section -->
+                <div id="footer">
+                    <!-- Social Icons -->
+                    <div class="socials-list">
+                        <a href=""><i class="fa-brands fa-facebook"></i></a>
+                        <a href=""><i class="fa-brands fa-instagram"></i></a>
+                        <a href=""><i class="fa-solid fa-bell"></i></a>
+                    </div>
+                    <!-- Slogan -->
+                    <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+                </div>
+                <!-- End of footer section -->
 
-        <!-- Footer section -->
-        <div id="footer">
-            <!-- Social Icons -->
-            <div class="socials-list">
-                <a href=""><i class="fa-brands fa-facebook"></i></a>
-                <a href=""><i class="fa-brands fa-instagram"></i></a>
-                <a href=""><i class="fa-solid fa-bell"></i></a>
-            </div>
-            <!-- Slogan -->
-            <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
-        </div>
-        <!-- End of footer section -->
+                <!-- End of main container div -->
 
-        <!-- End of main container div -->
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        // Get the logo element
+                        var logo = document.querySelector('.logo a');
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Get the logo element
-                var logo = document.querySelector('.logo a');
-                logo.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    var baseUrl = "<%= request.getContextPath() %>";
-                    window.location.href = baseUrl + "/home";
-                });
-            });
-        </script>
+                        // Add click event listener to the logo
+                        logo.addEventListener('click', function (event) {
+                            // Prevent the default action of the link
+                            event.preventDefault();
 
-    </body>
-</html>
+                            // Get the base URL
+                            var baseUrl = "<%= request.getContextPath() %>";
+
+                            // Navigate to the home page
+                            window.location.href = baseUrl + "/home";
+                        });
+                    });
+                </script>
+
+
+                </body>
+
+                </html>

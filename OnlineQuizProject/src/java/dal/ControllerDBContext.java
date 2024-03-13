@@ -84,6 +84,45 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return null;
     }
 
+    public ArrayList<RoleAccess> getRolesAndFeatures(String username, String url) {
+        ArrayList<RoleAccess> roles = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT r.[role_id]
+                               ,r.[role_name]
+                         \t  ,u.url_id
+                         \t  ,u.[url]
+                           FROM [Role] r INNER JOIN [RoleAccess] ra ON r.role_id = ra.role_id
+                           INNER JOIN [Url] u ON ra.url_id = u.url_id
+                           INNER JOIN [RoleFeature] rf ON r.role_id = rf.role_id
+                           INNER JOIN [Account] a ON a.account_id = rf.account_id
+                           WHERE a.displayname = ? AND u.[url] = ?""";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, username);
+            stm.setString(2, url);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Role r = new Role();
+                r.setRoleId(rs.getInt("role_id"));
+                r.setRoleName(rs.getString("role_name"));
+
+                Url u = new Url();
+                u.setUrlId(rs.getString("url_id"));
+                u.setUrl(rs.getString("url"));
+
+                RoleAccess ra = new RoleAccess();
+                ra.setRole(r);
+                ra.setUrl(u);
+                roles.add(ra);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return roles;
+    }
+
     public void createNewAccount(Account account) {
         try {
             connection.setAutoCommit(false);
@@ -800,6 +839,43 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return groups;
     }
 
+//    public void joinGroup(int accountId, String groupCode) {
+//        try {
+//            // Tìm group_id dựa vào group_invite_code
+//            String groupQuery = "SELECT [group_id] FROM [Group] WHERE [group_invite_code] = ?";
+//            PreparedStatement groupStm = connection.prepareStatement(groupQuery);
+//            groupStm.setString(1, groupCode);
+//            ResultSet groupRs = groupStm.executeQuery();
+//
+//            if (groupRs.next()) {
+//                int groupId = groupRs.getInt("group_id");
+//
+//                // Kiểm tra xem sinh viên đã đăng ký vào nhóm chưa
+//                String checkQuery = "SELECT COUNT(*) AS count FROM [Register] WHERE [student_id] = ? AND [group_id] = ?";
+//                PreparedStatement checkStm = connection.prepareStatement(checkQuery);
+//                checkStm.setInt(1, accountId);
+//                checkStm.setInt(2, groupId);
+//                ResultSet checkRs = checkStm.executeQuery();
+//
+//                if (checkRs.next() && checkRs.getInt("count") == 0) {
+//                    // Nếu sinh viên chưa đăng ký vào nhóm, thêm vào bảng Register
+//                    String insertQuery = "INSERT INTO [Register] ([register_date], [student_id], [group_id]) VALUES (GETDATE(), ?, ?)";
+//                    PreparedStatement insertStm = connection.prepareStatement(insertQuery);
+//                    insertStm.setInt(1, accountId);
+//                    insertStm.setInt(2, groupId);
+//                    insertStm.executeUpdate();
+//                    System.out.println("Student with ID " + accountId + " has joined the group.");
+//                } else {
+//                    System.out.println("Student with ID " + accountId + " is already registered in the group.");
+//                }
+//            } else {
+//                System.out.println("Group with code " + groupCode + " does not exist.");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    
     public int getTotalGroupsOnline() {
         int totalGroupsOnline = 0;
 

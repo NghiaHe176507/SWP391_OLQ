@@ -128,7 +128,7 @@
                                         <p class="topic-info-text" style="margin-bottom: 0">${group.status.statusName}</p>
                                     </c:otherwise>
                                 </c:choose>
-                                <a href="#" class="topic-info-link">More Details</a>
+                                <a href="<%= request.getContextPath() %>/group-detail?groupName=${group.groupName}" class="topic-info-link">More Details</a>
                             </div>
                         </div>
                     </div>

@@ -20,6 +20,7 @@
         <script src="js/homeStudent.js"></script>
         <title>Create Group</title>
         <style>
+            @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
             *{
                 padding: 0;
                 margin: 0;
@@ -210,15 +211,26 @@
                 color: palevioletred;
             }
             /* Footer Section Styles */
+
             #footer {
-                position: fixed;
+                position: relative;
                 bottom: 0;
                 left: 0;
                 width: 100%;
                 background: linear-gradient(135deg, #4397ce, #9a3cbf);
                 color: white;
                 text-align: center;
+                transition: transform 0.5s ease-in-out;
                 padding: 5px;
+            }
+
+            .container {
+                min-height: 100%;
+                position: relative;
+            }
+
+            .container {
+                flex: 1;
             }
 
             #footer a{
@@ -248,6 +260,33 @@
                 height: auto;
                 max-width: 100%;
             }
+
+
+            /*  */
+            /* .topic {
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-start; 
+            }
+            
+            .topic-info {
+              flex: 1; 
+              border: 1px solid #ccc; 
+              padding: 10px; 
+            }
+            
+            .show-all {
+              margin-top: 10px;
+            }
+            
+            .show-all a {
+              display: block;
+              text-align: right; 
+              text-decoration: none;
+              color: #007BFF;
+            } */
+
+
             .topic {
                 display: flex;
                 flex-wrap: wrap; /* Cho phép các div con xuống dòng khi không đủ không gian */
@@ -277,57 +316,243 @@
                 text-decoration: none;
                 color: #007BFF;
             }
+
             body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
+                margin-top: 20px;
+            }
+            .list-account {
+                font-size: 1.5rem;
+                /* Adjust font size as needed */
+                font-weight: bold;
+                /* Make the text bold */
+                margin-bottom: 1rem;
+                margin-left: 17rem;
+            }
+
+            .main-box {
+                position: relative;
                 display: flex;
-                height: 100vh;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 1px solid rgba(0, 0, 0, .125);
+                border-radius: 7px;
+                padding: 10px;
+                /* Remove border */
+                margin-bottom: 20px;
+                /* Adjust spacing */
             }
 
-            .container {
-                flex: 1;
-                display: flex;
-                justify-content: center; /* Center content vertically */
-                align-items: center;
-                /* Align items to the right side of the container */
+            /* USER LIST TABLE */
+            .user-list tbody td>img {
+                position: relative;
+                max-width: 50px;
+                float: left;
+                margin-right: 15px;
             }
 
-            .left-side,
-            .right-side {
-                padding: 20px;
-                box-sizing: border-box;
+            .user-list tbody td .user-link {
+                display: block;
+                font-size: 1.25em;
+                padding-top: 3px;
             }
 
-            .left-side {
-                overflow: auto;
+            .user-list tbody td .user-subhead {
+                font-size: 0.875em;
+                font-style: italic;
+            }
+
+            /* TABLES */
+            .table {
+                border-collapse: separate;
+            }
+
+            .table-hover>tbody>tr:hover>td,
+            .table-hover>tbody>tr:hover>th {
+                background-color: #eee;
+            }
+
+            .table thead>tr>th {
+                border-bottom: 1px solid #C2C2C2;
+                padding-bottom: 0;
+            }
+
+            .table tbody>tr>td {
+                font-size: 0.875em;
+                background: #f5f5f5;
+                border-top: 10px solid #fff;
+                vertical-align: middle;
+                padding: 12px 8px;
+            }
+
+            .table tbody>tr>td:first-child,
+            .table thead>tr>th:first-child {
+                padding-left: 20px;
+            }
+
+            .table thead>tr>th span {
+                border-bottom: 2px solid #C2C2C2;
+                display: inline-block;
+                padding: 0 5px;
+                padding-bottom: 5px;
+                font-weight: normal;
+            }
+
+            .table thead>tr>th>a span {
+                color: #344644;
+            }
+
+            .table thead>tr>th>a span:after {
+                content: "\f0dc";
+                font-family: FontAwesome;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: inherit;
+                margin-left: 5px;
+                font-size: 0.75em;
+            }
+
+            .table thead>tr>th>a.asc span:after {
+                content: "\f0dd";
+            }
+
+            .table thead>tr>th>a.desc span:after {
+                content: "\f0de";
+            }
+
+            .table thead>tr>th>a:hover span {
+                text-decoration: none;
+                color: #2bb6a3;
+                border-color: #2bb6a3;
+            }
+
+            .table.table-hover tbody>tr>td {
+                -webkit-transition: background-color 0.15s ease-in-out 0s;
+                transition: background-color 0.15s ease-in-out 0s;
+            }
+
+            .table tbody tr td .call-type {
+                display: block;
+                font-size: 0.75em;
+                text-align: center;
+            }
+
+            .table tbody tr td .first-line {
+                line-height: 1.5;
+                font-weight: 400;
+                font-size: 1.125em;
+            }
+
+            .table tbody tr td .first-line span {
+                font-size: 0.875em;
+                color: #969696;
+                font-weight: 300;
+            }
+
+            .table tbody tr td .second-line {
+                font-size: 0.875em;
+                line-height: 1.2;
+            }
+
+            .table a.table-link {
+                margin: 0 5px;
+                font-size: 1.125em;
+            }
+
+            .table a.table-link:hover {
+                text-decoration: none;
+                color: #2aa493;
+            }
+
+            .table a.table-link.danger {
+                color: #fe635f;
+            }
+
+            .table a.table-link.danger:hover {
+                color: #dd504c;
+            }
+
+            .table-products tbody>tr>td {
+                background: none;
+                border: none;
+                border-bottom: 1px solid #ebebeb;
+                -webkit-transition: background-color 0.15s ease-in-out 0s;
+                transition: background-color 0.15s ease-in-out 0s;
+                position: relative;
+            }
+
+            .table-products tbody>tr:hover>td {
+                text-decoration: none;
+                background-color: #f6f6f6;
+            }
+
+            .table-products .name {
+                display: block;
+                font-weight: 600;
+                padding-bottom: 7px;
+            }
+
+            .table-products .price {
+                display: block;
+                text-decoration: none;
                 width: 50%;
+                float: left;
+                font-size: 0.875em;
             }
 
-            .right-side {
-                overflow: auto;
+            .table-products .price>i {
+                color: #8dc859;
+            }
+
+            .table-products .warranty {
+                display: block;
+                text-decoration: none;
                 width: 50%;
-                /* Initially hide the right-side form */
+                float: left;
+                font-size: 0.875em;
             }
 
-            table {
-                width: 100%;
-                border-collapse: collapse;
+            .table-products .warranty>i {
+                color: #f1c40f;
             }
 
-            th,
-            td {
-                padding: 8px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
+            .table tbody>tr.table-line-fb>td {
+                background-color: #9daccb;
+                color: #262525;
             }
 
-            #toggleFormLink {
-                margin-left: 20px;
-                align-self: flex-start;
-                cursor: pointer;
-                color: blue;
-                text-decoration: underline;
+            .table tbody>tr.table-line-twitter>td {
+                background-color: #9fccff;
+                color: #262525;
+            }
+
+            .table tbody>tr.table-line-plus>td {
+                background-color: #eea59c;
+                color: #262525;
+            }
+
+            .table-stats .status-social-icon {
+                font-size: 1.9em;
+                vertical-align: bottom;
+            }
+
+            .table-stats .table-line-fb .status-social-icon {
+                color: #556484;
+            }
+
+            .table-stats .table-line-twitter .status-social-icon {
+                color: #5885b8;
+            }
+
+            .table-stats .table-line-plus .status-social-icon {
+                color: #a75d54;
+            }
+            @media (max-width: 600px) {
+                .right-side {
+                    display: none;
+                }
             }
         </style>
         <script>
@@ -344,17 +569,14 @@
     <body>
         <header>
             <form action="home" method="POST">
-                <!-- Main container div -->
                 <div class="container">
                     <!-- Header section -->
                     <div class="row">
                         <div class="header">
                             <!-- Logo -->
                             <div class="logo col-md-2">
-                                <a href="#">QUIZWIZ</a>
+                                <a href="<%= request.getContextPath() %>/homeLecture">QUIZWIZ</a>
                             </div>
-
-                            <!-- Search container -->
                             <div class="search-container col-md-6">
                                 <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
                                 <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -384,63 +606,75 @@
             </form>
         </header>
         <div class="container">
-
-            <div class="right-side" id="formContainer">
-                <c:if test="${requestScope.url == 'create'}">
-                    <form action="create-group" method="POST"> 
-                        Group Name: <input type="text" name="groupName" /> <br/>
-                        Topic:  
-                        <select name="topicId">
-                            <c:forEach items="${requestScope.listTopic}" var="topic">
-                                <option value="${topic.topicId}">${topic.topicName}</option>
-                            </c:forEach>
-                        </select><br/>
-                        <div class="btn-container d-flex">
-                            <button type="submit" class="btn btn-primary" value="save">Save</button><br/>
-                            <a href="<%=request.getContextPath()%>/group-management" class="btn btn-default">Cancel</a>
-                        </div>
-
-                    </form>
-                </c:if>
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <div class="row">
+                <div class="space"></div>
             </div>
-            <div class="left-side">
-                <a style="color: #fff;
-                   text-decoration: none;" href="<%=request.getContextPath()%>/group-management/create-group" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
-                <div class="container-fluid">
-                    <h2 class="mb-4">View list group</h2>
-                    <table class="table table-striped" id="myTable">
-                        <thead class="thead-dark">
-                            <tr>
-                                <td>Group Name</td>
-                                <td>Topic Name</td>
-                                <td>Status</td>
-                                <td>Invite code</td>
-                                <td>Action</td>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <c:forEach items="${requestScope.listGroup}" var="group">
+            <div class="row justify-content-end">
+                <c:if test="${requestScope.url == 'create'}">
+                    <div class="col-lg-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="align-items-lg-center py-3 flex-column flex-lg-row">
+                                    <h2 class="h5 mb-3 mb-lg-0"> Create new Group</h2>
+                                </div>
+                                <form action="create-group" method="POST"> 
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="mb-12">
+                                                <label class="form-label">Group Name:</label>
+                                                <input type="text" name="groupName" class="form-control" /> <br/>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="mb-12">
+                                                <label class="form-label" >Topic:</label>
+                                                <select name="topicId" class="form-control">
+                                                    <c:forEach items="${requestScope.listTopic}" var="topic">
+                                                        <option value="${topic.topicId}">${topic.topicName}</option>
+                                                    </c:forEach>
+                                                </select><br/>
+                                                <div class="btn-container d-flex">
+                                                    <button type="submit" class="btn btn-primary" value="save">Save</button><br/>
+                                                    <a href="<%=request.getContextPath()%>/group-management" class="btn btn-default">Cancel</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
+                <div class="col-lg-8"> 
+                    <a style="color: #fff; text-decoration: none;" href="<%=request.getContextPath()%>/group-management/create-group" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
+                    <div class="container-fluid">
+                        <h2 class="mb-4">View list group</h2>
+                        <table class="table table-striped" id="myTable">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td>${group.groupName}</td>
-                                    <td>${group.topic.topicName}</td>
-                                    <td>${group.status.statusName}</td>
-                                    <td>${group.groupInviteCode}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${not empty group.groupInviteCode}">
-                                                <input type="button" value="Remove invite code" onclick="window.location.href='<%=request.getContextPath()%>/group-management/delete-invite-code?groupId='+${group.groupId}"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <input type="button" value="Create invite code" onclick="window.location.href='<%=request.getContextPath()%>/group-management/create-invite-code?groupId='+${group.groupId}"/>
-                                            </c:otherwise>
-                                        </c:choose>
-                                        <input type="button" class="btn btn-danger" value="Delete" onclick="DeleteGroup(${group.groupId})"/>
-                                    </td>
+                                    <td><span>Group Name</span></td>
+                                    <td><span>Topic Name</span></td>
+                                    <td><span>Status</span></td>
+                                    <td><span>Action</span></td>
                                 </tr>
-                            </c:forEach>
-                    </table>
-                    </tbody>
-                    </table>
+                            </thead>
+                            <tbody id="tableBody">
+                                <c:forEach items="${requestScope.listGroup}" var="group">
+                                    <tr>
+                                        <td >${group.groupName}</td>
+                                        <td>${group.topic.topicName}</td>
+                                        <td>${group.status.statusName}</td>
+                                        <td>
+                                            <c:if test="true">
+                                                <input type="button" class="btn btn-danger" value="Delete" onclick="DeleteGroup(${group.groupId})"/>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -455,21 +689,6 @@
                 <!-- Slogan -->
                 <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
             </div>
-            <!-- End of footer section -->
-
-            <!-- End of main container div -->
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    // Get the logo element
-                    var logo = document.querySelector('.logo a');
-
-                    // Add click event listener to the logo
-                    logo.addEventListener('click', function () {
-                        // Reload the page
-                        location.reload();
-                    });
-                });
-            </script>
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

@@ -20,6 +20,7 @@
         <script src="js/homeStudent.js"></script>
         <title>Mange Account</title>
         <style>
+
             *{
                 padding: 0;
                 margin: 0;
@@ -210,15 +211,26 @@
                 color: palevioletred;
             }
             /* Footer Section Styles */
+
             #footer {
-                position: fixed;
+                position: relative;
                 bottom: 0;
                 left: 0;
                 width: 100%;
                 background: linear-gradient(135deg, #4397ce, #9a3cbf);
                 color: white;
                 text-align: center;
+                transition: transform 0.5s ease-in-out;
                 padding: 5px;
+            }
+
+            .container {
+                min-height: 100%;
+                position: relative;
+            }
+
+            .container {
+                flex: 1;
             }
 
             #footer a{
@@ -304,265 +316,488 @@
                 text-decoration: none;
                 color: #007BFF;
             }
+
             body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
+                margin-top: 20px;
+            }
+            .list-account {
+                font-size: 1.5rem;
+                /* Adjust font size as needed */
+                font-weight: bold;
+                /* Make the text bold */
+                margin-bottom: 1rem;
+                margin-left: 17rem;
+            }
+
+            .main-box {
+                position: relative;
                 display: flex;
-                height: 100vh;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .container {
-                display: flex;
-                max-width: 800px;
-                width: 100%;
-                justify-content: center;
-                margin-top: 70px;
-                /* Align items to the right side of the container */
-            }
-
-            .left-side,
-            .right-side {
-                padding: 20px;
-                box-sizing: border-box;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                width: 130%; /* Adjust the width as needed */
-                margin: 10px 5px; /* Add margin for spacing */
-            }
-
-            .left-side h2 {
-                color: #007bff;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 1px solid rgba(0, 0, 0, .125);
+                border-radius: 7px;
+                padding: 10px;
+                /* Remove border */
                 margin-bottom: 20px;
+                /* Adjust spacing */
             }
 
-            .btn-create {
-                margin-bottom: 10px;
+            /* USER LIST TABLE */
+            .user-list tbody td>img {
+                position: relative;
+                max-width: 50px;
+                float: left;
+                margin-right: 15px;
             }
 
-            .table-responsive {
-                overflow-x: auto;
+            .user-list tbody td .user-link {
+                display: block;
+                font-size: 1.25em;
+                padding-top: 3px;
             }
 
-            .table th,
-            .table td {
+            .user-list tbody td .user-subhead {
+                font-size: 0.875em;
+                font-style: italic;
+            }
+
+            /* TABLES */
+            .table {
+                border-collapse: separate;
+            }
+
+            .table-hover>tbody>tr:hover>td,
+            .table-hover>tbody>tr:hover>th {
+                background-color: #eee;
+            }
+
+            .table thead>tr>th {
+                border-bottom: 1px solid #C2C2C2;
+                padding-bottom: 0;
+            }
+
+            .table tbody>tr>td {
+                font-size: 0.875em;
+                background: #f5f5f5;
+                border-top: 10px solid #fff;
+                vertical-align: middle;
+                padding: 12px 8px;
+            }
+
+            .table tbody>tr>td:first-child,
+            .table thead>tr>th:first-child {
+                padding-left: 20px;
+            }
+
+            .table thead>tr>th span {
+                border-bottom: 2px solid #C2C2C2;
+                display: inline-block;
+                padding: 0 5px;
+                padding-bottom: 5px;
+                font-weight: normal;
+            }
+
+            .table thead>tr>th>a span {
+                color: #344644;
+            }
+
+            .table thead>tr>th>a span:after {
+                content: "\f0dc";
+                font-family: FontAwesome;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: inherit;
+                margin-left: 5px;
+                font-size: 0.75em;
+            }
+
+            .table thead>tr>th>a.asc span:after {
+                content: "\f0dd";
+            }
+
+            .table thead>tr>th>a.desc span:after {
+                content: "\f0de";
+            }
+
+            .table thead>tr>th>a:hover span {
+                text-decoration: none;
+                color: #2bb6a3;
+                border-color: #2bb6a3;
+            }
+
+            .table.table-hover tbody>tr>td {
+                -webkit-transition: background-color 0.15s ease-in-out 0s;
+                transition: background-color 0.15s ease-in-out 0s;
+            }
+
+            .table tbody tr td .call-type {
+                display: block;
+                font-size: 0.75em;
                 text-align: center;
             }
 
-            .action-links a {
-                margin-right: 10px;
+            .table tbody tr td .first-line {
+                line-height: 1.5;
+                font-weight: 400;
+                font-size: 1.125em;
             }
+
+            .table tbody tr td .first-line span {
+                font-size: 0.875em;
+                color: #969696;
+                font-weight: 300;
+            }
+
+            .table tbody tr td .second-line {
+                font-size: 0.875em;
+                line-height: 1.2;
+            }
+
+            .table a.table-link {
+                margin: 0 5px;
+                font-size: 1.125em;
+            }
+
+            .table a.table-link:hover {
+                text-decoration: none;
+                color: #2aa493;
+            }
+
+            .table a.table-link.danger {
+                color: #fe635f;
+            }
+
+            .table a.table-link.danger:hover {
+                color: #dd504c;
+            }
+
+            .table-products tbody>tr>td {
+                background: none;
+                border: none;
+                border-bottom: 1px solid #ebebeb;
+                -webkit-transition: background-color 0.15s ease-in-out 0s;
+                transition: background-color 0.15s ease-in-out 0s;
+                position: relative;
+            }
+
+            .table-products tbody>tr:hover>td {
+                text-decoration: none;
+                background-color: #f6f6f6;
+            }
+
+            .table-products .name {
+                display: block;
+                font-weight: 600;
+                padding-bottom: 7px;
+            }
+
+            .table-products .price {
+                display: block;
+                text-decoration: none;
+                width: 50%;
+                float: left;
+                font-size: 0.875em;
+            }
+
+            .table-products .price>i {
+                color: #8dc859;
+            }
+
+            .table-products .warranty {
+                display: block;
+                text-decoration: none;
+                width: 50%;
+                float: left;
+                font-size: 0.875em;
+            }
+
+            .table-products .warranty>i {
+                color: #f1c40f;
+            }
+
+            .table tbody>tr.table-line-fb>td {
+                background-color: #9daccb;
+                color: #262525;
+            }
+
+            .table tbody>tr.table-line-twitter>td {
+                background-color: #9fccff;
+                color: #262525;
+            }
+
+            .table tbody>tr.table-line-plus>td {
+                background-color: #eea59c;
+                color: #262525;
+            }
+
+            .table-stats .status-social-icon {
+                font-size: 1.9em;
+                vertical-align: bottom;
+            }
+
+            .table-stats .table-line-fb .status-social-icon {
+                color: #556484;
+            }
+
+            .table-stats .table-line-twitter .status-social-icon {
+                color: #5885b8;
+            }
+
+            .table-stats .table-line-plus .status-social-icon {
+                color: #a75d54;
+            }
+
             @media (max-width: 600px) {
                 .right-side {
                     display: none;
                 }
-            </style>
-            <script>
-                function deleteAccount(id)
-                {
-                    var conf = confirm("Are you sure?");
-                    if (conf) {
-                        window.location.href = '<%=request.getContextPath()%>/admin/account-management/delete-account?accountId=' + id;
-                    }
+            }
+        </style>
+        <script>
+            function deleteAccount(id)
+            {
+                var conf = confirm("Are you sure?");
+                if (conf) {
+                    window.location.href = '<%=request.getContextPath()%>/admin/account-management/delete-account?accountId=' + id;
                 }
-            </script>
-        </head>
+            }
+        </script>
+    </head>
 
-        <body>
-            <header>
-                <form action="home" method="POST">
-                    <!-- Main container div -->
-                    <div class="container">
-                        <!-- Header section -->
-                        <div class="row">
-                            <div class="header">
-                                <!-- Logo -->
-                                <div class="logo col-md-2">
-                                    <a href="#">QUIZWIZ</a>
-                                </div>
+    <body>
+        <header>
+            <form action="home" method="POST">
+                <div class="container">
+                    <div class="row">
+                        <div class="header">
+                            <div class="logo col-md-2">
+                                <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
+                            </div>
 
-                                <!-- Search container -->
-                                <div class="search-container col-md-6">
-                                    <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
-                                    <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                </div>
+                            <li><a style="
+                                   text-decoration: none;
+                                   color: #fff;
+                                   font-weight: bold;
+                                   font-size: 16px" href="<%= request.getContextPath() %>/home"><i class="fa-regular fa-folder-open"></i> Home</a></li>
+                            <li><a style="
+                                   text-decoration: none;
+                                   color: #fff;
+                                   font-weight: bold;
+                                   font-size: 16px" href="<%= request.getContextPath() %>/admin/group-management"><i class="fa-solid fa-list-ul"></i> View List group</a></li>
+                            <li><a style="
+                                   text-decoration: none;
+                                   color: #fff;
+                                   font-weight: bold;
+                                   font-size: 16px" href="<%= request.getContextPath() %>/admin/topic-management"><i class="fa-solid fa-book"></i> View List Topic</a></li>
 
-                                <!-- Login section -->
-                                <div class="login col-md-2">
-                                    <ul id="nav" class="nav nav-pills">
-                                        <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
-                                        <li class="nav-item dropdown">
-                                            <div class="circle-background">
-                                                <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
-                                            </div>
-                                            <ul class="subnav">
-                                                <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                                <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                                <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                                <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+                            <div class="login col-md-2">
+                                <ul id="nav" class="nav nav-pills">
+                                    <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
+                                    <li class="nav-item dropdown">
+                                        <div class="circle-background">
+                                            <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
+                                        </div>
+                                        <ul class="subnav">
+                                            <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                            <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                            <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
+                                            <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                </form>
-            </header>
-            <div class="container">
-
-                <div class="right-side" id="formContainer">
+                </div>
+            </form>
+        </header>
+        <div class="container">
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <div class="row">
+                <div class="space"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
                     <c:if test="${requestScope.url == 'create'}">
-                        <h2 class="mb-4">Create Form</h2>
-                        <form action="create-account" method="POST" class="needs-validation" onsubmit="return validateForm()"> 
-                            Mail: <input type="email" name="mail" required /> <br/>
-                            Password: <input type="password" name="password" required minlength="8" /> <br/>
-                            Display Name: <input type="text" name="displayname" required /> <br/>
-                            Full Name: <input type="text" name="fullname" required /> <br/>
-                            Dob: <input type="date" name="dob" value="1999-01-01" /> <br/>
-                            Status: <input type="text" name="status" required /> <br/>
-                            Role: 
-                            <c:forEach items="${requestScope.listRole}" var="role">
-                                <c:if test="${role.roleId != 1}">
-                                    <input type="radio" value="${role.roleId}" name="roleId" required/> ${role.roleName}
-                                </c:if>
-                            </c:forEach><br/>
-                            <div class="col-sm-10 col-sm-offset-2">
-                                <div class="btn-container d-flex">
-                                <button type="submit" class="btn btn-primary" value="Save">Submit</button><br/>
-                                <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
-                            </div>
-                            </div>
-                        </form>
-                        <script>
-                            function validateForm() {
-                                var form = document.forms[0];
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="align-items-lg-center py-3 flex-column flex-lg-row">
+                                    <h2 class="h5 mb-3 mb-lg-0">Create new account</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <c:if test="${requestScope.url == 'create'}">
+                                            <form action="create-account" method="POST" class="needs-validation" onsubmit="return validateForm()"> 
+                                                Mail: <input type="email" name="mail" class="form-control" required /> <br/>
+                                                Password: <input type="password" name="password" class="form-control" required minlength="8" /> <br/>
+                                                Display Name: <input type="text" name="displayname" class="form-control" required /> <br/>
+                                                Full Name: <input type="text" name="fullname" class="form-control" required /> <br/>
+                                                Dob: <input type="date" name="dob" class="form-control" value="1999-01-01" /> <br/>
+                                                Status: <input type="text" name="status" class="form-control" required /> <br/>
+                                                <label style="margin-right: 40px">Role</label>
+                                                <c:forEach items="${requestScope.listRole}" var="role">
+                                                    <c:if test="${role.roleId != 1}">
+                                                        <input type="radio" value="${role.roleId}" name="roleId" class="form-check-input" required/> <span style="    padding-right: 90px;">${role.roleName}</span>
+                                                    </c:if>
+                                                </c:forEach><br/>
+                                                <div class="d-grid gap-2">
+                                                    <button type="submit" class="btn btn-primary" value="Save">Submit</button>
+                                                    <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-light">Cancel</a>
+                                                </div>
+                                            </form>
+                                            <script>
+                                                function validateForm() {
+                                                    var form = document.forms[0];
 
-                                if (!form.checkValidity()) {
-                                    alert("Please fill out all required fields.");
-                                    return false;
-                                }
-                                return true;
-                            }
-                        </script>
-                    </c:if>
-                    <c:if test="${requestScope.url == 'update'}">
-                        <h2 class="mb-4">Update Form</h2>
-                        <form action="update-account" method="POST" class="needs-validation" novalidate> 
-                            Id: <input name="accountId" type="text" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/> <br/>
-                            Mail: <input type="text" name="mail" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
-                            Password: <input type="password" name="password" value="${requestScope.accountNeedToUpdate.password}"/> <br/>
-                            Display Name: <input type="text" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/> <br/>
-                            Full Name: <input type="text" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/> <br/>
-                            Dob: <input type="date" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/> <br/>
-                            Status: <input type="text" name="status" value="${requestScope.accountNeedToUpdate.accountStatus}"/> <br/>
-                            Role: 
-                            <c:forEach items="${requestScope.listRole}" var="role">
-                                <c:if test="${role.roleId != 1}">
-                                    <input <c:if test="${requestScope.roleFeatureAbountAccountNeedToUpdate.role.roleId==role.roleId}">
-                                            checked="checked"
+                                                    if (!form.checkValidity()) {
+                                                        alert("Please fill out all required fields.");
+                                                        return false;
+                                                    }
+                                                    return true;
+                                                }
+                                            </script>
                                         </c:if>
-                                        type="radio" value="${role.roleId}" name="roleId"/> ${role.roleName}
-                                </c:if>
-                            </c:forEach><br/>
-                            <div class="col-sm-10 col-sm-offset-2">
-                                <div class="btn-container d-flex">
-                                <button type="submit" class="btn btn-primary" value="Save">Submit</button>
-                                <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </c:if>
 
+                    <c:if test="${requestScope.url == 'update'}">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="align-items-lg-center py-3 flex-column flex-lg-row">
+                                    <h2 class="h5 mb-3 mb-lg-0">Update Form</h2>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <c:if test="${requestScope.url == 'update'}">
+                                            <form action="update-account" method="POST" class="form-control" class="needs-validation" novalidate> 
+                                                Id: <input name="accountId" type="text" class="form-control" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/> <br/>
+                                                Mail: <input type="text" name="mail" class="form-control" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
+                                                Password: <input type="password" class="form-control" name="password" value="${requestScope.accountNeedToUpdate.password}"/> <br/>
+                                                Display Name: <input type="text" class="form-control" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/> <br/>
+                                                Full Name: <input type="text" class="form-control" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/> <br/>
+                                                Dob: <input type="date" class="form-control" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/> <br/>
+                                                Status: <input type="text" class="form-control" name="status" value="${requestScope.accountNeedToUpdate.accountStatus}"/> <br/>
+                                                <label style="margin-right: 40px">Role</label>
+                                                <c:forEach items="${requestScope.listRole}" var="role">
+                                                    <c:if test="${role.roleId != 1}">
+                                                        <input <c:if test="${requestScope.roleFeatureAbountAccountNeedToUpdate.role.roleId==role.roleId}">
+                                                                checked="checked"
+                                                            </c:if>
+                                                            type="radio" value="${role.roleId}" name="roleId"/> <span style="padding-right: 60px;">${role.roleName}</span>
+                                                    </c:if>
+                                                </c:forEach><br/>
+                                                <div class="d-grid gap-2">
+                                                    <button type="submit" class="btn btn-primary" value="Save">Submit</button>
+                                                    <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
+                                                </div>
+                                            </form>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
-                <div class="left-side">
-                    <a href="<%=request.getContextPath()%>/admin/account-management/create-account" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
-                    <h2>List of Account</h2>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="myTable">
-                            <thead>
-                                <tr>
-                                    <td>Id</td>
-                                    <td>Mail</td>
-                                    <td>Password</td>
-                                    <td>Display Name</td>
-                                    <td>Full Name</td>
-                                    <td>Role</td>
-                                    <td>Status</td>
-                                    <td>Action</td>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody">
-                                <c:forEach items="${requestScope.listAccountWithInfo}" var="accountInfo">
+                <div class="col-lg-8">
+                    <div class="main-box clearfix">
+                        <div class="table-responsive">
+                            <a href="<%=request.getContextPath()%>/admin/account-management/create-account" class="btn btn-primary mb-3" id="toggleFormLink">Create</a>
+                            <span class="list-account">List Account</span>
+                            <table class="table user-list">
+                                <!-- Table headers -->
+                                <thead>
                                     <tr>
-                                        <td>${accountInfo.account.accountId}</td>
-                                        <td>${accountInfo.account.mail}</td>
-                                        <td>
-                                        <c:choose>
-                                        <c:when test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName() eq 'Admin'}">*****</c:when>
-                                        <c:otherwise>${accountInfo.account.password}</c:otherwise>
-                                        </c:choose>
-                                        </td>
-                                        <td>${accountInfo.account.displayName}</td>
-                                        <td>${accountInfo.fullName}</td>
-                                        <td>${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName()}</td>
-                                        <td>${accountInfo.account.accountStatus}</td>
-                                        <td>
-                                            <div class="btn-container d-flex">
-                                            <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleId() != 1}">
-                                                <a href="<%=request.getContextPath()%>/admin/account-management/update-account?accountId=${accountInfo.account.accountId}" class="btn btn-warning btn-sm b">Edit</a>
-                                                <input type="button" value="Delete" onclick="deleteAccount(${accountInfo.account.accountId})" class="btn btn-danger btn-sm"/>
-                                            </c:if>
-                                            </div>
-                                        </td>
+                                        <th><span>ID</span></th>
+                                        <th><span>User</span></th>
+                                        <th><span>Password</span></th>
+                                        <th class="text-center"><span>Status</span></th>
+                                        <th><span>Email</span></th>
+                                        <th>&nbsp;</th>
                                     </tr>
-                                </c:forEach>
-                        </table>
-                        </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${requestScope.listAccountWithInfo}" var="accountInfo">
+                                        <tr>
+                                            <td>${accountInfo.account.accountId}</td>
+                                            <td>
+                                                <a href="#" class="user-link">${accountInfo.fullName}</a>
+                                                <span class="user-subhead" style="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName() == 'Admin' ? 'color: red;' : ''}">
+                                                    ${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName()}
+                                                </span>
+
+                                            </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleName() eq 'Admin'}">*****</c:when>
+                                                    <c:otherwise>${accountInfo.account.password}</c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="label label-default">${accountInfo.account.accountStatus}</span>
+                                            </td>
+                                            <td>
+                                                <a href="#">${accountInfo.account.mail}</a>
+                                            </td> 
+                                            <td style="width: 20%;">
+                                                <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.listAccountWithInfo.indexOf(accountInfo)).getRole().getRoleId() != 1}">
+                                                    <a href="<%=request.getContextPath()%>/admin/account-management/update-account?accountId=${accountInfo.account.accountId}" class="table-link">
+                                                        <span class="fa-stack">
+                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" class="table-link danger" onclick="deleteAccount(${accountInfo.account.accountId})">
+                                                        <span class="fa-stack">
+                                                            <i class="fa fa-square fa-stack-2x"></i>
+                                                            <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                        </span>
+                                                    </a>
+                                                </c:if>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <footer>
-                <div id="footer">
-                    <!-- Social Icons -->
-                    <div class="socials-list">
-                        <a href=""><i class="fa-brands fa-facebook"></i></a>
-                        <a href=""><i class="fa-brands fa-instagram"></i></a>
-                        <a href=""><i class="fa-solid fa-bell"></i></a>
-                    </div>
-                    <!-- Slogan -->
-                    <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+        </div>
+        <footer>
+            <div id="footer">
+                <!-- Social Icons -->
+                <div class="socials-list">
+                    <a href=""><i class="fa-brands fa-facebook"></i></a>
+                    <a href=""><i class="fa-brands fa-instagram"></i></a>
+                    <a href=""><i class="fa-solid fa-bell"></i></a>
                 </div>
-                <!-- End of footer section -->
+                <!-- Slogan -->
+                <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+            </div>
+            <!-- End of footer section -->
 
-                <!-- End of main container div -->
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        // Get the logo element
-                        var logo = document.querySelector('.logo a');
+            <!-- End of main container div -->
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Get the logo element
+                    var logo = document.querySelector('.logo a');
 
-                        // Add click event listener to the logo
-                        logo.addEventListener('click', function () {
-                            // Reload the page
-                            location.reload();
-                        });
+                    // Add click event listener to the logo
+                    logo.addEventListener('click', function () {
+                        // Reload the page
+                        location.reload();
                     });
-                </script>
+                });
+            </script>
+        </footer>
+    </body>
 
-            </footer>
-        </body>
-
-    </html>
-
-
-
-
-
-
-
-
+</html>
 

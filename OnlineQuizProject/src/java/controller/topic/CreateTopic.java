@@ -4,12 +4,13 @@
  */
 package controller.topic;
 
+import controller.authentication.BasedAuthorizationController;
 import dal.ControllerDBContext;
+import entity.Account;
+import entity.RoleAccess;
 import entity.Topic;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -18,70 +19,26 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class CreateTopic extends HttpServlet {
+public class CreateTopic extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        Topic newTopic = new Topic();
+        String topicName = request.getParameter("topicName");
 
+        newTopic.setTopicName(topicName);
+        db.createNewTopic(newTopic);
+        response.sendRedirect(request.getContextPath() + "/admin/topic-management");
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<Topic> listTopic = db.getListTopic();
         request.setAttribute("listTopic", listTopic);
         request.setAttribute("url", "create");
         request.getRequestDispatcher("/view/controllerTopic/TopicManagement.jsp").forward(request, response);
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Topic newTopic = new Topic();
-        String topicName = request.getParameter("topicName");
-
-        newTopic.setTopicName(topicName);
-        db.createNewTopic(newTopic);
-        response.sendRedirect(request.getContextPath()+"/admin/topic-management");
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

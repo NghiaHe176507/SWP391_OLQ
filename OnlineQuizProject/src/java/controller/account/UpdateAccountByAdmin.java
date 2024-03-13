@@ -4,6 +4,7 @@
  */
 package controller.account;
 
+import controller.authentication.BasedAuthorizationController;
 import dal.AccountDBContext;
 import dal.AccountInfoDBContext;
 import dal.ControllerDBContext;
@@ -11,6 +12,7 @@ import dal.RoleDBContext;
 import entity.Account;
 import entity.AccountInfo;
 import entity.Role;
+import entity.RoleAccess;
 import entity.RoleFeature;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -24,69 +26,14 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class UpdateAccountByAdmin extends HttpServlet {
+public class UpdateAccountByAdmin extends BasedAuthorizationController {
 
     RoleDBContext roleDB = new RoleDBContext();
     AccountInfoDBContext accountInfoDB = new AccountInfoDBContext();
     ControllerDBContext db = new ControllerDBContext();
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        AccountDBContext accountDB = new AccountDBContext();
-        int accountId = Integer.parseInt(request.getParameter("accountId"));
-        Account accountNeedToUpdate = accountDB.getById(String.valueOf(accountId));
-        AccountInfo infoAbountAccountNeedToUpdate = db.getAccountInfoByAccountId(accountNeedToUpdate.getAccountId());
-        RoleFeature roleFeatureAbountAccountNeedToUpdate = db.getRoleFeatureByAccountId(accountNeedToUpdate.getAccountId());
-
-        ArrayList<Role> listRole = db.getListRole();
-        request.setAttribute("listRole", listRole);
-        request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
-        request.setAttribute("infoAbountAccountNeedToUpdate", infoAbountAccountNeedToUpdate);
-        request.setAttribute("roleFeatureAbountAccountNeedToUpdate", roleFeatureAbountAccountNeedToUpdate);
-        request.setAttribute("url", "update");
-        
-        ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
-        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
-        request.setAttribute("listAccountWithInfo", listAccount);
-        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
-        request.getRequestDispatcher("/view/controllerAccount/AccountManagement.jsp").forward(request, response);
-
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
 
         Account accountNeedToUpdate = new Account();
         AccountInfo accountInfoNeedToUpdate = new AccountInfo();
@@ -106,7 +53,7 @@ public class UpdateAccountByAdmin extends HttpServlet {
         accountNeedToUpdate.setPassword(password);
         accountNeedToUpdate.setDisplayName(displayname);
         accountNeedToUpdate.setAccountStatus(status);
-        
+
         accountInfoNeedToUpdate.setAccountInfoId(db.getAccountInfoByAccountId(accountId).getAccountInfoId());
         accountInfoNeedToUpdate.setFullName(fullname);
         accountInfoNeedToUpdate.setDob(dob);
@@ -119,17 +66,29 @@ public class UpdateAccountByAdmin extends HttpServlet {
         db.updateAccount(accountNeedToUpdate);
         db.updateAccountInfo(accountInfoNeedToUpdate);
         db.updateRoleFeature(roleFeatureNeedToUpdate);
-        response.sendRedirect(request.getContextPath()+"/admin/account-management");
+        response.sendRedirect(request.getContextPath() + "/admin/account-management");
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        AccountDBContext accountDB = new AccountDBContext();
+        int accountId = Integer.parseInt(request.getParameter("accountId"));
+        Account accountNeedToUpdate = accountDB.getById(String.valueOf(accountId));
+        AccountInfo infoAbountAccountNeedToUpdate = db.getAccountInfoByAccountId(accountNeedToUpdate.getAccountId());
+        RoleFeature roleFeatureAbountAccountNeedToUpdate = db.getRoleFeatureByAccountId(accountNeedToUpdate.getAccountId());
+
+        ArrayList<Role> listRole = db.getListRole();
+        request.setAttribute("listRole", listRole);
+        request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
+        request.setAttribute("infoAbountAccountNeedToUpdate", infoAbountAccountNeedToUpdate);
+        request.setAttribute("roleFeatureAbountAccountNeedToUpdate", roleFeatureAbountAccountNeedToUpdate);
+        request.setAttribute("url", "update");
+
+        ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
+        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
+        request.setAttribute("listAccountWithInfo", listAccount);
+        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
+        request.getRequestDispatcher("/view/controllerAccount/AccountManagement.jsp").forward(request, response);
+    }
 
 }

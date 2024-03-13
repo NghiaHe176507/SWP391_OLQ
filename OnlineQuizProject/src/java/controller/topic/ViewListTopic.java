@@ -2,14 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.topic;
 
+import controller.authentication.BasedAuthorizationController;
 import dal.ControllerDBContext;
+import entity.Account;
+import entity.RoleAccess;
 import entity.Topic;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -18,57 +19,47 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class ViewListTopic extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+public class ViewListTopic extends BasedAuthorizationController {
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
+            throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<Topic> listTopic = db.getListTopic();
-        request.setAttribute("listTopic", listTopic);
+
+        // Pagination parameters
+        int pageSize = 5; // Number of items per page
+        int currentPage = 1; // Default current page number
+
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        // Calculate startIndex and endIndex for pagination
+        int totalItems = listTopic.size();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalItems);
+
+        // Retrieve sublist of topics based on pagination
+        ArrayList<Topic> paginatedList = new ArrayList<>(listTopic.subList(startIndex, endIndex));
+
+        // Set attributes for pagination and paginated list
+        request.setAttribute("listTopic", paginatedList);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", currentPage);
+
+        // Forward the request to the JSP page
         request.getRequestDispatcher("/view/controllerTopic/TopicManagement.jsp").forward(request, response);
-    } 
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
+    }
 
 }

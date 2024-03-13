@@ -20,6 +20,7 @@
         <script src="js/homeStudent.js"></script>
         <title>Topic</title>
         <style>
+            @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
             *{
                 padding: 0;
                 margin: 0;
@@ -210,6 +211,7 @@
                 color: palevioletred;
             }
             /* Footer Section Styles */
+
             #footer {
                 position: fixed;
                 bottom: 0;
@@ -218,7 +220,17 @@
                 background: linear-gradient(135deg, #4397ce, #9a3cbf);
                 color: white;
                 text-align: center;
+                transition: transform 0.5s ease-in-out;
                 padding: 5px;
+            }
+
+            .container {
+                min-height: 100%;
+                position: relative;
+            }
+
+            .container {
+                flex: 1;
             }
 
             #footer a{
@@ -304,65 +316,243 @@
                 text-decoration: none;
                 color: #007BFF;
             }
+
             body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
+                margin-top: 20px;
+            }
+            .list-account {
+                font-size: 1.5rem;
+                /* Adjust font size as needed */
+                font-weight: bold;
+                /* Make the text bold */
+                margin-bottom: 1rem;
+                margin-left: 17rem;
+            }
+
+            .main-box {
+                position: relative;
                 display: flex;
-                height: 100vh;
-                justify-content: center;
-                align-items: center; /* Center items vertically */
-            }
-
-            .container {
-
-                display: flex;
-                max-width: 800px;
-                width: 100%;
-                justify-content: center;
-                /* Add margin for spacing on both sides */
-            }
-
-            .left-side,
-            .right-side {
-                padding: 20px;
-                box-sizing: border-box;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                width: 48%; /* Adjust the width to leave some space between left and right sides */
-            }
-
-            .left-side {
-                overflow: auto;
-                margin-right: 10px; /* Add margin between left and right sides */
-            }
-
-            .right-side {
-                overflow: auto;
-                margin-left: 10px; /* Add margin between left and right sides */
-            }
-
-            .left-side h2 {
-                color: #007bff;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: #fff;
+                background-clip: border-box;
+                border: 1px solid rgba(0, 0, 0, .125);
+                border-radius: 7px;
+                padding: 10px;
+                /* Remove border */
                 margin-bottom: 20px;
+                /* Adjust spacing */
             }
 
-            .left-side a.btn {
-                color: #fff;
+            /* USER LIST TABLE */
+            .user-list tbody td>img {
+                position: relative;
+                max-width: 50px;
+                float: left;
+                margin-right: 15px;
             }
 
-            .left-side a.btn:hover {
+            .user-list tbody td .user-link {
+                display: block;
+                font-size: 1.25em;
+                padding-top: 3px;
+            }
+
+            .user-list tbody td .user-subhead {
+                font-size: 0.875em;
+                font-style: italic;
+            }
+
+            /* TABLES */
+            .table {
+                border-collapse: separate;
+            }
+
+            .table-hover>tbody>tr:hover>td,
+            .table-hover>tbody>tr:hover>th {
+                background-color: #eee;
+            }
+
+            .table thead>tr>th {
+                border-bottom: 1px solid #C2C2C2;
+                padding-bottom: 0;
+            }
+
+            .table tbody>tr>td {
+                font-size: 0.875em;
+                background: #f5f5f5;
+                border-top: 10px solid #fff;
+                vertical-align: middle;
+                padding: 12px 8px;
+            }
+
+            .table tbody>tr>td:first-child,
+            .table thead>tr>th:first-child {
+                padding-left: 20px;
+            }
+
+            .table thead>tr>th span {
+                border-bottom: 2px solid #C2C2C2;
+                display: inline-block;
+                padding: 0 5px;
+                padding-bottom: 5px;
+                font-weight: normal;
+            }
+
+            .table thead>tr>th>a span {
+                color: #344644;
+            }
+
+            .table thead>tr>th>a span:after {
+                content: "\f0dc";
+                font-family: FontAwesome;
+                font-style: normal;
+                font-weight: normal;
+                text-decoration: inherit;
+                margin-left: 5px;
+                font-size: 0.75em;
+            }
+
+            .table thead>tr>th>a.asc span:after {
+                content: "\f0dd";
+            }
+
+            .table thead>tr>th>a.desc span:after {
+                content: "\f0de";
+            }
+
+            .table thead>tr>th>a:hover span {
                 text-decoration: none;
+                color: #2bb6a3;
+                border-color: #2bb6a3;
             }
 
-            .left-side .btn-danger {
-                background-color: #dc3545;
-                border-color: #dc3545;
+            .table.table-hover tbody>tr>td {
+                -webkit-transition: background-color 0.15s ease-in-out 0s;
+                transition: background-color 0.15s ease-in-out 0s;
             }
 
-            .left-side .btn-danger:hover {
-                background-color: #bd2130;
-                border-color: #bd2130;
+            .table tbody tr td .call-type {
+                display: block;
+                font-size: 0.75em;
+                text-align: center;
+            }
+
+            .table tbody tr td .first-line {
+                line-height: 1.5;
+                font-weight: 400;
+                font-size: 1.125em;
+            }
+
+            .table tbody tr td .first-line span {
+                font-size: 0.875em;
+                color: #969696;
+                font-weight: 300;
+            }
+
+            .table tbody tr td .second-line {
+                font-size: 0.875em;
+                line-height: 1.2;
+            }
+
+            .table a.table-link {
+                margin: 0 5px;
+                font-size: 1.125em;
+            }
+
+            .table a.table-link:hover {
+                text-decoration: none;
+                color: #2aa493;
+            }
+
+            .table a.table-link.danger {
+                color: #fe635f;
+            }
+
+            .table a.table-link.danger:hover {
+                color: #dd504c;
+            }
+
+            .table-products tbody>tr>td {
+                background: none;
+                border: none;
+                border-bottom: 1px solid #ebebeb;
+                -webkit-transition: background-color 0.15s ease-in-out 0s;
+                transition: background-color 0.15s ease-in-out 0s;
+                position: relative;
+            }
+
+            .table-products tbody>tr:hover>td {
+                text-decoration: none;
+                background-color: #f6f6f6;
+            }
+
+            .table-products .name {
+                display: block;
+                font-weight: 600;
+                padding-bottom: 7px;
+            }
+
+            .table-products .price {
+                display: block;
+                text-decoration: none;
+                width: 50%;
+                float: left;
+                font-size: 0.875em;
+            }
+
+            .table-products .price>i {
+                color: #8dc859;
+            }
+
+            .table-products .warranty {
+                display: block;
+                text-decoration: none;
+                width: 50%;
+                float: left;
+                font-size: 0.875em;
+            }
+
+            .table-products .warranty>i {
+                color: #f1c40f;
+            }
+
+            .table tbody>tr.table-line-fb>td {
+                background-color: #9daccb;
+                color: #262525;
+            }
+
+            .table tbody>tr.table-line-twitter>td {
+                background-color: #9fccff;
+                color: #262525;
+            }
+
+            .table tbody>tr.table-line-plus>td {
+                background-color: #eea59c;
+                color: #262525;
+            }
+
+            .table-stats .status-social-icon {
+                font-size: 1.9em;
+                vertical-align: bottom;
+            }
+
+            .table-stats .table-line-fb .status-social-icon {
+                color: #556484;
+            }
+
+            .table-stats .table-line-twitter .status-social-icon {
+                color: #5885b8;
+            }
+
+            .table-stats .table-line-plus .status-social-icon {
+                color: #a75d54;
+            }
+            @media (max-width: 600px) {
+                .right-side {
+                    display: none;
+                }
             }
         </style>
         <script>
@@ -375,28 +565,30 @@
             }
         </script>
     </head>
-
     <body>
-
         <header>
             <form action="home" method="POST">
-                <!-- Main container div -->
                 <div class="container">
-                    <!-- Header section -->
                     <div class="row">
                         <div class="header">
-                            <!-- Logo -->
                             <div class="logo col-md-2">
-                                <a href="#">QUIZWIZ</a>
+                                <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                             </div>
-
-                            <!-- Search container -->
-                            <div class="search-container col-md-6">
-                                <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
-                                <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </div>
-
-                            <!-- Login section -->
+                            <li><a style="
+                                   text-decoration: none;
+                                   color: #fff;
+                                   font-weight: bold;
+                                   font-size: 16px" href="<%= request.getContextPath() %>/home"><i class="fa-solid fa-list-ul"></i>Home</a></li>
+                            <li><a style="
+                                   text-decoration: none;
+                                   color: #fff;
+                                   font-weight: bold;
+                                   font-size: 16px" href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-regular fa-folder-open"></i> View List account</a></li>
+                            <li><a style="
+                                   text-decoration: none;
+                                   color: #fff;
+                                   font-weight: bold;
+                                   font-size: 16px" href="<%= request.getContextPath() %>/admin/group-management"><i class="fa-regular fa-folder-open"></i>View List group</a></li>
                             <div class="login col-md-2">
                                 <ul id="nav" class="nav nav-pills">
                                     <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
@@ -420,79 +612,80 @@
             </form>
         </header>
         <div class="container">
-
-            <div class="right-side" id="formContainer">
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <div class="row">
+                <div class="space"></div>
+            </div>
+            <div class="row justify-content-end">
                 <c:if test="${requestScope.url == 'create'}">
-                    <div class="container-fluid">
-                        <h2 class="mb-4">Create Topic</h2>
-                        <form action="create-topic" method="POST" class="needs-validation" novalidate>
-                            <div class="form-group">
-                                <label for="topicName">Topic Name:</label>
-                                <input type="text" class="form-control" id="topicName" name="topicName" required>
-                                <div class="invalid-feedback">Please enter a topic name.</div>
-                            </div>
-                            <div class="btn-container d-flex">
-                                <button type="submit" class="btn btn-primary" value="Save">Save</button><br/>
-                                <a href="<%=request.getContextPath()%>/admin/topic-management" class="btn btn-default">Cancel</a>
-                            </div>
-                        </form>
+                    <div class="col-lg-4">
+                        <div class="container-fluid">
+                            <h2 class="mb-4">Create Topic</h2>
+                            <form action="create-topic" method="POST" class="needs-validation" novalidate>
+                                <div class="form-group">
+                                    <label for="topicName">Topic Name:</label>
+                                    <input type="text" class="form-control" id="topicName" name="topicName" required>
+                                    <div class="invalid-feedback">Please enter a topic name.</div>
+                                </div>
+                                <div class="btn-container d-flex">
+                                    <button type="submit" class="btn btn-primary" value="Save">Save</button><br/>
+                                    <a href="<%=request.getContextPath()%>/admin/topic-management" class="btn btn-default">Cancel</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </c:if>
-            </div>
-            <div class="left-side">
-                <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
-                <div class="container-fluid">
-                    <h2 class="mb-4">View List Topic</h2>
-                    <table class="table table-striped" id="myTable">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Topic Id</th>
-                                <th>Topic Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody">
-                            <c:forEach items="${requestScope.listTopic}" var="topic">
+                <div class="col-lg-8">
+                    <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
+                    <div class="container-fluid">
+                        <h2 class="mb-4">View List Topic</h2>
+                        <table class="table table-striped" id="myTable">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td>${topic.topicId}</td>
-                                    <td>${topic.topicName}</td>
-                                    <td>
-                                        <button class="btn btn-danger" onclick="DeleteTopic(${topic.topicId})">Delete</button>
-                                    </td>
+                                    <th>Topic Id</th>
+                                    <th>Topic Name</th>
+                                    <th>Action</th>
                                 </tr>
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody id="tableBody">
+                                <c:forEach items="${requestScope.listTopic}" var="topic">
+                                    <tr>
+                                        <td>${topic.topicId}</td>
+                                        <td>${topic.topicName}</td>
+                                        <td>
+                                            <button class="btn btn-danger" onclick="DeleteTopic(${topic.topicId})">Delete</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                        <div>
+                            <c:if test="${totalPages > 1}">
+                                <c:forEach var="pageNum" begin="1" end="${totalPages}">
+                                    <c:choose>
+                                        <c:when test="${pageNum == currentPage}">
+                                            <span>${pageNum}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="?page=${pageNum}">${pageNum}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:if>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <footer>
             <div id="footer">
-                <!-- Social Icons -->
                 <div class="socials-list">
                     <a href=""><i class="fa-brands fa-facebook"></i></a>
                     <a href=""><i class="fa-brands fa-instagram"></i></a>
                     <a href=""><i class="fa-solid fa-bell"></i></a>
                 </div>
-                <!-- Slogan -->
                 <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
             </div>
-            <!-- End of footer section -->
-
-            <!-- End of main container div -->
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    // Get the logo element
-                    var logo = document.querySelector('.logo a');
-
-                    // Add click event listener to the logo
-                    logo.addEventListener('click', function () {
-                        // Reload the page
-                        location.reload();
-                    });
-                });
-            </script>
-
         </footer>
     </body>
 
