@@ -875,7 +875,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 //            Logger.getLogger(GroupDBContext.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-    
     public int getTotalGroupsOnline() {
         int totalGroupsOnline = 0;
 
@@ -1084,7 +1083,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     public Group getGroupByInviteCode(String inviteCode) {
         ArrayList<Group> listGroup = getListGroup();
         for (Group group : listGroup) {
-            if (group.getGroupInviteCode().equals(inviteCode)) {
+            if (group != null && group.getGroupInviteCode() != null && group.getGroupInviteCode().equals(inviteCode)) {
                 return group;
             }
         }
