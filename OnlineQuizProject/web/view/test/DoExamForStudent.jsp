@@ -30,30 +30,480 @@
         <!--<script src="home.js"></script>-->
         <script src="js/jquery.twbsPagination.js" type="text/javascript"></script>
         <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
 
-            .countdown-container {
+            html {
+                font-family: "Poppins", sans-serif;
+                scroll-behavior: smooth;
+            }
+            .container {
+                min-height: 100%;
+                position: relative;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .container {
+                flex: 1;
+            }
+
+            /* Common Styles */
+            .header {
+                background-color: #000;
                 position: fixed;
-                top: 80px;
-                right: 40px;
-                border: 2px solid #ccc;
-                background-color: #f9f9f9;
-                padding: 20px;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            /* Logo Styles */
+            .logo {
+                text-align: justify;
+            }
+
+            .logo a {
+                text-decoration: none;
+                font-family: "Poppins", sans-serif;
+                font-weight: bold;
+                font-size: 36px;
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                -webkit-background-clip: text;
+                color: transparent;
+                transition: transform 0.2s ease-in-out;
+            }
+
+            .logo:active {
+                transform: scale(0.9);
+            }
+
+            /* Search Container Styles */
+            .search-container {
+                display: flex;
+                width: 80%;
+            }
+
+            /* Search Input Styles */
+            .search-container {
+                padding: 10px;
+            }
+            #searchInput {
+                flex-grow: 1;
+                padding: 10px;
+                border: 2px solid #fff;
+                border-radius: 5px 0 0 5px;
+                outline: none;
+            }
+
+            /* Search Button Styles */
+            #searchButton {
+                padding: 10px;
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                color: #fff;
+                border: none;
+                border-radius: 0 5px 5px 0;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+            #searchButton:hover {
+                background: linear-gradient(135deg, #4397ce, #9a3cbf);
+                transform: scale(1.05);
+            }
+
+            #searchButton:active {
+                transform: scale(0.95);
+            }
+
+            /* Navigation menu styles */
+            .custom-icon {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                color: inherit;
+            }
+
+            .circle-background {
+                border-radius: 50%;
+                overflow: hidden;
+                background-color: #ccc;
+                width: 45px;
+                height: 45px;
+                transition: background-color 0.3s ease;
+            }
+
+            .custom-icon:hover .circle-background {
+                background-color: #ddd;
+            }
+
+            .profile-image {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+            /*  */
+
+            .login {
+
+            }
+
+            #nav {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            #nav>li {
+                display: inline-block; /* Hiển thị các li trên cùng một dòng */
+            }
+
+            #nav .fa-bell {
+                font-size: 36px; /* Đặt kích thước của biểu tượng chuông */
+                position: relative; /* Đặt vị trí tương đối để thực hiện hiệu ứng */
+                cursor: pointer; /* Biến con trỏ thành dạng bàn tay khi di chuột qua */
+                transition: color 0.3s; /* Tạo hiệu ứng màu khi hover */
+                color: #fff;
+                background-color: #000;
+                padding-top: 5px;
+            }
+
+            #nav .fa-bell:hover {
+                color: palevioletred; /* Màu khi di chuột qua */
+            }
+
+            #nav .fa-bell::after {
+                content: ''; /* Tạo một pseudo-element để làm hình nền của hiệu ứng nhấp chuột */
+                position: absolute; /* Đặt vị trí tuyệt đối để che phủ biểu tượng */
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.2); /* Màu nền của hiệu ứng khi nhấp chuột */
+                border-radius: 50%; /* Tạo hình tròn */
+                opacity: 0; /* Ẩn mặc định */
+                transition: opacity 0.3s; /* Tạo hiệu ứng độ mờ */
+            }
+
+            #nav .fa-bell:active::after {
+                opacity: 1; /* Hiển thị hiệu ứng khi nhấp chuột */
+            }
+
+
+            .subnav {
+                list-style-type: none;
+                padding: 15px;
+            }
+
+            #nav .subnav {
+                display: none;
+                min-width: 160px;
+                background-color: #000;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                white-space: nowrap;
+            }
+
+            #nav .subnav a {
+                color: white;
+                line-height: 38px;
+                text-decoration: none;
+            }
+
+            #nav .nav-arraow-down {
+                font-size: 14px;
+            }
+
+            #nav li:hover .subnav {
+                display: block;
+            }
+
+            #nav .subnav li:hover a,
+            #nav > li:hover > a {
+                color: palevioletred;
+            }
+
+            /* Create Styles */
+            .create {
+                text-align: center;
+            }
+
+            .create a {
+                text-decoration: none;
+                font-family: "Poppins", sans-serif;
+                font-weight: bold;
+                font-size: 16px;
+                color: #fff;
+                padding: 10px 20px;
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                border-radius: 5px;
+                transition: background 0.3s ease, transform 0.2s ease-in-out;
+            }
+
+            .create a:hover {
+                background: linear-gradient(135deg, #4397ce, #9a3cbf);
+                transform: scale(1.05);
+            }
+
+            .create a:active {
+                transform: scale(0.95);
+            }
+            /* Footer Section Styles */
+            #footer {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: linear-gradient(135deg, #4397ce, #9a3cbf);
+                color: white;
+                text-align: center;
+                transition: transform 0.5s ease-in-out;
+                padding: 5px;
+            }
+
+            #footer a{
+                color: #000;
+            }
+
+            .slogan {
+                margin: 0;
+                font-size: 16px;
+            }
+
+            /* Space Styles */
+            .space {
+                padding: 39px;
+            }
+
+            /* Slider Section Styles */
+            #carouselExampleIndicators {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+
+            /* Custom styles for carousel images */
+            #carouselExampleIndicators img {
+                width: 100%;
+                height: auto;
+                max-width: 100%;
+            }
+
+            .topic {
+                display: flex;
+                flex-wrap: wrap; /* Cho phép các div con xuống dòng khi không đủ không gian */
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 15px; /* Khoảng cách lề bên trong div topic */
+                border: 1px solid #ccc; /* Đường viền của div topic */
+                border-radius: 10px; /* Bo góc cho div topic */
+            }
+
+            .topic-info {
+                flex: 0 0 calc(25% - 15px); /* Chia cột cho 4 div con, với khoảng cách giữa chúng là 15px */
+                margin: 15px; /* Khoảng cách giữa các div con */
+                border: 1px solid #ccc; /* Đường viền của div con */
+                border-radius: 5px; /* Bo góc cho div con */
+                padding: 10px; /* Khoảng cách lề bên trong div con */
+            }
+
+            .show-all {
+                width: 100%;
+                margin-top: 15px; /* Khoảng cách giữa div con và div show-all */
+            }
+
+            .show-all a {
+                display: block;
+                text-align: right;
+                text-decoration: none;
+                color: #007BFF;
+            }
+
+            /*  */
+            .main-div {
+                position: relative;
+            }
+
+            .dropdown {
+                position: relative;
+                z-index: 1;
+            }
+
+            .dropdown-title {
+                cursor: pointer;
+                padding: 10px;
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
                 border-radius: 5px;
             }
 
-            .countdown-timer {
-                font-size: 24px;
+            .dropdown-list {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                z-index: 2;
+            }
+
+            .dropdown-list.show {
+                display: block;
+            }
+
+            .dropdown-item {
+                padding: 10px;
+                border-bottom: 1px solid #ccc;
+                cursor: pointer;
+            }
+
+            .dropdown-item:last-child {
+                border-bottom: none;
+            }
+
+            .other-content {
+                margin-top: 20px;
+                background-color: #f9f9f9;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+
+            /* CSS để xóa viền và thêm border */
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .quiz {
+                border: 2px solid #ccc;
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            .question {
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                padding: 10px;
+                border-radius: 5px;
+            }
+
+            .question-text {
                 font-weight: bold;
             }
 
-            /* Định dạng số giờ, phút, giây */
-            #hours, #minutes, #seconds {
-                padding: 0 5px;
-                border-right: 1px solid #ccc;
+            .answer {
+                margin-left: 20px;
             }
 
-            #seconds {
-                border-right: none; /* Loại bỏ border phía bên phải của giây */
+            /* CSS để thay đổi giao diện khi hover */
+            .question:hover {
+                background-color: #f5f5f5;
+            }
+
+            /* CSS để thay đổi giao diện khi chọn */
+            .answer input[type="checkbox"]:checked+label {
+                background-color: #e0e0e0;
+            }
+
+            /* CSS cho label và input cùng một hàng */
+            .answer label,
+            .answer input[type="checkbox"] {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            /* Khoảng cách giữa checkbox và label */
+            .answer label {
+                margin-left: 5px;
+            }
+
+
+            /* CSS cho nút Nộp bài */
+            .submit-button {
+                display: block;
+                margin-top: 20px;
+                padding: 10px 20px;
+                background-color: rgb(223, 58, 58);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .submit-button:hover {
+                background-color: rgb(119, 33, 33);
+            }
+
+
+            .create {
+                text-align: center;
+            }
+
+
+            #joinGroupButton {
+                text-decoration: none;
+                font-family: "Poppins", sans-serif;
+                font-weight: bold;
+                font-size: 16px;
+                color: #fff;
+                padding: 10px 20px;
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                border-radius: 5px;
+                transition: background 0.3s ease, transform 0.2s ease-in-out;
+            }
+
+            #joinGroupButton:hover {
+                background: linear-gradient(135deg, #4397ce, #9a3cbf);
+                transform: scale(1.05);
+            }
+
+            #joinGroupButton:active {
+                transform: scale(0.95);
+            }
+            /* CSS */
+
+            .code {
+                margin-top: 20px;
+                display: inline block;
+                text-align: center;
+                width: 100%;
+            }
+
+            #groupNameInput{
+                width: 80%;
+                padding: 20px;
+            }
+
+            #joinGroupButton {
+                padding: 11px;
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+            #joinGroupButton:hover {
+                background: linear-gradient(135deg, #4397ce, #9a3cbf);
+                transform: scale(1.05);
+            }
+
+            #joinGroupButton  :active {
+                transform: scale(0.95);
             }
         </style>
     </head>
@@ -111,163 +561,38 @@
                 <div class="space"></div>
             </div>
 
-            <form>
-                <div class="quiz">
+            <div class="quiz">
+                <c:forEach items="${requestScope.listQuestion}" var="eachQuestion">
                     <div class="question">
-                        <div class="question-text">Câu hỏi 1: Đâu là thành phố đông dân nhất thế giới?</div>
+                        <div class="question-text">${eachQuestion.questionContent}</div>
                         <div class="answer">
                             <input type="checkbox" id="q1a" name="q1" value="a">
                             <label for="q1a">A. Tokyo</label><br>
-                            <input type="checkbox" id="q1b" name="q1" value="b">
-                            <label for="q1b">B. Mumbai</label><br>
-                            <input type="checkbox" id="q1c" name="q1" value="c">
-                            <label for="q1c">C. Seoul</label><br>
-                            <input type="checkbox" id="q1d" name="q1" value="d">
-                            <label for="q1d">D. Jakarta</label>
                         </div>
                     </div>
+                </c:forEach>
 
-                    <div class="question">
-                        <div class="question-text">Câu hỏi 2: Ai là nhà văn viết "Tôi thấy hoa vàng trên cỏ xanh"?</div>
-                        <div class="answer">
-                            <input type="checkbox" id="q2a" name="q2" value="a">
-                            <label for="q2a">A. Nguyễn Du</label><br>
-                            <input type="checkbox" id="q2b" name="q2" value="b">
-                            <label for="q2b">B. Tố Hữu</label><br>
-                            <input type="checkbox" id="q2c" name="q2" value="c">
-                            <label for="q2c">C. Nguyễn Khắc Huy</label><br>
-                            <input type="checkbox" id="q2d" name="q2" value="d">
-                            <label for="q2d">D. Xuân Diệu</label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">Câu hỏi 3: Tác giả của cuốn sách "Nghìn lẻ một đêm" là ai?</div>
-                        <div class="answer">
-                            <input type="checkbox" id="q3a" name="q3" value="a">
-                            <label for="q3a">A. Homer</label><br>
-                            <input type="checkbox" id="q3b" name="q3" value="b">
-                            <label for="q3b">B. Shakespeare</label><br>
-                            <input type="checkbox" id="q3c" name="q3" value="c">
-                            <label for="q3c">C. Alexandre Dumas</label><br>
-                            <input type="checkbox" id="q3d" name="q3" value="d">
-                            <label for="q3d">D. Antoine Galland</label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">Câu hỏi 4: Thành phố nào được biết đến với tượng Nữ thần Tự do?</div>
-                        <div class="answer">
-                            <input type="checkbox" id="q4a" name="q4" value="a">
-                            <label for="q4a">A. New York City</label><br>
-                            <input type="checkbox" id="q4b" name="q4" value="b">
-                            <label for="q4b">B. Paris</label><br>
-                            <input type="checkbox" id="q4c" name="q4" value="c">
-                            <label for="q4c">C. London</label><br>
-                            <input type="checkbox" id="q4d" name="q4" value="d">
-                            <label for="q4d">D. Tokyo</label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">Câu hỏi 5: Ai là người phát minh ra bóng đèn điện?</div>
-                        <div class="answer">
-                            <input type="checkbox" id="q5a" name="q5" value="a">
-                            <label for="q5a">A. Thomas Edison</label><br>
-                            <input type="checkbox" id="q5b" name="q5" value="b">
-                            <label for="q5b">B. Nikola Tesla</label><br>
-                            <input type="checkbox" id="q5c" name="q5" value="c">
-                            <label for="q5c">C. Alexander Graham Bell</label><br>
-                            <input type="checkbox" id="q5d" name="q5" value="d">
-                            <label for="q5d">D. Galileo Galilei</label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">Câu hỏi 6: Ai là người phát minh ra bóng đèn điện?</div>
-                        <div class="answer">
-                            <input type="checkbox" id="q6a" name="q6" value="a">
-                            <label for="q6a">A. Thomas Edison</label><br>
-                            <input type="checkbox" id="q6b" name="q6" value="b">
-                            <label for="q6b">B. Nikola Tesla</label><br>
-                            <input type="checkbox" id="q6c" name="q6" value="c">
-                            <label for="q6c">C. Alexander Graham Bell</label><br>
-                            <input type="checkbox" id="q6d" name="q6" value="d">
-                            <label for="q6d">D. Galileo Galilei</label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">Câu hỏi 7: Ai là người phát minh ra bóng đèn điện?</div>
-                        <div class="answer">
-                            <input type="checkbox" id="q7a" name="q7" value="a">
-                            <label for="q7a">A. Thomas Edison</label><br>
-                            <input type="checkbox" id="q7b" name="q7" value="b">
-                            <label for="q7b">B. Nikola Tesla</label><br>
-                            <input type="checkbox" id="q7c" name="q7" value="c">
-                            <label for="q7c">C. Alexander Graham Bell</label><br>
-                            <input type="checkbox" id="q7d" name="q7" value="d">
-                            <label for="q7d">D. Galileo Galilei</label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">Câu hỏi 8: Ai là người phát minh ra bóng đèn điện?</div>
-                        <div class="answer">
-                            <input type="checkbox" id="q8a" name="q8" value="a">
-                            <label for="q8a">A. Thomas Edison</label><br>
-                            <input type="checkbox" id="q8b" name="q8" value="b">
-                            <label for="q8b">B. Nikola Tesla</label><br>
-                            <input type="checkbox" id="q8c" name="q8" value="c">
-                            <label for="q8c">C. Alexander Graham Bell</label><br>
-                            <input type="checkbox" id="q8d" name="q8" value="d">
-                            <label for="q8d">D. Galileo Galilei</label>
-                        </div>
-                    </div>
-                    <button class="submit-button" onclick="submitQuiz()">Finish Quiz!!!</button>
-                </div>
-            </form>
-
-            <div class="countdown-container">
-                <div class="countdown">
-                    <div class="countdown-timer">
-                        <span id="hours">00</span>:
-                        <span id="minutes">00</span>:
-                        <span id="seconds">00</span>
-                    </div>
-                </div>
+                <button class="submit-button" onclick="submitQuiz()">Finish Quiz!!!</button>
             </div>
+
+            <!--                <% int questionNumber = 1; %>
+            <c:forEach var="mappingId" items="${requestScope.listMappingQuestionId}">
+                <div class="question">
+                    <div class="question-text">
+                        Câu hỏi <%= questionNumber %>: ${mappingId.question.questionContent}
+                    </div>
+                </div>
+                <% questionNumber++; %>
+            </c:forEach>
+            <button class="submit-button" onclick="submitQuiz()">Hoàn thành bài thi!!!</button>
+        </div>-->
+
+            <!-- End of header section -->
+
+            <!-- Admin content section -->
+
 
         </div>
-        <!-- End of header section -->
-
-        <!-- Admin content section -->
-
-        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Join group by code</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form>
-                  <div class="form-group">
-                    <label for="recipient-name" class="col-form-label">Code:</label>
-                    <input type="text" class="form-control" id="recipient-name" placeholder="Enter code here........">
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Join <i class="fa-solid fa-right-to-bracket"></i> </button>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <!-- Footer section -->
         <div id="footer">
             <!-- Social Icons -->
@@ -282,107 +607,6 @@
         <!-- End of footer section -->
 
         <!-- End of main container div -->
-
-        <script>
-            // Lấy ra các phần tử của đồng hồ
-            const hoursElement = document.getElementById('hours');
-            const minutesElement = document.getElementById('minutes');
-            const secondsElement = document.getElementById('seconds');
-
-            // Thời gian ban đầu để đếm ngược (dạng "00:00:00")
-            let countdownInput = "00:00:20"; // Ví dụ đếm ngược 10 giây
-
-            // Chuyển đổi đầu vào "00:00:00" thành số giây
-            let [inputHours, inputMinutes, inputSeconds] = countdownInput.split(":");
-            let countdownTime = parseInt(inputHours) * 3600 + parseInt(inputMinutes) * 60 + parseInt(inputSeconds);
-
-            // Biến kiểm tra đã nộp bài hay chưa
-            let hasSubmitted = false;
-
-            function updateCountdown() {
-                const hours = Math.floor(countdownTime / 3600);
-                const minutes = Math.floor((countdownTime % 3600) / 60);
-                const seconds = countdownTime % 60;
-
-                // Hiển thị giờ, phút, giây với định dạng "00"
-                hoursElement.textContent = hours.toString().padStart(2, '0');
-                minutesElement.textContent = minutes.toString().padStart(2, '0');
-                secondsElement.textContent = seconds.toString().padStart(2, '0');
-
-                // Giảm thời gian đếm ngược mỗi giây
-                countdownTime--;
-
-                // Dừng đếm ngược khi hết thời gian
-                if (countdownTime < 0) {
-                    clearInterval(countdownInterval);
-                    if (!hasSubmitted) {
-                        submitQuiz();
-                        alert("Hết thời gian làm bài!");
-                    }
-                }
-            }
-
-            // Cập nhật đồng hồ mỗi giây
-            const countdownInterval = setInterval(updateCountdown, 1000);
-
-            // Hàm tự động submit và hiển thị thông báo
-            function submitQuiz() {
-                if (!hasSubmitted) {
-                    // Lấy danh sách tất cả các câu hỏi
-                    var questions = document.querySelectorAll('.question');
-
-                    // Biến để kiểm tra xem có câu hỏi nào chưa được chọn không
-                    var hasUncheckedQuestion = false;
-                    var allUnchecked = true; // Biến kiểm tra xem tất cả câu hỏi đều chưa được chọn
-                    var alertShown = false; // Biến để kiểm tra xem đã hiển thị thông báo chưa
-
-                    questions.forEach(function (question) {
-                        // Lấy danh sách các checkbox trong câu hỏi
-                        var checkboxes = question.querySelectorAll('input[type="checkbox"]');
-                        var isChecked = false;
-
-                        // Kiểm tra xem có ít nhất 1 checkbox được chọn không
-                        checkboxes.forEach(function (checkbox) {
-                            if (checkbox.checked) {
-                                isChecked = true;
-                                allUnchecked = false; // Có ít nhất 1 checkbox được chọn, không phải tất cả đều chưa được chọn
-                            }
-                        });
-
-                        // Nếu không có checkbox nào được chọn, đánh dấu có câu hỏi chưa được chọn
-                        if (!isChecked) {
-                            hasUncheckedQuestion = true;
-                            // Scroll đến câu hỏi chưa được chọn và hiển thị thông báo nếu chưa hiển thị
-                            if (!alertShown) {
-                                question.scrollIntoView({behavior: 'smooth', block: 'end'});
-                                alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
-                                alertShown = true;
-                            }
-                            return;
-                        }
-                    });
-
-                    // Nếu tất cả câu hỏi đều chưa được chọn, hiển thị thông báo nếu chưa hiển thị
-                    if (allUnchecked && !alertShown) {
-                        alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
-                        alertShown = true;
-                        return;
-                    }
-
-                    // Nếu không có câu hỏi nào chưa được chọn và đã có ít nhất 1 câu hỏi được chọn, hiển thị thông báo xác nhận
-                    if (!hasUncheckedQuestion && !alertShown) {
-                        var confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
-                        if (confirmSubmit) {
-                            alert("Bài thi đã được nộp thành công!");
-                            // Ở đây bạn có thể thực hiện các hành động khác sau khi người dùng nộp bài
-                            hasSubmitted = true; // Đánh dấu đã nộp bài
-                        }
-                        alertShown = true;
-                    }
-                }
-            }
-
-        </script>
         <script>
             function submitQuiz() {
                 // Lấy danh sách tất cả các câu hỏi
