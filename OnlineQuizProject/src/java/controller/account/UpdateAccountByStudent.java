@@ -4,11 +4,13 @@
  */
 package controller.account;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.AccountInfoDBContext;
 import dal.ControllerDBContext;
 import entity.Account;
 import entity.AccountInfo;
+import entity.RoleAccess;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -21,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
+import java.util.ArrayList;
 
 
 /**
@@ -28,7 +31,7 @@ import java.sql.Date;
  * @author PC
  */
 @WebServlet(name = "UpdateAccountByStudent", urlPatterns = {"/UpdateAccountByStudent"})
-public class UpdateAccountByStudent extends BasedRequiredAuthenticationController {
+public class UpdateAccountByStudent extends BasedAuthorizationController {
 
     AccountInfoDBContext accountInfoDB = new AccountInfoDBContext();
     ControllerDBContext db = new ControllerDBContext();
@@ -42,7 +45,7 @@ public class UpdateAccountByStudent extends BasedRequiredAuthenticationControlle
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         Account accountNeedToUpdate = LoggedUser;
         AccountInfo accountInfoNeedToUpdate = db.getAccountInfoByAccountId(accountNeedToUpdate.getAccountId());
@@ -64,18 +67,18 @@ public class UpdateAccountByStudent extends BasedRequiredAuthenticationControlle
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        Account accountNeedToUpdate = LoggedUser;
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+         Account accountNeedToUpdate = LoggedUser;
         AccountInfo accountInfoNeedToUpdate = db.getAccountInfoByAccountId(accountNeedToUpdate.getAccountId());
 
         request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);
         request.setAttribute("infoAbountAccountNeedToUpdate", accountInfoNeedToUpdate);
         request.getRequestDispatcher("/view/controllerAccount/UpdateAccountByStudent.jsp").forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
     }
 
 }
