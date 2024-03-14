@@ -68,8 +68,8 @@
                                     </c:if>
                                 </div>
 
-                                <div class="row mb-3 px-3">
-                                    <button type="submit" class="btn btn-blue text-center">Login</button>
+                                <div class="row mb-3 px-3" >
+                                    <button type="submit" class="btn btn-primary ">Login</button>
                                 </div>
                             </form>
                             <div class="row mb-4 px-3">
