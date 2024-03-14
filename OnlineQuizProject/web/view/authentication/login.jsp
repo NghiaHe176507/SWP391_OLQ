@@ -60,7 +60,7 @@
                                         <label for="chk1" class="custom-control-label text-sm">Remember me</label>
                                     </div>
                                     <a href="${pageContext.request.contextPath}/forgotpassword"
-                                       class="ml-auto mb-0 text-sm">Forgot Password?</a>
+                                       class="ml-auto mb-0 text-sm" style="color: #007BFF">Forgot Password?</a>
                                 </div>
                                 <div>
                                     <c:if test="${checkAuthentication eq 'F'}">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-blue py-4">
+                                        <div class="bg-blue py-4" style="background-color: #007BFF" >
                     <div class="row px-3">
                         <small class="ml-4 ml-sm-5 mb-2">Create by Group 1 SE1760</small>
                     </div>
