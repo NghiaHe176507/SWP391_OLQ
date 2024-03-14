@@ -22,11 +22,13 @@ html {
 }
 .container {
     min-height: 100%;
+   background-image: url('https://i.pinimg.com/originals/db/34/d4/db34d40b271fb59477621550bf73ea0b.jpg');
 }
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    
 }
 
 .container {
