@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="create col-md-1">
-                        <a href="#"><i class="fa-solid fa-plus"></i> Tạo đề thi</a>
+                        <a href="<%= request.getContextPath() %>/create-exam"><i class="fa-solid fa-plus"></i> Tạo đề thi</a>
                     </div>
 
                     <!-- Search container -->

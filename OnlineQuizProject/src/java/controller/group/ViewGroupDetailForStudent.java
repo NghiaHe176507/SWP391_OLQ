@@ -52,6 +52,7 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
 
+        
         int studentId = LoggedUser.getAccountId();
         ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
         listRegister.size();
@@ -60,6 +61,8 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
 
         ArrayList<Exam> listExamOfGroup = db.getListExamByGroupId(groupId);
 
+        
+        request.setAttribute("groupId", groupId);
         request.setAttribute("listExamOfGroup", listExamOfGroup);
 
         request.setAttribute("listRegister", listRegister);

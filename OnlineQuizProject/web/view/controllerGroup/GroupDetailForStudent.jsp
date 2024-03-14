@@ -105,7 +105,7 @@
                     </thead>
                     <tbody>
                         <c:forEach var="register" items="${requestScope.listRegister}">
-                            <c:if test="${register.group.groupId == 1}">
+                            <c:if test="${register.group.groupId == requestScope.groupId}}">
                                 <tr>
                                     <td>${register.group.groupName}</td>
                                     <td>${register.group.topic.topicName}</td>
@@ -138,7 +138,7 @@
                                 <td>${exam.examEndDate}</td>
                                 <td>${exam.examTime}</td>
                                 <td>${exam.status.statusName}</td>
-                                <td><a href="#"class="btn btn-primary">Do Exam</a></td>
+                                <td><a href="<%= request.getContextPath() %>/take-exam"class="btn btn-primary">Do Exam</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>

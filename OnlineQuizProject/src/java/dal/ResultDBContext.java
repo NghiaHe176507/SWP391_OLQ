@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author tuann
  */
-public class ResultTotalExamDBContext extends DBContext<Result> {
+public class ResultDBContext extends DBContext<Result> {
 
    public Result getByStudentId(int studentID) {
         try {
@@ -74,7 +74,7 @@ public class ResultTotalExamDBContext extends DBContext<Result> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ResultTotalExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -87,7 +87,7 @@ public class ResultTotalExamDBContext extends DBContext<Result> {
             stm.setInt(2, resultId);
             stm.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(ResultTotalExamDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -5,7 +5,7 @@
 package controller.test;
 
 import controller.authentication.BasedAuthorizationController;
-import dal.ResultTotalExamDBContext;
+import dal.ResultDBContext;
 import entity.Account;
 import entity.Result;
 import entity.RoleAccess;
@@ -24,7 +24,7 @@ public class ViewResultExamOfStudent extends BasedAuthorizationController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
 //        int studentID = Integer.parseInt(request.getParameter("studentID"));
-        ResultTotalExamDBContext resultExam = new ResultTotalExamDBContext();
+        ResultDBContext resultExam = new ResultDBContext();
         Result result = resultExam.getByStudentId(11);
         request.setAttribute("resultTotalExam", result);
         request.getRequestDispatcher("view/test/ViewTotalResultTest.jsp").forward(request, response);
