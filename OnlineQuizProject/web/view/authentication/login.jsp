@@ -68,8 +68,8 @@
                                     </c:if>
                                 </div>
 
-                                <div class="row mb-3 px-3" >
-                                    <button type="submit" class="btn btn-primary ">Login</button>
+                                <div class="row mb-3 px-3"  >
+                                    <button type="submit" class="btn btn-primary">Login</button>
                                 </div>
                             </form>
                             <div class="row mb-4 px-3">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                                        <div class="bg-blue py-4" style="background-color: #007BFF" >
+                                        <div class="bg-blue py-4" style="background: linear-gradient(135deg, #71b7e6, #9b59b6)" >
                     <div class="row px-3">
                         <small class="ml-4 ml-sm-5 mb-2">Create by Group 1 SE1760</small>
                     </div>
