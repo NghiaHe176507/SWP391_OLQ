@@ -56,41 +56,92 @@ public class ViewResultExamOfStudent extends BasedAuthorizationController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
-        ArrayList<ExamQuestionMapping> listQuestion = (ArrayList<ExamQuestionMapping>) request.getAttribute("listQuestion");
-        ArrayList<ArrayList<OptionAnswer>> optionAnswersForEachQuestion = (ArrayList<ArrayList<OptionAnswer>>) request.getAttribute("optionAnswersForEachQuestion");
+//        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(1);
+//
+//        // Khởi tạo biến score
+//        int score = 0;
+//
+//        for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
+//            // Lấy danh sách câu trả lời từ người dùng
+//            String questionIdParam = "q" + examQuestionMapping.getQuestion().getQuestionId();
+//            String[] selectedAnswers = request.getParameterValues(questionIdParam);
+//
+//            if (selectedAnswers != null && selectedAnswers.length > 0) {
+//                ArrayList<Integer> selectedAnswerIds = new ArrayList<>();
+//                for (String answer : selectedAnswers) {
+//                    selectedAnswerIds.add(Integer.parseInt(answer));
+//                }
+//
+//                // Lấy danh sách đáp án đúng từ CSDL
+//                ArrayList<OptionAnswer> correctAnswers = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
+//
+//                // So sánh câu trả lời của người dùng với đáp án đúng
+//                boolean isCorrect = true;
+//                for (OptionAnswer correctAnswer : correctAnswers) {
+//                    if (!selectedAnswerIds.contains(correctAnswer.getOptionAnswerId())) {
+//                        isCorrect = false;
+//                        break;
+//                    }
+//                }
+//
+//                // Nếu câu trả lời đúng, cộng điểm
+//                if (isCorrect) {
+//                    score += 1; // Điểm mỗi câu là 1, bạn có thể thay đổi nếu muốn
+//                }
+//            }
+//        }
+//
+//        // Tính điểm theo quy tắc của bạn
+//        score += listExamQuestionMapping.size() / 10;
+//
+//        request.setAttribute("score", score);
 
-        // Lấy danh sách các optionAnswerId được chọn từ request
-        Map<Integer, Integer> selectedOptions = new HashMap<>();
-        for (ExamQuestionMapping examQuestionMapping : listQuestion) {
-            int questionIndex = examQuestionMapping.getQuestion().getQuestionId();
-            String optionAnswerIdStr = request.getParameter("q" + questionIndex);
-            if (optionAnswerIdStr != null && !optionAnswerIdStr.isEmpty()) {
-                int optionAnswerId = Integer.parseInt(optionAnswerIdStr);
-                selectedOptions.put(questionIndex, optionAnswerId);
+// Lấy thông tin câu trả lời từ request
+    ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(1);
+
+    // Khởi tạo biến score
+    int score = 0;
+
+    for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
+        // Lấy danh sách câu trả lời từ người dùng
+        ArrayList<String> selectedAnswerContents = new ArrayList<>();
+        for (int i = 1; ; i++) {
+            String answerIdParam = "q" + examQuestionMapping.getQuestion().getQuestionId() + "." + i;
+            String selectedAnswer = request.getParameter(answerIdParam);
+            if (selectedAnswer != null && !selectedAnswer.isEmpty()) {
+                selectedAnswerContents.add(selectedAnswer);
+            } else {
+                break;
             }
         }
 
-        // Tính điểm số
-        int score = 0;
-        for (int i = 0; i < listQuestion.size(); i++) {
-            ExamQuestionMapping examQuestionMapping = listQuestion.get(i);
-            int questionIndex = examQuestionMapping.getQuestion().getQuestionId();
-            ArrayList<OptionAnswer> correctOptions = optionAnswersForEachQuestion.get(i);
-            int selectedOptionId = selectedOptions.getOrDefault(questionIndex, -1);
-
-            for (OptionAnswer correctOption : correctOptions) {
-                if (correctOption.getOptionAnswerId() == selectedOptionId) {
-                    score += listQuestion.size() / 10;
-                    break;
-                }
+        // Lấy danh sách đáp án đúng từ CSDL
+        ArrayList<OptionAnswer> correctAnswers = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
+        // So sánh câu trả lời của người dùng với đáp án đúng
+        boolean isCorrect = true;
+        for (OptionAnswer correctAnswer : correctAnswers) {
+            // Kiểm tra nếu câu trả lời của người dùng không nằm trong danh sách đáp án đúng
+            if (!selectedAnswerContents.contains(correctAnswer.getAnswerContent())) {
+                isCorrect = false;
+                break;
             }
         }
 
-        // Đưa điểm số vào request để hiển thị ở JSP hoặc thực hiện các thao tác khác
-        request.setAttribute("score", score);
-        request.getRequestDispatcher("view/test/ViewTotalResultTest.jsp").forward(request, response);
-
+        // Nếu câu trả lời đúng, cộng điểm
+        if (isCorrect) {
+            score += 1; // Điểm mỗi câu là 1, bạn có thể thay đổi nếu muốn
+        }
     }
+
+    // Tính điểm theo quy tắc của bạn
+    score += listExamQuestionMapping.size() / 10;
+
+    // Đặt điểm số vào request để hiển thị
+    request.setAttribute("score", score);
+
+    // Chuyển hướng đến JSP để hiển thị kết quả
+    request.getRequestDispatcher("view/test/ViewTotalResultTest.jsp").forward(request, response);
+}
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {

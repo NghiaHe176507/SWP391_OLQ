@@ -60,7 +60,20 @@ public class DoExamForStudent extends BasedRequiredAuthenticationController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
+        String examIdParam = request.getParameter("examId");
+        int examId = Integer.parseInt(examIdParam);
+        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(examId);
+        request.setAttribute("listQuestion", listExamQuestionMapping);
+
+        ArrayList<ArrayList<OptionAnswer>> optionAnswersForEachQuestion = new ArrayList<>();
+
+        for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
+            ArrayList<OptionAnswer> listOptionAnswerByQuestion = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
+            optionAnswersForEachQuestion.add(listOptionAnswerByQuestion);
+        }
+        request.setAttribute("optionAnswersForEachQuestion", optionAnswersForEachQuestion);
+
+        request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
     }
 
 }

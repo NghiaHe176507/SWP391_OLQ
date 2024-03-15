@@ -139,6 +139,8 @@
                                 <td>${exam.examTime}</td>
                                 <td>${exam.status.statusName}</td>
                                 <td>
+                                    </form>
+
                                     <form action="<%= request.getContextPath() %>/take-exam" method="GET">
                                         <input type="hidden" name="examId" value="${exam.examId}">
                                         <button type="submit" class="btn btn-primary">Do Exam</button>
@@ -149,7 +151,6 @@
 
                     </tbody>
                 </table>
-            </form>
 
 
         </div>
