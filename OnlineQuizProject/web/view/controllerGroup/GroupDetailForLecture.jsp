@@ -1,9 +1,8 @@
 <%-- 
     Document   : GroupDetailForLecture
-    Created on : Mar 13, 2024, 3:22:35 AM
+    Created on : Mar 15, 2024, 12:10:37 AM
     Author     : nghia
 --%>
-
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -90,41 +89,37 @@
             <div class="row">
                 <div class="space"></div>
             </div>
-
-            <form action="viewGroupDetail" method="GET">
-                <!-- Bảng hiển thị thông tin lớp, môn học, giảng viên, trạng thái -->
-                <table class="table">
+            <form>
+                <!-- Table for displaying class information -->
+                <table class="table class-table">
                     <thead>
-                        <tr>
-                            <th scope="col">Group Name</th>
-                            <th scope="col">Topic</th>
-                            <th scope="col">Lecturer</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">Status</th>
+                        <tr style="font-size: 30px;">
+                            <th scope="col">Group Management</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="register" items="${requestScope.listRegister}">
-                            <c:if test="${register.group.groupId == groupId}">
+                        <c:forEach var="group" items="${requestScope.listGroup}">
+                            <c:if test="${group.groupId == groupId}">
                                 <tr>
-                                    <td>${register.group.groupName}</td>
-                                    <td>${register.group.topic.topicName}</td>
-                                    <td>${register.group.lectureInfo.fullName}</td>
-                                    <td>${register.registerDate}</td>
-                                    <td>${register.group.status.statusName}</td>
+                                    <td>
+                                        <p><strong>Group Name: </strong> ${group.groupName}</p>
+                                        <p><strong>Topic Name: </strong>${group.topic.topicName}</p>
+                                        <p><strong>Lecture: </strong>${group.lectureInfo.fullName}</p>
+                                        <p><strong>Status: </strong>${group.status.statusName}</p>
+                                    </td>
                                 </tr>
                             </c:if>
                         </c:forEach>
                     </tbody>
                 </table>
 
-                <!-- Bảng danh sách các Exam -->
-                <table class="table">
+                <!-- Table for listing exams -->
+                <table class="table exam-table">
                     <thead>
                         <tr>
                             <th scope="col">Exam Title</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
+                            <th scope="col">StartDate</th>
+                            <th scope="col">EndDate</th>
                             <th scope="col">Time</th>
                             <th scope="col">Status</th>
                             <th scope="col"></th>
@@ -132,25 +127,20 @@
                     </thead>
                     <tbody>
                         <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
-                            <tr>
-                                <td>${exam.examTitle}</td>
-                                <td>${exam.examStartDate}</td>
-                                <td>${exam.examEndDate}</td>
-                                <td>${exam.examTime}</td>
-                                <td>${exam.status.statusName}</td>
-                                <td>
-                                    <form action="<%= request.getContextPath() %>/take-exam" method="GET">
-                                        <input type="hidden" name="examId" value="${exam.examId}">
-                                        <button type="submit" class="btn btn-primary">Do Exam</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            <c:if test="${exam.group.groupId == groupId}">
+                                <tr>
+                                    <td>${exam.examTitle}</td>
+                                    <td>${exam.examStartDate}</td>
+                                    <td>${exam.examEndDate}</td>
+                                    <td>${exam.examTime}</td>
+                                    <td>${exam.status.statusName}</td>
+                                    <td><a href="<%= request.getContextPath() %>/take-exam"class="btn btn-primary">Do Exam</a></td>
+                                </tr>
+                            </c:if>
                         </c:forEach>
-
                     </tbody>
                 </table>
             </form>
-
 
         </div>
 

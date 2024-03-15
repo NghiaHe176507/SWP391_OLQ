@@ -36,14 +36,19 @@ public class DoExamForStudent extends BasedRequiredAuthenticationController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
-
-        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(11);
+        String examIdParam = request.getParameter("examId");
+        int examId = Integer.parseInt(examIdParam);
+        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(examId);
         request.setAttribute("listQuestion", listExamQuestionMapping);
+
+        ArrayList<ArrayList<OptionAnswer>> optionAnswersForEachQuestion = new ArrayList<>();
+
         for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
             ArrayList<OptionAnswer> listOptionAnswerByQuestion = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
-            int index = listExamQuestionMapping.indexOf(examQuestionMapping);
-            request.setAttribute("optionAnswerOfQuestion" + index, listOptionAnswerByQuestion);
+            optionAnswersForEachQuestion.add(listOptionAnswerByQuestion);
         }
+        request.setAttribute("optionAnswersForEachQuestion", optionAnswersForEachQuestion);
+
         request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
     }
 

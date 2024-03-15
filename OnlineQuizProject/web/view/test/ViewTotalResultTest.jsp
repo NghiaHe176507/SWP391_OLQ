@@ -90,7 +90,7 @@
                                 <div class="grade">
                                     <h3>Grading Details</h3>
                                     <p><strong>Time Exam</strong> ${resultTotalExam.exam.examTime}</p>
-                                    <p><strong>Score:</strong> ${resultTotalExam.score}</p>
+                                    <p><strong>Score:</strong> ${requestScope.score}</p>
                                     <p><strong>Comments:</strong> 
                                     <c:choose>
                                         <c:when test="${resultTotalExam.score >= 9}">
@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                             <div class="actions">
-                                <a href="${pageContext.request.contextPath}/homeStudent" class="btn btn-primary">Back to Home</a>
+                                <a href="${pageContext.request.contextPath}/home" class="btn btn-primary">Back to Home</a>
                                 <a href="#" class="btn btn-secondary">View Detailed Results</a>
                             </div>
                         </div>

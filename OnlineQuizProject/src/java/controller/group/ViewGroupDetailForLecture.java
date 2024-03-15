@@ -7,7 +7,9 @@ package controller.group;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import entity.Account;
+import entity.AccountInfo;
 import entity.Exam;
+import entity.Group;
 import entity.Register;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author nghia
  */
-public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationController {
+public class ViewGroupDetailForLecture extends BasedRequiredAuthenticationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
@@ -34,7 +36,7 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
     }
@@ -52,9 +54,10 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
 
-        int studentId = LoggedUser.getAccountId();
-        ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
-        listRegister.size();
+        int lecturerId = LoggedUser.getAccountId();
+        AccountInfo accountInfo = db.getAccountInfoByAccountId(lecturerId);
+        ArrayList<Group> listGroupOwned = db.getListGroupOwnedByLectureId(accountInfo.getAccountInfoId());
+
         String groupIdStr = request.getParameter("groupId");
         int groupId = Integer.parseInt(groupIdStr);
 
@@ -62,18 +65,17 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
         int topicId = Integer.parseInt(topicIdStr);
 
         ArrayList<Exam> listExamOfGroup = db.getListExamByGroupId(groupId);
-
-        request.setAttribute("groupId", groupId);
+        request.setAttribute("listGroup", listGroupOwned);
         request.setAttribute("topicId", topicId);
+        request.setAttribute("groupId", groupId);
         request.setAttribute("listExamOfGroup", listExamOfGroup);
+        request.getRequestDispatcher("view/controllerGroup/GroupDetailForLecture.jsp").forward(request, response);
 
-        request.setAttribute("listRegister", listRegister);
-        request.getRequestDispatcher("view/controllerGroup/GroupDetailForStudent.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
