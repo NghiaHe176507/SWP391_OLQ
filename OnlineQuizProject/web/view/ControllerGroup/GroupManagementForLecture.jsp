@@ -666,9 +666,15 @@
                                         <td>${group.topic.topicName}</td>
                                         <td>${group.status.statusName}</td>
                                         <td>
-                                            <c:if test="true">
-                                                <input type="button" class="btn btn-danger" value="Delete" onclick="DeleteGroup(${group.groupId})"/>
-                                            </c:if>
+                                            <c:choose>
+                                                <c:when test="${not empty group.groupInviteCode}">
+                                                    <input type="button" value="Remove invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/delete-invite-code?groupId=' +${group.groupId}"/>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="button" value="Create invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/create-invite-code?groupId=' +${group.groupId}"/>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <input type="button" class="btn btn-danger" value="Delete" onclick="DeleteGroup(${group.groupId})"/>
                                         </td>
                                     </tr>
                                 </c:forEach>

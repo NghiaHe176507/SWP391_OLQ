@@ -14,6 +14,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.net.URL;
 
 /**
  *
@@ -24,7 +25,7 @@ public abstract class BasedRequiredAuthenticationController extends HttpServlet 
 
     private boolean isAuthenticated(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
-       if (account != null) {
+        if (account != null) {
             return true;
         } else {
             String mail = null;
@@ -63,15 +64,21 @@ public abstract class BasedRequiredAuthenticationController extends HttpServlet 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String currentUrl = request.getRequestURL().toString();
+        URL url = new URL(currentUrl);
         if (isAuthenticated(request)) {
             //login
             doGet(request, response, (Account) request.getSession().getAttribute("account"));
         } else {
-           response.sendRedirect(request.getContextPath()+"/login");
+            if (url.getPath() == null ? (request.getContextPath()+"/") == null : url.getPath().equals(request.getContextPath()+"/")) {
+                request.getRequestDispatcher("view/controllerHome/home.jsp").forward(request, response);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/login");
+            }
         }
     }
 
-   protected abstract void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected abstract void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException;
 
     protected abstract void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
@@ -80,10 +87,17 @@ public abstract class BasedRequiredAuthenticationController extends HttpServlet 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String currentUrl = request.getRequestURL().toString();
+        URL url = new URL(currentUrl);
         if (isAuthenticated(request)) {
-            doPost(request, response, (Account) request.getSession().getAttribute("account"));
+            //login
+            doGet(request, response, (Account) request.getSession().getAttribute("account"));
         } else {
-            response.sendRedirect(request.getContextPath()+"/login");
+            if (url.getPath() == null ? (request.getContextPath()+"/") == null : url.getPath().equals(request.getContextPath()+"/")) {
+                request.getRequestDispatcher("view/controllerHome/home.jsp").forward(request, response);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/login");
+            }
         }
     }
 
