@@ -140,6 +140,14 @@
         <servlet-name>UpdateLectureComment</servlet-name>
         <servlet-class>controller.comment.UpdateLectureComment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateExamByLecture</servlet-name>
+        <servlet-class>controller.test.CreateExamByLecture</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewListGroupForExam</servlet-name>
+        <servlet-class>controller.test.ViewListGroupForExam</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -279,6 +287,14 @@
     <servlet-mapping>
         <servlet-name>UpdateLectureComment</servlet-name>
         <url-pattern>/update-lecture-comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateExamByLecture</servlet-name>
+        <url-pattern>/create-exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewListGroupForExam</servlet-name>
+        <url-pattern>/show-list-group-exam</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>default</welcome-file>

@@ -660,6 +660,34 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listGroup;
     }
 
+    public ArrayList<Exam> getListActiveGroupExamByLectureID(int lectureID) {
+        ArrayList<Exam> listExam = new ArrayList<>();
+        try {
+            String sql = """
+                     SELECT DISTINCT e.group_id, g.group_name, t.topic_name  FROM Exam e 
+                     INNER JOIN [Group] g ON e.group_id = g.group_id
+                     INNER JOIN [Topic] t ON g.topic_id = t.topic_id
+                     WHERE e.status_id = 1 AND g.lecture_id = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, lectureID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Topic topic = new Topic();
+                topic.setTopicName(rs.getString("topic_name"));
+                Group group = new Group();
+                group.setGroupName(rs.getString("group_name"));
+                group.setGroupId(rs.getInt("group_id"));
+                group.setTopic(topic);
+                Exam exam = new Exam();
+                exam.setGroup(group);
+                listExam.add(exam);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listExam;
+    }
+
     public void createNewGroupByLecture(Group newGroup) {
         try {
             connection.setAutoCommit(false);

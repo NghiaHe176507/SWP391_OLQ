@@ -320,9 +320,9 @@
                                                                     <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.paginatedList.indexOf(accountInfo)).getRole().getRoleId() != 1}">
                                                                         <a href="updateaccount?accountId=${accountInfo.account.accountId}" >Edit</a>
                                                                         <input type="button" value="Delete" onclick="deleteAccount(${accountInfo.account.accountId})"/>
-                                                                    </c:if>
-                                                                </td>
-                                                            </tr>
+                                                                        `                     </c:if>
+                                                                    </td>
+                                                                </tr>
                                                         </c:forEach>
                                                     </table>
                                                     <div class="pagination-container">
@@ -366,47 +366,34 @@
                         </div>
                     </div>
                 </div>
-                <!-- End of header section -->
-
-                <div>
-
+            </div>
+            <div id="footer">
+                <!-- Social Icons -->
+                <div class="socials-list">
+                    <a href=""><i class="fa-brands fa-facebook"></i></a>
+                    <a href=""><i class="fa-brands fa-instagram"></i></a>
+                    <a href=""><i class="fa-solid fa-bell"></i></a>
                 </div>
+                <!-- Slogan -->
+                <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Get the logo element
+                    var logo = document.querySelector('.logo a');
 
-                <!-- Footer section -->
-                <div id="footer">
-                    <!-- Social Icons -->
-                    <div class="socials-list">
-                        <a href=""><i class="fa-brands fa-facebook"></i></a>
-                        <a href=""><i class="fa-brands fa-instagram"></i></a>
-                        <a href=""><i class="fa-solid fa-bell"></i></a>
-                    </div>
-                    <!-- Slogan -->
-                    <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
-                </div>
-                <!-- End of footer section -->
+                    // Add click event listener to the logo
+                    logo.addEventListener('click', function (event) {
+                        // Prevent the default action of the link
+                        event.preventDefault();
 
-                <!-- End of main container div -->
+                        // Get the base URL
+                        var baseUrl = "<%= request.getContextPath() %>";
 
-                <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        // Get the logo element
-                        var logo = document.querySelector('.logo a');
-
-                        // Add click event listener to the logo
-                        logo.addEventListener('click', function (event) {
-                            // Prevent the default action of the link
-                            event.preventDefault();
-
-                            // Get the base URL
-                            var baseUrl = "<%= request.getContextPath() %>";
-
-                            // Navigate to the home page
-                            window.location.href = baseUrl + "/home";
-                        });
+                        // Navigate to the home page
+                        window.location.href = baseUrl + "/home";
                     });
-                </script>
-
-
-                </body>
-
-                </html>
+                });
+            </script>
+    </body>
+</html>
