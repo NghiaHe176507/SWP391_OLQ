@@ -256,7 +256,7 @@
 
                             <form action="unenroll" method="POST"> 
                                 <div class="row" style="padding-left: 27px;margin-bottom: 5px;    margin-right: 11px;">
-                                    <input type="hidden" name="groupId" id="groupId" value="${register.group.topic.topicId}"> 
+                                    <input type="hidden" name="groupId" id="groupId" value="${register.group.groupId}"> 
                                     <button class="unenrollButton btn btn-1 color-red">
                                         <svg>
                                         <rect x="0" y="0" fill="none" width="100%" height="100%"/>
