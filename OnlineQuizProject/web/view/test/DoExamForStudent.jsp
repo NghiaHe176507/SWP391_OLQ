@@ -542,7 +542,7 @@
 
                             <c:forEach items="${requestScope.optionAnswersForEachQuestion[questionIndex.index]}" var="answer" varStatus="answerIndex">
                                 <div class="answer">
-                                    <input type="checkbox" id="q${questionIndex.index + 1}.${answerIndex.index + 1}" name="q${questionIndex.index + 1}" value="${answerIndex.index + 1}" data-option-answer-id="${answer.optionAnswerId}">
+                                    <input type="checkbox" id="q${questionIndex.index + 1}.${answerIndex.index + 1}" name="answerOption" value="${answer.optionAnswerId}" data-option-answer-id="${answer.optionAnswerId}">
                                     <label for="q${questionIndex.index + 1}.${answerIndex.index + 1}">${answerIndex.index + 1}: ${answer.answerContent}</label><br>
                                 </div>
                             </c:forEach>

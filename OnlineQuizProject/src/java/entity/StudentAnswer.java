@@ -10,7 +10,7 @@ package entity;
  */
 public class StudentAnswer extends BaseEntity {
 
-    private int studentAnswer;
+    private int studentAnswerId;
     private Exam exam;
     private Question question;
     private OptionAnswer optionAnswer;
@@ -20,19 +20,19 @@ public class StudentAnswer extends BaseEntity {
     }
 
     public StudentAnswer(int studentAnswer, Exam exam, Question question, OptionAnswer optionAnswer, AccountInfo studentInfo) {
-        this.studentAnswer = studentAnswer;
+        this.studentAnswerId = studentAnswer;
         this.exam = exam;
         this.question = question;
         this.optionAnswer = optionAnswer;
         this.studentInfo = studentInfo;
     }
 
-    public int getStudentAnswer() {
-        return studentAnswer;
+    public int getStudentAnswerId() {
+        return studentAnswerId;
     }
 
-    public void setStudentAnswer(int studentAnswer) {
-        this.studentAnswer = studentAnswer;
+    public void setStudentAnswerId(int studentAnswerId) {
+        this.studentAnswerId = studentAnswerId;
     }
 
     public Exam getExam() {

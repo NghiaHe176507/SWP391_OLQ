@@ -9,6 +9,7 @@ import entity.Exam;
 import entity.Group;
 import entity.Result;
 import entity.Status;
+import entity.StudentAnswer;
 import entity.Topic;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class ResultDBContext extends DBContext<Result> {
 
-   public Result getByStudentId(int studentID) {
+    public Result getByStudentId(int studentID) {
         try {
             String sql = """
                          SELECT e.[exam_id]
@@ -54,7 +55,7 @@ public class ResultDBContext extends DBContext<Result> {
                 e.setExamTime(rs.getTime("time"));
                 e.setExamAttemp(rs.getInt("attempt"));
                 e.setIsPractice(rs.getBoolean("isPractice"));
-                e.setExamStartDate(rs.getTimestamp( "startDate"));
+                e.setExamStartDate(rs.getTimestamp("startDate"));
                 Status s = new Status();
                 s.setStatusName(rs.getString("status_name"));
                 e.setStatus(s);
@@ -93,7 +94,35 @@ public class ResultDBContext extends DBContext<Result> {
 
     @Override
     public Result getById(String Id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ExamDBContext examDB = new ExamDBContext();
+        AccountInfoDBContext accountInfoDB = new AccountInfoDBContext();
+        try {
+            String sql = """
+                         SELECT [result_id]
+                               ,[exam_id]
+                               ,[student_id]
+                               ,[score]
+                               ,[comment_content]
+                           FROM [Result]
+                           WHERE [result_id] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, Id);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Result result = new Result();
+                result.setResultId(rs.getInt("studentAnswer_id"));
+                result.setExam(examDB.getById(String.valueOf(rs.getInt("exam_id"))));
+                result.setStudentInfo(accountInfoDB.getById(String.valueOf(rs.getInt("student_id"))));
+                result.setScore(rs.getDouble("score"));
+                result.setCommentContent(rs.getString("comment_content"));
+
+                return result;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ExamQuestionMappingDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

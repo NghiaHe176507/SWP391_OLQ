@@ -675,7 +675,6 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <c:if test="${requestScope.url == 'update'}">
                                             <form action="update-account" method="POST" class="form-control" class="needs-validation" novalidate> 
                                                 Id: <input name="accountId" type="text" class="form-control" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/> <br/>
                                                 Mail: <input type="text" name="mail" class="form-control" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
@@ -698,7 +697,6 @@
                                                     <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
                                                 </div>
                                             </form>
-                                        </c:if>
                                     </div>
                                 </div>
                             </div>

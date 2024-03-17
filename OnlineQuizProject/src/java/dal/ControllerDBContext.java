@@ -1493,4 +1493,44 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listGroup;
     }
 
+    public void createNewStudentAnswer(OptionAnswer newOptionAnswer) {
+        try {
+            connection.setAutoCommit(false);
+
+            String sql_insert = """
+                                INSERT INTO [OptionAnswer]
+                                           ([answer_content]
+                                           ,[isCorrect]
+                                           ,[question_id])
+                                     VALUES
+                                           (?,?,?)""";
+            PreparedStatement stm = connection.prepareStatement(sql_insert);
+            stm.setString(1, newOptionAnswer.getAnswerContent());
+            stm.setBoolean(2, newOptionAnswer.isIsCorrect());
+            stm.setInt(3, newOptionAnswer.getQuestion().getQuestionId());
+            stm.executeUpdate();
+
+            String sql_getid = "SELECT @@IDENTITY as [optionAnswer_id]";
+            PreparedStatement stm2 = connection.prepareStatement(sql_getid);
+            ResultSet rs = stm2.executeQuery();
+            if (rs.next()) {
+                newOptionAnswer.setOptionAnswerId(rs.getInt("optionAnswer_id"));
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
