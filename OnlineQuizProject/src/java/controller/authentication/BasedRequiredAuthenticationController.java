@@ -91,7 +91,7 @@ public abstract class BasedRequiredAuthenticationController extends HttpServlet 
         URL url = new URL(currentUrl);
         if (isAuthenticated(request)) {
             //login
-            doGet(request, response, (Account) request.getSession().getAttribute("account"));
+            doPost(request, response, (Account) request.getSession().getAttribute("account"));
         } else {
             if (url.getPath() == null ? (request.getContextPath()+"/") == null : url.getPath().equals(request.getContextPath()+"/")) {
                 request.getRequestDispatcher("view/controllerHome/home.jsp").forward(request, response);
