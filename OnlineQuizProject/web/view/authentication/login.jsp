@@ -27,6 +27,13 @@
                 height: 1px;
                 background: #eee;
             }
+            .fixed-bottom {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                z-index: 1000; /* Ensure it appears above other content */
+            }
+
         </style>
     </head>
     <body>
@@ -98,12 +105,18 @@
 
                             <a class="btn btn-primary btn-lg d-block w-100" style="background-color: #3b5998" href="${pageContext.request.contextPath}/register">
                                 <i class="fa fa-registered me-2" aria-hidden="true"></i> Register Account Now
-
                             </a>
                         </form>
                     </div>
                 </div>
             </div>
+            <div class="fixed-bottom bg-primary text-white text-center py-3 px-4">
+                <!-- Copyright -->
+                <div>
+                    Copyright © 2020. All rights reserved.
+                </div>
+            </div>
+
         </section>
 
         <!-- Bootstrap Bundle with Popper -->
