@@ -26,13 +26,13 @@ public abstract class DBContext<T extends BaseEntity> {
 //            String user = "thanbd";
 //            String pass = "123";
 
-//            String url = "jdbc:sqlserver://LAPTOP-TML7FNC1:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
-//            String user = "sa";
-//            String pass = "minhtuanha2003";
-
-            String url = "jdbc:sqlserver://localhost\\DESKTOP-KRG8A16\\NGHIA2003:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://LAPTOP-TML7FNC1:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
             String user = "sa";
-            String pass = "Nghia2003@@";
+            String pass = "minhtuanha2003";
+
+//            String url = "jdbc:sqlserver://localhost\\DESKTOP-KRG8A16\\NGHIA2003:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
+//            String user = "sa";
+//            String pass = "Nghia2003@@";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException ex) {
