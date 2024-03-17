@@ -5,7 +5,7 @@
 
 package controller.comment;
 
-import dal.ResultTotalExamDBContext;
+import dal.ResultDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -25,7 +25,7 @@ public class UpdateLectureComment extends HttpServlet {
             int resultId = Integer.parseInt(request.getParameter("resultId"));
             String lectureComment = request.getParameter("lectureComment");
 
-            ResultTotalExamDBContext resultDB = new ResultTotalExamDBContext();
+            ResultDBContext resultDB = new ResultDBContext();
             resultDB.updateLectureComment(resultId, lectureComment);
 
             // Redirect back to the result page after updating the Lecture Comment

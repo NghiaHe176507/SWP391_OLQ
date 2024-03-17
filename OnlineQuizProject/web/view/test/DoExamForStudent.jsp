@@ -452,58 +452,29 @@
                 text-align: center;
             }
 
-
-            #joinGroupButton {
-                text-decoration: none;
-                font-family: "Poppins", sans-serif;
-                font-weight: bold;
-                font-size: 16px;
-                color: #fff;
-                padding: 10px 20px;
-                background: linear-gradient(135deg, #9a3cbf, #4397ce);
-                border-radius: 5px;
-                transition: background 0.3s ease, transform 0.2s ease-in-out;
-            }
-
-            #joinGroupButton:hover {
-                background: linear-gradient(135deg, #4397ce, #9a3cbf);
-                transform: scale(1.05);
-            }
-
-            #joinGroupButton:active {
-                transform: scale(0.95);
-            }
-            /* CSS */
-
-            .code {
-                margin-top: 20px;
-                display: inline block;
-                text-align: center;
-                width: 100%;
-            }
-
-            #groupNameInput{
-                width: 80%;
+            .countdown-container {
+                position: fixed;
+                top: 80px;
+                right: 40px;
+                border: 2px solid #ccc;
+                background-color: #f9f9f9;
                 padding: 20px;
-            }
-
-            #joinGroupButton {
-                padding: 11px;
-                background: linear-gradient(135deg, #9a3cbf, #4397ce);
-                color: #fff;
-                border: none;
                 border-radius: 5px;
-                cursor: pointer;
-                transition: background 0.3s ease;
             }
 
-            #joinGroupButton:hover {
-                background: linear-gradient(135deg, #4397ce, #9a3cbf);
-                transform: scale(1.05);
+            .countdown-timer {
+                font-size: 24px;
+                font-weight: bold;
             }
 
-            #joinGroupButton  :active {
-                transform: scale(0.95);
+            /* Định dạng số giờ, phút, giây */
+            #hours, #minutes, #seconds {
+                padding: 0 5px;
+                border-right: 1px solid #ccc;
+            }
+
+            #seconds {
+                border-right: none; /* Loại bỏ border phía bên phải của giây */
             }
         </style>
     </head>
@@ -561,233 +532,308 @@
                 <div class="space"></div>
             </div>
 
-            <div class="quiz">
-                <c:forEach items="${requestScope.listQuestion}" var="eachQuestion">
-                    <div class="question">
-                        <div class="question-text">${eachQuestion.questionContent}</div>
-                        <div class="answer">
-                            <input type="checkbox" id="q1a" name="q1" value="a">
-                            <label for="q1a">A. Tokyo</label><br>
+            <form action="view-total" method="POST" id="quiz-form">
+                <div class="quiz">
+                    <c:forEach items="${requestScope.listQuestion}" var="eachQuestion" varStatus="questionIndex">
+                        <div class="question">
+                            <div class="question-text">
+                                Câu hỏi ${questionIndex.index + 1}: ${eachQuestion.question.questionContent}
+                            </div>
+
+                            <c:forEach items="${requestScope.optionAnswersForEachQuestion[questionIndex.index]}" var="answer" varStatus="answerIndex">
+                                <div class="answer">
+                                    <input type="checkbox" id="q${questionIndex.index + 1}.${answerIndex.index + 1}" name="q${questionIndex.index + 1}" value="${answerIndex.index + 1}" data-option-answer-id="${answer.optionAnswerId}">
+                                    <label for="q${questionIndex.index + 1}.${answerIndex.index + 1}">${answerIndex.index + 1}: ${answer.answerContent}</label><br>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    </c:forEach>
+
+                    <button class="submit-button" onclick="submitQuiz()">Hoàn thành bài thi!!!</button>
+                </div>
+
+
+                <div class="countdown-container">
+                    <div class="countdown">
+                        <div class="countdown-timer">
+                            <span id="hours">00</span>:
+                            <span id="minutes">00</span>:
+                            <span id="seconds">00</span>
                         </div>
                     </div>
-                </c:forEach>
-
-                <button class="submit-button" onclick="submitQuiz()">Finish Quiz!!!</button>
-            </div>
-
-            <!--                <% int questionNumber = 1; %>
-            <c:forEach var="mappingId" items="${requestScope.listMappingQuestionId}">
-                <div class="question">
-                    <div class="question-text">
-                        Câu hỏi <%= questionNumber %>: ${mappingId.question.questionContent}
-                    </div>
                 </div>
-                <% questionNumber++; %>
-            </c:forEach>
-            <button class="submit-button" onclick="submitQuiz()">Hoàn thành bài thi!!!</button>
-        </div>-->
-
-            <!-- End of header section -->
-
-            <!-- Admin content section -->
-
+            </form>
 
         </div>
-        <!-- Footer section -->
-        <div id="footer">
-            <!-- Social Icons -->
-            <div class="socials-list">
-                <a href=""><i class="fa-brands fa-facebook"></i></a>
-                <a href=""><i class="fa-brands fa-instagram"></i></a>
-                <a href=""><i class="fa-solid fa-bell"></i></a>
-            </div>
-            <!-- Slogan -->
-            <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+
+        <!-- End of header section -->
+
+        <!-- Admin content section -->
+
+
+    </div>
+    <!-- Footer section -->
+    <div id="footer">
+        <!-- Social Icons -->
+        <div class="socials-list">
+            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-solid fa-bell"></i></a>
         </div>
-        <!-- End of footer section -->
+        <!-- Slogan -->
+        <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+    </div>
+    <!-- End of footer section -->
 
-        <!-- End of main container div -->
-        <script>
-            function submitQuiz() {
-                // Lấy danh sách tất cả các câu hỏi
-                var questions = document.querySelectorAll('.question');
+    <!-- End of main container div -->
+    <script>
+        // Lấy ra các phần tử của đồng hồ
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
 
-                // Biến để kiểm tra xem có câu hỏi nào chưa được chọn không
-                var hasUncheckedQuestion = false;
-                var allUnchecked = true; // Biến kiểm tra xem tất cả câu hỏi đều chưa được chọn
-                var alertShown = false; // Biến để kiểm tra xem đã hiển thị thông báo chưa
+        // Thời gian ban đầu để đếm ngược (dạng "00:00:00")
+        let countdownInput = "00:00:30";
 
-                questions.forEach(function (question) {
-                    // Lấy danh sách các checkbox trong câu hỏi
-                    var checkboxes = question.querySelectorAll('input[type="checkbox"]');
-                    var isChecked = false;
+        // Chuyển đổi đầu vào "00:00:00" thành số giây
+        let [inputHours, inputMinutes, inputSeconds] = countdownInput.split(":");
+        let countdownTime = parseInt(inputHours) * 3600 + parseInt(inputMinutes) * 60 + parseInt(inputSeconds);
 
-                    // Kiểm tra xem có ít nhất 1 checkbox được chọn không
-                    checkboxes.forEach(function (checkbox) {
-                        if (checkbox.checked) {
-                            isChecked = true;
-                            allUnchecked = false; // Có ít nhất 1 checkbox được chọn, không phải tất cả đều chưa được chọn
-                        }
-                    });
+        // Biến kiểm tra đã nộp bài hay chưa
+        let hasSubmitted = false;
 
-                    // Nếu không có checkbox nào được chọn, đánh dấu có câu hỏi chưa được chọn
-                    if (!isChecked) {
-                        hasUncheckedQuestion = true;
-                        // Scroll đến câu hỏi chưa được chọn và hiển thị thông báo nếu chưa hiển thị
-                        if (!alertShown) {
-                            question.scrollIntoView({behavior: 'smooth', block: 'end'});
-                            alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
-                            alertShown = true;
-                        }
-                        return;
+        function updateCountdown() {
+            const hours = Math.floor(countdownTime / 3600);
+            const minutes = Math.floor((countdownTime % 3600) / 60);
+            const seconds = countdownTime % 60;
+
+            // Hiển thị giờ, phút, giây với định dạng "00"
+            hoursElement.textContent = hours.toString().padStart(2, '0');
+            minutesElement.textContent = minutes.toString().padStart(2, '0');
+            secondsElement.textContent = seconds.toString().padStart(2, '0');
+
+            // Giảm thời gian đếm ngược mỗi giây
+            countdownTime--;
+
+            // Dừng đếm ngược khi hết thời gian
+            if (countdownTime < 0) {
+                clearInterval(countdownInterval);
+                submitQuizTimeout();
+            }
+        }
+
+        // Cập nhật đồng hồ mỗi giây
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Hàm tự động submit và hiển thị thông báo khi hết thời gian
+        function submitQuizTimeout() {
+            const quizForm = document.getElementById('quiz-form');
+            quizForm.submit();
+
+            alert("Bạn đã hết thời gian làm bài!");
+
+        }
+
+
+        // Hàm tự động submit và hiển thị thông báo
+        function submitQuiz() {
+            // Lấy danh sách tất cả các câu hỏi
+            var questions = document.querySelectorAll('.question');
+
+            // Biến để kiểm tra xem có câu hỏi nào chưa được chọn không
+            var hasUncheckedQuestion = false;
+            var allUnchecked = true; // Biến kiểm tra xem tất cả câu hỏi đều chưa được chọn
+            var alertShown = false; // Biến để kiểm tra xem đã hiển thị thông báo chưa
+
+            questions.forEach(function (question) {
+                // Lấy danh sách các checkbox trong câu hỏi
+                var checkboxes = question.querySelectorAll('input[type="checkbox"]');
+                var isChecked = false;
+
+                // Kiểm tra xem có ít nhất 1 checkbox được chọn không
+                checkboxes.forEach(function (checkbox) {
+                    if (checkbox.checked) {
+                        isChecked = true;
+                        allUnchecked = false; // Có ít nhất 1 checkbox được chọn, không phải tất cả đều chưa được chọn
                     }
                 });
 
-                // Nếu tất cả câu hỏi đều chưa được chọn, hiển thị thông báo nếu chưa hiển thị
-                if (allUnchecked && !alertShown) {
-                    alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
-                    alertShown = true;
+                // Nếu không có checkbox nào được chọn, đánh dấu có câu hỏi chưa được chọn
+                if (!isChecked) {
+                    hasUncheckedQuestion = true;
+                    // Scroll đến câu hỏi chưa được chọn và hiển thị thông báo nếu chưa hiển thị
+                    if (!alertShown) {
+                        question.scrollIntoView({behavior: 'smooth', block: 'end'});
+                        alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
+                        alertShown = true;
+                        event.preventDefault();
+                    }
                     return;
                 }
-
-                // Nếu không có câu hỏi nào chưa được chọn và đã có ít nhất 1 câu hỏi được chọn, hiển thị thông báo xác nhận
-                if (!hasUncheckedQuestion && !alertShown) {
-                    var confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
-                    if (confirmSubmit) {
-                        alert("Bài thi đã được nộp thành công!");
-                        // Ở đây bạn có thể thực hiện các hành động khác sau khi người dùng nộp bài
-                    }
-                    alertShown = true;
-                }
-            }
-
-        </script>
-
-        <!--
-        
-                <script>
-                    $(document).ready(function () {
-                        $('.admin-functions td a').on('click', function (e) {
-                            e.preventDefault();
-                            var contentId = $(this).data('content-id');
-                            $('.admin-content').hide();
-                            $('#' + contentId).show();
-                        });
-                    });
-                </script>
-        
-                <script>
-                    $('#exampleModal').on('show.bs.modal', function (event) {
-                        var button = $(event.relatedTarget) // Button that triggered the modal
-                        var recipient = button.data('whatever') // Extract info from data-* attributes
-                        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                        var modal = $(this)
-                        // modal.find('.modal-title').text('New message to ' + recipient)
-                        // modal.find('.modal-body input').val(recipient)
-                    })
-                </script>-->
-
-
-        <!--        <script>
-                    function toggleDropdown(event) {
-                        const dropdown = event.currentTarget;
-                        const dropdownList = dropdown.querySelector(".dropdown-list");
-        
-                        // Toggle class "show" for dropdown list
-                        dropdownList.classList.toggle("show");
-        
-                        // Get height of the dropdown list
-                        const dropdownHeight = dropdownList.offsetHeight;
-        
-                        // Get next sibling element (in this case, the element below the dropdown)
-                        const nextElement = dropdown.nextElementSibling;
-        
-                        // If dropdown list is visible, add margin to next sibling
-                        if (dropdownList.classList.contains("show")) {
-                            nextElement.style.marginTop = ${dropdownHeight}px;
-                        } else {
-                            nextElement.style.marginTop = 0;
-                        }
-                    }
-        
-                    // Đóng dropdown khi click bên ngoài
-                    window.addEventListener("click", function (event) {
-                        const dropdowns = document.querySelectorAll(".dropdown");
-                        dropdowns.forEach(function (dropdown) {
-                            const dropdownList = dropdown.querySelector(".dropdown-list");
-                            if (!dropdown.contains(event.target)) {
-                                dropdownList.classList.remove("show");
-                                const nextElement = dropdown.nextElementSibling;
-                                nextElement.style.marginTop = 0;
-                            }
-                        });
-                    });
-                </script>-->
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var quizDiv = document.querySelector('.quiz');
-
-                document.querySelectorAll('a').forEach(function (link) {
-                    if (!quizDiv.contains(link)) {
-                        link.addEventListener('click', function (event) {
-                            event.preventDefault();
-                        });
-                    }
-                });
-
-                document.querySelectorAll('button').forEach(function (button) {
-                    if (!quizDiv.contains(button)) {
-                        button.addEventListener('click', function (event) {
-                            event.preventDefault();
-                        });
-                    }
-                });
-
-                document.querySelectorAll('input').forEach(function (input) {
-                    if (!quizDiv.contains(input)) {
-                        input.addEventListener('click', function (event) {
-                            event.preventDefault();
-                        });
-                    }
-                });
-
-                document.querySelectorAll('select').forEach(function (select) {
-                    if (!quizDiv.contains(select)) {
-                        select.addEventListener('click', function (event) {
-                            event.preventDefault();
-                        });
-                    }
-                });
-
-                document.querySelectorAll('textarea').forEach(function (textarea) {
-                    if (!quizDiv.contains(textarea)) {
-                        textarea.addEventListener('click', function (event) {
-                            event.preventDefault();
-                        });
-                    }
-                });
-
-                document.querySelectorAll('label').forEach(function (label) {
-                    if (!quizDiv.contains(label)) {
-                        label.addEventListener('click', function (event) {
-                            event.preventDefault();
-                        });
-                    }
-                });
-
-                document.querySelectorAll('span').forEach(function (span) {
-                    if (!quizDiv.contains(span)) {
-                        span.addEventListener('click', function (event) {
-                            event.preventDefault();
-                        });
-                    }
-                });
             });
 
-        </script>
+            // Nếu tất cả câu hỏi đều chưa được chọn, hiển thị thông báo nếu chưa hiển thị
+            if (allUnchecked && !alertShown) {
+                alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
+                alertShown = true;
+                event.preventDefault();
+                return;
+            }
 
-    </body>
+            // Nếu không có câu hỏi nào chưa được chọn và đã có ít nhất 1 câu hỏi được chọn, hiển thị thông báo xác nhận
+            if (!hasUncheckedQuestion && !alertShown) {
+                var confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
+                if (confirmSubmit) {
+                    alert("Bài thi đã được nộp thành công!");
+                    // Ở đây bạn có thể thực hiện các hành động khác sau khi người dùng nộp bài
+                    hasSubmitted = true; // Đánh dấu đã nộp bài
+                } else {
+                    event.preventDefault();
+                }
+                alertShown = true;
+            }
+        }
+
+        // Xử lý sự kiện nút Submit
+        const submitButton = document.getElementById('submit-button');
+        submitButton.addEventListener('click', function () {
+            // Kiểm tra nếu thời gian còn lại vẫn lớn hơn 0
+            if (countdownTime > 0) {
+                submitQuiz();
+            } else if (countdownTime === 0) {
+                // Thời gian đã hết, tự động submit bài và thông báo
+                submitQuizTimeout();
+            }
+        });
+
+    </script>
+
+
+    <!--
+    
+            <script>
+                $(document).ready(function () {
+                    $('.admin-functions td a').on('click', function (e) {
+                        e.preventDefault();
+                        var contentId = $(this).data('content-id');
+                        $('.admin-content').hide();
+                        $('#' + contentId).show();
+                    });
+                });
+            </script>
+    
+            <script>
+                $('#exampleModal').on('show.bs.modal', function (event) {
+                    var button = $(event.relatedTarget) // Button that triggered the modal
+                    var recipient = button.data('whatever') // Extract info from data-* attributes
+                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                    var modal = $(this)
+                    // modal.find('.modal-title').text('New message to ' + recipient)
+                    // modal.find('.modal-body input').val(recipient)
+                })
+            </script>-->
+
+
+    <!--        <script>
+                function toggleDropdown(event) {
+                    const dropdown = event.currentTarget;
+                    const dropdownList = dropdown.querySelector(".dropdown-list");
+    
+                    // Toggle class "show" for dropdown list
+                    dropdownList.classList.toggle("show");
+    
+                    // Get height of the dropdown list
+                    const dropdownHeight = dropdownList.offsetHeight;
+    
+                    // Get next sibling element (in this case, the element below the dropdown)
+                    const nextElement = dropdown.nextElementSibling;
+    
+                    // If dropdown list is visible, add margin to next sibling
+                    if (dropdownList.classList.contains("show")) {
+                        nextElement.style.marginTop = ${dropdownHeight}px;
+                    } else {
+                        nextElement.style.marginTop = 0;
+                    }
+                }
+    
+                // Đóng dropdown khi click bên ngoài
+                window.addEventListener("click", function (event) {
+                    const dropdowns = document.querySelectorAll(".dropdown");
+                    dropdowns.forEach(function (dropdown) {
+                        const dropdownList = dropdown.querySelector(".dropdown-list");
+                        if (!dropdown.contains(event.target)) {
+                            dropdownList.classList.remove("show");
+                            const nextElement = dropdown.nextElementSibling;
+                            nextElement.style.marginTop = 0;
+                        }
+                    });
+                });
+            </script>-->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var quizDiv = document.querySelector('.quiz');
+
+            document.querySelectorAll('a').forEach(function (link) {
+                if (!quizDiv.contains(link)) {
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                }
+            });
+
+            document.querySelectorAll('button').forEach(function (button) {
+                if (!quizDiv.contains(button)) {
+                    button.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                }
+            });
+
+            document.querySelectorAll('input').forEach(function (input) {
+                if (!quizDiv.contains(input)) {
+                    input.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                }
+            });
+
+            document.querySelectorAll('select').forEach(function (select) {
+                if (!quizDiv.contains(select)) {
+                    select.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                }
+            });
+
+            document.querySelectorAll('textarea').forEach(function (textarea) {
+                if (!quizDiv.contains(textarea)) {
+                    textarea.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                }
+            });
+
+            document.querySelectorAll('label').forEach(function (label) {
+                if (!quizDiv.contains(label)) {
+                    label.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                }
+            });
+
+            document.querySelectorAll('span').forEach(function (span) {
+                if (!quizDiv.contains(span)) {
+                    span.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                }
+            });
+        });
+
+    </script>
+
+</body>
 
 </html>

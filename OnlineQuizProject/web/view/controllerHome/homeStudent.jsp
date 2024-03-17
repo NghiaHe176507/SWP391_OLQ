@@ -250,6 +250,8 @@
                                         </button>
                                     </div>
                                     <input type="hidden" name="groupId" value="${register.group.groupId}" />
+                                    <input type="hidden" name="topicId" value="${register.group.topic.topicId}" />
+
                             </form>
 
                             <form action="unenroll" method="POST"> 

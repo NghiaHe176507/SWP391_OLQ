@@ -32,7 +32,7 @@ public class HomeStudent extends BasedAuthorizationController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("view/controllerHome/homeStudent.jsp").forward(request, response);
+        request.getRequestDispatcher("view/home/homeStudent.jsp").forward(request, response);
     }
     
     @Override
