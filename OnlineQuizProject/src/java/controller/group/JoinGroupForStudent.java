@@ -4,29 +4,32 @@
  */
 package controller.group;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import dal.GroupDBContext;
 import entity.Account;
 import entity.Group;
 import entity.Register;
+import entity.RoleAccess;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  *
  * @author PC
  */
-public class JoinGroupForStudent extends BasedRequiredAuthenticationController {
+public class JoinGroupForStudent extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
     GroupDBContext GroupDB = new GroupDBContext();
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
 //        if (db.checkContainGroupInviteCode(request.getParameter("inviteCode"))) {
 //            LocalDate currentDate = LocalDate.now();
@@ -68,15 +71,16 @@ public class JoinGroupForStudent extends BasedRequiredAuthenticationController {
 
     }
 
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response,
-            Account LoggedUser) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response,
-            Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
+
     }
 
 }

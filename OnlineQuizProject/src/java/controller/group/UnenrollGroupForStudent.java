@@ -42,7 +42,13 @@ public class UnenrollGroupForStudent extends BasedRequiredAuthenticationControll
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        
+        Register newRegister = new Register();
+            Group groupNeedToUnenroll = GroupDB.getById(request.getParameter("groupId"));
+            
+            newRegister.setGroup(groupNeedToUnenroll);
+            newRegister.setStudentInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
+            db.unEnrollForStudent(newRegister);
+            response.sendRedirect(request.getContextPath() + "/home");
     }
 
     @Override
