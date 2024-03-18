@@ -103,6 +103,7 @@ public class ResultDBContext extends DBContext<Result> {
                                ,[student_id]
                                ,[score]
                                ,[comment_content]
+                               ,[attempt_number]
                            FROM [Result]
                            WHERE [result_id] = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -115,7 +116,7 @@ public class ResultDBContext extends DBContext<Result> {
                 result.setStudentInfo(accountInfoDB.getById(String.valueOf(rs.getInt("student_id"))));
                 result.setScore(rs.getDouble("score"));
                 result.setCommentContent(rs.getString("comment_content"));
-
+                result.setAttemptNumber(rs.getInt("attempt_number"));
                 return result;
             }
 

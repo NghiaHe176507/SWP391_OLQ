@@ -30,6 +30,12 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     ExamQuestionMappingDBContext examQuestionMappingDB = new ExamQuestionMappingDBContext();
     ExamDBContext examDB = new ExamDBContext();
     OptionAnswerDBContext optionAnswerDB = new OptionAnswerDBContext();
+    ResultDBContext resultDB = new ResultDBContext();
+
+    @Override
+    public BaseEntity getById(String Id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     public ArrayList<AccountInfo> getListAccountWithInfo() {
         ArrayList<AccountInfo> listAccount = new ArrayList<>();
@@ -985,11 +991,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return registers;
     }
 
-    @Override
-    public BaseEntity getById(String Id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public int getTotalStudents() {
         int totalStudents = 0;
         try {
@@ -1035,7 +1036,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     public void updateGroupInviteCode(Group groupNeedToUpdate) {
         try {
             String sql_update = """
-                                UPDATE [dbo].[Group]
+                                UPDATE [Group]
                                    SET [group_invite_code] = ?
                                  WHERE [group_id]=?""";
             PreparedStatement stm = connection.prepareStatement(sql_update);
@@ -1493,28 +1494,30 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listGroup;
     }
 
-    public void createNewStudentAnswer(OptionAnswer newOptionAnswer) {
+    public void createNewStudentAnswer(StudentAnswer newStudentAnswer) {
         try {
             connection.setAutoCommit(false);
 
             String sql_insert = """
-                                INSERT INTO [OptionAnswer]
-                                           ([answer_content]
-                                           ,[isCorrect]
-                                           ,[question_id])
+                                INSERT INTO [StudentAnswer]
+                                           ([exam_id]
+                                           ,[question_id]
+                                           ,[option_answer_id]
+                                           ,[student_id])
                                      VALUES
-                                           (?,?,?)""";
+                                           (?,?,?,?)""";
             PreparedStatement stm = connection.prepareStatement(sql_insert);
-            stm.setString(1, newOptionAnswer.getAnswerContent());
-            stm.setBoolean(2, newOptionAnswer.isIsCorrect());
-            stm.setInt(3, newOptionAnswer.getQuestion().getQuestionId());
+            stm.setInt(1, newStudentAnswer.getExam().getExamId());
+            stm.setInt(2, newStudentAnswer.getQuestion().getQuestionId());
+            stm.setInt(3, newStudentAnswer.getOptionAnswer().getOptionAnswerId());
+            stm.setInt(4, newStudentAnswer.getStudentInfo().getAccountInfoId());
             stm.executeUpdate();
 
-            String sql_getid = "SELECT @@IDENTITY as [optionAnswer_id]";
+            String sql_getid = "SELECT @@IDENTITY as [studentAnswer_id]";
             PreparedStatement stm2 = connection.prepareStatement(sql_getid);
             ResultSet rs = stm2.executeQuery();
             if (rs.next()) {
-                newOptionAnswer.setOptionAnswerId(rs.getInt("optionAnswer_id"));
+                newStudentAnswer.setStudentAnswerId(rs.getInt("studentAnswer_id"));
             }
             connection.commit();
         } catch (SQLException ex) {
@@ -1531,6 +1534,113 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             } catch (SQLException ex) {
                 Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    public void createNewResult(Result newStudentResult) {
+        try {
+            connection.setAutoCommit(false);
+
+            String sql_insert = """
+                                INSERT INTO [Result]
+                                           ([exam_id]
+                                           ,[student_id]
+                                           ,[score]
+                                           ,[comment_content]
+                                           ,[attempt_number])
+                                     VALUES
+                                           (?,?,?,?,?)""";
+            PreparedStatement stm = connection.prepareStatement(sql_insert);
+            stm.setInt(1, newStudentResult.getExam().getExamId());
+            stm.setInt(2, newStudentResult.getStudentInfo().getAccountInfoId());
+            stm.setDouble(3, newStudentResult.getScore());
+            stm.setString(4, newStudentResult.getCommentContent());
+            stm.setInt(5, getCurrentAttemptOfExamByStudentId(newStudentResult.getStudentInfo().getAccountInfoId(), newStudentResult.getExam().getExamId()) + 1);
+            stm.executeUpdate();
+
+            String sql_getid = "SELECT @@IDENTITY as [result_id]";
+            PreparedStatement stm2 = connection.prepareStatement(sql_getid);
+            ResultSet rs = stm2.executeQuery();
+            if (rs.next()) {
+                newStudentResult.setResultId(rs.getInt("result_id"));
+            }
+            connection.commit();
+        } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public int getCurrentAttemptOfExamByStudentId(int studentId, int examId) {
+        int numberAttempt = 0;
+        try {
+            String sql = """
+                         SELECT COUNT(*) AS [attempt]
+                         FROM [Result]
+                         WHERE [exam_id] = ? AND [student_id] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, studentId);
+            stm.setInt(2, examId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                numberAttempt = rs.getInt("attempt");
+                return numberAttempt;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numberAttempt;
+    }
+
+    public void updateScoreOfResult(Result resultNeedToUpdate) {
+        try {
+            String sql_update = """
+                                UPDATE [Result]
+                                   SET [score] = ?
+                                 WHERE [result_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql_update);
+            stm.setDouble(1, resultNeedToUpdate.getScore());
+            stm.setInt(2, resultNeedToUpdate.getResultId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public boolean checkAttemptPermissionOfExamByStudentId(int studentId, int examId) {
+        Exam exam = examDB.getById(String.valueOf(examId));
+
+        if (!exam.isIsPractice()) {
+            if (getCurrentAttemptOfExamByStudentId(studentId, examId) == exam.getExamAttemp()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void deleteAllResultByExamIdAndStudentId(int studentId, int examId) {
+        try {
+            String sql_delete = """
+                                DELETE FROM [Result]
+                                      WHERE [student_id]=? AND [exam_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql_delete);
+            stm.setInt(1, studentId);
+            stm.setInt(2, examId);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

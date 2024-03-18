@@ -532,7 +532,7 @@
                 <div class="space"></div>
             </div>
 
-            <form action="view-total" method="POST" id="quiz-form">
+            <form action="calculate-exam-results" method="POST" id="quiz-form">
                 <div class="quiz">
                     <c:forEach items="${requestScope.listQuestion}" var="eachQuestion" varStatus="questionIndex">
                         <div class="question">
@@ -544,8 +544,9 @@
                                 <div class="answer">
                                     <input type="checkbox" id="q${questionIndex.index + 1}.${answerIndex.index + 1}" name="answerOption" value="${answer.optionAnswerId}" data-option-answer-id="${answer.optionAnswerId}">
                                     <label for="q${questionIndex.index + 1}.${answerIndex.index + 1}">${answerIndex.index + 1}: ${answer.answerContent}</label><br>
-                                </div>
+                                </div>                            
                             </c:forEach>
+
                         </div>
                     </c:forEach>
 

@@ -4,11 +4,13 @@
  */
 package controller.test;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import entity.Account;
 import entity.ExamQuestionMapping;
 import entity.OptionAnswer;
+import entity.RoleAccess;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
  *
  * @author PC
  */
-public class DoExamForStudent extends BasedRequiredAuthenticationController {
+public class DoExamForStudent extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
@@ -34,7 +36,7 @@ public class DoExamForStudent extends BasedRequiredAuthenticationController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         String examIdParam = request.getParameter("examId");
         int examId = Integer.parseInt(examIdParam);
@@ -53,13 +55,13 @@ public class DoExamForStudent extends BasedRequiredAuthenticationController {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        processRequest(request, response, LoggedUser);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
 
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         String examIdParam = request.getParameter("examId");
         int examId = Integer.parseInt(examIdParam);
         ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(examId);
