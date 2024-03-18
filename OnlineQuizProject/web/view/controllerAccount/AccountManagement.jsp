@@ -577,21 +577,25 @@
                                 <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                             </div>
 
-                            <li><a style="
-                                   text-decoration: none;
-                                   color: #fff;
-                                   font-weight: bold;
-                                   font-size: 16px" href="<%= request.getContextPath() %>/home"><i class="fa-regular fa-folder-open"></i> Home</a></li>
-                            <li><a style="
-                                   text-decoration: none;
-                                   color: #fff;
-                                   font-weight: bold;
-                                   font-size: 16px" href="<%= request.getContextPath() %>/admin/group-management"><i class="fa-solid fa-list-ul"></i> View List group</a></li>
-                            <li><a style="
-                                   text-decoration: none;
-                                   color: #fff;
-                                   font-weight: bold;
-                                   font-size: 16px" href="<%= request.getContextPath() %>/admin/topic-management"><i class="fa-solid fa-book"></i> View List Topic</a></li>
+                            <div class="col-md-8"> <!-- Adjusted column width to properly divide the distance -->
+                                <ul class="nav nav-pills">
+                                    <li><a style="
+                                           text-decoration: none;
+                                           color: #fff;
+                                           font-weight: bold;
+                                           font-size: 16px" href="<%= request.getContextPath() %>/home"><i class="fa-regular fa-folder-open"></i> Home</a></li>
+                                    <li><a style="
+                                           text-decoration: none;
+                                           color: #fff;
+                                           font-weight: bold;
+                                           font-size: 16px" href="<%= request.getContextPath() %>/admin/group-management"><i class="fa-solid fa-list-ul"></i> View List group</a></li>
+                                    <li><a style="
+                                           text-decoration: none;
+                                           color: #fff;
+                                           font-weight: bold;
+                                           font-size: 16px" href="<%= request.getContextPath() %>/admin/topic-management"><i class="fa-solid fa-book"></i> View List Topic</a></li>
+                                </ul>
+                            </div>
 
                             <div class="login col-md-2">
                                 <ul id="nav" class="nav nav-pills">
@@ -605,7 +609,6 @@
                                             <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                             <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                             <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
-
                                         </ul>
                                     </li>
                                 </ul>
