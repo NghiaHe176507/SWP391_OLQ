@@ -584,6 +584,25 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listGroup;
     }
 
+    public ArrayList<Group> getListGroupToFilter() {
+        ArrayList<Group> listGroupToFilter = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT DISTINCT [group_name]
+                             FROM [Group]""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Group group = new Group();
+                group.setGroupName(rs.getString("group_name"));
+                listGroupToFilter.add(group);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listGroupToFilter;
+    }
+
     public void deleteTopicById(int topicId) {
         if (getListGroupByTopicId(topicId).isEmpty()) {
             try {
@@ -658,6 +677,22 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listGroup;
+    }
+
+    public int countListGroupOwnedByLectureId(int lectureId) {
+        int count = 0;
+        try {
+            String sql = "SELECT COUNT(group_id) AS group_count FROM [Group] WHERE [lecture_id] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, lectureId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("group_count");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
     }
 
     public void createNewGroupByLecture(Group newGroup) {

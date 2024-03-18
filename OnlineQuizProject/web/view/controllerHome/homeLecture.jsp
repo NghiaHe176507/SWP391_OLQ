@@ -94,7 +94,7 @@
                 <div class="header">
                     <!-- Logo -->
                     <div class="logo col-md-2">
-                        <a href="#">QUIZWIZ</a>
+                        <a href="home">QUIZWIZ</a>
                     </div>
 
                     <div class="menu-icon col-md-1">
@@ -102,7 +102,7 @@
                             <button class="dropbtn"><i class="fa-solid fa-bars" style="padding-right: 4px;"></i>Menu</button>
                             <div class="dropdown-content">
                                 <a href="<%= request.getContextPath() %>/show-list-group-exam"><i class="fa-solid fa-plus"></i> Create An Exam</a>
-                                <a href="<%= request.getContextPath() %>/group-management"><i class="fa-solid fa-plus"></i> Group Management</a>
+                                <a href="<%= request.getContextPath() %>/group-management"><i class="fa-solid fa-user-group"></i></i> Group Management</a>
                             </div>
                         </div>
                     </div>
