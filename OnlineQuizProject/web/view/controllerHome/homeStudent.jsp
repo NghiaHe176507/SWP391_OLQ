@@ -214,7 +214,7 @@
                             </div>
                             <ul class="subnav">
                                 <li><a href="<%= request.getContextPath() %>/updateaccount"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                 <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                 <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 

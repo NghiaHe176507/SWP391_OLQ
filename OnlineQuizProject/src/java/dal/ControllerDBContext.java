@@ -679,21 +679,21 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listGroup;
     }
 
-    public int countListGroupOwnedByLectureId(int lectureId) {
-        int count = 0;
-        try {
-            String sql = "SELECT COUNT(group_id) AS group_count FROM [Group] WHERE [lecture_id] = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, lectureId);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                count = rs.getInt("group_count");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return count;
-    }
+//    public int countListGroupOwnedByLectureId(int lectureId) {
+//        int count = 0;
+//        try {
+//            String sql = "SELECT COUNT(group_id) AS group_count FROM [Group] WHERE [lecture_id] = ?";
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            stm.setInt(1, lectureId);
+//            ResultSet rs = stm.executeQuery();
+//            if (rs.next()) {
+//                count = rs.getInt("group_count");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return count;
+//    }
 
     public void createNewGroupByLecture(Group newGroup) {
         try {
