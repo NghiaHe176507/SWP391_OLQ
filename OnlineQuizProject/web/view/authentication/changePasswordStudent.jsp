@@ -628,7 +628,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-10 offset-lg-1">
-                        <h3 class="mb-3">Change Password for Lecture</h3>
+                        <a href="${pageContext.request.contextPath}/home" class="btn btn-primary mb-3 mx-1">Back to Home</a>
                         <div class="bg-white shadow rounded">
                             <div class="row">
                                 <div class="col-md-7 pe-0">
@@ -663,8 +663,14 @@
                                                     ${error}
                                                 </div>
                                             </c:if>
+                                            <c:if test="${not empty success}">
+                                                <div class="danger" role="alert">
+                                                    ${success}
+                                                </div>
+                                            </c:if>
                                             <div class="col-12">
-                                                <button type="submit" class="btn btn-primary px-4 float-end mt-4">Change Password</button>
+                                                <button type="button" class="btn btn-secondary px-4 float-end mt-4" id="cancelBtn">Cancel</button>
+                                                <button type="submit" class="btn btn-primary px-4 float-end mt-4 me-2">Change Password</button>
                                             </div>
                                         </form>
                                     </div>
@@ -672,7 +678,7 @@
                                 <div class="col-md-5 ps-0 d-none d-md-block">
                                     <div class="form-right h-100 bg-primary text-white text-center pt-5">
                                         <i class="fa-solid fa-lock-open"></i>
-                                        <h2 class="fs-1" style="margin-top: 49px;">Changing Your Passwords</h2>
+                                        <h2 class="fs-1" style="margin-top: 49px;">Change Password for Students</h2>
                                     </div>
                                 </div>
                             </div>

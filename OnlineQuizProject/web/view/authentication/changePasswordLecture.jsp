@@ -262,7 +262,7 @@
 
             /* Space Styles */
             .space {
-                padding: 39px;
+                padding:55px;
             }
 
             /* Slider Section Styles */
@@ -587,47 +587,49 @@
     </head>
     <body>
         <header>
-            <form action="home" method="POST">
-                <div class="container">
-                    <div class="row">
-                        <div class="header">
-                            <div class="logo col-md-2">
-                                <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
+            <div class="container">
+                <div class="row">
+                    <div class="header">
+                        <!-- Logo -->
+                        <div class="logo col-md-2">
+                            <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
+                        </div>
+
+                        <form action="" method="GET" class="col-md-5">
+                            <div class="search-container" style="width: 100%">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                                <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
-                            <form action="search" method="GET" class="col-md-6">
-                                <div class="search-container">
-                                    <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
-                                    <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                </div>
-                            </form>
-                            <div class="login col-md-2">
-                                <ul id="nav" class="nav nav-pills">
-                                    <li class="nav-item dropdown">
-                                        <div class="circle-background">
-                                            <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
-                                        </div>
-                                        <ul class="subnav">
-                                            <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                            <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                            <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                            <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                        </form>
+
+                        <div class="login col-md-2">
+                            <ul id="nav" class="nav nav-pills">
+                                <li></li>
+                                <li class="nav-item dropdown">
+                                    <div class="circle-background">
+                                        <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
+                                    </div>
+                                    <ul class="subnav">
+                                        <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                        <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i>Log out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </header>
+        <div class="row">
+            <div class="space"></div>
+        </div>
         <div class="login-page bg-light">
             <div class="container">
                 <div class="row">
-                    <div class="space"></div>
-                </div>
-                <div class="row">
                     <div class="col-lg-10 offset-lg-1">
-                        <h3 class="mb-3">Change Password for Lecture</h3>
+                        <a href="${pageContext.request.contextPath}/home" class="btn btn-primary mb-3 mx-1">Back to Home</a>
                         <div class="bg-white shadow rounded">
                             <div class="row">
                                 <div class="col-md-7 pe-0">
@@ -662,8 +664,14 @@
                                                     ${error}
                                                 </div>
                                             </c:if>
+                                            <c:if test="${not empty success}">
+                                                <div class="danger" role="alert">
+                                                    ${success}
+                                                </div>
+                                            </c:if>
                                             <div class="col-12">
-                                                <button type="submit" class="btn btn-primary px-4 float-end mt-4">Change Password</button>
+                                                <button type="button" class="btn btn-secondary px-4 float-end mt-4" id="cancelBtn">Cancel</button>
+                                                <button type="submit" class="btn btn-primary px-4 float-end mt-4 me-2">Change Password</button>
                                             </div>
                                         </form>
                                     </div>
@@ -671,7 +679,7 @@
                                 <div class="col-md-5 ps-0 d-none d-md-block">
                                     <div class="form-right h-100 bg-primary text-white text-center pt-5">
                                         <i class="fa-solid fa-lock-open"></i>
-                                        <h2 class="fs-1" style="margin-top: 49px;">Changing Your Passwords</h2>
+                                        <h2 class="fs-1" style="margin-top: 49px;">Change Password for Lecture</h2>
                                     </div>
                                 </div>
                             </div>
@@ -726,6 +734,12 @@
                     input.type = "password";
                 }
             }
+
+            document.getElementById("cancelBtn").addEventListener("click", function () {
+                document.getElementById("newPassword").value = ""; // Clear new password input
+                document.getElementById("currentPassword").value = ""; // Clear current password input
+                document.getElementById("confirmPassword").value = ""; // Clear current password input
+            });
         </script>
     </body>
 </html>

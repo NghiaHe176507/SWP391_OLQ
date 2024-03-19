@@ -39,7 +39,8 @@ public class ChangePasswordForLecture extends BasedAuthorizationController {
             LoggedUser.setPassword(newPassword);
             db.updateAccount(LoggedUser);
             // Password updated successfully, you can redirect or display a success message
-            response.sendRedirect(request.getContextPath() + "/change-password-lecture");
+            request.setAttribute("success", "Password updated successfully");
+            request.getRequestDispatcher("view/authentication/changePasswordLecture.jsp").forward(request, response);
         } else {
             // Current password does not match, display an error message
             request.setAttribute("error", "Current password does not match");
