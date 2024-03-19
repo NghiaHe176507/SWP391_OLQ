@@ -98,7 +98,6 @@
             </div>
 
 
-            <form action="viewGroupDetail" method="GET">
                 <table class="table class-table">
                     <thead>
                         <tr style="font-size: 30px;">
