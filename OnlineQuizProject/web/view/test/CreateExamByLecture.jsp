@@ -530,11 +530,6 @@
                     selectedQuestions.push(checkbox.value);
                 });
 
-                if (selectedQuestions.length === 0) {
-                    alert("Please select at least one question to add to the question bank.");
-                    return;
-                }
-
                 var confirmation = confirm("Are you sure you want to add the selected questions to the question bank?");
                 if (confirmation) {
                     document.getElementById("questionForm").submit();

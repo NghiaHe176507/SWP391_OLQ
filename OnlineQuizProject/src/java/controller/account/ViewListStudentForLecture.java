@@ -39,8 +39,8 @@ public class ViewListStudentForLecture extends BasedAuthorizationController {
 
         int lecturerAccountId = LoggedUser.getAccountId();
         AccountInfo accountInfo = db.getAccountInfoByAccountId(lecturerAccountId);
-        TestDBContext test = new TestDBContext();
-        ArrayList<Result> listExaminationOfStudent = test.getListExaminationOfStudent(accountInfo.getAccountInfoId());
+        
+        ArrayList<Result> listExaminationOfStudent = db.getListExaminationOfStudent(accountInfo.getAccountInfoId());
         request.setAttribute("listExaminationOfStudent", listExaminationOfStudent);
         request.getRequestDispatcher("view/test/ViewListStudentForExam.jsp").forward(request, response);
     }

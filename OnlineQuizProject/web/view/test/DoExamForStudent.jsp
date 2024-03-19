@@ -488,7 +488,7 @@
                 <div class="header">
                     <!-- Logo -->
                     <div class="logo col-md-2">
-                        <a href="#home">QUIZWIZ</a>
+                        <a href="home">QUIZWIZ</a>
                     </div>
 
                     <div class="create col-md-1">

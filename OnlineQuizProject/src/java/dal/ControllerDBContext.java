@@ -35,7 +35,8 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     ResultDBContext resultDB = new ResultDBContext();
     QuestionDBContext questionDB = new QuestionDBContext();
     StudentAnswerDBContext studentAnswerDB = new StudentAnswerDBContext();
-
+    RegisterDBContext registerDB = new RegisterDBContext();
+    
     @Override
     public BaseEntity getById(String Id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -1009,6 +1010,66 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             Logger.getLogger(RegisterDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return registers;
+    }
+
+    public ArrayList<Result> getListExaminationOfStudent(int lectureID) {
+        ArrayList<Result> resultOfStudents = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [result_id]
+                         ,t.topic_name
+                         ,acI.fullname
+                         ,[score]
+                         ,e.isPractice
+                        FROM [Result] r INNER JOIN Exam e ON r.exam_id = e.exam_id
+                        INNER JOIN Account a ON r.student_id = a.account_id
+                        INNER JOIN AccountInfo acI ON a.account_id = acI.account_id
+                        INNER JOIN [Group] g ON e.group_id = g.group_id
+                        INNER JOIN [Topic] t ON g.topic_id = t.topic_id
+                        WHERE e.lecture_id = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, lectureID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                AccountInfo acc = new AccountInfo();
+                acc.setFullName(rs.getString("fullname"));
+                Topic topic = new Topic();
+                topic.setTopicName(rs.getString("topic_name"));
+                Exam exam = new Exam();
+                exam.setIsPractice(rs.getBoolean("isPractice"));            
+                Result result = new Result();
+                result.setExam(exam);
+                result.setStudentInfo(acc);
+                result.setScore(rs.getDouble("score"));
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultOfStudents;
+    }
+    
+    public ArrayList<Register> getListAccountRegistedExamByGroup(int groupID) {
+        ArrayList<Register> listRegister = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [register_id]
+                               ,[register_date]
+                               ,[student_id]
+                               ,[group_id]
+                           FROM [Register]
+                           WHERE [group_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, groupID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Register newRegister = registerDB.getById(String.valueOf(rs.getInt("register_id")));
+                listRegister.add(newRegister);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listRegister;
     }
 
     public ArrayList<Register> searchRegister(String keyword) {

@@ -92,7 +92,7 @@
                 <div class="header">
                     <!-- Logo -->
                     <div class="logo col-md-2">
-                        <a href="#">QUIZWIZ</a>
+                        <a href="home">QUIZWIZ</a>
                     </div>
 
                     <div class="menu-icon col-md-1">
@@ -124,7 +124,7 @@
                                 </div>
                                 <ul class="subnav">
                                     <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                    <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                    <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                     <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
                                 </ul>
@@ -183,7 +183,7 @@
                                     <td>${exam.examEndDate}</td>
                                     <td>${exam.examTime}</td>
                                     <td>${exam.status.statusName}</td>
-                                    <td><a href="<%= request.getContextPath() %>/take-exam"class="btn btn-primary">Do Exam</a></td>
+                                    <td><a href="<%= request.getContextPath() %>/show-result-test-list-student?groupID=${groupId}"class="btn btn-primary">View Detail</a></td>
                                 </tr>
                             </c:if>
                         </c:forEach>
