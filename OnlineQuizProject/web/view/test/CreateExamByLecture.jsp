@@ -20,6 +20,10 @@
                 margin-top: .5rem;
             }
 
+            .distance {
+                margin-right: 5px;
+            }
+
             * {
                 padding: 0;
                 margin: 0;
@@ -277,81 +281,91 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <div class="row">
-                <div class="header">
-                    <!-- Logo -->
-                    <div class="logo col-md-2">
-                        <a href="home">QUIZWIZ</a>
-                    </div>
-
-                    <form action="search" method="GET" class="col-md-6">
-                        <div class="search-container">
-                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
-                            <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="header">
+                        <!-- Logo -->
+                        <div class="logo col-md-2">
+                            <a href="home">QUIZWIZ</a>
                         </div>
-                    </form>
-                    <div class="login col-md-3">
-                        <ul id="nav" class="nav nav-pills">
-                            <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
-                            <li class="nav-item dropdown">
-                                <div class="circle-background">
-                                    <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
-                                </div>
-                                <ul class="subnav">
-                                    <li><a href="<%= request.getContextPath() %>/updateaccount"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                    <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                    <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                    <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
-                                </ul>
-                            </li>
-                        </ul>
+                        <form action="search" method="GET" class="col-md-6">
+                            <div class="search-container" style="width: 100%">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                                <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
+                        <div class="login col-md-3">
+                            <ul id="nav" class="nav nav-pills">
+                                <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
+                                <li class="nav-item dropdown">
+                                    <div class="circle-background">
+                                        <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
+                                    </div>
+                                    <ul class="subnav">
+                                        <li><a href="<%= request.getContextPath() %>/updateaccount"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                        <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                        <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="space"></div>
-            </div>
-
+        </header>
+        <div class="container mt-5 pt-4">
             <form method="GET" class="mt-5">
                 <div class="mb-3">
                     <label for="numQuestion" class="form-label">Enter number of questions:</label>
                     <input type="number" class="form-control" id="numQuestion" name="numQuestion">
                     <input hidden="hidden" type="number" class="form-control" id="groupId" name="groupId" value="${requestScope.groupId}">
+
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <br/>
 
             <c:if test="${not empty param.numQuestion}">
                 <c:set var="numQuestion" value="${param.numQuestion}" />
                 <c:if test="${numQuestion > 0}">
-                    <form id="questionForm" method="POST" class="mt-5">
+                    <form action="create-exam" id="questionForm" method="POST" class="mt-5">
+                        <input hidden="hidden" type="number" class="form-control" id="numQuestion" name="numQuestion" value="${numQuestion}">
+                        <input hidden="hidden" type="number" class="form-control" id="groupId" name="groupId" value="${requestScope.groupId}">
+                        <label for="examTitle" class="form-label">Enter Title Of Exam:</label>
+                        <input type="text" class="form-control" id="examTitle" name="examTitle"><br/>
+                        Attempt: <input type="number" class="form-control" id="attempt" name="attempt"><br/>
                         <div class="row">
                             <div class="col-lg-6 mb-3">
                                 <label for="examDate" class="form-label">Start Exam Date:</label>
-                                <input type="date" class="form-control" id="examDate" name="examDate" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
+                                <input type="date" class="form-control" id="examStartDate" name="examStartDate" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>" required>
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="examTime" class="form-label">Start Exam Time:</label>
-                                <input type="time" class="form-control" id="examTime" name="examTime">
+                                <input type="time" class="form-control" id="examStartTime" name="examStartTime">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-6 mb-3">
                                 <label for="examEndDate" class="form-label">End Exam Date:</label>
-                                <input type="date" class="form-control" id="examEndDate" name="examEndDate" min="<%= request.getParameter("examDate") %>">
+                                <input type="date" class="form-control" id="examEndDate" name="examEndDate" min="<%= request.getParameter("examDate") %>" required>
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="examEndTime" class="form-label">End Exam Time:</label>
-                                <input type="time" class="form-control" id="examEndTime" name="examEndTime" min="<%= request.getParameter("examTime") %>">
+                                <input type="time" class="form-control" id="examEndTime" name="examEndTime" min="<%= request.getParameter("examTime") %>" required>
                             </div>
                         </div>
 
+                        <div class="col-lg-12 mb-3">
+                            <label for="examEndTime" class="form-label">Create Time for Exam (minutes)</label>
+                            <input type="number" class="form-control" name="examTimeToTest" required>
+                        </div>
+
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="isPractice" name="isPractice" value="true">
+                            <input type="checkbox" class="form-check-input" id="isPractice" name="isPractice" >
                             <label class="form-check-label" for="isPractice">Is this exam for practice?</label>
                         </div>
 
@@ -392,7 +406,6 @@
                 </c:if>
             </c:if>
         </div>
-
         <div style="padding-bottom: 20px;"></div>
 
         <div id="footer">
@@ -420,7 +433,7 @@
             }
 
             function deleteAnswer(button) {
-                var answerDiv = button.parentNode;
+                var answerDiv = button.parentNode.parentNode; // Navigate to the parent of the parent element
                 answerDiv.parentNode.removeChild(answerDiv);
             }
 
@@ -453,7 +466,7 @@
 
                 var addAnswerButton = document.createElement('button');
                 addAnswerButton.type = 'button';
-                addAnswerButton.classList.add('btn', 'btn-secondary', 'mt-2');
+                addAnswerButton.classList.add('btn', 'btn-secondary', 'mt-2', 'distance');
                 addAnswerButton.innerHTML = 'Add Answer';
                 addAnswerButton.onclick = function () {
                     addAnswer(questionCount);

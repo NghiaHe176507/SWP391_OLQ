@@ -551,7 +551,7 @@
 
                         </div>
                     </c:forEach>
-                    
+
                     <button class="submit-button" onclick="submitQuiz()">Hoàn thành bài thi!!!</button>
                 </div>
 
@@ -573,7 +573,7 @@
 
         <!-- Admin content section -->
 
-
+        <input type="hidden" id="examTimeInput" value="${timeExam}" readonly>
     </div>
     <!-- Footer section -->
     <div id="footer">
@@ -596,7 +596,11 @@
         const secondsElement = document.getElementById('seconds');
 
         // Thời gian ban đầu để đếm ngược (dạng "00:00:00")
-        let countdownInput = "00:00:30";
+        let examTimeInput = document.getElementById('examTimeInput');
+
+        // Thời gian ban đầu để đếm ngược (dạng "00:00:00")
+//        let countdownInput = "00:00:30";
+        let countdownInput = examTimeInput.value;
 
         // Chuyển đổi đầu vào "00:00:00" thành số giây
         let [inputHours, inputMinutes, inputSeconds] = countdownInput.split(":");

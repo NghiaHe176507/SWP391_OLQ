@@ -64,7 +64,7 @@ public class DoExamForStudent extends BasedAuthorizationController {
         request.setAttribute("attemptNumber", studentDefaultResult.getAttemptNumber());
         request.setAttribute("optionAnswersForEachQuestion", optionAnswersForEachQuestion);
         request.setAttribute("examId", examId);
-
+        request.setAttribute("timeExam", examDb.getById(String.valueOf(examId)).getExamTime());
         request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
     }
 

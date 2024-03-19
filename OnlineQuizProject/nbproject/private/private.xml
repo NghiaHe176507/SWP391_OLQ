@@ -5,6 +5,7 @@
         <group>
             <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/web/view/test/DoExamForStudent.jsp</file>
             <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/src/java/dal/ControllerDBContext.java</file>
+            <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/web/view/test/CreateExamByLecture.jsp</file>
             <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/src/java/controller/test/CreateExamByLecture.java</file>
         </group>
     </open-files>
