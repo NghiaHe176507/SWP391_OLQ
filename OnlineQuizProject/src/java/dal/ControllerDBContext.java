@@ -289,6 +289,24 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
     }
 
+    public boolean updatePassword(String mail, String newPassword) {
+        boolean success = false;
+        try {
+            String sql_update = """
+                            UPDATE [Account]
+                            SET [password] = ?
+                            WHERE [mail]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql_update);
+            stm.setString(1, newPassword); // Set newPassword as the first parameter
+            stm.setString(2, mail); // Set mail as the second parameter
+            int rowCount = stm.executeUpdate();
+            success = rowCount > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        return success;
+    }
+
     public void updateAccountInfo(AccountInfo accountInfo) {
         try {
             String sql_update = """
@@ -694,7 +712,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
 //        }
 //        return count;
 //    }
-
     public void createNewGroupByLecture(Group newGroup) {
         try {
             connection.setAutoCommit(false);

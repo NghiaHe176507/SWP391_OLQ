@@ -654,7 +654,7 @@
                                                 <label>Confirm New Password<span class="text-danger"> *</span></label>
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
-                                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Enter New Password" required>
+                                                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm New Password" required>
                                                 </div>
                                                 <small id="confirmPasswordError" class="form-text text-danger"></small>
                                             </div>
@@ -685,9 +685,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-
             </div>
             <div id="footer">
                 <!-- Social Icons -->

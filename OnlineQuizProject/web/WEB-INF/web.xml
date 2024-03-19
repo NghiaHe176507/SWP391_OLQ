@@ -156,6 +156,18 @@
         <servlet-name>ViewListGroupForExam</servlet-name>
         <servlet-class>controller.test.ViewListGroupForExam</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ValidateOtp</servlet-name>
+        <servlet-class>controller.authentication.ValidateOtp</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewPassword</servlet-name>
+        <servlet-class>controller.authentication.NewPassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ValidateOtpForRegister</servlet-name>
+        <servlet-class>controller.authentication.ValidateOtpForRegister</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -311,6 +323,18 @@
     <servlet-mapping>
         <servlet-name>ViewListGroupForExam</servlet-name>
         <url-pattern>/show-list-group-exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidateOtp</servlet-name>
+        <url-pattern>/validateOtp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewPassword</servlet-name>
+        <url-pattern>/new-password</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidateOtpForRegister</servlet-name>
+        <url-pattern>/validate-otp-register</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
