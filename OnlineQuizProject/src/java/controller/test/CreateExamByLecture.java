@@ -53,7 +53,7 @@ public class CreateExamByLecture extends BasedAuthorizationController {
             Timestamp currentTime = new Timestamp(milisTime);
             // Parse the time strings from request parameters
             String examStartTimeParam = ((!request.getParameter("examStartTime").isEmpty() || !request.getParameter("examStartTime").isBlank()) ? request.getParameter("examStartTime") : "00:00");
-            String examEndTimeParam = ((!request.getParameter("examEndTime").isEmpty() || !request.getParameter("examEndTime").isBlank()) ? request.getParameter("examStartTime") : "00:00");
+            String examEndTimeParam = ((!request.getParameter("examEndTime").isEmpty() || !request.getParameter("examEndTime").isBlank()) ? request.getParameter("examStartTime") : "23:59");
 
             Timestamp startDateExam = ((!request.getParameter("examStartDate").isEmpty() || !request.getParameter("examStartDate").isBlank()) ? Timestamp.valueOf(request.getParameter("examStartDate") + " " + examStartTimeParam + ":00") : currentTime);
             Timestamp endDateExam = Timestamp.valueOf(request.getParameter("examEndDate") + " " + examEndTimeParam + ":00");

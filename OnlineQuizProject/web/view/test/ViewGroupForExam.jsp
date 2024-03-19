@@ -340,8 +340,8 @@
                             <a href="home">QUIZWIZ</a>
                         </div>
 
-                        <form action="" method="GET" class="col-md-5">
-                            <div class="search-container" style="width: 100%">
+                        <form action="search" method="GET" class="col-md-6">
+                            <div class="search-container" style="width:100%;">
                                 <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
                                 <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
@@ -349,16 +349,14 @@
 
                         <div class="login col-md-2">
                             <ul id="nav" class="nav nav-pills">
-                                <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                 <li class="nav-item dropdown">
                                     <div class="circle-background">
-                                        <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
+                                        <img class="profile-image" src="<%= request.getContextPath() %>/image/avatar.jpg" alt="Profile Image">
                                     </div>
                                     <ul class="subnav">
                                         <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                        <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                        <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i>Log out</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -462,6 +460,25 @@
                 });
             });
         </script>
+        
+         <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the logo element
+            var logo = document.querySelector('.logo a');
+
+            // Add click event listener to the logo
+            logo.addEventListener('click', function (event) {
+                // Prevent the default action of the link
+                event.preventDefault();
+
+                // Get the base URL
+                var baseUrl = "<%= request.getContextPath() %>";
+
+                // Navigate to the home page
+                window.location.href = baseUrl + "/home";
+            });
+        });
+    </script>
 
     </body>
 </html>

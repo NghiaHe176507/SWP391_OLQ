@@ -176,6 +176,10 @@
         <servlet-name>ViewListStudentForLecture</servlet-name>
         <servlet-class>controller.account.ViewListStudentForLecture</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewDetailResultForStudent</servlet-name>
+        <servlet-class>controller.test.ViewDetailResultForStudent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -351,6 +355,10 @@
     <servlet-mapping>
         <servlet-name>ViewListStudentForLecture</servlet-name>
         <url-pattern>/show-result-test-list-student</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailResultForStudent</servlet-name>
+        <url-pattern>/view-detail-result</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

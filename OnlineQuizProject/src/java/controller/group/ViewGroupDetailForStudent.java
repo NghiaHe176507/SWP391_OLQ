@@ -9,12 +9,14 @@ import dal.ControllerDBContext;
 import entity.Account;
 import entity.Exam;
 import entity.Register;
+import entity.Status;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 /**
@@ -52,8 +54,8 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
 
-        int studentId = LoggedUser.getAccountId();
-        ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
+        int studentAccountId = db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId();
+        ArrayList<Register> listRegister = db.getRegisterByStudentId(studentAccountId);
         listRegister.size();
         String groupIdStr = request.getParameter("groupId");
         int groupId = Integer.parseInt(groupIdStr);
@@ -61,8 +63,15 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
         String topicIdStr = request.getParameter("topicId");
         int topicId = Integer.parseInt(topicIdStr);
 
+        
         ArrayList<Exam> listExamOfGroup = db.getListExamByGroupId(groupId);
+        ArrayList<Boolean> listCheckAttemptLimit = new ArrayList<>();
+        for (Exam exam : listExamOfGroup) {
+            db.updateStatusExamToFitRealTime(exam);
 
+            listCheckAttemptLimit.add(db.checkAttemptLimit(exam.getExamId(), studentAccountId));
+        }
+        request.setAttribute("listCheckAttemptLimit", listCheckAttemptLimit);
         request.setAttribute("groupId", groupId);
         request.setAttribute("topicId", topicId);
         request.setAttribute("listExamOfGroup", listExamOfGroup);

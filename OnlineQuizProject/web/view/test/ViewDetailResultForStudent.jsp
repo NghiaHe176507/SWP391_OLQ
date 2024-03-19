@@ -1,6 +1,6 @@
 <%-- 
-    Document   : DoExamForStudent.jsp
-    Created on : Mar 12, 2024, 8:52:30 AM
+    Document   : ViewDetailResultForStudent
+    Created on : Mar 20, 2024, 2:47:05 AM
     Author     : nghia
 --%>
 
@@ -515,10 +515,9 @@
                                 </div>
                                 <ul class="subnav">
                                     <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                    <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                    <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                     <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                     <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
-
                                 </ul>
                             </li>
                         </ul>
@@ -535,6 +534,7 @@
                 <input hidden="hidden" name="examId" value="${requestScope.examId}">
                 <input hidden="hidden" name="attemptNumber" value="${requestScope.attemptNumber}">
                 <div class="quiz">
+                    <h2 style="text-align:center">View Answer Details</h2>
                     <c:forEach items="${requestScope.listQuestion}" var="eachQuestion" varStatus="questionIndex">
                         <div class="question">
                             <div class="question-text">
@@ -543,29 +543,30 @@
 
                             <c:forEach items="${requestScope.optionAnswersForEachQuestion[questionIndex.index]}" var="answer" varStatus="answerIndex">
                                 <div class="answer">
-                                    <input type="checkbox" id="q${questionIndex.index + 1}.${answerIndex.index + 1}" name="answerOption" value="${answer.optionAnswerId}" data-option-answer-id="${answer.optionAnswerId}">
-                                    <label for="q${questionIndex.index + 1}.${answerIndex.index + 1}">Đáp án số ${answerIndex.index + 1}:  ${answer.answerContent}</label><br>
+                                    <c:set var="isChecked" value="false" />
+                                    <c:forEach items="${requestScope.listOptionAnswerOfStudent}" var="selectedOption">
+                                        <c:if test="${answer.optionAnswerId eq selectedOption.optionAnswer.optionAnswerId}">
+                                            <c:set var="isChecked" value="true" />
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:choose>
+                                        <c:when test="${answer.isCorrect}">
+                                            <input type="checkbox" id="q${questionIndex.index + 1}.${answerIndex.index + 1}" name="answerOption" value="${answer.optionAnswerId}" data-option-answer-id="${answer.optionAnswerId}" ${isChecked ? 'checked' : ''} disabled>
+                                            <label for="q${questionIndex.index + 1}.${answerIndex.index + 1}" style="background-color: #a1e6cf;">Đáp án số ${answerIndex.index + 1}:  ${answer.answerContent}</label><br>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" id="q${questionIndex.index + 1}.${answerIndex.index + 1}" name="answerOption" value="${answer.optionAnswerId}" data-option-answer-id="${answer.optionAnswerId}" ${isChecked ? 'checked' : ''} disabled>
+                                            <label for="q${questionIndex.index + 1}.${answerIndex.index + 1}">Đáp án số ${answerIndex.index + 1}:  ${answer.answerContent}</label><br>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>                            
                             </c:forEach>
 
                         </div>
                     </c:forEach>
 
-                    <button class="submit-button" onclick="submitQuiz()">Hoàn thành bài thi!!!</button>
-                </div>
-
-
-                <div class="countdown-container">
-                    <div class="countdown">
-                        <div class="countdown-timer">
-                            <span id="hours">00</span>:
-                            <span id="minutes">00</span>:
-                            <span id="seconds">00</span>
-                        </div>
-                    </div>
                 </div>
             </form>
-
         </div>
 
         <!-- End of header section -->
@@ -589,257 +590,23 @@
 
     <!-- End of main container div -->
     <script>
-        // Lấy ra các phần tử của đồng hồ
-        const hoursElement = document.getElementById('hours');
-        const minutesElement = document.getElementById('minutes');
-        const secondsElement = document.getElementById('seconds');
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the logo element
+            var logo = document.querySelector('.logo a');
 
-        // Thời gian ban đầu để đếm ngược (dạng "00:00:00")
-        let examTimeInput = document.getElementById('examTimeInput');
-
-        // Thời gian ban đầu để đếm ngược (dạng "00:00:00")
-//        let countdownInput = "00:00:30";
-        let countdownInput = examTimeInput.value;
-
-        // Chuyển đổi đầu vào "00:00:00" thành số giây
-        let [inputHours, inputMinutes, inputSeconds] = countdownInput.split(":");
-        let countdownTime = parseInt(inputHours) * 3600 + parseInt(inputMinutes) * 60 + parseInt(inputSeconds);
-
-        // Biến kiểm tra đã nộp bài hay chưa
-        let hasSubmitted = false;
-
-        function updateCountdown() {
-            const hours = Math.floor(countdownTime / 3600);
-            const minutes = Math.floor((countdownTime % 3600) / 60);
-            const seconds = countdownTime % 60;
-
-            // Hiển thị giờ, phút, giây với định dạng "00"
-            hoursElement.textContent = hours.toString().padStart(2, '0');
-            minutesElement.textContent = minutes.toString().padStart(2, '0');
-            secondsElement.textContent = seconds.toString().padStart(2, '0');
-
-            // Giảm thời gian đếm ngược mỗi giây
-            countdownTime--;
-
-            // Dừng đếm ngược khi hết thời gian
-            if (countdownTime < 0) {
-                clearInterval(countdownInterval);
-                submitQuizTimeout();
-            }
-        }
-
-        // Cập nhật đồng hồ mỗi giây
-        const countdownInterval = setInterval(updateCountdown, 1000);
-
-        // Hàm tự động submit và hiển thị thông báo khi hết thời gian
-        function submitQuizTimeout() {
-            const quizForm = document.getElementById('quiz-form');
-            quizForm.submit();
-
-            alert("Bạn đã hết thời gian làm bài!");
-
-        }
-
-
-        // Hàm tự động submit và hiển thị thông báo
-        function submitQuiz() {
-            // Lấy danh sách tất cả các câu hỏi
-            var questions = document.querySelectorAll('.question');
-
-            // Biến để kiểm tra xem có câu hỏi nào chưa được chọn không
-            var hasUncheckedQuestion = false;
-            var allUnchecked = true; // Biến kiểm tra xem tất cả câu hỏi đều chưa được chọn
-            var alertShown = false; // Biến để kiểm tra xem đã hiển thị thông báo chưa
-
-            questions.forEach(function (question) {
-                // Lấy danh sách các checkbox trong câu hỏi
-                var checkboxes = question.querySelectorAll('input[type="checkbox"]');
-                var isChecked = false;
-
-                // Kiểm tra xem có ít nhất 1 checkbox được chọn không
-                checkboxes.forEach(function (checkbox) {
-                    if (checkbox.checked) {
-                        isChecked = true;
-                        allUnchecked = false; // Có ít nhất 1 checkbox được chọn, không phải tất cả đều chưa được chọn
-                    }
-                });
-
-                // Nếu không có checkbox nào được chọn, đánh dấu có câu hỏi chưa được chọn
-                if (!isChecked) {
-                    hasUncheckedQuestion = true;
-                    // Scroll đến câu hỏi chưa được chọn và hiển thị thông báo nếu chưa hiển thị
-                    if (!alertShown) {
-                        question.scrollIntoView({behavior: 'smooth', block: 'end'});
-                        alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
-                        alertShown = true;
-                        event.preventDefault();
-                    }
-                    return;
-                }
-            });
-
-            // Nếu tất cả câu hỏi đều chưa được chọn, hiển thị thông báo nếu chưa hiển thị
-            if (allUnchecked && !alertShown) {
-                alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
-                alertShown = true;
+            // Add click event listener to the logo
+            logo.addEventListener('click', function (event) {
+                // Prevent the default action of the link
                 event.preventDefault();
-                return;
-            }
 
-            // Nếu không có câu hỏi nào chưa được chọn và đã có ít nhất 1 câu hỏi được chọn, hiển thị thông báo xác nhận
-            if (!hasUncheckedQuestion && !alertShown) {
-                var confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
-                if (confirmSubmit) {
-                    alert("Bài thi đã được nộp thành công!");
-                    // Ở đây bạn có thể thực hiện các hành động khác sau khi người dùng nộp bài
-                    hasSubmitted = true; // Đánh dấu đã nộp bài
-                } else {
-                    event.preventDefault();
-                }
-                alertShown = true;
-            }
-        }
+                // Get the base URL
+                var baseUrl = "<%= request.getContextPath() %>";
 
-        // Xử lý sự kiện nút Submit
-        const submitButton = document.getElementById('submit-button');
-        submitButton.addEventListener('click', function () {
-            // Kiểm tra nếu thời gian còn lại vẫn lớn hơn 0
-            if (countdownTime > 0) {
-                submitQuiz();
-            } else if (countdownTime === 0) {
-                // Thời gian đã hết, tự động submit bài và thông báo
-                submitQuizTimeout();
-            }
-        });
-
-    </script>
-
-
-    <!--
-    
-            <script>
-                $(document).ready(function () {
-                    $('.admin-functions td a').on('click', function (e) {
-                        e.preventDefault();
-                        var contentId = $(this).data('content-id');
-                        $('.admin-content').hide();
-                        $('#' + contentId).show();
-                    });
-                });
-            </script>
-    
-            <script>
-                $('#exampleModal').on('show.bs.modal', function (event) {
-                    var button = $(event.relatedTarget) // Button that triggered the modal
-                    var recipient = button.data('whatever') // Extract info from data-* attributes
-                    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-                    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-                    var modal = $(this)
-                    // modal.find('.modal-title').text('New message to ' + recipient)
-                    // modal.find('.modal-body input').val(recipient)
-                })
-            </script>-->
-
-
-    <!--        <script>
-                function toggleDropdown(event) {
-                    const dropdown = event.currentTarget;
-                    const dropdownList = dropdown.querySelector(".dropdown-list");
-    
-                    // Toggle class "show" for dropdown list
-                    dropdownList.classList.toggle("show");
-    
-                    // Get height of the dropdown list
-                    const dropdownHeight = dropdownList.offsetHeight;
-    
-                    // Get next sibling element (in this case, the element below the dropdown)
-                    const nextElement = dropdown.nextElementSibling;
-    
-                    // If dropdown list is visible, add margin to next sibling
-                    if (dropdownList.classList.contains("show")) {
-                        nextElement.style.marginTop = ${dropdownHeight}px;
-                    } else {
-                        nextElement.style.marginTop = 0;
-                    }
-                }
-    
-                // Đóng dropdown khi click bên ngoài
-                window.addEventListener("click", function (event) {
-                    const dropdowns = document.querySelectorAll(".dropdown");
-                    dropdowns.forEach(function (dropdown) {
-                        const dropdownList = dropdown.querySelector(".dropdown-list");
-                        if (!dropdown.contains(event.target)) {
-                            dropdownList.classList.remove("show");
-                            const nextElement = dropdown.nextElementSibling;
-                            nextElement.style.marginTop = 0;
-                        }
-                    });
-                });
-            </script>-->
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var quizDiv = document.querySelector('.quiz');
-
-            document.querySelectorAll('a').forEach(function (link) {
-                if (!quizDiv.contains(link)) {
-                    link.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                }
-            });
-
-            document.querySelectorAll('button').forEach(function (button) {
-                if (!quizDiv.contains(button)) {
-                    button.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                }
-            });
-
-            document.querySelectorAll('input').forEach(function (input) {
-                if (!quizDiv.contains(input)) {
-                    input.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                }
-            });
-
-            document.querySelectorAll('select').forEach(function (select) {
-                if (!quizDiv.contains(select)) {
-                    select.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                }
-            });
-
-            document.querySelectorAll('textarea').forEach(function (textarea) {
-                if (!quizDiv.contains(textarea)) {
-                    textarea.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                }
-            });
-
-            document.querySelectorAll('label').forEach(function (label) {
-                if (!quizDiv.contains(label)) {
-                    label.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                }
-            });
-
-            document.querySelectorAll('span').forEach(function (span) {
-                if (!quizDiv.contains(span)) {
-                    span.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                }
+                // Navigate to the home page
+                window.location.href = baseUrl + "/home";
             });
         });
-
     </script>
-
 </body>
 
 </html>
