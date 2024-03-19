@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.userdetail;
 
+import controller.authentication.BasedRequiredAuthenticationController;
 import dal.AccountDetailDBContext;
 import dal.AccountInfoDBContext;
+import dal.ControllerDBContext;
 import entity.Account;
 import entity.AccountInfo;
 import java.io.IOException;
@@ -15,79 +16,40 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
  * @author Đạt Phạm
  */
-public class UserDetail extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+public class UserDetail extends BasedRequiredAuthenticationController {
+
+    ControllerDBContext db = new ControllerDBContext();
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-      Account account = (Account) request.getSession().getAttribute("account");
-        
-        if (account != null) {
-            AccountDetailDBContext accountInfoDB = new AccountDetailDBContext();
-            AccountInfo accountInfo = accountInfoDB.getAccountInfoByAccount_Id(account.getAccountId());
-
-            if (accountInfo != null) {
-                request.setAttribute("displayname", account.getDisplayName());
-                request.setAttribute("mail", account.getMail());
-                request.setAttribute("fullname", accountInfo.getFullName());
-                request.setAttribute("dob", accountInfo.getDob());
-                request.setAttribute("account_id", account.getAccountId());
-                request.setAttribute("account_status",account.getAccountStatus());
-
-                request.getRequestDispatcher("view/userdetails/UserDetail.jsp").forward(request, response);
-            } else {
-                response.getWriter().println("AccountInfo not found for the user");
-            }
-        } else {
-            response.getWriter().println("User not logged in");
-        }
-    } 
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+            throws ServletException, IOException {
+        AccountInfo accountInfo = db.getAccountInfoByAccountId(LoggedUser.getAccountId());
+        request.setAttribute("listAccountWithInfo", accountInfo);
+        request.getRequestDispatcher("view/userdetails/UserDetail.jsp").forward(request, response);
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
     @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser);
+    }
 
 }

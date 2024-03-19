@@ -4,7 +4,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
 */
 /* 
-    Created on : Jan 28, 2024, 12:40:45 AM
+    Created on : Jan 27, 2024, 1:21:22 AM
     Author     : nghia
 */
 
@@ -20,6 +20,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 html {
     font-family: "Poppins", sans-serif;
     scroll-behavior: smooth;
+}
+.container {
+    min-height: 100%;
+    position: relative;
+}
+
+
+.container {
+    flex: 1;
 }
 
 /* Common Styles */
@@ -93,20 +102,6 @@ html {
     transform: scale(0.95);
 }
 
-
-/* CSS cho button */
-.btn-primary {
-    background-color: white; /* Màu nền trắng */
-    color: #007bff; /* Màu chữ mặc định */
-    border: 1px solid #007bff; /* Viền button */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
-}
-
-.btn-primary:hover {
-    background-color: #007bff; /* Màu nền khi hover */
-    color: white; /* Màu chữ khi hover */
-}
-
 /* Navigation menu styles */
 .custom-icon {
     display: flex;
@@ -133,24 +128,7 @@ html {
     height: auto;
     display: block;
 }
-/*  */
 
-.login {
-
-}
-
-/* CSS cho button */
-.btn-primary {
-    background-color: white; /* Màu nền trắng */
-    color: #007bff; /* Màu chữ mặc định */
-    border: 1px solid #007bff; /* Viền button */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
-}
-
-.btn-primary:hover {
-    background-color: #007bff; /* Màu nền khi hover */
-    color: white; /* Màu chữ khi hover */
-}
 
 #nav {
     display: flex;
@@ -254,7 +232,6 @@ html {
     transform: scale(0.95);
 }
 
-/* Footer Section Styles */
 #footer {
     position: relative;
     bottom: 0;
@@ -263,7 +240,22 @@ html {
     background: linear-gradient(135deg, #4397ce, #9a3cbf);
     color: white;
     text-align: center;
+    transition: transform 0.5s ease-in-out;
     padding: 5px;
+}
+
+.container {
+    min-height: 100%;
+    position: relative;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
 }
 
 #footer a{
@@ -294,53 +286,65 @@ html {
     max-width: 100%;
 }
 
-
-.topic {
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
     display: flex;
-    flex-wrap: wrap; /* Cho phép các div con xuống dòng khi không đủ không gian */
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 15px; /* Khoảng cách lề bên trong div topic */
-    border: 1px solid #ccc; /* Đường viền của div topic */
-    border-radius: 10px; /* Bo góc cho div topic */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
 }
 
-.topic-info {
-    flex: 0 0 calc(25% - 15px); /* Chia cột cho 4 div con, với khoảng cách giữa chúng là 15px */
-    margin: 15px; /* Khoảng cách giữa các div con */
-    border: 1px solid #ccc; /* Đường viền của div con */
-    border-radius: 5px; /* Bo góc cho div con */
-    padding: 10px; /* Khoảng cách lề bên trong div con */
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
 }
 
-
-.show-all {
+.avatar img {
     width: 100%;
-    margin-top: 15px; /* Khoảng cách giữa div con và div show-all */
+    height: 100%;
+    object-fit: cover;
 }
 
-.show-all a {
-    display: block;
-    text-align: right;
-    text-decoration: none;
-    color: #007BFF;
+.student-info {
+    width: 300px;
+    margin: 0 auto;
+    border-collapse: collapse;
 }
 
+.student-info th,
+.student-info td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
 
-.group {
+.student-info th {
+    text-align: left;
+    background-color: #f2f2f2;
+}
+.avatar-container {
+    width: 150px; /* Điều chỉnh kích thước của hình tròn */
+    height: 150px;
+    border-radius: 50%; /* Tạo hình tròn bằng cách sử dụng border-radius */
+    overflow: hidden; /* Ẩn phần bên ngoài của hình tròn */
     display: flex;
-    flex-wrap: wrap; /* Cho phép các div con xuống dòng khi không đủ không gian */
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 15px; /* Khoảng cách lề bên trong div topic */
-    border: 1px solid #ccc; /* Đường viền của div topic */
-    border-radius: 10px; /* Bo góc cho div topic */
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Màu nền của hình tròn */
 }
 
-.group-info {
-    flex: 0 0 calc(25% - 15px); /* Chia cột cho 4 div con, với khoảng cách giữa chúng là 15px */
-    margin: 15px; /* Khoảng cách giữa các div con */
-    border: 1px solid #ccc; /* Đường viền của div con */
-    border-radius: 5px; /* Bo góc cho div con */
-    padding: 10px; /* Khoảng cách lề bên trong div con */
+.avatar-container img {
+    max-width: 100%; /* Đảm bảo ảnh không vượt quá kích thước của hình tròn */
+    height: auto;
+    display: block;
+}
+
+.card-body.border {
+    border: 1px solid #dee2e6; /* Màu và độ dày của border */
+    border-radius: 10px;
 }

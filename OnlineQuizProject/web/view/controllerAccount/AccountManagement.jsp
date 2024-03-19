@@ -232,9 +232,6 @@
                                             <img class="profile-image" src="<%= request.getContextPath() %>/image/avatar.jpg" alt="Profile Image">
                                         </div>
                                         <ul class="subnav">
-                                            <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fas fa-user"></i> User Details</a></li>
-                                            <li><a href="#"><i class="fas fa-lock"></i> Change Password</a></li>
-                                            <li><a><i class="fas fa-trophy"></i> Achievement</a></li>
                                             <li><a href="<%= request.getContextPath() %>/logout"><i class="fas fa-right-from-bracket"></i> Log out</a></li>
 
                                         </ul>
@@ -465,18 +462,24 @@
 
             <!-- End of main container div -->
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    // Get the logo element
-                    var logo = document.querySelector('.logo a');
+ <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the logo element
+            var logo = document.querySelector('.logo a');
 
-                    // Add click event listener to the logo
-                    logo.addEventListener('click', function () {
-                        // Reload the page
-                        location.reload();
-                    });
-                });
-            </script>
+            // Add click event listener to the logo
+            logo.addEventListener('click', function (event) {
+                // Prevent the default action of the link
+                event.preventDefault();
+
+                // Get the base URL
+                var baseUrl = "<%= request.getContextPath() %>";
+
+                // Navigate to the home page
+                window.location.href = baseUrl + "/home";
+            });
+        });
+    </script>
         </footer>
     </body>
 </html>
