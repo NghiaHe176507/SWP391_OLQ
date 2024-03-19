@@ -111,7 +111,7 @@ public class ResultDBContext extends DBContext<Result> {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 Result result = new Result();
-                result.setResultId(rs.getInt("studentAnswer_id"));
+                result.setResultId(rs.getInt("result_id"));
                 result.setExam(examDB.getById(String.valueOf(rs.getInt("exam_id"))));
                 result.setStudentInfo(accountInfoDB.getById(String.valueOf(rs.getInt("student_id"))));
                 result.setScore(rs.getDouble("score"));

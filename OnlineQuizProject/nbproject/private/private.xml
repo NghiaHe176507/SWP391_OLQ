@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/src/java/dal/ResultDBContext.java</file>
+            <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/web/view/test/DoExamForStudent.jsp</file>
             <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/src/java/dal/ControllerDBContext.java</file>
-            <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/src/java/entity/Result.java</file>
+            <file>file:/D:/SWP391/SWP391_OLQ/OnlineQuizProject/src/java/controller/test/CreateExamByLecture.java</file>
         </group>
     </open-files>
 </project-private>

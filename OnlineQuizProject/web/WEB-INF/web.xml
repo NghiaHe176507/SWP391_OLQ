@@ -148,6 +148,10 @@
         <servlet-name>CalculateExamResults</servlet-name>
         <servlet-class>controller.test.CalculateExamResults</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewListGroupForExam</servlet-name>
+        <servlet-class>controller.test.ViewListGroupForExam</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -293,8 +297,12 @@
         <url-pattern>/viewGroupDetailForLecture</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ViewListGroupForExam</servlet-name>
+        <url-pattern>/show-list-group-exam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CalculateExamResults</servlet-name>
-        <url-pattern>/calculate-exam-results</url-pattern>
+        <url-pattern>/result-after-exam</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Types;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -31,6 +32,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     ExamDBContext examDB = new ExamDBContext();
     OptionAnswerDBContext optionAnswerDB = new OptionAnswerDBContext();
     ResultDBContext resultDB = new ResultDBContext();
+    QuestionDBContext questionDB = new QuestionDBContext();
 
     @Override
     public BaseEntity getById(String Id) {
@@ -1503,14 +1505,16 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                                            ([exam_id]
                                            ,[question_id]
                                            ,[option_answer_id]
-                                           ,[student_id])
+                                           ,[student_id]
+                                           ,[attempt_number])
                                      VALUES
-                                           (?,?,?,?)""";
+                                           (?,?,?,?,?)""";
             PreparedStatement stm = connection.prepareStatement(sql_insert);
             stm.setInt(1, newStudentAnswer.getExam().getExamId());
             stm.setInt(2, newStudentAnswer.getQuestion().getQuestionId());
             stm.setInt(3, newStudentAnswer.getOptionAnswer().getOptionAnswerId());
             stm.setInt(4, newStudentAnswer.getStudentInfo().getAccountInfoId());
+            stm.setInt(5, newStudentAnswer.getAttemptNumber());
             stm.executeUpdate();
 
             String sql_getid = "SELECT @@IDENTITY as [studentAnswer_id]";
@@ -1537,7 +1541,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
     }
 
-    public void createNewResult(Result newStudentResult) {
+    public Result createNewResult(Result newStudentResult) {
         try {
             connection.setAutoCommit(false);
 
@@ -1565,6 +1569,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                 newStudentResult.setResultId(rs.getInt("result_id"));
             }
             connection.commit();
+
         } catch (SQLException ex) {
             try {
                 connection.rollback();
@@ -1580,6 +1585,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                 Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return newStudentResult;
     }
 
     public int getCurrentAttemptOfExamByStudentId(int studentId, int examId) {
@@ -1590,8 +1596,8 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                          FROM [Result]
                          WHERE [exam_id] = ? AND [student_id] = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, studentId);
-            stm.setInt(2, examId);
+            stm.setInt(1, examId);
+            stm.setInt(2, studentId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 numberAttempt = rs.getInt("attempt");
@@ -1604,15 +1610,17 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return numberAttempt;
     }
 
-    public void updateScoreOfResult(Result resultNeedToUpdate) {
+    public void updateScoreOfResultByExamIdAndStudentId(Result resultNeedToUpdate) {
         try {
             String sql_update = """
                                 UPDATE [Result]
-                                   SET [score] = ?
-                                 WHERE [result_id]=?""";
+                                 SET [score] = ?
+                                 WHERE [exam_id]=? AND [student_id]=? AND [attempt_number]=? """;
             PreparedStatement stm = connection.prepareStatement(sql_update);
             stm.setDouble(1, resultNeedToUpdate.getScore());
-            stm.setInt(2, resultNeedToUpdate.getResultId());
+            stm.setInt(2, resultNeedToUpdate.getExam().getExamId());
+            stm.setInt(3, resultNeedToUpdate.getStudentInfo().getAccountInfoId());
+            stm.setInt(4, resultNeedToUpdate.getAttemptNumber());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
@@ -1643,4 +1651,144 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public int getNumbersCorrectAnswerOfQuestionByQuestionId(int questionId) {
+        int numberCorrectAnswer = 0;
+        try {
+            String sql = """
+                         SELECT COUNT(*) AS [number_correct_answer]
+                           FROM [OptionAnswer]
+                           WHERE [question_id]= ? AND [isCorrect] = 'true'""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                numberCorrectAnswer = rs.getInt("number_correct_answer");
+                return numberCorrectAnswer;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numberCorrectAnswer;
+    }
+
+    public int getNumbersCorrectAnswerOfStudentAnswer(int examId, int questionId, int studentId, int attemptNumber) {
+        int numberCorrectAnswer = 0;
+        try {
+            String sql = """
+                         SELECT COUNT(*) AS [number_correct_answer_of_student]
+                           FROM [StudentAnswer] sa
+                           INNER JOIN OptionAnswer oa ON sa.option_answer_id=oa.optionAnswer_id
+                           WHERE oa.[isCorrect] = 'true' 
+                           AND sa.[exam_id]=?
+                           AND sa.[question_id]=?
+                           AND sa.[student_id]=? 
+                           AND sa.[attempt_number]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, examId);
+            stm.setInt(2, questionId);
+            stm.setInt(3, studentId);
+            stm.setInt(4, attemptNumber);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                numberCorrectAnswer = rs.getInt("number_correct_answer_of_student");
+                return numberCorrectAnswer;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numberCorrectAnswer;
+    }
+
+    public int getNumbersFalseAnswerOfStudentAnswer(int examId, int questionId, int studentId, int attemptNumber) {
+        int numberFalseAnswer = 0;
+        try {
+            String sql = """
+                         SELECT COUNT(*) AS [number_false_answer_of_student]
+                           FROM [StudentAnswer] sa
+                           INNER JOIN OptionAnswer oa ON sa.option_answer_id=oa.optionAnswer_id
+                           WHERE oa.[isCorrect] = 'false' 
+                           AND sa.[exam_id]=?
+                           AND sa.[question_id]=?
+                           AND sa.[student_id]=? 
+                           AND sa.[attempt_number]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, examId);
+            stm.setInt(2, questionId);
+            stm.setInt(3, studentId);
+            stm.setInt(4, attemptNumber);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                numberFalseAnswer = rs.getInt("number_false_answer_of_student");
+                return numberFalseAnswer;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return numberFalseAnswer;
+    }
+
+    public boolean compareAnswerOfStudent(int examId, int questionId, int studentId, int attemptNumber) {
+        if ((getNumbersCorrectAnswerOfStudentAnswer(examId, questionId, studentId, attemptNumber) == getNumbersCorrectAnswerOfQuestionByQuestionId(questionId)
+                & (getNumbersFalseAnswerOfStudentAnswer(examId, questionId, studentId, attemptNumber) == 0))) {
+            return true;
+        }
+        return false;
+    }
+
+    public Double calculateScoreResultExamOfStudent(ArrayList<ExamQuestionMapping> listExamQuestionMapping, int studentId, int attemptNumber) {
+        int totalQuestion = listExamQuestionMapping.size();
+        int totalCorrectAnswer = 0;
+        for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
+            if (compareAnswerOfStudent(examQuestionMapping.getExam().getExamId(), examQuestionMapping.getQuestion().getQuestionId(), studentId, attemptNumber)) {
+                totalCorrectAnswer++;
+            }
+        }
+
+        double score = (double) totalCorrectAnswer / totalQuestion * 10;
+
+        DecimalFormat df = new DecimalFormat("#.##");
+        String formattedScore = df.format(score);
+
+        return Double.parseDouble(formattedScore);
+    }
+
+    public Result getResultByStudentIdAndExamIdAndNumberAttempt(int examId, int studentId, int attemptNumber) {
+        ExamDBContext examDB = new ExamDBContext();
+        AccountInfoDBContext accountInfoDB = new AccountInfoDBContext();
+        try {
+            String sql = """
+                         SELECT [result_id]
+                               ,[exam_id]
+                               ,[student_id]
+                               ,[score]
+                               ,[comment_content]
+                               ,[attempt_number]
+                           FROM [Result]
+                         WHERE exam_id = ? AND student_id = ? And attempt_number = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, examId);
+            stm.setInt(2, studentId);
+            stm.setInt(3, attemptNumber);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Result result = new Result();
+                result.setResultId(rs.getInt("result_id"));
+                result.setExam(examDB.getById(String.valueOf(rs.getInt("exam_id"))));
+                result.setStudentInfo(accountInfoDB.getById(String.valueOf(rs.getInt("student_id"))));
+                result.setScore(rs.getDouble("score"));
+                result.setCommentContent(rs.getString("comment_content"));
+                result.setAttemptNumber(rs.getInt("attempt_number"));
+                return result;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }

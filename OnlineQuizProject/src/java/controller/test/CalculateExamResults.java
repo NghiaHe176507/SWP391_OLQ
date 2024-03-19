@@ -5,8 +5,20 @@
 package controller.test;
 
 import controller.authentication.BasedAuthorizationController;
+import dal.AccountInfoDBContext;
+import dal.ControllerDBContext;
+import dal.ExamDBContext;
+import dal.OptionAnswerDBContext;
+import dal.QuestionDBContext;
+import dal.StudentAnswerDBContext;
 import entity.Account;
+import entity.AccountInfo;
+import entity.Exam;
+import entity.ExamQuestionMapping;
+import entity.Question;
+import entity.Result;
 import entity.RoleAccess;
+import entity.StudentAnswer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,6 +33,13 @@ import java.util.ArrayList;
  */
 public class CalculateExamResults extends BasedAuthorizationController {
 
+    ControllerDBContext db = new ControllerDBContext();
+    StudentAnswerDBContext studentAnswerDB = new StudentAnswerDBContext();
+    ExamDBContext examDB = new ExamDBContext();
+    QuestionDBContext questionDB = new QuestionDBContext();
+    OptionAnswerDBContext optionAnswerDB = new OptionAnswerDBContext();
+    AccountInfoDBContext accountInfoDB = new AccountInfoDBContext();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,14 +51,48 @@ public class CalculateExamResults extends BasedAuthorizationController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
+        Exam exam = examDB.getById(request.getParameter("examId"));
+        AccountInfo studentInfo = db.getAccountInfoByAccountId(LoggedUser.getAccountId());
+        int attemptNumber = Integer.parseInt(request.getParameter("attemptNumber"));
         String[] listStudentAnswerId = request.getParameterValues("answerOption");
-        
+        ArrayList<StudentAnswer> listOptionAnswerStudentSelected = new ArrayList<>();
+        for (String studentAnswerId : listStudentAnswerId) {
+            StudentAnswer optionAnswerStudentSelected = new StudentAnswer();
+            optionAnswerStudentSelected.setExam(exam);
+            optionAnswerStudentSelected.setQuestion(optionAnswerDB.getById(studentAnswerId).getQuestion());
+            optionAnswerDB.getById(studentAnswerId).getQuestion().getQuestionId();
+            optionAnswerStudentSelected.setOptionAnswer(optionAnswerDB.getById(studentAnswerId));
+            optionAnswerStudentSelected.setStudentInfo(studentInfo);
+            optionAnswerStudentSelected.setAttemptNumber(attemptNumber);
+            db.createNewStudentAnswer(optionAnswerStudentSelected);
+
+            listOptionAnswerStudentSelected.add(optionAnswerStudentSelected);
+
+        }
+
+        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(exam.getExamId());
+
+        Double finalScore = db.calculateScoreResultExamOfStudent(listExamQuestionMapping,
+                 studentInfo.getAccountInfoId(),
+                 attemptNumber);
+
+        Result newResult = new Result();
+        newResult.setAttemptNumber(attemptNumber);
+        newResult.setExam(exam);
+        newResult.setStudentInfo(studentInfo);
+        newResult.setScore(finalScore);
+
+        db.updateScoreOfResultByExamIdAndStudentId(newResult);
+
+        request.setAttribute("resultTotalExam", db.getResultByStudentIdAndExamIdAndNumberAttempt(exam.getExamId(), studentInfo.getAccountInfoId(), attemptNumber));
+        request.getRequestDispatcher("view/test/ViewResultAfterTest.jsp").forward(request, response);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         processRequest(request, response, LoggedUser, roles);
+
     }
 
     @Override

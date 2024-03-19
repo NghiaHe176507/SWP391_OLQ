@@ -74,7 +74,7 @@ public class CreateExamByLecture extends HttpServlet {
             Exam newExam = new Exam();
             newExam.setExamTitle("title jkedfbngkjvdfbn");
             newExam.setExamStartDate(startDateExam);
-            newExam.setGroup(groupDB.getById("4"));
+            newExam.setGroup(groupDB.getById(request.getParameter("groupId")));
             newExam.setIsPractice(true);
             newExam.setLectureInfo(db.getAccountInfoByAccountId(1));
             newExam.setStatus(statusDB.getById("1"));
@@ -110,7 +110,10 @@ public class CreateExamByLecture extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        request.setAttribute("groupId", request.getParameter("groupId"));
         request.getRequestDispatcher("view/test/CreateExamByLecture.jsp").forward(request, response);
+        
     }
 
     @Override

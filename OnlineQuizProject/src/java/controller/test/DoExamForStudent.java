@@ -7,9 +7,12 @@ package controller.test;
 import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
+import dal.ExamDBContext;
+import dal.ResultDBContext;
 import entity.Account;
 import entity.ExamQuestionMapping;
 import entity.OptionAnswer;
+import entity.Result;
 import entity.RoleAccess;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +29,8 @@ import java.util.ArrayList;
 public class DoExamForStudent extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
+    ExamDBContext examDb = new ExamDBContext();
+    ResultDBContext resultDB = new ResultDBContext();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,6 +43,7 @@ public class DoExamForStudent extends BasedAuthorizationController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
+
         String examIdParam = request.getParameter("examId");
         int examId = Integer.parseInt(examIdParam);
         ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(examId);
@@ -49,7 +55,15 @@ public class DoExamForStudent extends BasedAuthorizationController {
             ArrayList<OptionAnswer> listOptionAnswerByQuestion = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
             optionAnswersForEachQuestion.add(listOptionAnswerByQuestion);
         }
+        Result studentDefaultResult = new Result();
+        studentDefaultResult.setExam(examDb.getById(String.valueOf(examId)));
+        studentDefaultResult.setScore(0.0);
+        studentDefaultResult.setStudentInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
+        studentDefaultResult = db.createNewResult(studentDefaultResult);
+        studentDefaultResult = resultDB.getById(String.valueOf(studentDefaultResult.getResultId()));
+        request.setAttribute("attemptNumber", studentDefaultResult.getAttemptNumber());
         request.setAttribute("optionAnswersForEachQuestion", optionAnswersForEachQuestion);
+        request.setAttribute("examId", examId);
 
         request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
     }
@@ -62,20 +76,8 @@ public class DoExamForStudent extends BasedAuthorizationController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
-        String examIdParam = request.getParameter("examId");
-        int examId = Integer.parseInt(examIdParam);
-        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(examId);
-        request.setAttribute("listQuestion", listExamQuestionMapping);
+        processRequest(request, response, LoggedUser, roles);
 
-        ArrayList<ArrayList<OptionAnswer>> optionAnswersForEachQuestion = new ArrayList<>();
-
-        for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
-            ArrayList<OptionAnswer> listOptionAnswerByQuestion = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
-            optionAnswersForEachQuestion.add(listOptionAnswerByQuestion);
-        }
-        request.setAttribute("optionAnswersForEachQuestion", optionAnswersForEachQuestion);
-
-        request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
     }
 
 }

@@ -15,17 +15,29 @@ public class StudentAnswer extends BaseEntity {
     private Question question;
     private OptionAnswer optionAnswer;
     private AccountInfo studentInfo;
+    private int attemptNumber;
 
     public StudentAnswer() {
     }
 
-    public StudentAnswer(int studentAnswer, Exam exam, Question question, OptionAnswer optionAnswer, AccountInfo studentInfo) {
-        this.studentAnswerId = studentAnswer;
+    public StudentAnswer(int studentAnswerId, Exam exam, Question question, OptionAnswer optionAnswer, AccountInfo studentInfo, int attemptNumber) {
+        this.studentAnswerId = studentAnswerId;
         this.exam = exam;
         this.question = question;
         this.optionAnswer = optionAnswer;
         this.studentInfo = studentInfo;
+        this.attemptNumber = attemptNumber;
     }
+
+    public int getAttemptNumber() {
+        return attemptNumber;
+    }
+
+    public void setAttemptNumber(int attemptNumber) {
+        this.attemptNumber = attemptNumber;
+    }
+
+    
 
     public int getStudentAnswerId() {
         return studentAnswerId;

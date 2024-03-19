@@ -532,7 +532,9 @@
                 <div class="space"></div>
             </div>
 
-            <form action="calculate-exam-results" method="POST" id="quiz-form">
+            <form action="result-after-exam" method="POST" id="quiz-form">
+                <input hidden="hidden" name="examId" value="${requestScope.examId}">
+                <input hidden="hidden" name="attemptNumber" value="${requestScope.attemptNumber}">
                 <div class="quiz">
                     <c:forEach items="${requestScope.listQuestion}" var="eachQuestion" varStatus="questionIndex">
                         <div class="question">
@@ -549,7 +551,7 @@
 
                         </div>
                     </c:forEach>
-
+                    
                     <button class="submit-button" onclick="submitQuiz()">Hoàn thành bài thi!!!</button>
                 </div>
 

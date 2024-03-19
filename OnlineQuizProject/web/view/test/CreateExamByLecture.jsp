@@ -319,6 +319,7 @@
                 <div class="mb-3">
                     <label for="numQuestion" class="form-label">Enter number of questions:</label>
                     <input type="number" class="form-control" id="numQuestion" name="numQuestion">
+                    <input hidden="hidden" type="number" class="form-control" id="groupId" name="groupId" value="${requestScope.groupId}">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
