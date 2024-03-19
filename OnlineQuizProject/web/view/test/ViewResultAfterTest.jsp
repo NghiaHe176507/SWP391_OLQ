@@ -4,7 +4,6 @@
     Author     : tuann
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +34,7 @@
                     <div class="header">
                         <!-- Logo -->
                         <div class="logo col-md-2">
-                            <a href="home">QUIZWIZ</a>
+                            <a href="#">QUIZWIZ</a>
                         </div>
 
                         <!-- Search container -->
@@ -55,7 +54,7 @@
                                     <ul class="subnav">
                                         <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User
                                                 Details</a></li>
-                                        <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                        <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                         <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                         <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i>
                                                 Log out</a></li>
@@ -93,20 +92,20 @@
                                     <p><strong>Time Exam</strong> ${resultTotalExam.exam.examTime}</p>
                                     <p><strong>Score:</strong> ${resultTotalExam.score}</p>
                                     <p><strong>Comments:</strong> 
-                                        <c:choose>
-                                            <c:when test="${resultTotalExam.score >= 9}">
-                                                Excellent performance! Keep up the great work!
-                                            </c:when>
-                                            <c:when test="${resultTotalExam.score >= 8}">
-                                                Well done! You've achieved a commendable score.
-                                            </c:when>
-                                            <c:when test="${resultTotalExam.score >= 4}">
-                                                You've passed the exam. Keep practicing to improve further.
-                                            </c:when>
-                                            <c:otherwise>
-                                                Your score is below passing. Keep studying and aim for improvement.
-                                            </c:otherwise>
-                                        </c:choose>
+                                    <c:choose>
+                                        <c:when test="${resultTotalExam.score >= 9}">
+                                            Excellent performance! Keep up the great work!
+                                        </c:when>
+                                        <c:when test="${resultTotalExam.score >= 8}">
+                                            Well done! You've achieved a commendable score.
+                                        </c:when>
+                                        <c:when test="${resultTotalExam.score >= 4}">
+                                            You've passed the exam. Keep practicing to improve further.
+                                        </c:when>
+                                        <c:otherwise>
+                                            Your score is below passing. Keep studying and aim for improvement.
+                                        </c:otherwise>
+                                    </c:choose>
                                     </p>
                                 </div>
                             </div>
