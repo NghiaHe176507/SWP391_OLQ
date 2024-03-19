@@ -4,6 +4,7 @@
  */
 package controller.test;
 
+import controller.authentication.BasedAuthorizationController;
 import dal.ControllerDBContext;
 import dal.GroupDBContext;
 import dal.StatusDBContext;
@@ -12,6 +13,7 @@ import entity.Exam;
 import entity.ExamQuestionMapping;
 import entity.OptionAnswer;
 import entity.Question;
+import entity.RoleAccess;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -19,12 +21,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.TimeZone;
 
 /**
  *
  * @author PC
  */
-public class CreateExamByLecture extends HttpServlet {
+public class CreateExamByLecture extends BasedAuthorizationController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +41,7 @@ public class CreateExamByLecture extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
         GroupDBContext groupDB = new GroupDBContext();
@@ -44,42 +49,47 @@ public class CreateExamByLecture extends HttpServlet {
         int numberOfQuestion = Integer.parseInt(request.getParameter("numQuestion"));
 
         try {
+            long milisTime = System.currentTimeMillis();
+            Timestamp currentTime = new Timestamp(milisTime);
             // Parse the time strings from request parameters
-            String examTimeParam = request.getParameter("examTime");
-            String examEndTimeParam = request.getParameter("examEndTime");
+            String examStartTimeParam = ((!request.getParameter("examStartTime").isEmpty() || !request.getParameter("examStartTime").isBlank()) ? request.getParameter("examStartTime") : "00:00");
+            String examEndTimeParam = ((!request.getParameter("examEndTime").isEmpty() || !request.getParameter("examEndTime").isBlank()) ? request.getParameter("examStartTime") : "00:00");
 
-            Timestamp startDateExam = Timestamp.valueOf(request.getParameter("examDate") + " " + examTimeParam + ":00");
+            Timestamp startDateExam = ((!request.getParameter("examStartDate").isEmpty() || !request.getParameter("examStartDate").isBlank()) ? Timestamp.valueOf(request.getParameter("examStartDate") + " " + examStartTimeParam + ":00") : currentTime);
             Timestamp endDateExam = Timestamp.valueOf(request.getParameter("examEndDate") + " " + examEndTimeParam + ":00");
 
-            // Append ":00" to convert time strings into "hh:mm:ss" format
-            String formattedStartTime = examTimeParam + ":00";
-            String formattedEndTime = examEndTimeParam + ":00";
-
-            // Convert time strings to Time objects
-            Time timeStartExam = Time.valueOf(formattedStartTime);
-            Time timeEndExam = Time.valueOf(formattedEndTime);
-
-            // Calculate duration in milliseconds
-            long durationMillis = timeEndExam.getTime() - timeStartExam.getTime();
-
-            // Convert duration to seconds
-            long durationSeconds = durationMillis / 1000;
-
-            int hours = (int) (durationSeconds / 3600);
-            int minutes = (int) ((durationSeconds % 3600) / 60);
-            int seconds = (int) (durationSeconds % 60);
-
-            String formattedDuration = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-
+            int examTimeMinutes = Integer.parseInt(request.getParameter("examTimeToTest"));
+            long milliseconds = examTimeMinutes * 60 * 1000;
+            Time examTime = new Time(milliseconds);
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String formattedTime = sdf.format(examTime);
+            examTime = Time.valueOf(formattedTime);
+            
             Exam newExam = new Exam();
-            newExam.setExamTitle("title jkedfbngkjvdfbn");
+            newExam.setExamTitle(request.getParameter("examTitle"));
+
             newExam.setExamStartDate(startDateExam);
-            newExam.setGroup(groupDB.getById("4"));
-            newExam.setIsPractice(true);
-            newExam.setLectureInfo(db.getAccountInfoByAccountId(1));
-            newExam.setStatus(statusDB.getById("1"));
-            newExam.setExamTime(Time.valueOf(formattedDuration));
-            newExam.setExamEndDate(endDateExam);
+
+            newExam.setGroup(groupDB.getById(request.getParameter("groupId")));
+            newExam.setIsPractice((request.getParameterValues("isPractice") != null) ? true : false);
+            newExam.setLectureInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
+
+            if (startDateExam.after(currentTime)) {
+                newExam.setStatus(statusDB.getById("2"));
+            } else {
+                newExam.setStatus(statusDB.getById("1"));
+            }
+
+            newExam.setExamTime(examTime);
+
+            if ((request.getParameterValues("isPractice") == null)) {
+                newExam.setExamEndDate(endDateExam);
+                newExam.setExamAttemp(Integer.parseInt(request.getParameter("attempt")));
+            } else {
+                newExam.setExamEndDate(null);
+            }
+
             newExam = db.createNewExam(newExam);
             for (int i = 1; i <= numberOfQuestion; i++) {
                 ExamQuestionMapping newExamQuestionMapping = new ExamQuestionMapping();
@@ -102,20 +112,23 @@ public class CreateExamByLecture extends HttpServlet {
                 newExamQuestionMapping.setQuestion(newQuestion);
                 db.createNewExamQuestionMapping(newExamQuestionMapping);
             }
-            request.getRequestDispatcher("view/test/CreateExamByLecture.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath());
         } catch (IllegalArgumentException | NullPointerException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+
+        request.setAttribute("groupId", request.getParameter("groupId"));
         request.getRequestDispatcher("view/test/CreateExamByLecture.jsp").forward(request, response);
+
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processRequest(request, response);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        processRequest(request, response, LoggedUser, roles);
     }
 
 }

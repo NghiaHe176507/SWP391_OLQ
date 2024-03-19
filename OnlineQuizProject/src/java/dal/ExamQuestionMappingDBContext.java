@@ -35,7 +35,7 @@ public class ExamQuestionMappingDBContext extends DBContext<ExamQuestionMapping>
                 ExamQuestionMapping examQuestionMapping = new ExamQuestionMapping();
                 examQuestionMapping.setExamQuestionMappingId(rs.getInt("mapping_id"));
                 examQuestionMapping.setQuestion(questionDB.getById(String.valueOf(rs.getString("question_id"))));
-                examQuestionMapping.setExam(examDB.getById(String.valueOf(rs.getString("question_id"))));
+                examQuestionMapping.setExam(examDB.getById(String.valueOf(rs.getString("exam_id"))));
                 return examQuestionMapping;
             }
 

@@ -321,43 +321,51 @@
                 <div class="mb-3">
                     <label for="numQuestion" class="form-label">Enter number of questions:</label>
                     <input type="number" class="form-control" id="numQuestion" name="numQuestion">
+                    <input hidden="hidden" type="number" class="form-control" id="groupId" name="groupId" value="${requestScope.groupId}">
+
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <br/>
 
             <c:if test="${not empty param.numQuestion}">
                 <c:set var="numQuestion" value="${param.numQuestion}" />
                 <c:if test="${numQuestion > 0}">
-                    <form id="questionForm" method="POST" class="mt-5">
+                    <form action="create-exam" id="questionForm" method="POST" class="mt-5">
+                        <input hidden="hidden" type="number" class="form-control" id="numQuestion" name="numQuestion" value="${numQuestion}">
+                        <input hidden="hidden" type="number" class="form-control" id="groupId" name="groupId" value="${requestScope.groupId}">
+                        <label for="examTitle" class="form-label">Enter Title Of Exam:</label>
+                        <input type="text" class="form-control" id="examTitle" name="examTitle"><br/>
+                        Attempt: <input type="number" class="form-control" id="attempt" name="attempt"><br/>
                         <div class="row">
                             <div class="col-lg-6 mb-3">
                                 <label for="examDate" class="form-label">Start Exam Date:</label>
-                                <input type="date" class="form-control" id="examDate" name="examDate">
+                                <input type="date" class="form-control" id="examStartDate" name="examStartDate" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>" required>
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="examTime" class="form-label">Start Exam Time:</label>
-                                <input type="time" class="form-control" id="examTime" name="examTime">
+                                <input type="time" class="form-control" id="examStartTime" name="examStartTime">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-6 mb-3">
                                 <label for="examEndDate" class="form-label">End Exam Date:</label>
-                                <input type="date" class="form-control" id="examEndDate" name="examEndDate">
+                                <input type="date" class="form-control" id="examEndDate" name="examEndDate" min="<%= request.getParameter("examDate") %>" required>
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="examEndTime" class="form-label">End Exam Time:</label>
-                                <input type="time" class="form-control" id="examEndTime" name="examEndTime">
+                                <input type="time" class="form-control" id="examEndTime" name="examEndTime" min="<%= request.getParameter("examTime") %>" required>
                             </div>
                         </div>
 
                         <div class="col-lg-12 mb-3">
-                            <label for="examEndTime" class="form-label">Create Time for Exam (hh:mm:ss)</label>
-                            <input type="datetime" class="form-control" name="examTimeToTest">
+                            <label for="examEndTime" class="form-label">Create Time for Exam (minutes)</label>
+                            <input type="number" class="form-control" name="examTimeToTest" required>
                         </div>
 
                         <div class="mb-3 form-check">
-                            <input type="radio" class="form-check-input" id="isPractice" name="isPractice" value="true">
+                            <input type="checkbox" class="form-check-input" id="isPractice" name="isPractice" >
                             <label class="form-check-label" for="isPractice">Is this exam for practice?</label>
                         </div>
 
@@ -566,28 +574,6 @@
                     alert("You cannot choose an end time less than now.");
                     this.value = '';
                 }
-            });
-
-            // Get current date and time
-            var currentDate = new Date();
-            var currentDateString = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
-            var currentTimeString = currentDate.toTimeString().slice(0, 5); // Format: HH:MM
-
-            // Set default values for end exam date and time
-            document.getElementById('examEndDate').value = currentDateString;
-            document.getElementById('examEndTime').value = currentTimeString;
-
-            // Function to update end exam date based on start exam date
-            document.getElementById('examDate').addEventListener('change', function () {
-                var startDate = new Date(this.value);
-                var endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000)); // Add one day
-                var endDateString = endDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
-                document.getElementById('examEndDate').value = endDateString;
-            });
-
-            // Function to update end exam time based on start exam time
-            document.getElementById('examTime').addEventListener('change', function () {
-                document.getElementById('examEndTime').value = this.value;
             });
         </script>
     </body>

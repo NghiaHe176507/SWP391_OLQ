@@ -77,11 +77,11 @@
                                 <div class="row">
                                     <div class="col-md-6" style="padding-left: 90px;">
                                         <p><strong>Name:</strong> ${resultTotalExam.studentInfo.fullName}</p>
-                                        <p><strong>Class:</strong> ${resultTotalExam.exam.classExam.groupName}</p>
+                                        <p><strong>Class:</strong> ${resultTotalExam.exam.group.groupName}</p>
                                         <p><strong>Subject:</strong> ${resultTotalExam.exam.examTitle} </p>
                                     </div>
                                     <div class="col-md-6" style="padding-left: 120px;">
-                                        <p><strong>Assignment:</strong> ${resultTotalExam.exam.classExam.topic.topicName}</p>
+                                        <p><strong>Assignment:</strong> ${resultTotalExam.exam.group.topic.topicName}</p>
                                         <p><strong>Submitted Date:</strong> ${resultTotalExam.exam.examEndDate}</p>
                                         <p><strong>Status:</strong> ${resultTotalExam.exam.status.statusName}</p>
                                     </div>
@@ -90,7 +90,7 @@
                                 <div class="grade">
                                     <h3>Grading Details</h3>
                                     <p><strong>Time Exam</strong> ${resultTotalExam.exam.examTime}</p>
-                                    <p><strong>Score:</strong> ${requestScope.score}</p>
+                                    <p><strong>Score:</strong> ${resultTotalExam.score}</p>
                                     <p><strong>Comments:</strong> 
                                     <c:choose>
                                         <c:when test="${resultTotalExam.score >= 9}">

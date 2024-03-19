@@ -31,6 +31,7 @@ public class StudentAnswerDBContext extends DBContext<StudentAnswer> {
                                ,[question_id]
                                ,[option_answer_id]
                                ,[student_id]
+                               ,[attempt_number]
                            FROM [StudentAnswer]
                            WHERE [studentAnswer_id] = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -43,7 +44,7 @@ public class StudentAnswerDBContext extends DBContext<StudentAnswer> {
                 studentAnswer.setQuestion(questionDB.getById(String.valueOf(rs.getInt("question_id"))));
                 studentAnswer.setOptionAnswer(optionAnswerDB.getById(String.valueOf(rs.getInt("option_answer_id"))));
                 studentAnswer.setStudentInfo(accountInfoDB.getById(String.valueOf(rs.getInt("student_id"))));
-
+                studentAnswer.setAttemptNumber(rs.getInt("attempt_number"));
                 return studentAnswer;
             }
 

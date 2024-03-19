@@ -14,6 +14,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>View Group</title>
+
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://kit.fontawesome.com/ce03f1d68b.js" crossorigin="anonymous"></script>
         <style>
@@ -272,6 +273,7 @@
             .space {
                 padding: 39px;
             }
+
             body{
                 margin-top:20px;
             }
@@ -328,6 +330,7 @@
     </head>
 
     <body>
+
         <header>
             <div class="container">
                 <div class="row">
@@ -367,6 +370,7 @@
         <div class="row">
             <div class="space"></div>
         </div>
+
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <div class="container mt-5 pt-4">
             <div class="row align-items-end mb-4 pb-2">
@@ -376,13 +380,16 @@
                         <p class="text-muted mb-0 para-desc">Prepare to demonstrate your knowledge and critical thinking skills as you tackle each question with clarity and focus. Success lies not only in correct answers but also in the effort and thoughtfulness you invest.</p>
                     </div>
                 </div>
+
             </div>
 
             <div class="row">
                 <span class="text-muted d-block"><i class="fa fa-bar-chart" style="margin-right: 6px;" aria-hidden="true"></i>Number of exam: ${listGroupExam.size()}</span>
                 <c:forEach items="${requestScope.listGroupExam}" var="groupE">
                     <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+
                         <div class="group-info card border-0 bg-light rounded shadow">
+
                             <div class="card-body p-4">
                                 <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">${accountInfo.fullName}</span>
                                 <h5>${groupE.groupName}</h5>
@@ -391,17 +398,21 @@
                                 </div>
 
                                 <div class="mt-3">
-                                    <a href="<%= request.getContextPath() %>/create-exam?topicID=${groupE.topic.topicId}" class="btn btn-primary">Create Exam</a>
+
+                                    <a href="<%= request.getContextPath() %>/create-exam?groupId=${groupE.groupId}" class="btn btn-primary">Create Exam</a>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </c:forEach>
+
                 <div class="row justify-content-end mb-4 pb-2">
                     <div class="col-md-4 mt-sm-0 d-none d-md-block" id="groupContainer">
                         <div class="text-center text-md-end">
                             <a href="#" id="showAllBtn">Show all groups <i class="fa-solid fa-arrow-down"></i></a>
                             <a href="#" id="showLessBtn" style="display: none;">Show less <i class="fa-solid fa-arrow-up"></i></a>
+
                         </div>
                     </div>
                 </div>
@@ -451,5 +462,6 @@
                 });
             });
         </script>
+
     </body>
 </html>
