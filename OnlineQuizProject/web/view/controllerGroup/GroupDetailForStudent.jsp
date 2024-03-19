@@ -98,81 +98,86 @@
             </div>
 
 
-                <table class="table class-table">
-                    <thead>
-                        <tr style="font-size: 30px;">
-                            <th scope="col">Group Information</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="register" items="${requestScope.listRegister}">
-                            <c:if test="${register.group.groupId == groupId}">
-                                <tr>
-                                    <td>
-                                        <p><strong>Group Name: </strong>${register.group.topic.topicName}</p>
-                                        <p><strong>Topic Name: </strong>${register.group.topic.topicName}</p>
-                                        <p><strong>Lecture: </strong>${register.group.lectureInfo.fullName}</p>
-                                        <p><strong>Start Date: </strong>${register.registerDate}</p>
-                                        <p><strong>Status: </strong>${register.group.status.statusName}</p>
-                                    </td>
-                                </tr>
-                            </c:if>
-                        </c:forEach>
-                    </tbody>
-                </table>
-
-
-                <!-- Bảng danh sách các Exam -->
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Exam Title</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Status</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <p><%= currentDateTime %></p>
-
-                    <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
-                        <tr>
-                            <td>${exam.examTitle}</td>
-                            <td>
-                                ${exam.examStartDate}
-                            </td>
-                            <td>
-                                <fmt:formatDate value="${exam.examEndDate}" pattern="dd/MM/yyyy HH:mm:ss" />
-                            </td>
-                            <td>${exam.examTime}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${currentDateTime.isAfter(exam.examEndDate)}">
-                                        Closed
-                                    </c:when>
-                                    <c:when test="${currentDateTime.isAfter(exam.examStartDate) and currentDateTime.isBefore(exam.examEndDate)}">
-                                        Active
-                                    </c:when>
-                                    <c:when test="${currentDateTime.isBefore(exam.examStartDate)}">
-                                        Pending
-                                    </c:when>
-                                    <c:otherwise>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/take-exam" method="GET">
-                                    <input type="hidden" name="examId" value="${exam.examId}">
-                                    <button type="submit" class="btn btn-primary">Do Exam</button>
-                                </form>
-                            </td>
-                        </tr>
+            <table class="table class-table">
+                <thead>
+                    <tr style="font-size: 30px;">
+                        <th scope="col">Group Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="register" items="${requestScope.listRegister}">
+                        <c:if test="${register.group.groupId == groupId}">
+                            <tr>
+                                <td>
+                                    <p><strong>Group Name: </strong>${register.group.topic.topicName}</p>
+                                    <p><strong>Topic Name: </strong>${register.group.topic.topicName}</p>
+                                    <p><strong>Lecture: </strong>${register.group.lectureInfo.fullName}</p>
+                                    <p><strong>Start Date: </strong>${register.registerDate}</p>
+                                    <p><strong>Status: </strong>${register.group.status.statusName}</p>
+                                </td>
+                            </tr>
+                        </c:if>
                     </c:forEach>
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
+
+
+            <!-- Bảng danh sách các Exam -->
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Exam Title</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Attempt</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <p><%= currentDateTime %></p>
+                <c:set var="listCheckAttemptLimit" value="${listCheckAttemptLimit}" scope="request" />
+
+                <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
+                    <tr>
+                        <td>${exam.examTitle}</td>
+                        <td>
+                            ${exam.examStartDate}
+                        </td>
+                        <td>
+                            <fmt:formatDate value="${exam.examEndDate}" pattern="dd/MM/yyyy HH:mm:ss" />
+                        </td>
+                        <td>${exam.examTime}</td>
+                        <td>${exam.examAttemp}</td>
+                        <td>
+                            ${exam.status.statusName}
+                        </td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${exam.status.statusId==2}">
+                                    Not Open Yet
+                                </c:when>
+                                <c:when test="${exam.status.statusId==3}">
+                                    Closed
+                                </c:when>
+                                <c:when test="${listCheckAttemptLimit.get(listExamOfGroup.indexOf(exam))!=true}">
+                                    Attempt Limit
+                                </c:when>
+                                <c:otherwise>
+                                    <form action="${pageContext.request.contextPath}/take-exam" method="GET">
+                                        <input type="hidden" name="examId" value="${exam.examId}">
+                                        <button type="submit" class="btn btn-primary">Do Exam</button>
+                                    </form>
+                                </c:otherwise>
+                            </c:choose>
+
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
 
 

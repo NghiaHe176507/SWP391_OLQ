@@ -8,6 +8,7 @@ import entity.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -1593,7 +1594,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
     }
 
-
     public Result createNewResult(Result newStudentResult) {
         try {
             connection.setAutoCommit(false);
@@ -1844,4 +1844,48 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return null;
     }
 
+    public boolean checkAttemptLimit(int examId, int studentId) {
+        if (examDB.getById(String.valueOf(examId)).getExamAttemp() == null) {
+            return true;
+        }
+        return getCurrentAttemptOfExamByStudentId(studentId, examId) < examDB.getById(String.valueOf(examId)).getExamAttemp();
+    }
+
+    public void updateStatusExamByStudentAction(Exam exam) {
+        try {
+            String sql_update = """
+                                UPDATE [Exam]
+                                   SET [status_id] = ?
+                                 WHERE [exam_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql_update);
+            stm.setInt(1, exam.getStatus().getStatusId());
+            stm.setInt(2, exam.getExamId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateStatusExamToFitRealTime(Exam exam) {
+        long milisTime = System.currentTimeMillis();
+        Timestamp currentTime = new Timestamp(milisTime);
+        if (exam.getExamEndDate() != null) {
+            if ((exam.getExamStartDate().before(currentTime))
+                    && ((exam.getExamEndDate().after(currentTime))
+                    && (exam.getStatus().getStatusId() != 1))) {
+                exam.setStatus(new Status(1, "Active"));
+                updateStatusExamByStudentAction(exam);
+            }
+            if ((exam.getExamStartDate().after(currentTime))
+                    && (exam.getStatus().getStatusId() != 2)) {
+                exam.setStatus(new Status(2, "Pending"));
+                updateStatusExamByStudentAction(exam);
+            }
+            if ((exam.getExamEndDate().before(currentTime))
+                    && (exam.getStatus().getStatusId() != 3)) {
+                exam.setStatus(new Status(3, "Closed"));
+                updateStatusExamByStudentAction(exam);
+            }
+        }
+    }
 }
