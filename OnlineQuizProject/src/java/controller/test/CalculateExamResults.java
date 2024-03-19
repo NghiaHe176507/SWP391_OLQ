@@ -83,7 +83,9 @@ public class CalculateExamResults extends BasedAuthorizationController {
         newResult.setScore(finalScore);
 
         db.updateScoreOfResultByExamIdAndStudentId(newResult);
-
+        request.setAttribute("newResult", newResult);
+        request.setAttribute("examId", exam.getExamId());
+        request.setAttribute("studentInfoId", studentInfo.getAccountInfoId());
         request.setAttribute("resultTotalExam", db.getResultByStudentIdAndExamIdAndNumberAttempt(exam.getExamId(), studentInfo.getAccountInfoId(), attemptNumber));
         request.getRequestDispatcher("view/test/ViewResultAfterTest.jsp").forward(request, response);
 

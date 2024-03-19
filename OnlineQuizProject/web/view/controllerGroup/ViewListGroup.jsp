@@ -466,9 +466,6 @@
                                             <img class="profile-image" src="<%= request.getContextPath() %>/image/avatar.jpg" alt="Profile Image">
                                         </div>
                                         <ul class="subnav">
-                                            <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                            <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                            <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                             <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
                                         </ul>
@@ -612,6 +609,24 @@
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
+    </script>
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the logo element
+            var logo = document.querySelector('.logo a');
+
+            // Add click event listener to the logo
+            logo.addEventListener('click', function (event) {
+                // Prevent the default action of the link
+                event.preventDefault();
+
+                // Get the base URL
+                var baseUrl = "<%= request.getContextPath() %>";
+
+                // Navigate to the home page
+                window.location.href = baseUrl + "/home";
+            });
+        });
     </script>
 </body>
 </html>

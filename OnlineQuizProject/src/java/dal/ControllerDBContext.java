@@ -33,6 +33,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     OptionAnswerDBContext optionAnswerDB = new OptionAnswerDBContext();
     ResultDBContext resultDB = new ResultDBContext();
     QuestionDBContext questionDB = new QuestionDBContext();
+    StudentAnswerDBContext studentAnswerDB = new StudentAnswerDBContext();
 
     @Override
     public BaseEntity getById(String Id) {
@@ -1294,6 +1295,35 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listOptionAnswer;
     }
 
+    public ArrayList<StudentAnswer> getListStudentAnswerOfStudent(int resultNumber, int studentID, int examId) {
+        ArrayList<StudentAnswer> listStudentAnswerOfStudent = new ArrayList<>();
+        try {
+            String sql = """
+                     SELECT [studentAnswer_id]
+                           ,[exam_id]
+                           ,[question_id]
+                           ,[option_answer_id]
+                           ,[student_id]
+                           ,[attempt_number]
+                       FROM [StudentAnswer]
+                       WHERE [exam_id] = ? AND [attempt_number] = ? AND [student_id] = ?
+                     """;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, examId);
+            stm.setInt(2, resultNumber);
+            stm.setInt(3, studentID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                StudentAnswer studentAnswer = new StudentAnswer();
+                studentAnswer = studentAnswerDB.getById(String.valueOf(rs.getInt("studentAnswer_id")));
+                listStudentAnswerOfStudent.add(studentAnswer);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listStudentAnswerOfStudent;
+    }
+
     public ArrayList<Exam> getListExamByGroupId(int groupId) {
         ArrayList<Exam> listExam = new ArrayList<>();
         try {
@@ -1592,7 +1622,6 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             }
         }
     }
-
 
     public Result createNewResult(Result newStudentResult) {
         try {

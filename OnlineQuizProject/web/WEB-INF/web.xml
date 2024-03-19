@@ -172,6 +172,10 @@
         <servlet-name>ValidateOtpForRegister</servlet-name>
         <servlet-class>controller.authentication.ValidateOtpForRegister</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewDetailResultForStudent</servlet-name>
+        <servlet-class>controller.test.ViewDetailResultForStudent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -343,6 +347,10 @@
     <servlet-mapping>
         <servlet-name>ValidateOtpForRegister</servlet-name>
         <url-pattern>/validate-otp-register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailResultForStudent</servlet-name>
+        <url-pattern>/view-detail-result</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

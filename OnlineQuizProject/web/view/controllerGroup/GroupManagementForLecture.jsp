@@ -657,52 +657,51 @@
 
     <body>
         <header>
-                <div class="container">
-                    <!-- Header section -->
-                    <div class="row">
-                        <div class="header">
-                            <!-- Logo -->
-                            <div class="logo col-md-2">
-                                <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
-                            </div>
+            <div class="container">
+                <!-- Header section -->
+                <div class="row">
+                    <div class="header">
+                        <!-- Logo -->
+                        <div class="logo col-md-2">
+                            <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
+                        </div>
 
-                            <div class="menu-icon col-md-1">
-                                <div class="dropdown">
-                                    <button class="dropbtn" style="font-size: 19px;"><i class="fa-solid fa-bars" style="padding-right: 4px;"></i>Menu</button>
-                                    <div class="dropdown-content">
-                                        <a href="<%= request.getContextPath() %>/show-list-group-exam"><i class="fa-solid fa-plus"></i> Create An Exam</a>
-                                        <a href="<%= request.getContextPath() %>/home"><i class="fa-solid fa-rotate-left"></i> Return Home</a>
+                        <div class="menu-icon col-md-1">
+                            <div class="dropdown">
+                                <button class="dropbtn" style="font-size: 19px;"><i class="fa-solid fa-bars" style="padding-right: 4px;"></i>Menu</button>
+                                <div class="dropdown-content">
+                                    <a href="<%= request.getContextPath() %>/show-list-group-exam"><i class="fa-solid fa-plus"></i> Create An Exam</a>
+                                    <a href="<%= request.getContextPath() %>/home"><i class="fa-solid fa-rotate-left"></i> Return Home</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form action="search" method="GET" class="col-md-6">
+                            <div class="search-container" style="width:100%;">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                                <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
+
+                        <!-- Login section -->
+                        <div class="login col-md-2">
+                            <ul id="nav" class="nav nav-pills">
+                                <li class="nav-item dropdown">
+                                    <div class="circle-background">
+                                        <img class="profile-image" src="<%=request.getContextPath()%>/image/avatar.jpg" alt="Profile Image">
                                     </div>
-                                </div>
-                            </div>
+                                    <ul class="subnav">
+                                        <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
-                            <form action="search" method="GET" class="col-md-6">
-                                <div class="search-container" style="width:100%;">
-                                    <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
-                                    <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                </div>
-                            </form>
-
-                            <!-- Login section -->
-                            <div class="login col-md-2">
-                                <ul id="nav" class="nav nav-pills">
-                                    <li class="nav-item dropdown">
-                                        <div class="circle-background">
-                                            <img class="profile-image" src="<%=request.getContextPath()%>/image/avatar.jpg" alt="Profile Image">
-                                        </div>
-                                        <ul class="subnav">
-                                            <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                            <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                            <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                            <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
-
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+            </div>
         </header>
         <div class="container">
             <div class="row">
@@ -849,22 +848,22 @@
         </footer>
 
         <script>
-                           document.addEventListener("DOMContentLoaded", function () {
-                               // Get the logo element
-                               var logo = document.querySelector('.logo a');
+                                                document.addEventListener("DOMContentLoaded", function () {
+                                                    // Get the logo element
+                                                    var logo = document.querySelector('.logo a');
 
-                               // Add click event listener to the logo
-                               logo.addEventListener('click', function (event) {
-                                   // Prevent the default action of the link
-                                   event.preventDefault();
+                                                    // Add click event listener to the logo
+                                                    logo.addEventListener('click', function (event) {
+                                                        // Prevent the default action of the link
+                                                        event.preventDefault();
 
-                                   // Get the base URL
-                                   var baseUrl = "<%= request.getContextPath() %>";
+                                                        // Get the base URL
+                                                        var baseUrl = "<%= request.getContextPath() %>";
 
-                                   // Navigate to the home page
-                                   window.location.href = baseUrl + "/home";
-                               });
-                           });
+                                                        // Navigate to the home page
+                                                        window.location.href = baseUrl + "/home";
+                                                    });
+                                                });
         </script>
     </body>
 

@@ -363,10 +363,6 @@
                 </div>
                 <!-- End of header section -->
 
-                <div>
-
-                </div>
-
                 <!-- Footer section -->
                 <div id="footer">
                     <!-- Social Icons -->

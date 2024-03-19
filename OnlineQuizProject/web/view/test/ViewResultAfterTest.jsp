@@ -39,15 +39,16 @@
                         </div>
 
                         <!-- Search container -->
-                        <div class="search-container col-md-6">
-                            <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
-                            <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </div>
+                        <form action="search" method="GET" class="col-md-6">
+                            <div class="search-container" style="width:100%;">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                                <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </div>
+                        </form>
 
                         <!-- Login section -->
                         <div class="login col-md-2">
                             <ul id="nav" class="nav nav-pills">
-                                <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                 <li class="nav-item dropdown">
                                     <div class="circle-background">
                                         <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
@@ -112,8 +113,14 @@
                             </div>
                             <div class="actions">
                                 <a href="${pageContext.request.contextPath}/home" class="btn btn-primary">Back to Home</a>
-                                <a href="#" class="btn btn-secondary">View Detailed Results</a>
+                                <form id="examForm" action="${pageContext.request.contextPath}/view-detail-result" method="POST">
+                                    <input type="hidden" id="examId" name="examId" value="${examId}">
+                                    <input type="hidden" id="studentInfoId" name="studentInfoId" value="${studentInfoId}">
+                                    <input type="hidden" id="resultNumber" name="resultNumber" value="${requestScope.newResult.attemptNumber}">
+                                    <button type="submit" id="viewResultsBtn" class="btn btn-secondary">View Detailed Results</button>
                             </div>
+                            </form>
+
                         </div>
                     </div>
                     <!-- End of Test Result Section -->
@@ -135,6 +142,24 @@
             </div>
             <!-- Bootstrap JS -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Get the logo element
+                    var logo = document.querySelector('.logo a');
+
+                    // Add click event listener to the logo
+                    logo.addEventListener('click', function (event) {
+                        // Prevent the default action of the link
+                        event.preventDefault();
+
+                        // Get the base URL
+                        var baseUrl = "<%= request.getContextPath() %>";
+
+                        // Navigate to the home page
+                        window.location.href = baseUrl + "/home";
+                    });
+                });
+            </script>
     </body>
 
 </html>
