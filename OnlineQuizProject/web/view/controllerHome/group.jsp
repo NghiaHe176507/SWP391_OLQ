@@ -12,12 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="joingroup" method="GET    ">
+        <form action="joingroup" method="GET">
             <div id="joinGroupInput" class="col-md-1" name="groupInviteCode">
                 <input type="text" id="joinInput" placeholder="Enter group code">
                 <button id="submitJoin" type="submit">Join</button>
             </div>
         </form>
-
     </body>
 </html>

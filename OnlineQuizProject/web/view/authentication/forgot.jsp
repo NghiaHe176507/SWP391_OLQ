@@ -1,112 +1,69 @@
 <%-- 
-    Document   : forgot
-    Created on : 13 Jan 2024, 6:23:49 pm
-    Author     : tuann
+    Document   : changePassword
+    Created on : 19 Mar 2024, 12:56:13 am
+    Author     : hatua
 --%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Forgot Password</title>
-        <link href="css/registerstyle.css" rel="stylesheet" type="text/css"/>
-        <script src="js/validation.js" type="text/javascript"></script>
-        <style>
-            .error {
-                color: red;
-                font-size: 10px;
-                text-align: left;
-            }
-        </style>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <title>Password Recovery</title>
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.3/components/password-resets/password-reset-3/assets/css/password-reset-3.css">
     </head>
-
     <body>
-        <div class="main">
-            <div style="display: flex; background: #fff">
-                <form id="registrationForm" onsubmit="return validateForm()" class="form" method="POST">                
-                    <div>
-                        <h1 class="heading">Forgot Password</h1>
+        <section class="p-3 p-md-4 p-xl-5" style="margin-top: 63px">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 bsb-tpl-bg-platinum">
+                        <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
+                            <h3 class="m-0">Welcome Back To QuizWiz !</h3>
+                            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="https://smiletutor.sg/wp-content/uploads/2020/10/password.png" width="245" height="80" alt="BootstrapBrain Logo">
+                            <p class="mb-0">Not a member yet? <a href="<%= request.getContextPath() %>/register" class="link-secondary text-decoration-none">Register now</a></p>
+                        </div>
                     </div>
-                    <div class="spacer"></div>
-                    <c:if test="${not empty errorMessage}">
-                        <div style="color: red; padding: 10px 10px; text-align: left; font-size: 13px">${errorMessage}</div>
-                    </c:if>
-
-                    <div class="form-group">
-                        <label for="gmail" class="form-label">Gmail:<span class="required">(*)</span></label>
-                        <input type="text" id="gmail" name="gmail" placeholder="Enter your Gmail address" class="form-control">
-                        <div id="gmailError" class="error"></div>
+                    <div class="col-md-8 col-lg-6 bsb-tpl-bg-lotion">
+                        <div class="p-3 p-md-4 p-xl-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-5">
+                                        <h2 class="h3">Password Reset</h2>
+                                        <h3 class="fs-6 fw-normal text-secondary m-0">Provide the email address associated with your account to recover your password.</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="forgotpassword" method="POST">
+                                <p style="color: red; font-size: 18px">${requestScope.mess}</p>
+                                <div class="row gy-3 gy-md-4 overflow-hidden">
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button class="btn bsb-btn-xl btn-primary" type="submit">Reset Password</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <hr class="mt-5 mb-4 border-secondary-subtle">
+                                    <div class="text-end">
+                                        <a href="<%= request.getContextPath() %>/login" class="link-secondary text-decoration-none">Login</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="password" class="form-label">New Password:<span class="required">(*)</span></label>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" class="form-control">
-                        <div id="passwordError" class="error"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="confirmPassword" class="form-label">Confirm New Password:<span class="required">(*)</span></label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" class="form-control">
-                        <div id="confirmPasswordError" class="error"></div>
-                    </div> 
-
-                    <div class="policy">
-                        <input type="checkbox" id="acceptTerms">
-                        <h4>I accept all terms & condition</h4>
-                    </div>
-                    <button class="form-submit" type="submit">Reset Password</button>
-                    <div class="text">
-                        <h3>Back to login? <a href="#">Login</a></h3>
-                    </div>
-                    <script>
-                        function validateForm() {
-                            var password = document.getElementById('password').value;
-                            var confirmPassword = document.getElementById('confirmPassword').value;
-                            var gmail = document.getElementById('gmail').value;
-
-                            var passwordError = document.getElementById('passwordError');
-                            var confirmPasswordError = document.getElementById('confirmPasswordError'); // Fix here
-                            var gmailError = document.getElementById('gmailError');
-
-                            // Validate Gmail
-                            var gmailRegex = /^[a-zA-Z0-9._-]+@gmail\.com$/;
-                            if (!gmail.match(gmailRegex)) {
-                                gmailError.innerHTML = "Please enter a valid Gmail address";
-                                return false;
-                            }
-
-                            // Reset previous errors
-                            passwordError.innerHTML = "";
-                            confirmPasswordError.innerHTML = ""; // Fix here
-                            gmailError.innerHTML = "";
-
-                            // Validate password
-                            if (password.trim() === "") {
-                                passwordError.innerHTML = "Password is required";
-                                return false;
-                            }
-
-                            // Validate confirm password
-                            if (confirmPassword.trim() === "") {
-                                confirmPasswordError.innerHTML = "Please confirm your password";
-                                return false;
-                            }
-
-                            if (password !== confirmPassword) {
-                                confirmPasswordError.innerHTML = "Passwords do not match";
-                                return false;
-                            }
-
-                            return true;
-                        }
-                    </script>
-
+                </div>
             </div>
-        </div>
+        </section>
     </body>
-
 </html>

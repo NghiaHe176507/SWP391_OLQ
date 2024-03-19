@@ -17,7 +17,7 @@
         <script src="js/validation.js" type="text/javascript"></script>
         <style>
             .main {
-                background: linear-gradient(135deg, #71b7e6, #9b59b6);
+                background: #fff;
             }
             .error {
                 color: red;
@@ -30,7 +30,7 @@
     <body>
         <div class="main">
             <div style="display: flex; background: #fff">
-                <img src="https://th.bing.com/th/id/OIP.fUJ9ZRjz4iMrpHlltVv_XgHaJl?rs=1&pid=ImgDetMain" alt=""/>
+                <img style="width: 64%" src="https://static.vecteezy.com/system/resources/previews/029/888/142/original/megaphone-banner-quiz-time-illustration-vector.jpg" alt=""/>
                 <form id="registrationForm" onsubmit="return validateForm()" class="form" method="POST" style="width: 447px; padding: 20px 10px;">                
                     <div>
                         <h1 class="heading">Registration</h1>
