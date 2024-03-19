@@ -199,9 +199,6 @@
                                     <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
                                 </div>
                                 <ul class="subnav">
-                                    <li><a href="<%= request.getContextPath() %>/updateaccount"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                    <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                    <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                     <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
                                 </ul>
@@ -229,7 +226,6 @@
                             <!--<li><a href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-regular fa-folder-open"></i> Update Account</a></li>-->
                             <li><a href="<%= request.getContextPath() %>/admin/topic-management"><i class="fa-solid fa-book"></i> View List Topic</a></li>
                             <li><a href="<%= request.getContextPath() %>/admin/group-management"><i class="fa-solid fa-people-group"></i> View List Group</a></li>
-                            <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                             <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
                         </ul>
                     </div>

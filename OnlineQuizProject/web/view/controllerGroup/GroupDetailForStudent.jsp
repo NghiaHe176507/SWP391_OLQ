@@ -60,23 +60,21 @@
                     <div class="logo col-md-2">
                         <a href="#">QUIZWIZ</a>
                     </div>
-
                     <div class="create col-md-1">
-                        <a href="#"><i class="fa-solid fa-plus"></i> Tạo đề thi</a>
+                        <a href="${pageContext.request.contextPath}/home">Return Home</a>
                     </div>
 
                     <!-- Search container -->
-                    <form action="search" method="GET" class=" col-md-5">
-                        <div class="search-container">
+                    <form action="search" method="GET" class=" col-md-6">
+                        <div class="search-container" style="width: 100%;">
                             <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
                             <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
 
                     <!-- Login section -->
-                    <div class="login col-md-3">
+                    <div class="login col-md-2">
                         <ul id="nav" class="nav nav-pills">
-                            <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                             <li class="nav-item dropdown">
                                 <div class="circle-background">
                                     <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
@@ -101,31 +99,29 @@
 
 
             <form action="viewGroupDetail" method="GET">
-                <!-- Bảng hiển thị thông tin lớp, môn học, giảng viên, trạng thái -->
-                <table class="table">
+                <table class="table class-table">
                     <thead>
-                        <tr>
-                            <th scope="col">Group Name</th>
-                            <th scope="col">Topic</th>
-                            <th scope="col">Lecturer</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">Status</th>
+                        <tr style="font-size: 30px;">
+                            <th scope="col">Group Information</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="register" items="${requestScope.listRegister}">
                             <c:if test="${register.group.groupId == groupId}">
                                 <tr>
-                                    <td>${register.group.groupName}</td>
-                                    <td>${register.group.topic.topicName}</td>
-                                    <td>${register.group.lectureInfo.fullName}</td>
-                                    <td>${register.registerDate}</td>
-                                    <td>${register.group.status.statusName}</td>
+                                    <td>
+                                        <p><strong>Group Name: </strong>${register.group.topic.topicName}</p>
+                                        <p><strong>Topic Name: </strong>${register.group.topic.topicName}</p>
+                                        <p><strong>Lecture: </strong>${register.group.lectureInfo.fullName}</p>
+                                        <p><strong>Start Date: </strong>${register.registerDate}</p>
+                                        <p><strong>Status: </strong>${register.group.status.statusName}</p>
+                                    </td>
                                 </tr>
                             </c:if>
                         </c:forEach>
                     </tbody>
                 </table>
+
 
                 <!-- Bảng danh sách các Exam -->
 

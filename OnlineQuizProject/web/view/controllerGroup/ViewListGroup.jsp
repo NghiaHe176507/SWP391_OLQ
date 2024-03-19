@@ -254,32 +254,6 @@
                 max-width: 100%;
             }
 
-
-            /*  */
-            /* .topic {
-              display: flex;
-              justify-content: space-between;
-              align-items: flex-start; 
-            }
-            
-            .topic-info {
-              flex: 1; 
-              border: 1px solid #ccc; 
-              padding: 10px; 
-            }
-            
-            .show-all {
-              margin-top: 10px;
-            }
-            
-            .show-all a {
-              display: block;
-              text-align: right; 
-              text-decoration: none;
-              color: #007BFF;
-            } */
-
-
             .topic {
                 display: flex;
                 flex-wrap: wrap; /* Cho phép các div con xuống dòng khi không đủ không gian */

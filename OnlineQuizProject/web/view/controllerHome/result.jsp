@@ -70,22 +70,21 @@
                     </div>
 
                     <div class="create col-md-2">
-                        <a href="${pageContext.request.contextPath}/home"><i class="fa-solid fa-people-pulling"></i>Return Home</a>
+                        <a href="${pageContext.request.contextPath}/home">Return Home</a>
                     </div>
 
                     <!-- Search container -->
 
-                    <form action="search" method="GET">
-                        <div class="search-container col-md-5">
+                    <form action="search" method="GET" class=" col-md-6">
+                        <div class="search-container" style="width: 100%;">
                             <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
                             <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
 
                     <!-- Login section -->
-                    <div class="login col-md-3">
+                    <div class="login col-md-2">
                         <ul id="nav" class="nav nav-pills">
-                            <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                             <li class="nav-item dropdown">
                                 <div class="circle-background">
                                     <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">

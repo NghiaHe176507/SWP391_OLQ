@@ -17,6 +17,8 @@ import java.util.ArrayList;
  */
 public class ViewOwnedGroupForLecture extends BasedAuthorizationController {
 
+    ControllerDBContext db = new ControllerDBContext();
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -28,7 +30,6 @@ public class ViewOwnedGroupForLecture extends BasedAuthorizationController {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        ControllerDBContext db = new ControllerDBContext();
         int lectureId = db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId();
 
         // Fetch groups for the current page
@@ -42,14 +43,13 @@ public class ViewOwnedGroupForLecture extends BasedAuthorizationController {
         // Paginate the data
         int totalItems = listGroup.size();
         int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-
         int startIndex = (page - 1) * pageSize;
         int endIndex = Math.min(startIndex + pageSize, totalItems);
 
         ArrayList<Group> paginatedList = new ArrayList<>(listGroup.subList(startIndex, endIndex));
-        
+
         ArrayList<Group> listGroupToFilter = db.getListGroupToFilter();
-        
+
         request.setAttribute("listGroup", paginatedList);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);

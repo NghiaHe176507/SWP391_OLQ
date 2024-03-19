@@ -37,8 +37,8 @@
                 background-color: #007bff; /* Màu nền khi hover */
                 color: white; /* Màu chữ khi hover */
             }
-            
-             /* Dropdown menu */
+
+            /* Dropdown menu */
             .dropdown {
                 position: relative;
                 display: inline-block;
@@ -95,19 +95,20 @@
                         <a href="#">QUIZWIZ</a>
                     </div>
 
-                     <div class="menu-icon col-md-1">
+                    <div class="menu-icon col-md-1">
                         <div class="dropdown">
                             <button class="dropbtn" style="font-size: 19px;"><i class="fa-solid fa-bars" style="padding-right: 4px;"></i>Menu</button>
                             <div class="dropdown-content">
                                 <a href="<%= request.getContextPath() %>/show-list-group-exam"><i class="fa-solid fa-plus"></i> Create An Exam</a>
                                 <a href="<%= request.getContextPath() %>/group-management"><i class="fa-solid fa-user-group"></i></i> Group Management</a>
+                                <a href="<%= request.getContextPath() %>/home"><i class="fa-solid fa-rotate-left"></i> Return Home</a>
                             </div>
                         </div>
                     </div>
 
 
                     <!-- Search container -->
-                    <form action="search" method="GET" class=" col-md-5">
+                    <form action="search" method="GET" class=" col-md-6">
                         <div class="search-container" style="width: 100%;">
                             <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
                             <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -115,7 +116,7 @@
                     </form>
 
                     <!-- Login section -->
-                    <div class="login col-md-3">
+                    <div class="login col-md-2">
                         <ul id="nav" class="nav nav-pills">
                             <li class="nav-item dropdown">
                                 <div class="circle-background">

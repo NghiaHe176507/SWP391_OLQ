@@ -12,14 +12,13 @@
 
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="js/homeStudent.js"></script>
-        <title>Create Group</title>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>     
+        <title>Management Group</title>
         <style>
             @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
             *{
@@ -262,32 +261,6 @@
                 height: auto;
                 max-width: 100%;
             }
-
-
-            /*  */
-            /* .topic {
-              display: flex;
-              justify-content: space-between;
-              align-items: flex-start; 
-            }
-            
-            .topic-info {
-              flex: 1; 
-              border: 1px solid #ccc; 
-              padding: 10px; 
-            }
-            
-            .show-all {
-              margin-top: 10px;
-            }
-            
-            .show-all a {
-              display: block;
-              text-align: right; 
-              text-decoration: none;
-              color: #007BFF;
-            } */
-
 
             .topic {
                 display: flex;
@@ -552,30 +525,35 @@
                 color: #a75d54;
             }
 
-            .pagination {
-                display: inline-block;
+            /* Pagination container */
+            .pagination-container {
+                margin-bottom: 10px;
+                margin-top: 20px;
+                text-align: center;
             }
 
-            .pagination div {
+            /* Pagination links */
+            .pagination-container a {
                 display: inline-block;
-                margin-right: 5px; /* Add some spacing between pagination links */
-            }
-
-            .pagination a {
-                color: black;
-                padding: 8px 16px;
+                padding: 5px 10px;
+                margin: 0 2px;
+                border: 1px solid #ccc;
+                background-color: #f7f7f7;
+                color: #333;
                 text-decoration: none;
-                border: 1px solid #ddd;
+                border-radius: 3px;
             }
 
-            .pagination a.active {
-                background-color: #007bff;
-                color: white;
+            /* Current page */
+            .pagination-container .current-page {
+                display: inline-block;
+                padding: 5px 10px;
+                margin: 0 2px;
+                background-color: #333;
+                color: #fff;
+                border-radius: 3px;
             }
 
-            .pagination a:hover:not(.active) {
-                background-color: #ddd;
-            }
 
             .container {
                 min-height: 100%;
@@ -596,6 +574,65 @@
                 .right-side {
                     display: none;
                 }
+            }
+
+            /* Dropdown menu */
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #000; /* New color for the dropdown background */
+                min-width: 204px;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: white; /* New color for the dropdown text */
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #444; /* New color for the dropdown hover background */
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropbtn {
+                background-color: transparent;
+                color: #fff;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropbtn:hover {
+                background-color: #0056b3;
+            }
+
+            .create-button{
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                cursor: pointer;
+                color: white;
+                border: none;
+            }
+            .create-button:hover{
+                background-color: #0056b3;
+                color: #fff;
+            }
+
+            .list-group-container {
+                border: 1px solid #ccc; /* Màu và kích thước viền */
+                border-radius: 5px; /* Góc bo tròn của viền */
             }
 
         </style>
@@ -620,7 +657,6 @@
 
     <body>
         <header>
-            <form action="home" method="POST">
                 <div class="container">
                     <!-- Header section -->
                     <div class="row">
@@ -629,18 +665,30 @@
                             <div class="logo col-md-2">
                                 <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                             </div>
-                            <div class="search-container col-md-6">
-                                <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
-                                <button type="button" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+                            <div class="menu-icon col-md-1">
+                                <div class="dropdown">
+                                    <button class="dropbtn" style="font-size: 19px;"><i class="fa-solid fa-bars" style="padding-right: 4px;"></i>Menu</button>
+                                    <div class="dropdown-content">
+                                        <a href="<%= request.getContextPath() %>/show-list-group-exam"><i class="fa-solid fa-plus"></i> Create An Exam</a>
+                                        <a href="<%= request.getContextPath() %>/home"><i class="fa-solid fa-rotate-left"></i> Return Home</a>
+                                    </div>
+                                </div>
                             </div>
+
+                            <form action="search" method="GET" class="col-md-6">
+                                <div class="search-container" style="width:100%;">
+                                    <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                                    <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                            </form>
 
                             <!-- Login section -->
                             <div class="login col-md-2">
                                 <ul id="nav" class="nav nav-pills">
-                                    <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                     <li class="nav-item dropdown">
                                         <div class="circle-background">
-                                            <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
+                                            <img class="profile-image" src="<%=request.getContextPath()%>/image/avatar.jpg" alt="Profile Image">
                                         </div>
                                         <ul class="subnav">
                                             <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
@@ -655,10 +703,8 @@
                         </div>
                     </div>
                 </div>
-            </form>
         </header>
         <div class="container">
-            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
             <div class="row">
                 <div class="space"></div>
             </div>
@@ -668,7 +714,7 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="align-items-lg-center py-3 flex-column flex-lg-row">
-                                    <h2 class="h5 mb-3 mb-lg-0"> Create new Group</h2>
+                                    <h2 class="h5 mb-3 mb-lg-0"> Create New Group</h2>
                                 </div>
                                 <form action="create-group" method="POST"> 
                                     <div class="row">
@@ -698,10 +744,10 @@
                         </div>
                     </div>
                 </c:if>
-                <div class="col-lg-8"> 
+                <div class="col-lg-8 list-group-container"> 
                     <div class="container-fluid">
-                        <div style="display: flex">
-                            <a style="color: #fff; text-decoration: none;" href="<%=request.getContextPath()%>/group-management/create-group" class="btn btn-primary mb-3" id="toggleFormLink">Create</a>
+                        <div style="display: flex;">
+                            <a style="color: #fff; text-decoration: none; margin-top: 5px" href="<%=request.getContextPath()%>/group-management/create-group" class="btn btn-primary mb-3 create-button" id="toggleFormLink">Create</a>
                             <h2 class="mb-4" style="padding-left: 205px; padding-right: 182px">View list group</h2>
                             <form class="form-inline mb-3">
                                 <select class="form-control" id="groupNameFilter" name="groupName">
@@ -710,7 +756,10 @@
                                         <option value="${listGroup.groupName}">${listGroup.groupName}</option>
                                     </c:forEach>
                                 </select>
-                                <button type="submit" class="btn btn-primary ml-2"><i class="fa fa-filter" aria-hidden="true"></i></button>
+                                <button type="submit" class="btn btn-primary ml-2" style="background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                                        cursor: pointer;
+                                        color: white;
+                                        border: none;"><i class="fa fa-filter" aria-hidden="true"></i></button>
                             </form>
                         </div>
 
@@ -755,13 +804,28 @@
                         </table>
 
                         <!-- Pagination -->
-                        <div class="pagination">
-                            <c:if test="${requestScope.totalPages > 1}">
-                                <c:forEach var="i" begin="1" end="${requestScope.totalPages}">
-                                    <div class="<c:if test='${i == requestScope.currentPage}'>active</c:if>">
-                                        <a href="<c:url value='/group-management' ><c:param name="page" value="${i}" /></c:url>">${i}</a>
-                                        </div>
+
+
+                        <div class="pagination-container">
+                            <c:if test="${not empty totalPages}">
+                                <c:if test="${currentPage > 1}">
+                                    <a href="?page=1">&laquo; First</a>
+                                    <a href="?page=${currentPage - 1}">&lsaquo; Previous</a>
+                                </c:if>
+                                <c:forEach var="pageNum" begin="1" end="${totalPages}">
+                                    <c:choose>
+                                        <c:when test="${pageNum == currentPage}">
+                                            <span class="current-page">${pageNum}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="?page=${pageNum}">${pageNum}</a>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
+                                <c:if test="${currentPage < totalPages}">
+                                    <a href="?page=${currentPage + 1}">Next &rsaquo;</a>
+                                    <a href="?page=${totalPages}">Last &raquo;</a>
+                                </c:if>
                             </c:if>
                         </div>
                     </div>
@@ -783,6 +847,25 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         </footer>
+
+        <script>
+                           document.addEventListener("DOMContentLoaded", function () {
+                               // Get the logo element
+                               var logo = document.querySelector('.logo a');
+
+                               // Add click event listener to the logo
+                               logo.addEventListener('click', function (event) {
+                                   // Prevent the default action of the link
+                                   event.preventDefault();
+
+                                   // Get the base URL
+                                   var baseUrl = "<%= request.getContextPath() %>";
+
+                                   // Navigate to the home page
+                                   window.location.href = baseUrl + "/home";
+                               });
+                           });
+        </script>
     </body>
 
 </html>

@@ -202,8 +202,8 @@
                                     <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
                                 </div>
                                 <ul class="subnav">
-                                    <li><a href="<%= request.getContextPath() %>/updateaccount"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                    <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                    <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                    <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                     <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                     <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
@@ -229,13 +229,7 @@
 
                                 <c:choose>
                                     <c:when test="${group.groupInviteCode == null}">
-                                        <!-- Button khi chưa có Invite Code -->
-                                        <button class="btn btn-primary mb-2" onclick="this.parentNode.submit();return false; showInput(${group.groupId})">Add Invite Code</button>
-                                        <!-- Ô input và nút submit, ẩn ban đầu -->
-                                        <div id="inviteCode_${group.groupId}" style="display: none;">
-                                            <input type="text" id="inviteInput_${group.groupId}" class="form-control mb-2" name="inviteCode" placeholder="Enter Invite Code">
-                                            <button class="btn btn-success" onclick="submitInviteCode(${group.groupId})">Submit</button>
-                                        </div>
+                                        <h6 class="topic-info-subtitle mb-2">Invite Code: NULL</h6>
                                     </c:when>
                                     <c:otherwise>
                                         <!-- Hiển thị Invite Code nếu đã có -->
