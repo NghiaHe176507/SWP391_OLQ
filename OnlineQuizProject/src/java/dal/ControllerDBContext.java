@@ -1585,23 +1585,23 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             }
         }
     }
-
-    public ArrayList<Group> getListGroupToFilter() {
-        ArrayList<Group> listGroupToFilter = new ArrayList<>();
-        try {
-            String sql = """
-                         SELECT DISTINCT [group_name]
-                             FROM [Group]""";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Group group = new Group();
-                group.setGroupName(rs.getString("group_name"));
-                listGroupToFilter.add(group);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listGroupToFilter;
-    }
+//
+//    public ArrayList<Group> getListGroupToFilter() {
+//        ArrayList<Group> listGroupToFilter = new ArrayList<>();
+//        try {
+//            String sql = """
+//                         SELECT DISTINCT [group_name]
+//                             FROM [Group]""";
+//            PreparedStatement stm = connection.prepareStatement(sql);
+//            ResultSet rs = stm.executeQuery();
+//            while (rs.next()) {
+//                Group group = new Group();
+//                group.setGroupName(rs.getString("group_name"));
+//                listGroupToFilter.add(group);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return listGroupToFilter;
+//    }
 }

@@ -110,8 +110,8 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 break;
             case 2:
 
-                int lecturerId = LoggedUser.getAccountId();
-                AccountInfo accountInfo = db.getAccountInfoByAccountId(lecturerId);
+                int lecturerAccountId = LoggedUser.getAccountId();
+                AccountInfo accountInfo = db.getAccountInfoByAccountId(lecturerAccountId);
                 ArrayList<Group> listGroupOwned = db.getListGroupOwnedByLectureId(accountInfo.getAccountInfoId());
 
                 request.setAttribute("listGroup", listGroupOwned);
@@ -122,8 +122,9 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 ArrayList<Group> searchResults = db.searchGroup(keywords);
                 request.setAttribute("searchResults", searchResults);
                 request.setAttribute("listTopic", listTopic);
-                int studentId = LoggedUser.getAccountId();
-                ArrayList<Register> listRegister = db.getRegisterByStudentId(studentId);
+                int studentAccountId = db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId();
+                
+                ArrayList<Register> listRegister = db.getRegisterByStudentId(studentAccountId);
                 listRegister.size();
 
                 request.setAttribute("listRegister", listRegister);
