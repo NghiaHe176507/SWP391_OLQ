@@ -167,7 +167,6 @@
                             <td>
                                 <form action="${pageContext.request.contextPath}/take-exam" method="GET">
                                     <input type="hidden" name="examId" value="${exam.examId}">
-                                    <input type="hidden" name="examTime" value="${exam.examTime}">
                                     <button type="submit" class="btn btn-primary">Do Exam</button>
                                 </form>
                             </td>
