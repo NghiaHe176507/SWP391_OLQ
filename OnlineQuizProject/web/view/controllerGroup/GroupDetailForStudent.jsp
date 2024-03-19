@@ -4,9 +4,17 @@
     Author     : nghia
 --%>
 
-
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    LocalDateTime currentTime = LocalDateTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    String formattedDateTime = currentTime.format(formatter);
+    LocalDateTime currentDateTime = LocalDateTime.parse(formattedDateTime, formatter);
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,6 +99,7 @@
                 <div class="space"></div>
             </div>
 
+
             <form action="viewGroupDetail" method="GET">
                 <!-- Bảng hiển thị thông tin lớp, môn học, giảng viên, trạng thái -->
                 <table class="table">
@@ -119,6 +128,7 @@
                 </table>
 
                 <!-- Bảng danh sách các Exam -->
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -131,28 +141,44 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
-                            <tr>
-                                <td>${exam.examTitle}</td>
-                                <td>${exam.examStartDate}</td>
-                                <td>${exam.examEndDate}</td>
-                                <td>${exam.examTime}</td>
-                                <td>${exam.status.statusName}</td>
-                                <td>
-                                    </form>
+                    <p><%= currentDateTime %></p>
 
-                                    <form action="<%= request.getContextPath() %>/take-exam" method="GET">
-                                        <input type="hidden" name="examId" value="${exam.examId}">
-                                        <button type="submit" class="btn btn-primary">Do Exam</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        </c:forEach>
-
+                    <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
+                        <tr>
+                            <td>${exam.examTitle}</td>
+                            <td>
+                                ${exam.examStartDate}
+                            </td>
+                            <td>
+                                <fmt:formatDate value="${exam.examEndDate}" pattern="dd/MM/yyyy HH:mm:ss" />
+                            </td>
+                            <td>${exam.examTime}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${currentDateTime.isAfter(exam.examEndDate)}">
+                                        Closed
+                                    </c:when>
+                                    <c:when test="${currentDateTime.isAfter(exam.examStartDate) and currentDateTime.isBefore(exam.examEndDate)}">
+                                        Active
+                                    </c:when>
+                                    <c:when test="${currentDateTime.isBefore(exam.examStartDate)}">
+                                        Pending
+                                    </c:when>
+                                    <c:otherwise>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <form action="${pageContext.request.contextPath}/take-exam" method="GET">
+                                    <input type="hidden" name="examId" value="${exam.examId}">
+                                    <input type="hidden" name="examTime" value="${exam.examTime}">
+                                    <button type="submit" class="btn btn-primary">Do Exam</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
-
-
         </div>
 
 

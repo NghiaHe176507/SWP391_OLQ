@@ -37,6 +37,64 @@
                 background-color: #007bff; /* Màu nền khi hover */
                 color: white; /* Màu chữ khi hover */
             }
+            .search-container {
+                width: 100%;
+            }
+
+            /* Dropdown menu */
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #000; /* New color for the dropdown background */
+                min-width: 204px;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: white; /* New color for the dropdown text */
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #444; /* New color for the dropdown hover background */
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropbtn {
+                background-color: transparent;
+                color: #fff;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropbtn:hover {
+                background-color: #0056b3;
+            }
+
+            .btn-primary {
+                background-color: white; /* Màu nền trắng */
+                color: #007bff; /* Màu chữ mặc định */
+                border: 1px solid #007bff; /* Viền button */
+                transition: background-color 0.3s ease, color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền và màu chữ */
+            }
+
+            .btn-primary:hover {
+                background-color: #007bff; /* Màu nền khi hover */
+                color: white; /* Màu chữ khi hover */
+            }
 
 
             .btn-1 {
@@ -103,7 +161,7 @@
                 text-transform: uppercase;
                 /*width: 100%;*/
             }
-        </style>
+        </style>    
     </head>
 
     <body>
@@ -114,12 +172,19 @@
                 <div class="header">
                     <!-- Logo -->
                     <div class="logo col-md-2">
-                        <a href="#">QUIZWIZ</a>
+                        <a href="home">QUIZWIZ</a>
                     </div>
 
-                    <div class="create col-md-1">
-                        <a href="<%= request.getContextPath() %>/create-exam"><i class="fa-solid fa-plus"></i> Tạo đề thi</a>
+                    <div class="menu-icon col-md-1">
+                        <div class="dropdown">
+                            <button class="dropbtn" style="font-size: 19px;"><i class="fa-solid fa-bars" style="padding-right: 4px;"></i>Menu</button>
+                            <div class="dropdown-content">
+                                <a href="<%= request.getContextPath() %>/show-list-group-exam"><i class="fa-solid fa-plus"></i> Create An Exam</a>
+                                <a href="<%= request.getContextPath() %>/group-management"><i class="fa-solid fa-user-group"></i></i> Group Management</a>
+                            </div>
+                        </div>
                     </div>
+
 
                     <!-- Search container -->
                     <form action="search" method="GET" class=" col-md-5">
@@ -132,7 +197,6 @@
                     <!-- Login section -->
                     <div class="login col-md-3">
                         <ul id="nav" class="nav nav-pills">
-                            <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                             <li class="nav-item dropdown">
                                 <div class="circle-background">
                                     <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
@@ -165,7 +229,13 @@
 
                                 <c:choose>
                                     <c:when test="${group.groupInviteCode == null}">
-                                        <h6 class="topic-info-subtitle mb-2">Invite Code: Null</h6>
+                                        <!-- Button khi chưa có Invite Code -->
+                                        <button class="btn btn-primary mb-2" onclick="this.parentNode.submit();return false; showInput(${group.groupId})">Add Invite Code</button>
+                                        <!-- Ô input và nút submit, ẩn ban đầu -->
+                                        <div id="inviteCode_${group.groupId}" style="display: none;">
+                                            <input type="text" id="inviteInput_${group.groupId}" class="form-control mb-2" name="inviteCode" placeholder="Enter Invite Code">
+                                            <button class="btn btn-success" onclick="submitInviteCode(${group.groupId})">Submit</button>
+                                        </div>
                                     </c:when>
                                     <c:otherwise>
                                         <!-- Hiển thị Invite Code nếu đã có -->

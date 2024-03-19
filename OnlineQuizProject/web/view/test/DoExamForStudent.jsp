@@ -527,10 +527,12 @@
                 </div>
             </div>
 
+
             <!-- Empty space -->
             <div class="row">
                 <div class="space"></div>
             </div>
+
 
             <form action="view-total" method="POST" id="quiz-form">
                 <div class="quiz">
@@ -564,12 +566,12 @@
                 </div>
             </form>
 
+            <input type="hidden" id="examTimeInput" value="${examTime}" readonly>
+
+
         </div>
 
         <!-- End of header section -->
-
-        <!-- Admin content section -->
-
 
     </div>
     <!-- Footer section -->
@@ -585,15 +587,33 @@
     </div>
     <!-- End of footer section -->
 
-    <!-- End of main container div -->
+    
     <script>
+        // Bắt sự kiện khi người dùng nhấn phím
+        window.addEventListener('keydown', function (e) {
+            // Kiểm tra nếu người dùng đang nhấn Ctrl (hoặc Command trên MacOS)
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'r' || e.key === 'R')) {
+                // Ngăn chặn hành động mặc định của trình duyệt (tải lại trang)
+                e.preventDefault();
+                // Thêm thông báo cảnh báo (tùy chọn)
+                alert('Tính năng tải lại đã bị vô hiệu hóa!');
+            }
+        });
+    </script>
+
+    <script>
+
+
         // Lấy ra các phần tử của đồng hồ
         const hoursElement = document.getElementById('hours');
         const minutesElement = document.getElementById('minutes');
         const secondsElement = document.getElementById('seconds');
+        let examTimeInput = document.getElementById('examTimeInput');
 
         // Thời gian ban đầu để đếm ngược (dạng "00:00:00")
-        let countdownInput = "00:00:30";
+//        let countdownInput = "00:00:30";
+        let countdownInput = examTimeInput.value;
+
 
         // Chuyển đổi đầu vào "00:00:00" thành số giây
         let [inputHours, inputMinutes, inputSeconds] = countdownInput.split(":");

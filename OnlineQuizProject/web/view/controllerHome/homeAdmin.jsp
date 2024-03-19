@@ -13,11 +13,10 @@
         <!-- Metadata -->
         <meta charset="UTF-8">
         <title>QuizWiz</title>
-        <!-- Favicon -->
         <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
-        <!-- Stylesheets -->
+
         <link rel="stylesheet" href="css/homeAdmin.css">
-        <!-- Font Awesome Icons -->
+
         <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +35,6 @@
                     window.location.href = 'deleteaccount?accountId=' + id;
                 }
             }
-
         </script>
 
         <style>
@@ -168,7 +166,9 @@
                 margin: 5px; /* Thêm margin 5px */
                 text-align: center;
             }
-
+            .search-container {
+                width: 100%
+            }
         </style>
     </head>
 
@@ -183,8 +183,8 @@
                         <a href="home">QUIZWIZ</a>
                     </div>
 
-                    <!-- Search container -->
-                    <form action="search" method="GET" class="col-md-6">
+                    <!--Search container--> 
+                    <form action="search" method="GET" class="col-md-7">
                         <div class="search-container">
                             <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
                             <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -192,9 +192,8 @@
                     </form>
 
                     <!-- Login section -->
-                    <div class="login col-md-3">
+                    <div class="login col-md-2">
                         <ul id="nav" class="nav nav-pills">
-                            <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                             <li class="nav-item dropdown">
                                 <div class="circle-background">
                                     <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
@@ -227,7 +226,7 @@
                         <h2>Admin Menu</h2>
                         <ul>
                             <li><a href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-solid fa-list-ul"></i> View List Account</a></li>
-                            <li><a href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-regular fa-folder-open"></i> Update Account</a></li>
+                            <!--<li><a href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-regular fa-folder-open"></i> Update Account</a></li>-->
                             <li><a href="<%= request.getContextPath() %>/admin/topic-management"><i class="fa-solid fa-book"></i> View List Topic</a></li>
                             <li><a href="<%= request.getContextPath() %>/admin/group-management"><i class="fa-solid fa-people-group"></i> View List Group</a></li>
                             <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>

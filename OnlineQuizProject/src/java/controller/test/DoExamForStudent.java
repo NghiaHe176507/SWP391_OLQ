@@ -37,6 +37,9 @@ public class DoExamForStudent extends BasedRequiredAuthenticationController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
         String examIdParam = request.getParameter("examId");
+        String examTime = request.getParameter("examTime");
+        request.setAttribute("examTime", examTime);
+
         int examId = Integer.parseInt(examIdParam);
         ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(examId);
         request.setAttribute("listQuestion", listExamQuestionMapping);

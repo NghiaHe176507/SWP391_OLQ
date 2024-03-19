@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +27,7 @@
                 margin: 0;
                 box-sizing: border-box;
             }
+
 
             html {
                 font-family: "Poppins", sans-serif;
@@ -549,18 +551,68 @@
             .table-stats .table-line-plus .status-social-icon {
                 color: #a75d54;
             }
+
+            .pagination {
+                display: inline-block;
+            }
+
+            .pagination div {
+                display: inline-block;
+                margin-right: 5px; /* Add some spacing between pagination links */
+            }
+
+            .pagination a {
+                color: black;
+                padding: 8px 16px;
+                text-decoration: none;
+                border: 1px solid #ddd;
+            }
+
+            .pagination a.active {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+
+            .container {
+                min-height: 100%;
+                position: relative;
+            }
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
+
+            .container {
+                flex: 1;
+            }
+
+
             @media (max-width: 600px) {
                 .right-side {
                     display: none;
                 }
             }
+
         </style>
         <script>
-            function DeleteGroup(id)
-            {
-                var conf = confirm("are you sure?");
-                if (conf) {
-                    window.location.href = '<%=request.getContextPath()%>/group-management/delete-group?groupId=' + id;
+            function deleteGroup(groupId, status) {
+                if (status === "Active") {
+                    // Display notification
+                    alert("Cannot delete a group that is in active status.");
+
+                    // Optionally, you can prevent further execution
+                    return;
+                }
+
+                // Proceed with deletion
+                if (confirm("Are you sure you want to delete this group?")) {
+                    // Perform deletion action
+                    window.location.href = '<%=request.getContextPath()%>/group-management/delete-group?groupId=' + groupId;
                 }
             }
         </script>
@@ -575,7 +627,7 @@
                         <div class="header">
                             <!-- Logo -->
                             <div class="logo col-md-2">
-                                <a href="<%= request.getContextPath() %>/homeLecture">QUIZWIZ</a>
+                                <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                             </div>
                             <div class="search-container col-md-6">
                                 <input type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
@@ -647,39 +699,71 @@
                     </div>
                 </c:if>
                 <div class="col-lg-8"> 
-                    <a style="color: #fff; text-decoration: none;" href="<%=request.getContextPath()%>/group-management/create-group" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
                     <div class="container-fluid">
-                        <h2 class="mb-4">View list group</h2>
+                        <div style="display: flex">
+                            <a style="color: #fff; text-decoration: none;" href="<%=request.getContextPath()%>/group-management/create-group" class="btn btn-primary mb-3" id="toggleFormLink">Create</a>
+                            <h2 class="mb-4" style="padding-left: 205px; padding-right: 182px">View list group</h2>
+                            <form class="form-inline mb-3">
+                                <select class="form-control" id="groupNameFilter" name="groupName">
+                                    <option value="">All Groups</option>
+                                    <c:forEach items="${requestScope.listGroupToFilter}" var="listGroup">
+                                        <option value="${listGroup.groupName}">${listGroup.groupName}</option>
+                                    </c:forEach>
+                                </select>
+                                <button type="submit" class="btn btn-primary ml-2"><i class="fa fa-filter" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+
                         <table class="table table-striped" id="myTable">
+                            <!-- Table header -->
                             <thead class="thead-dark">
                                 <tr>
-                                    <td><span>Group Name</span></td>
-                                    <td><span>Topic Name</span></td>
-                                    <td><span>Status</span></td>
-                                    <td><span>Action</span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Group Name</span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Topic Name</span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Invite Code</span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Status</span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Action</span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
                                 </tr>
                             </thead>
                             <tbody id="tableBody">
+                                <!-- Table body rows -->
                                 <c:forEach items="${requestScope.listGroup}" var="group">
                                     <tr>
-                                        <td >${group.groupName}</td>
+                                        <td>${group.groupName}</td>
                                         <td>${group.topic.topicName}</td>
+                                        <td>${group.groupInviteCode}</td>
                                         <td>${group.status.statusName}</td>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${not empty group.groupInviteCode}">
-                                                    <input type="button" value="Remove invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/delete-invite-code?groupId=' +${group.groupId}"/>
+                                                    <input type="button" class="btn btn-danger" value="Remove invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/delete-invite-code?groupId=${group.groupId}'"/>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="button" value="Create invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/create-invite-code?groupId=' +${group.groupId}"/>
+                                                    <input type="button" class="btn btn-primary" value="Create invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/create-invite-code?groupId=${group.groupId}'"/>
                                                 </c:otherwise>
-                                            </c:choose>
-                                            <input type="button" class="btn btn-danger" value="Delete" onclick="DeleteGroup(${group.groupId})"/>
+                                            </c:choose>                         
+                                        </td>
+                                        <td>
+                                            <button type="button" style="color: #333; background-color: transparent; border-color: transparent;" onclick="deleteGroup(${group.groupId}, '${group.status.statusName}')">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
+
+                        <!-- Pagination -->
+                        <div class="pagination">
+                            <c:if test="${requestScope.totalPages > 1}">
+                                <c:forEach var="i" begin="1" end="${requestScope.totalPages}">
+                                    <div class="<c:if test='${i == requestScope.currentPage}'>active</c:if>">
+                                        <a href="<c:url value='/group-management' ><c:param name="page" value="${i}" /></c:url>">${i}</a>
+                                        </div>
+                                </c:forEach>
+                            </c:if>
+                        </div>
                     </div>
                 </div>
             </div>

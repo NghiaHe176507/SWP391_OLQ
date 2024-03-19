@@ -14,10 +14,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="js/homeStudent.js"></script>
         <title>Topic</title>
         <style>
             @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
@@ -213,7 +212,7 @@
             /* Footer Section Styles */
 
             #footer {
-                position: fixed;
+                position: relative;
                 bottom: 0;
                 left: 0;
                 width: 100%;
@@ -228,11 +227,15 @@
                 min-height: 100%;
                 position: relative;
             }
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+            }
 
             .container {
                 flex: 1;
             }
-
             #footer a{
                 color: #000;
             }
@@ -244,7 +247,7 @@
 
             /* Space Styles */
             .space {
-                padding: 39px;
+                padding: 30px;
             }
 
             /* Slider Section Styles */
@@ -260,32 +263,6 @@
                 height: auto;
                 max-width: 100%;
             }
-
-
-            /*  */
-            /* .topic {
-              display: flex;
-              justify-content: space-between;
-              align-items: flex-start; 
-            }
-            
-            .topic-info {
-              flex: 1; 
-              border: 1px solid #ccc; 
-              padding: 10px; 
-            }
-            
-            .show-all {
-              margin-top: 10px;
-            }
-            
-            .show-all a {
-              display: block;
-              text-align: right; 
-              text-decoration: none;
-              color: #007BFF;
-            } */
-
 
             .topic {
                 display: flex;
@@ -554,6 +531,81 @@
                     display: none;
                 }
             }
+
+            .create-button{
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                cursor: pointer;
+                color: white;
+                border: none;
+                padding: 10px 15px;
+            }
+            .create-button:hover{
+                background-color: #0056b3;
+                color: #fff;
+            }
+
+
+            .nav-pills .nav-item {
+                display: inline-block;
+                margin-left: 125px;
+            }
+
+            .nav-pills .nav-link {
+                text-decoration: none;
+                color: #fff;
+                font-weight: bold;
+                font-size: 16px;
+                border-radius: 5px;
+            }
+
+            .nav-pills .nav-link:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            /* Pagination container */
+            .pagination-container {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            /* Pagination links */
+            .pagination-container a {
+                display: inline-block;
+                padding: 5px 10px;
+                margin: 0 2px;
+                border: 1px solid #ccc;
+                background-color: #f7f7f7;
+                color: #333;
+                text-decoration: none;
+                border-radius: 3px;
+            }
+
+            /* Current page */
+            .pagination-container .current-page {
+                display: inline-block;
+                padding: 5px 10px;
+                margin: 0 2px;
+                background-color: #333;
+                color: #fff;
+                border-radius: 3px;
+            }
+
+            /* Viền cho create-topic-container */
+            .create-topic-container {
+                border: 1px solid #ccc; /* Màu và kích thước viền */
+                border-radius: 5px; /* Góc bo tròn của viền */
+                padding: 20px; /* Khoảng cách bên trong div */
+            }
+
+            /* Border cho list-topic-container */
+            .list-topic-container {
+                border: 1px solid #ccc; /* Màu và kích thước viền */
+                border-radius: 5px; /* Góc bo tròn của viền */
+                padding: 20px; /* Khoảng cách bên trong div */
+                margin-bottom: 15px;
+            }
+
+
         </style>
         <script>
             function DeleteTopic(id)
@@ -574,34 +626,38 @@
                             <div class="logo col-md-2">
                                 <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                             </div>
-                            <li><a style="
-                                   text-decoration: none;
-                                   color: #fff;
-                                   font-weight: bold;
-                                   font-size: 16px" href="<%= request.getContextPath() %>/home"><i class="fa-solid fa-list-ul"></i>Home</a></li>
-                            <li><a style="
-                                   text-decoration: none;
-                                   color: #fff;
-                                   font-weight: bold;
-                                   font-size: 16px" href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-regular fa-folder-open"></i> View List account</a></li>
-                            <li><a style="
-                                   text-decoration: none;
-                                   color: #fff;
-                                   font-weight: bold;
-                                   font-size: 16px" href="<%= request.getContextPath() %>/admin/group-management"><i class="fa-regular fa-folder-open"></i>View List group</a></li>
+
+                            <div class="col-md-6">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<%= request.getContextPath() %>/home">
+                                            <i class="fas fa-folder-open"></i> Home
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<%= request.getContextPath() %>/admin/group-management">
+                                            <i class="fas fa-list-ul"></i> View List Group
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<%= request.getContextPath() %>/admin/account-management">
+                                            <i class="fas fa-book"></i> View List Account
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
                             <div class="login col-md-2">
                                 <ul id="nav" class="nav nav-pills">
-                                    <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                     <li class="nav-item dropdown">
                                         <div class="circle-background">
-                                            <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
+                                            <img class="profile-image" src="<%= request.getContextPath() %>/image/avatar.jpg" alt="Profile Image">
                                         </div>
                                         <ul class="subnav">
                                             <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
                                             <li><a href="#"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                             <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                             <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
-
                                         </ul>
                                     </li>
                                 </ul>
@@ -612,14 +668,13 @@
             </form>
         </header>
         <div class="container">
-            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
             <div class="row">
                 <div class="space"></div>
             </div>
-            <div class="row justify-content-end">
+            <div class="row justify-content-end ">
                 <c:if test="${requestScope.url == 'create'}">
                     <div class="col-lg-4">
-                        <div class="container-fluid">
+                        <div class="container-fluid create-topic-container">
                             <h2 class="mb-4">Create Topic</h2>
                             <form action="create-topic" method="POST" class="needs-validation" novalidate>
                                 <div class="form-group">
@@ -635,8 +690,8 @@
                         </div>
                     </div>
                 </c:if>
-                <div class="col-lg-8">
-                    <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" class="btn btn-success mb-3" id="toggleFormLink">Create</a>
+                <div class="col-lg-8 list-topic-container">
+                    <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" class="btn btn-success mb-3 create-button" id="toggleFormLink">Create Topic</a>
                     <div class="container-fluid">
                         <h2 class="mb-4">View List Topic</h2>
                         <table class="table table-striped" id="myTable">
@@ -659,20 +714,29 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-                        <div>
-                            <c:if test="${totalPages > 1}">
+                        <div class="pagination-container">
+                            <c:if test="${not empty totalPages}">
+                                <c:if test="${currentPage > 1}">
+                                    <a href="?page=1">&laquo; First</a>
+                                    <a href="?page=${currentPage - 1}">&lsaquo; Previous</a>
+                                </c:if>
                                 <c:forEach var="pageNum" begin="1" end="${totalPages}">
                                     <c:choose>
                                         <c:when test="${pageNum == currentPage}">
-                                            <span>${pageNum}</span>
+                                            <span class="current-page">${pageNum}</span>
                                         </c:when>
                                         <c:otherwise>
                                             <a href="?page=${pageNum}">${pageNum}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
+                                <c:if test="${currentPage < totalPages}">
+                                    <a href="?page=${currentPage + 1}">Next &rsaquo;</a>
+                                    <a href="?page=${totalPages}">Last &raquo;</a>
+                                </c:if>
                             </c:if>
                         </div>
+
                     </div>
                 </div>
             </div>

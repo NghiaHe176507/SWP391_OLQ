@@ -37,6 +37,49 @@
                 background-color: #007bff; /* Màu nền khi hover */
                 color: white; /* Màu chữ khi hover */
             }
+            
+             /* Dropdown menu */
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #000; /* New color for the dropdown background */
+                min-width: 204px;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: white; /* New color for the dropdown text */
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #444; /* New color for the dropdown hover background */
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropbtn {
+                background-color: transparent;
+                color: #fff;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropbtn:hover {
+                background-color: #0056b3;
+            }
 
         </style>
     </head>
@@ -52,13 +95,20 @@
                         <a href="#">QUIZWIZ</a>
                     </div>
 
-                    <div class="create col-md-1">
-                        <a href="#"><i class="fa-solid fa-plus"></i> Tạo đề thi</a>
+                     <div class="menu-icon col-md-1">
+                        <div class="dropdown">
+                            <button class="dropbtn" style="font-size: 19px;"><i class="fa-solid fa-bars" style="padding-right: 4px;"></i>Menu</button>
+                            <div class="dropdown-content">
+                                <a href="<%= request.getContextPath() %>/show-list-group-exam"><i class="fa-solid fa-plus"></i> Create An Exam</a>
+                                <a href="<%= request.getContextPath() %>/group-management"><i class="fa-solid fa-user-group"></i></i> Group Management</a>
+                            </div>
+                        </div>
                     </div>
+
 
                     <!-- Search container -->
                     <form action="search" method="GET" class=" col-md-5">
-                        <div class="search-container">
+                        <div class="search-container" style="width: 100%;">
                             <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
                             <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
@@ -67,7 +117,6 @@
                     <!-- Login section -->
                     <div class="login col-md-3">
                         <ul id="nav" class="nav nav-pills">
-                            <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                             <li class="nav-item dropdown">
                                 <div class="circle-background">
                                     <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">

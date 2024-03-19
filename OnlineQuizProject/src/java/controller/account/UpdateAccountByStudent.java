@@ -73,7 +73,7 @@ public class UpdateAccountByStudent extends BasedAuthorizationController {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
-         Account accountNeedToUpdate = LoggedUser;
+        Account accountNeedToUpdate = LoggedUser;
         AccountInfo accountInfoNeedToUpdate = db.getAccountInfoByAccountId(accountNeedToUpdate.getAccountId());
 
         request.setAttribute("accountNeedToUpdate", accountNeedToUpdate);

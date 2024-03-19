@@ -36,8 +36,33 @@ public class CreateTopic extends BasedAuthorizationController {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
+//        ArrayList<Topic> listTopic = db.getListTopic();
+//        request.setAttribute("listTopic", listTopic);
+        
         ArrayList<Topic> listTopic = db.getListTopic();
-        request.setAttribute("listTopic", listTopic);
+
+        // Pagination parameters
+        int pageSize = 8;
+        int currentPage = 1; 
+
+        if (request.getParameter("page") != null) {
+            currentPage = Integer.parseInt(request.getParameter("page"));
+        }
+
+        // Calculate startIndex and endIndex for pagination
+        int totalItems = listTopic.size();
+        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalItems);
+
+        // Retrieve sublist of topics based on pagination
+        ArrayList<Topic> paginatedList = new ArrayList<>(listTopic.subList(startIndex, endIndex));
+
+        // Set attributes for pagination and paginated list
+        request.setAttribute("listTopic", paginatedList);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", currentPage);
+
         request.setAttribute("url", "create");
         request.getRequestDispatcher("/view/controllerTopic/TopicManagement.jsp").forward(request, response);
     }

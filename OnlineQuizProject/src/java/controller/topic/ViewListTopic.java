@@ -27,7 +27,7 @@ public class ViewListTopic extends BasedAuthorizationController {
         ArrayList<Topic> listTopic = db.getListTopic();
 
         // Pagination parameters
-        int pageSize = 5; // Number of items per page
+        int pageSize = 8; // Number of items per page
         int currentPage = 1; // Default current page number
 
         if (request.getParameter("page") != null) {

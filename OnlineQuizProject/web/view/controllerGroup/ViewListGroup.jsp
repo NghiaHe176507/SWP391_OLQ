@@ -6,13 +6,12 @@
     <head>
         <title>List Group</title>
         <meta charset="UTF-8">
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="js/homeStudent.js"></script>        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>     
         <style>
             @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
             *{
@@ -429,6 +428,22 @@
                 color: #333;
                 text-transform: uppercase;
             }
+             .nav-pills .nav-item {
+                display: inline-block; /* Hiển thị các mục trên cùng 1 hàng */
+                margin-left: 125px; /* Khoảng cách giữa các mục */
+            }
+
+            .nav-pills .nav-link {
+                text-decoration: none;
+                color: #fff;
+                font-weight: bold;
+                font-size: 16px;
+                border-radius: 5px;
+            }
+
+            .nav-pills .nav-link:hover {
+                background-color: rgba(255, 255, 255, 0.2); /* Màu nền khi hover */
+            }
         </style>
         <script>
             function DeleteGroup(id)
@@ -449,16 +464,32 @@
                             <div class="logo col-md-2">
                                 <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                             </div>
-                            <li><a href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-solid fa-list-ul"></i> View List Account</a></li>
-                            <li><a href="<%= request.getContextPath() %>/admin/account-management"><i class="fa-regular fa-folder-open"></i> Update Account</a></li>
-                            <li><a href="<%= request.getContextPath() %>/admin/topic-management"><i class="fa-solid fa-book"></i> View List Topic</a></li>
-
+                            
+                            <div class="col-md-6">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<%= request.getContextPath() %>/home">
+                                            <i class="fas fa-folder-open"></i> Home
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<%= request.getContextPath() %>/admin/account-management">
+                                           <i class="fa-solid fa-list-ul"></i> View List Account
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="<%= request.getContextPath() %>/admin/topic-management">
+                                            <i class="fas fa-book"></i> View List Topic
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                                            
                             <div class="login col-md-2">
                                 <ul id="nav" class="nav nav-pills">
-                                    <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                     <li class="nav-item dropdown">
                                         <div class="circle-background">
-                                            <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
+                                            <img class="profile-image" src="<%= request.getContextPath() %>/image/avatar.jpg" alt="Profile Image">
                                         </div>
                                         <ul class="subnav">
                                             <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
