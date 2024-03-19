@@ -332,7 +332,7 @@
                         <div class="row">
                             <div class="col-lg-6 mb-3">
                                 <label for="examDate" class="form-label">Start Exam Date:</label>
-                                <input type="date" class="form-control" id="examDate" name="examDate" min="<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>">
+                                <input type="date" class="form-control" id="examDate" name="examDate">
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="examTime" class="form-label">Start Exam Time:</label>
@@ -343,11 +343,11 @@
                         <div class="row">
                             <div class="col-lg-6 mb-3">
                                 <label for="examEndDate" class="form-label">End Exam Date:</label>
-                                <input type="date" class="form-control" id="examEndDate" name="examEndDate" min="<%= request.getParameter("examDate") %>">
+                                <input type="date" class="form-control" id="examEndDate" name="examEndDate">
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="examEndTime" class="form-label">End Exam Time:</label>
-                                <input type="time" class="form-control" id="examEndTime" name="examEndTime" min="<%= request.getParameter("examTime") %>">
+                                <input type="time" class="form-control" id="examEndTime" name="examEndTime">
                             </div>
                         </div>
 
@@ -357,7 +357,7 @@
                         </div>
 
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="isPractice" name="isPractice" value="true">
+                            <input type="radio" class="form-check-input" id="isPractice" name="isPractice" value="true">
                             <label class="form-check-label" for="isPractice">Is this exam for practice?</label>
                         </div>
 
@@ -566,6 +566,28 @@
                     alert("You cannot choose an end time less than now.");
                     this.value = '';
                 }
+            });
+
+            // Get current date and time
+            var currentDate = new Date();
+            var currentDateString = currentDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
+            var currentTimeString = currentDate.toTimeString().slice(0, 5); // Format: HH:MM
+
+            // Set default values for end exam date and time
+            document.getElementById('examEndDate').value = currentDateString;
+            document.getElementById('examEndTime').value = currentTimeString;
+
+            // Function to update end exam date based on start exam date
+            document.getElementById('examDate').addEventListener('change', function () {
+                var startDate = new Date(this.value);
+                var endDate = new Date(startDate.getTime() + (24 * 60 * 60 * 1000)); // Add one day
+                var endDateString = endDate.toISOString().slice(0, 10); // Format: YYYY-MM-DD
+                document.getElementById('examEndDate').value = endDateString;
+            });
+
+            // Function to update end exam time based on start exam time
+            document.getElementById('examTime').addEventListener('change', function () {
+                document.getElementById('examEndTime').value = this.value;
             });
         </script>
     </body>
