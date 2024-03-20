@@ -418,6 +418,25 @@
             <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
         </div>
         <script>
+            function validateForm() {
+                var inputs = document.querySelectorAll('#questionForm input[type=text], #questionForm input[type=number], #questionForm input[type=date], #questionForm input[type=time]');
+                var isValid = true;
+
+                inputs.forEach(function (input) {
+                    if (!input.value) {
+                        isValid = false;
+                        input.classList.add('is-invalid');
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                });
+
+                if (!isValid) {
+                    alert('Please fill in all fields.');
+                }
+
+                return isValid;
+            }
             function addAnswer(questionNum) {
                 var answerContainer = document.getElementById('answerContainer_' + questionNum);
                 var answerCount = answerContainer.querySelectorAll('.answer').length + 1;
