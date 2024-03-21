@@ -476,6 +476,32 @@
             #seconds {
                 border-right: none; /* Loại bỏ border phía bên phải của giây */
             }
+
+            /* Create Styles */
+            .create {
+                text-align: center;
+            }
+
+            .create a {
+                text-decoration: none;
+                font-family: "Poppins", sans-serif;
+                font-weight: bold;
+                font-size: 16px;
+                color: #fff;
+                padding: 10px 20px;
+                background: linear-gradient(135deg, #9a3cbf, #4397ce);
+                border-radius: 5px;
+                transition: background 0.3s ease, transform 0.2s ease-in-out;
+            }
+
+            .create a:hover {
+                background: linear-gradient(135deg, #4397ce, #9a3cbf);
+                transform: scale(1.05);
+            }
+
+            .create a:active {
+                transform: scale(0.95);
+            }
         </style>
     </head>
 
@@ -491,9 +517,8 @@
                         <a href="#home">QUIZWIZ</a>
                     </div>
 
-                    <div class="create col-md-1">
-                        <button type="button" class="btn btn-primary" id="joinGroupButton" data-toggle="modal" data-target="#exampleModal"
-                                data-whatever="@mdo">Join group</button>
+                    <div class="create col-md-2">
+                        <a href="${pageContext.request.contextPath}/home">Return Home</a>
                     </div>
 
                     <!-- Search container -->
