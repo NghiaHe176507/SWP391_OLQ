@@ -10,6 +10,7 @@
     <head>
         <title>Change Password</title>
         <meta charset="utf-8">
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">   

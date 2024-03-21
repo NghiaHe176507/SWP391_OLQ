@@ -9,6 +9,7 @@
 <html lang="en">
     <head>
         <meta charset='utf-8'>
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <title>Reset Password</title>
         <!-- Google Fonts -->

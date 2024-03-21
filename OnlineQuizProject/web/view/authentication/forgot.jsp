@@ -9,6 +9,7 @@
 <html>
     <head>
         <meta charset='utf-8'>
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <title>Password Recovery</title>
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">

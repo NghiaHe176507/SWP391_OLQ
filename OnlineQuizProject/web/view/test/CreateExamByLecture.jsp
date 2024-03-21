@@ -9,6 +9,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Create Exam</title>
         <link rel="stylesheet" href="icons/fontawesome-free-6.5.1-web/css/all.min.css">
