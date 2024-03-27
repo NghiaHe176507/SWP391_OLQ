@@ -36,7 +36,8 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     QuestionDBContext questionDB = new QuestionDBContext();
     StudentAnswerDBContext studentAnswerDB = new StudentAnswerDBContext();
     RegisterDBContext registerDB = new RegisterDBContext();
-    
+    UrlDBContext urlDB = new UrlDBContext();
+
     @Override
     public BaseEntity getById(String Id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -1036,19 +1037,19 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                 Topic topic = new Topic();
                 topic.setTopicName(rs.getString("topic_name"));
                 Exam exam = new Exam();
-                exam.setIsPractice(rs.getBoolean("isPractice"));            
+                exam.setIsPractice(rs.getBoolean("isPractice"));
                 Result result = new Result();
                 result.setExam(exam);
                 result.setStudentInfo(acc);
                 result.setScore(rs.getDouble("score"));
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return resultOfStudents;
     }
-    
+
     public ArrayList<Register> getListAccountRegistedExamByGroup(int groupID) {
         ArrayList<Register> listRegister = new ArrayList<>();
         try {
@@ -1979,4 +1980,23 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             }
         }
     }
+
+    public ArrayList<Url> getListUrl() {
+        ArrayList<Url> listUrl = new ArrayList<>();
+        try {
+            String sql = "SELECT [url_id], [url] FROM [Url] ORDER BY [url_id]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Url url = new Url();
+                url = urlDB.getById(String.valueOf(rs.getString("url_id")));
+                listUrl.add(url);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listUrl;
+    }
+
 }

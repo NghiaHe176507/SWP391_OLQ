@@ -281,74 +281,23 @@
                                 <div class="col-md-12">
                                     <!--                                    <table class="table table-bordered">-->
                                     <div class="custom">
-                                        <h2 class="text-center">Manager List Account</h2>
+                                        <h2 class="text-center">Manager List Url</h2>
                                         <div class="row">
                                             <div id="viewAccountContent" >
                                                 <div>
-                                                    <form action="home" method="GET">
-                                                        <div class="search-container col-md-12">
-                                                            <input name="query" type="text" id="searchInput" placeholder="Vui lòng nhập mail của account..." style=" border: 1px solid #000;">
-                                                            <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                                        </div>
-                                                    </form>
-                                                    <table id="paginationButtons" class="custom-table" style="margin-left: 10px;">
+                                                    <table class="custom-table" style="margin-left: 10px;">
                                                         <tr class="account-row">
-                                                            <td>Id</td>
-                                                            <td>Mail</td>
-                                                            <td>Password</td>
-                                                            <td>Display Name</td>
-                                                            <td>Full Name</td>
-                                                            <td>Role</td>
-                                                            <td>Status</td>
-                                                            <td>Action</td>
+                                                            <td>Url Id</td>
+                                                            <td></td>
                                                         </tr>
-                                                        <c:forEach items="${requestScope.paginatedList}" var="accountInfo">
+                                                        <c:forEach items="${requestScope.listUrl}" var="url">
                                                             <tr>
-                                                                <td>${accountInfo.account.accountId}</td>
-                                                                <td>${accountInfo.account.mail}</td>
-                                                                <td>${accountInfo.account.password}</td>
-                                                                <td>${accountInfo.account.displayName}</td>
-                                                                <td>${accountInfo.fullName}</td>
-                                                                <td>${requestScope.listRoleFeatureByListAccount.get(requestScope.paginatedList.indexOf(accountInfo)).getRole().getRoleName()}</td>
-                                                                <td>${accountInfo.account.accountStatus}</td>
-                                                                <td>
-                                                                    <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.paginatedList.indexOf(accountInfo)).getRole().getRoleId() != 1}">
-                                                                        <a href="updateaccount?accountId=${accountInfo.account.accountId}" >Edit</a>
-                                                                        <input type="button" value="Delete" onclick="deleteAccount(${accountInfo.account.accountId})"/>
-                                                                    </c:if>
-                                                                </td>
+                                                                <td>${url.urlId}</td>
+                                                                <td>${url.url}</td>
                                                             </tr>
                                                         </c:forEach>
                                                     </table>
-                                                    <div class="pagination-container">
-                                                        <c:if test="${not empty totalPages}">
-                                                            <c:if test="${currentPage > 1}">
-                                                                <a href="?query=${param.query}&page=1">&laquo; First</a>
-                                                                <a href="?query=${param.query}&page=${currentPage - 1}">&lsaquo; Previous</a>
-                                                            </c:if>
-                                                            <c:forEach var="pageNum" begin="1" end="${totalPages}">
-                                                                <c:choose>
-                                                                    <c:when test="${pageNum == currentPage}">
-                                                                        <span class="current-page">${pageNum}</span>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <a href="?query=${param.query}&page=${pageNum}">${pageNum}</a>
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </c:forEach>
-                                                            <c:if test="${currentPage < totalPages}">
-                                                                <a href="?query=${param.query}&page=${currentPage + 1}">Next &rsaquo;</a>
-                                                                <a href="?query=${param.query}&page=${totalPages}">Last &raquo;</a>
-                                                            </c:if>
-                                                        </c:if>
-                                                    </div>
-
-                                                    <br />
-                                                    <p>Note: Delete account đối với student là xóa tất cả mọi thông tin liên quan đến account bao gồm thông
-                                                        tin,
-                                                        lớp đã join, kết quả ktra trong database.<br />
-                                                        Chỉ có thể update role/delete account giảng viên khi tài khoản chưa có hoạt động gì.<br />
-                                                        Không thể delete account Admin.</p>
+                                                    
                                                 </div>
                                             </div>
 

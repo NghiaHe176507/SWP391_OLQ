@@ -95,7 +95,9 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 int totalStudents = db.getTotalStudents();
                 int totalLectures = db.getTotalLectures();
                 int totalGroupsOnline = db.getTotalGroupsOnline();
+                ArrayList<Url> listUrl = db.getListUrl();
 
+                request.setAttribute("listUrl", listUrl);
                 request.setAttribute("listTopic", listTopic);
                 request.setAttribute("listGroup", listAllGroup);
                 request.setAttribute("totalGroupsOnline", totalGroupsOnline);
