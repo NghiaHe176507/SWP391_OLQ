@@ -422,10 +422,7 @@
         <script>
             function DeleteGroup(id)
             {
-                var conf = confirm("are you sure?");
-                if (conf) {
-                    window.location.href = '/admin/group-management/delete-group?groupId=' + id;
-                }
+                 alert("You can not delete group.");
             }
         </script>
     </head>

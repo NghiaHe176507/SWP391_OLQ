@@ -665,29 +665,29 @@
                 });
 
                 // Nếu không có checkbox nào được chọn, đánh dấu có câu hỏi chưa được chọn
-                if (!isChecked) {
-                    hasUncheckedQuestion = true;
-                    // Scroll đến câu hỏi chưa được chọn và hiển thị thông báo nếu chưa hiển thị
-                    if (!alertShown) {
-                        question.scrollIntoView({behavior: 'smooth', block: 'end'});
-                        alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
-                        alertShown = true;
-                        event.preventDefault();
-                    }
-                    return;
-                }
+//                if (!isChecked) {
+//                    hasUncheckedQuestion = true;
+//                    // Scroll đến câu hỏi chưa được chọn và hiển thị thông báo nếu chưa hiển thị
+//                    if (!alertShown) {
+//                        question.scrollIntoView({behavior: 'smooth', block: 'end'});
+//                        alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
+//                        alertShown = true;
+//                        event.preventDefault();
+//                    }
+//                    return;
+//                }
             });
 
             // Nếu tất cả câu hỏi đều chưa được chọn, hiển thị thông báo nếu chưa hiển thị
-            if (allUnchecked && !alertShown) {
-                alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
-                alertShown = true;
-                event.preventDefault();
-                return;
-            }
+//            if (allUnchecked && !alertShown) {
+//                alert("Vui lòng chọn ít nhất một đáp án cho mỗi câu hỏi trước khi nộp bài.");
+//                alertShown = true;
+//                event.preventDefault();
+//                return;
+//            }
 
             // Nếu không có câu hỏi nào chưa được chọn và đã có ít nhất 1 câu hỏi được chọn, hiển thị thông báo xác nhận
-            if (!hasUncheckedQuestion && !alertShown) {
+            if ( !alertShown) {
                 var confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
                 if (confirmSubmit) {
                     alert("Bài thi đã được nộp thành công!");
