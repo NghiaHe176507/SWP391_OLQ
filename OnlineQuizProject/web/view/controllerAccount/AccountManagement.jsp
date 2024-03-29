@@ -403,17 +403,19 @@
                                                             <i class="fas fa-pencil fa-stack-1x fa-inverse"></i>
                                                         </span>
                                                     </a>
+                                                    <c:if test="${requestScope.listRoleFeatureByListAccount.get(requestScope.paginatedList.indexOf(accountInfo)).getRole().getRoleId() != 2}">
+                                                        <c:choose>
+                                                            <c:when test="${accountInfo.account.accountStatus=='Pending'}">
+                                                                <input type="button" class="btn btn-primary" value="Active" onclick="window.location.href = '<%=request.getContextPath()%>/active-account?accountId=${accountInfo.account.accountId}'"/>
+                                                            </c:when>
+                                                            <c:when test="${accountInfo.account.accountStatus=='Active'}">
+                                                                <input type="button" class="btn btn-primary" value="Close" onclick="window.location.href = '<%=request.getContextPath()%>/close-account?accountId=${accountInfo.account.accountId}'"/>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
                                                 </c:if>
-                                                <c:choose>
-                                                    <c:when test="${accountInfo.account.accountStatus=='Pending'}">
-                                                        <input type="button" class="btn btn-primary" value="Active" onclick="window.location.href = '<%=request.getContextPath()%>/active-account?accountId=${accountInfo.account.accountId}'"/>
-                                                    </c:when>
-                                                    <c:when test="${accountInfo.account.accountStatus=='Active'}">
-                                                        <input type="button" class="btn btn-primary" value="Close" onclick="window.location.href = '<%=request.getContextPath()%>/close-account?accountId=${accountInfo.account.accountId}'"/>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    </c:otherwise>
-                                                </c:choose>
                                             </td>
                                         </tr>
                                     </c:forEach>

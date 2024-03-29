@@ -385,25 +385,28 @@
             <div class="row">
                 <span class="text-muted d-block"><i class="fa fa-bar-chart" style="margin-right: 6px;" aria-hidden="true"></i>Number of exam: ${listGroupExam.size()}</span>
                 <c:forEach items="${requestScope.listGroupExam}" var="groupE">
-                    <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+                    <c:if test="${groupE.status.statusId==1}" >
+                        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
 
-                        <div class="group-info card border-0 bg-light rounded shadow">
+                            <div class="group-info card border-0 bg-light rounded shadow">
 
-                            <div class="card-body p-4">
-                                <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">${accountInfo.fullName}</span>
-                                <h5>${groupE.groupName}</h5>
-                                <div class="mt-3">
-                                    <span class="text-muted d-block"><i class="fa fa-graduation-cap" aria-hidden="true"></i> ${groupE.topic.topicName}</span>
-                                </div>
+                                <div class="card-body p-4">
+                                    <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">${accountInfo.fullName}</span>
+                                    <h5>${groupE.groupName}</h5>
+                                    <div class="mt-3">
+                                        <span class="text-muted d-block"><i class="fa fa-graduation-cap" aria-hidden="true"></i> ${groupE.topic.topicName}</span>
+                                    </div>
 
-                                <div class="mt-3">
+                                    <div class="mt-3">
 
-                                    <a href="<%= request.getContextPath() %>/create-exam?groupId=${groupE.groupId}" class="btn btn-primary">Create Exam</a>
+                                        <a href="<%= request.getContextPath() %>/create-exam?groupId=${groupE.groupId}" class="btn btn-primary">Create Exam</a>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
+
                 </c:forEach>
 
                 <div class="row justify-content-end mb-4 pb-2">
@@ -461,25 +464,25 @@
                 });
             });
         </script>
-        
-         <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Get the logo element
-            var logo = document.querySelector('.logo a');
 
-            // Add click event listener to the logo
-            logo.addEventListener('click', function (event) {
-                // Prevent the default action of the link
-                event.preventDefault();
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get the logo element
+                var logo = document.querySelector('.logo a');
 
-                // Get the base URL
-                var baseUrl = "<%= request.getContextPath() %>";
+                // Add click event listener to the logo
+                logo.addEventListener('click', function (event) {
+                    // Prevent the default action of the link
+                    event.preventDefault();
 
-                // Navigate to the home page
-                window.location.href = baseUrl + "/home";
+                    // Get the base URL
+                    var baseUrl = "<%= request.getContextPath() %>";
+
+                    // Navigate to the home page
+                    window.location.href = baseUrl + "/home";
+                });
             });
-        });
-    </script>
+        </script>
 
     </body>
 </html>
