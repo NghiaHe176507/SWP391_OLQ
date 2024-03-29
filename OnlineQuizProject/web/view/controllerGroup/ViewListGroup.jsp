@@ -402,7 +402,7 @@
                 color: #333;
                 text-transform: uppercase;
             }
-             .nav-pills .nav-item {
+            .nav-pills .nav-item {
                 display: inline-block; /* Hiển thị các mục trên cùng 1 hàng */
                 margin-left: 125px; /* Khoảng cách giữa các mục */
             }
@@ -419,12 +419,6 @@
                 background-color: rgba(255, 255, 255, 0.2); /* Màu nền khi hover */
             }
         </style>
-        <script>
-            function DeleteGroup(id)
-            {
-                 alert("You can not delete group.");
-            }
-        </script>
     </head>
     <body>
         <header>
@@ -435,7 +429,7 @@
                             <div class="logo col-md-2">
                                 <a href="<%= request.getContextPath() %>/home">QUIZWIZ</a>
                             </div>
-                            
+
                             <div class="col-md-6">
                                 <ul class="nav nav-pills">
                                     <li class="nav-item">
@@ -445,7 +439,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="<%= request.getContextPath() %>/admin/account-management">
-                                           <i class="fa-solid fa-list-ul"></i> View List Account
+                                            <i class="fa-solid fa-list-ul"></i> View List Account
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -455,7 +449,7 @@
                                     </li>
                                 </ul>
                             </div>
-                                            
+
                             <div class="login col-md-2">
                                 <ul id="nav" class="nav nav-pills">
                                     <li class="nav-item dropdown">
@@ -543,11 +537,15 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         <td>
-                                            <c:if test="true">
-                                                <a href="javascript:void(0);" onclick="DeleteGroup(${group.groupId})" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="px-2 text-danger">
-                                                    <i class="bx bx-trash-alt font-size-18"></i>
-                                                </a>
-                                            </c:if>
+                                            <c:choose>
+                                                <c:when test="${group.status.statusId==1}">
+                                                    <input type="button" class="btn btn-danger" value="Close" onclick="window.location.href = '<%=request.getContextPath()%>/close-group?groupId=${group.groupId}'"/>
+                                                </c:when>
+                                                <c:when test="${group.status.statusId==2}">
+                                                    <input type="button" class="btn btn-primary" value="Active" onclick="window.location.href = '<%=request.getContextPath()%>/active-group?groupId=${group.groupId}'"/>
+                                                </c:when>
+                                                <c:otherwise></c:otherwise>
+                                            </c:choose>        
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -607,7 +605,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
     </script>
-     <script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Get the logo element
             var logo = document.querySelector('.logo a');

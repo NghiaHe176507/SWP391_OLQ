@@ -41,7 +41,9 @@ public class ClosedGroup extends BasedAuthorizationController {
         int groupId = Integer.parseInt(request.getParameter("groupId"));
         Group group = groupDB.getById(String.valueOf(groupId));
         group.setStatus(statusDB.getById("3"));
+        group.setGroupInviteCode(null);
         db.updateGroupStatus(group);
+        db.updateGroupInviteCode(group);
         if (db.getRoleOfAccount(LoggedUser).getRole().getRoleId() == 1) {
             response.sendRedirect(request.getContextPath() + "/admin/group-management");
         } else if (db.getRoleOfAccount(LoggedUser).getRole().getRoleId() == 2) {

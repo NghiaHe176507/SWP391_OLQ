@@ -772,6 +772,7 @@
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Status</span></td>
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Action</span></td>
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
                                 </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -783,19 +784,34 @@
                                         <td>${group.groupInviteCode}</td>
                                         <td>${group.status.statusName}</td>
                                         <td>
+                                            <c:if test="${group.status.statusId!=3}">
+                                                <c:choose>
+                                                    <c:when test="${not empty group.groupInviteCode}">
+                                                        <input type="button" class="btn btn-danger" value="Remove invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/delete-invite-code?groupId=${group.groupId}'"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="button" class="btn btn-primary" value="Create invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/create-invite-code?groupId=${group.groupId}'"/>
+                                                    </c:otherwise>
+                                                </c:choose>     
+                                            </c:if>  
+                                        </td>
+                                        <td>
                                             <c:choose>
-                                                <c:when test="${not empty group.groupInviteCode}">
-                                                    <input type="button" class="btn btn-danger" value="Remove invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/delete-invite-code?groupId=${group.groupId}'"/>
+                                                <c:when test="${group.status.statusId==1}">
+                                                    <input type="button" class="btn btn-danger" value="Close" onclick="window.location.href = '<%=request.getContextPath()%>/close-group?groupId=${group.groupId}'"/>
                                                 </c:when>
-                                                <c:otherwise>
-                                                    <input type="button" class="btn btn-primary" value="Create invite code" onclick="window.location.href = '<%=request.getContextPath()%>/group-management/create-invite-code?groupId=${group.groupId}'"/>
-                                                </c:otherwise>
+                                                <c:when test="${group.status.statusId==2}">
+                                                    <input type="button" class="btn btn-primary" value="Active" onclick="window.location.href = '<%=request.getContextPath()%>/active-group?groupId=${group.groupId}'"/>
+                                                </c:when>
+                                                <c:otherwise></c:otherwise>
                                             </c:choose>                         
                                         </td>
                                         <td>
-                                            <button type="button" style="color: #333; background-color: transparent; border-color: transparent;" onclick="deleteGroup(${group.groupId}, '${group.status.statusName}')">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
+                                            <c:if test="${group.status.statusId==2}">
+                                                <button type="button" style="color: #333; background-color: transparent; border-color: transparent;" onclick="deleteGroup(${group.groupId}, '${group.status.statusName}')">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </c:if>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -848,22 +864,22 @@
         </footer>
 
         <script>
-                                                document.addEventListener("DOMContentLoaded", function () {
-                                                    // Get the logo element
-                                                    var logo = document.querySelector('.logo a');
+                                                    document.addEventListener("DOMContentLoaded", function () {
+                                                        // Get the logo element
+                                                        var logo = document.querySelector('.logo a');
 
-                                                    // Add click event listener to the logo
-                                                    logo.addEventListener('click', function (event) {
-                                                        // Prevent the default action of the link
-                                                        event.preventDefault();
+                                                        // Add click event listener to the logo
+                                                        logo.addEventListener('click', function (event) {
+                                                            // Prevent the default action of the link
+                                                            event.preventDefault();
 
-                                                        // Get the base URL
-                                                        var baseUrl = "<%= request.getContextPath() %>";
+                                                            // Get the base URL
+                                                            var baseUrl = "<%= request.getContextPath() %>";
 
-                                                        // Navigate to the home page
-                                                        window.location.href = baseUrl + "/home";
+                                                            // Navigate to the home page
+                                                            window.location.href = baseUrl + "/home";
+                                                        });
                                                     });
-                                                });
         </script>
     </body>
 
