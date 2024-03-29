@@ -1999,4 +1999,18 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return listUrl;
     }
 
+    public void updateGroupStatus(Group groupNeedToUpdate) {
+        try {
+            String sql_update = """
+                                UPDATE [Group]
+                                   SET [status_id] = ?
+                                 WHERE [group_id]=?""";
+            PreparedStatement stm = connection.prepareStatement(sql_update);
+            stm.setInt(1, groupNeedToUpdate.getStatus().getStatusId());
+            stm.setInt(2, groupNeedToUpdate.getGroupId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

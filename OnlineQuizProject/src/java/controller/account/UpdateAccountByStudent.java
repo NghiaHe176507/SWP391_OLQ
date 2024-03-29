@@ -5,7 +5,6 @@
 package controller.account;
 
 import controller.authentication.BasedAuthorizationController;
-import controller.authentication.BasedRequiredAuthenticationController;
 import dal.AccountInfoDBContext;
 import dal.ControllerDBContext;
 import entity.Account;
@@ -16,12 +15,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.util.ArrayList;
 
