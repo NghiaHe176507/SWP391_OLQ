@@ -403,13 +403,17 @@
                                                             <i class="fas fa-pencil fa-stack-1x fa-inverse"></i>
                                                         </span>
                                                     </a>
-                                                    <a href="#" class="table-link danger" onclick="deleteAccount(${accountInfo.account.accountId})">
-                                                        <span class="fa-stack">
-                                                            <i class="fas fa-square fa-stack-2x"></i>
-                                                            <i class="fas fa-trash-alt fa-stack-1x fa-inverse"></i>
-                                                        </span>
-                                                    </a>
                                                 </c:if>
+                                                <c:choose>
+                                                    <c:when test="${accountInfo.account.accountStatus=='Pending'}">
+                                                        <input type="button" class="btn btn-primary" value="Active" onclick="window.location.href = '<%=request.getContextPath()%>/active-account?accountId=${accountInfo.account.accountId}'"/>
+                                                    </c:when>
+                                                    <c:when test="${accountInfo.account.accountStatus=='Active'}">
+                                                        <input type="button" class="btn btn-primary" value="Close" onclick="window.location.href = '<%=request.getContextPath()%>/close-account?accountId=${accountInfo.account.accountId}'"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -463,24 +467,24 @@
 
             <!-- End of main container div -->
 
- <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Get the logo element
-            var logo = document.querySelector('.logo a');
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Get the logo element
+                    var logo = document.querySelector('.logo a');
 
-            // Add click event listener to the logo
-            logo.addEventListener('click', function (event) {
-                // Prevent the default action of the link
-                event.preventDefault();
+                    // Add click event listener to the logo
+                    logo.addEventListener('click', function (event) {
+                        // Prevent the default action of the link
+                        event.preventDefault();
 
-                // Get the base URL
-                var baseUrl = "<%= request.getContextPath() %>";
+                        // Get the base URL
+                        var baseUrl = "<%= request.getContextPath() %>";
 
-                // Navigate to the home page
-                window.location.href = baseUrl + "/home";
-            });
-        });
-    </script>
+                        // Navigate to the home page
+                        window.location.href = baseUrl + "/home";
+                    });
+                });
+            </script>
         </footer>
     </body>
 </html>

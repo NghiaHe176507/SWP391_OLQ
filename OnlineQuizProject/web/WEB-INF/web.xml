@@ -188,6 +188,14 @@
         <servlet-name>ActiveGroup</servlet-name>
         <servlet-class>controller.group.ActivedGroup</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActiveAccountByAdmin</servlet-name>
+        <servlet-class>controller.account.ActiveAccountByAdmin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CloseAccountByAdmin</servlet-name>
+        <servlet-class>controller.account.CloseAccountByAdmin</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -375,6 +383,14 @@
     <servlet-mapping>
         <servlet-name>ActiveGroup</servlet-name>
         <url-pattern>/active-group</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActiveAccountByAdmin</servlet-name>
+        <url-pattern>/active-account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CloseAccountByAdmin</servlet-name>
+        <url-pattern>/close-account</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
