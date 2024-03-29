@@ -3,13 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FPT/Semester_5_SPRING2024/SWP_391/SWP391_OnlineQuiz_Project/SWP391_OLQ/OnlineQuizProject/src/java/dal/TestDBContext.java</file>
-            <file>file:/D:/FPT/Semester_5_SPRING2024/SWP_391/SWP391_OnlineQuiz_Project/SWP391_OLQ/OnlineQuizProject/src/java/controller/account/ViewListStudentForLecture.java</file>
-            <file>file:/D:/FPT/Semester_5_SPRING2024/SWP_391/SWP391_OnlineQuiz_Project/SWP391_OLQ/OnlineQuizProject/src/java/controller/test/ViewResultTestStudent.java</file>
-            <file>file:/D:/FPT/Semester_5_SPRING2024/SWP_391/SWP391_OnlineQuiz_Project/SWP391_OLQ/OnlineQuizProject/web/view/test/ViewListStudentForExam.jsp</file>
-            <file>file:/D:/FPT/Semester_5_SPRING2024/SWP_391/SWP391_OnlineQuiz_Project/SWP391_OLQ/OnlineQuizProject/web/view/test/ViewListExamTest.jsp</file>
-            <file>file:/D:/FPT/Semester_5_SPRING2024/SWP_391/SWP391_OnlineQuiz_Project/SWP391_OLQ/OnlineQuizProject/src/java/dal/DBContext.java</file>
-            <file>file:/D:/FPT/Semester_5_SPRING2024/SWP_391/SWP391_OnlineQuiz_Project/SWP391_OLQ/OnlineQuizProject/web/WEB-INF/web.xml</file>
+            <file>file:/E:/MyCode/SWP/SWP391_OLQ/OnlineQuizProject/web/view/controllerHome/result.jsp</file>
+            <file>file:/E:/MyCode/SWP/SWP391_OLQ/OnlineQuizProject/web/view/controllerAccount/AccountManagement.jsp</file>
         </group>
     </open-files>
 </project-private>
