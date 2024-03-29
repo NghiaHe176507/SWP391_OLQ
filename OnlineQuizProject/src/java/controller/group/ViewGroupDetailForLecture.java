@@ -65,6 +65,9 @@ public class ViewGroupDetailForLecture extends BasedRequiredAuthenticationContro
         int topicId = Integer.parseInt(topicIdStr);
 
         ArrayList<Exam> listExamOfGroup = db.getListExamByGroupId(groupId);
+        for (Exam exam : listExamOfGroup) {
+            db.updateStatusExamToFitRealTime(exam);
+        }
         request.setAttribute("listGroup", listGroupOwned);
         request.setAttribute("topicId", topicId);
         request.setAttribute("groupId", groupId);

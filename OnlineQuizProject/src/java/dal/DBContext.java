@@ -22,7 +22,7 @@ public abstract class DBContext<T extends BaseEntity> {
 
     public DBContext() {
         try {
-            String url = "jdbc:sqlserver://localhost\\DESKTOP-VIO3U0P\\SQLEXPRESS:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://localhost\\DESKTOP-I6017GJ\\SQLEXPRESS:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
             String user = "thanbd";
             String pass = "123";
 //            String url = "jdbc:sqlserver://localhost\\DESKTOP-KRG8A16\\NGHIA2003:1433;databaseName=Quiz;encrypt=true;trustServerCertificate=true";
