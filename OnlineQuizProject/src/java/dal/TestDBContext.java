@@ -18,6 +18,8 @@ import java.util.logging.Logger;
  */
 public class TestDBContext extends DBContext<OptionAnswer> {
 
+    ResultDBContext resultDB = new ResultDBContext();
+
     public ArrayList<OptionAnswer> getListQuestionAndAnswer() {
         ArrayList<OptionAnswer> listQuestion = new ArrayList<>();
         try {
@@ -70,7 +72,7 @@ public class TestDBContext extends DBContext<OptionAnswer> {
         return listQuestion;
     }
 
-    public ArrayList<Result> getListExaminationOfStudent() {
+    public ArrayList<Result> getListExaminationOfStudent(int studentID) {
         ArrayList<Result> listStudentExamResult = new ArrayList<>();
         try {
             String sql = """
@@ -82,24 +84,13 @@ public class TestDBContext extends DBContext<OptionAnswer> {
                           INNER JOIN Account a ON r.student_id = a.account_id
                           INNER JOIN AccountInfo acI ON a.account_id = acI.account_id
                           INNER JOIN [Group] g ON e.group_id = g.group_id
-                          INNER JOIN [Topic] t ON g.topic_id = t.topic_id""";
+                          INNER JOIN [Topic] t ON g.topic_id = t.topic_id
+                          WHERE acI.accountInfo_id = ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, studentID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Result r = new Result();
-                r.setResultId(rs.getInt("result_id"));
-                r.setScore(rs.getDouble("score"));
-                AccountInfo acc = new AccountInfo();
-                acc.setFullName(rs.getString("fullname"));
-                r.setStudentInfo(acc);
-                Topic t = new Topic();
-                t.setTopicName(rs.getString("topic_name"));
-                Group g = new Group();
-                g.setTopic(t);
-                Exam e = new Exam();
-                e.setGroup(g);
-                r.setStudentInfo(acc);
-                r.setExam(e);
+                Result r = resultDB.getById(String.valueOf(rs.getInt("result_id")));
                 listStudentExamResult.add(r);
             }
 

@@ -88,7 +88,7 @@
                 <div class="header">
                     <!-- Logo -->
                     <div class="logo col-md-2">
-                        <a href="#">QUIZWIZ</a>
+                        <a href="home">QUIZWIZ</a>
                     </div>
 
                     <form action="search" method="GET" class="col-md-6">
@@ -120,93 +120,31 @@
             </div>
             <div class="row">
                 <div class="return-home" style="margin-bottom: 10px">
-                    <a href="${pageContext.request.contextPath}/homeLecture" class="btn btn-primary">Return to Home Page</a>
+                    <a href="${pageContext.request.contextPath}/home" class="btn btn-primary">Return to Home Page</a>
                 </div>
-                <form action="${pageContext.request.contextPath}/view-total-result-of-students" method="GET" class="form-inline mb-3" style="padding-left: 21rem">
-                    <label for="examNameFilter" class="mr-2">Filter by Examination Name:</label>
-                    <select id="examNameFilter" name="examName" class="form-control mr-2">
-                        <option value="">All Examinations</option>
-                        <!-- Iterate through available examination names -->
-                        <c:forEach var="examName" items="${requestScope.listTopic}">
-                            <option value="${examName.topicName}" ${examName.topicName eq examName ? 'selected' : ''}>${examName.topicName}</option>
-                        </c:forEach>
-                    </select>
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                </form>
 
                 <table id="studentTable" class="table table-bordered">
                     <thead class="thead-light">
                         <tr>
                             <th>No</th>
                             <th>Student Name</th>
-                            <th>Examination Name</th>
                             <th>Score</th>
-                            <th>Status</th>
-                            <th>Lecture Comment</th>
-                            <th>Edit Comment by Lecture</th>
+                            <th>Is practice</th>
+                            <th>Test attempt number</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="list" items="${requestScope.listStudent}">
+                        <c:forEach var="list" items="${requestScope.listExaminationOfStudent}" varStatus="loop">
                             <tr>
-                                <td>${list.resultId}</td>
+                                <td>${loop.index + 1}</td>
                                 <td>${list.studentInfo.fullName}</td>
-                                <td>${list.exam.examTitle}</td>
                                 <td>${list.score}</td>
-                                <td>${list.exam.isPractice}</td>
-                                <td>${list.commentContent}</td>
-                                <td>
-                                    <!-- Add a form to submit Lecture Comments -->
-                                    <form action="${pageContext.request.contextPath}/update-lecture-comment" method="POST" class="form-inline">
-                                        <input type="hidden" name="resultId" value="${list.resultId}">
-                                        <div class="form-group mx-sm-3 mb-2">
-                                            <textarea class="form-control" name="lectureComment" rows="1" cols="30">${list.commentContent}</textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary mb-2">Save</button>
-                                    </form>
-                                </td>
+                                <td>${list.exam.isPractice}</td>                                
+                                <td>${list.attemptNumber}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
                 </table>
-            </div>
-
-            <div class="pagination-container">
-                <c:if test="${not empty totalPages}">
-                    <c:if test="${currentPage > 1}">
-                        <a href="?page=1&examName=${param.examName}">&laquo; First</a>
-                        <a href="?page=${currentPage - 1}&examName=${param.examName}">&lsaquo; Previous</a>
-                    </c:if>
-
-                    <c:forEach var="pageNum" begin="1" end="${totalPages}">
-                        <c:choose>
-                            <c:when test="${pageNum == currentPage}">
-                                <span class="current-page">${pageNum}</span>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="?page=${pageNum}&examName=${param.examName}">${pageNum}</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-
-                    <c:if test="${currentPage < totalPages}">
-                        <a href="?page=${currentPage + 1}&examName=${param.examName}">Next &rsaquo;</a>
-                        <a href="?page=${totalPages}&examName=${param.examName}">Last &raquo;</a>
-                    </c:if>
-
-                    <!-- Allow user to enter page number -->
-                    <form action="${pageContext.request.contextPath}/view-list-exam" method="GET" style="display: inline-block;">
-                        <input type="text" name="page"  style="    width: 50px;
-                               margin: 0 5px;
-                               padding: 3px 5px;
-                               border-radius: 4px">
-                        <input type="hidden" name="examName" value="${param.examName}">
-                        <button type="submit" style="    width: 50px;
-                                margin: 0 -4px;
-                                padding: 3px 5px;
-                                border-radius: 4px">Go</button>
-                    </form>
-                </c:if>
             </div>
 
         </div>

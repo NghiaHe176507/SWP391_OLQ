@@ -111,7 +111,6 @@
                                             Details</a>
                                     </li>
                                     <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                    <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                     <li><a href="<%= request.getContextPath() %>/logout"><i
                                                 class="fa-solid fa-right-from-bracket"></i>
                                             Log out</a>
@@ -150,42 +149,7 @@
                                 <td>${list.registerDate}</td>
                                 <!-- Add a cell for the dropdown -->
                                 <td>
-                                    <button class="btn btn-link" onclick="toggleDropdown(${loop.index})">Show More</button>
-                                    <div id="dropdown_${loop.index}" class="dropdown-content" style="display: none;">
-                                        <!-- Dropdown content here -->
-                                        <table id="studentTable" class="table table-bordered">
-                                            <thead class="thead-light">
-                                                <tr>
-                                                <tr>
-                                                    <th>Examination Name</th>
-                                                    <th>Score</th>
-                                                    <th>Lecture Comment</th>
-                                                    <th>Edit Comment by Lecture</th>
-                                                </tr>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="list" items="${requestScope.listExaminationOfStudent}">
-                                                    <tr>
-                                                        <td>${list.exam.group.topic.topicName}</td>
-                                                        <td>${list.score}</td>
-                                                        <td>${list.commentContent}</td>
-                                                        <td>
-                                                            <!-- Add a form to submit Lecture Comments -->
-                                                            <form action="${pageContext.request.contextPath}/update-lecture-comment" method="POST" class="form-inline">
-                                                                <input type="hidden" name="resultId" value="${list.resultId}">
-                                                                <div class="form-group mx-sm-3 mb-2">
-                                                                    <textarea class="form-control" name="lectureComment" rows="1" cols="30">${list.commentContent}</textarea>
-                                                                </div>
-                                                                <button type="submit" class="btn btn-primary mb-2">Save</button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                        <!-- Add more information as needed -->
-                                    </div>
+                                    <a href="<%= request.getContextPath() %>/view-list-exam?studentID=${list.studentInfo.accountInfoId}">Show More</a>                             
                                 </td>
                             </tr>
                         </c:forEach>
