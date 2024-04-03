@@ -106,12 +106,12 @@
             <div id="footer">
                 <!-- Social Icons -->
                 <div class="socials-list">
-                    <a href=""><i class="fa-brands fa-facebook"></i></a>
-                    <a href=""><i class="fa-brands fa-instagram"></i></a>
-                    <a href=""><i class="fa-solid fa-bell"></i></a>
+                    <a href=""><i class="fa-brands fa-facebook" style="color: #333"></i></a>
+                    <a href=""><i class="fa-brands fa-instagram " style="color: #333"></i></a>
+                    <a href=""><i class="fa-solid fa-bell" style="color: #333"></i></a>
                 </div>
                 <!-- Slogan -->
-                <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+                <p class="slogan">Khám phá sức thông minh cùng <a href="<%= request.getContextPath() %>/home" style="color: #333; text-decoration: none">Quizwiz</a> </p>
             </div>
             <!-- End of footer section -->
 

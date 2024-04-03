@@ -114,7 +114,7 @@
             <div class="container">
                 <div class="col-sm-8 offset-sm-2 col-lg-6 offset-lg-3 col-xl-6 offset-xl-3 text-center">
                     <div class="logo">
-                        <img decoding="async" src="https://i2.wp.com/maroonersrock.com/wp-content/uploads/2017/11/Its-Quiz-Time-Logo.png?fit=1024%2C1024&ssl=1" class="img-fluid" alt="logo">
+                        <img decoding="async" src="image/Its-Quiz-Time-Logo.webp" class="img-fluid" alt="logo">
                     </div>
                     <form id="register-form" action="validate-otp-register" role="form" autocomplete="off" class="rounded bg-white shadow p-5" method="post">
                         <h3 class="text-dark fw-bolder fs-4 mb-2">Two Step Verification</h3>
