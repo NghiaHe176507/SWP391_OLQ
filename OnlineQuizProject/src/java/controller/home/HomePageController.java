@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -125,7 +126,7 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 request.setAttribute("searchResults", searchResults);
                 request.setAttribute("listTopic", listTopic);
                 int studentAccountId = db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId();
-                
+
                 ArrayList<Register> listRegister = db.getRegisterByStudentId(studentAccountId);
                 listRegister.size();
 
