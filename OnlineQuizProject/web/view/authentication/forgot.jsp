@@ -25,7 +25,7 @@
                     <div class="col-md-8 col-lg-6 bsb-tpl-bg-platinum">
                         <div class="d-flex flex-column justify-content-between h-100 p-3 p-md-4 p-xl-5">
                             <h3 class="m-0">Welcome Back To QuizWiz !</h3>
-                            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="https://smiletutor.sg/wp-content/uploads/2020/10/password.png" width="245" height="80" alt="BootstrapBrain Logo">
+                            <img class="img-fluid rounded mx-auto my-4" loading="lazy" src="image/password.png" width="245" height="80" alt="BootstrapBrain Logo">
                             <p class="mb-0">Not a member yet? <a href="<%= request.getContextPath() %>/register" class="link-secondary text-decoration-none">Register now</a></p>
                         </div>
                     </div>

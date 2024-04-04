@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.comment;
 
 import dal.ResultDBContext;
@@ -18,7 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Đạt Phạm
  */
 public class UpdateLectureComment extends HttpServlet {
-   
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
@@ -33,15 +33,15 @@ public class UpdateLectureComment extends HttpServlet {
         } catch (NumberFormatException e) {
             // Handle the case where resultId is not a valid integer
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid resultId");
-        } catch (Exception e) {
-            // Handle other exceptions
-            e.printStackTrace();
+        } catch (IOException e) {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Internal Server Error");
         }
     }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    // You can implement GET handling if needed, but it's generally not recommended for data modifications.
-    response.sendRedirect(request.getContextPath() + "/view-list-exam");
-}
+            throws ServletException, IOException {
+        // You can implement GET handling if needed, but it's generally not recommended for data modifications.
+        response.sendRedirect(request.getContextPath() + "/view-list-exam");
+    }
 }

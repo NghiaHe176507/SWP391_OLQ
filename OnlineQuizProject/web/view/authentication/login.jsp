@@ -13,7 +13,6 @@
         <link rel="icon" href="image/iconlogo.PNG" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
-        <link rel="stylesheet" href="css/loginstyle.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
@@ -38,33 +37,6 @@
         </style>
     </head>
     <body>
-        <!--    <div class="logo" style="margin-top: 5% ">    
-                <a style="font-size: 55px; font-family: 'Poppins', cursive; text-decoration: none; color: black" href="${pageContext.request.contextPath}">Home</a>
-            </div>
-            <div class="container">
-                <form >
-                    <div class="row">
-                        <h2 style="text-align:center; font-family: Poppins ">Welcome to Quiz Online, please login to continue</h2>
-                        <div class="col">
-
-        <input type="text" name="mail" placeholder="yourname@gmail.com" required style="background-color: white" >
-        <input type="password" name="password" placeholder="Password" required style="background-color: white" >
-        <input type="submit" value="Login">
-    </div>
-    
-    </div>
-    </form>
-    </div>
-    <a href="" style="text-decoration: none">Forgot password</a>
-    <div class="bottom-container">
-    <div class="row">
-    <div class="col">
-    <a href=""  style="background-color: #ffffff; color: #000; text-decoration: none">
-        Sign Up
-    </a>
-    </div>
-    </div>
-    </div>-->
         <section class="vh-100">
             <div class="container py-5 h-100">
                 <div class="row align-items-center justify-content-center h-100">
@@ -73,7 +45,7 @@
                              class="img-fluid" alt="Phone image">
                     </div>
                     <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                        <form action="login" method="post">
+                        <form action="login" method="POST">
                             <!-- Email input -->
                             <div class="form-floating mb-4">
                                 <input type="email" id="form1Example13" name="mail" class="form-control form-control-lg" pattern="/^[a-zA-Z0-9._-]+@gmail\.com$/" />

@@ -689,7 +689,7 @@
             // Nếu không có câu hỏi nào chưa được chọn và đã có ít nhất 1 câu hỏi được chọn, hiển thị thông báo xác nhận
             if ( !alertShown) {
                 var confirmSubmit = confirm("Bạn có chắc chắn muốn nộp bài không?");
-                if (confirmSubmit) {
+                if (confirmSubmit && ${requestScope.attemptNumber != null}) {
                     alert("Bài thi đã được nộp thành công!");
                     // Ở đây bạn có thể thực hiện các hành động khác sau khi người dùng nộp bài
                     hasSubmitted = true; // Đánh dấu đã nộp bài

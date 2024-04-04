@@ -139,7 +139,12 @@
                                 <td>${loop.index + 1}</td>
                                 <td>${list.studentInfo.fullName}</td>
                                 <td>${list.score}</td>
-                                <td>${list.exam.isPractice}</td>                                
+                                <c:if test="${list.exam.isPractice eq false}">
+                                    <td>No</td> 
+                                </c:if>   
+                                <c:if test="${list.exam.isPractice eq true}">
+                                    <td>Yes</td> 
+                                </c:if>   
                                 <td>${list.attemptNumber}</td>
                             </tr>
                         </c:forEach>

@@ -54,28 +54,31 @@ public class CalculateExamResults extends BasedAuthorizationController {
         Exam exam = examDB.getById(request.getParameter("examId"));
         AccountInfo studentInfo = db.getAccountInfoByAccountId(LoggedUser.getAccountId());
         int attemptNumber = Integer.parseInt(request.getParameter("attemptNumber"));
+        Double finalScore = 0.0;
         String[] listStudentAnswerId = request.getParameterValues("answerOption");
         ArrayList<StudentAnswer> listOptionAnswerStudentSelected = new ArrayList<>();
-        for (String studentAnswerId : listStudentAnswerId) {
-            StudentAnswer optionAnswerStudentSelected = new StudentAnswer();
-            optionAnswerStudentSelected.setExam(exam);
-            optionAnswerStudentSelected.setQuestion(optionAnswerDB.getById(studentAnswerId).getQuestion());
-            optionAnswerDB.getById(studentAnswerId).getQuestion().getQuestionId();
-            optionAnswerStudentSelected.setOptionAnswer(optionAnswerDB.getById(studentAnswerId));
-            optionAnswerStudentSelected.setStudentInfo(studentInfo);
-            optionAnswerStudentSelected.setAttemptNumber(attemptNumber);
-            db.createNewStudentAnswer(optionAnswerStudentSelected);
+        if (listStudentAnswerId != null) {
 
-            listOptionAnswerStudentSelected.add(optionAnswerStudentSelected);
+            for (String studentAnswerId : listStudentAnswerId) {
+                StudentAnswer optionAnswerStudentSelected = new StudentAnswer();
+                optionAnswerStudentSelected.setExam(exam);
+                optionAnswerStudentSelected.setQuestion(optionAnswerDB.getById(studentAnswerId).getQuestion());
+                optionAnswerDB.getById(studentAnswerId).getQuestion().getQuestionId();
+                optionAnswerStudentSelected.setOptionAnswer(optionAnswerDB.getById(studentAnswerId));
+                optionAnswerStudentSelected.setStudentInfo(studentInfo);
+                optionAnswerStudentSelected.setAttemptNumber(attemptNumber);
+                db.createNewStudentAnswer(optionAnswerStudentSelected);
 
+                listOptionAnswerStudentSelected.add(optionAnswerStudentSelected);
+
+            }
+
+            ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(exam.getExamId());
+
+            finalScore = db.calculateScoreResultExamOfStudent(listExamQuestionMapping,
+                    studentInfo.getAccountInfoId(),
+                    attemptNumber);
         }
-
-        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(exam.getExamId());
-
-        Double finalScore = db.calculateScoreResultExamOfStudent(listExamQuestionMapping,
-                 studentInfo.getAccountInfoId(),
-                 attemptNumber);
-
         Result newResult = new Result();
         newResult.setAttemptNumber(attemptNumber);
         newResult.setExam(exam);

@@ -4,6 +4,7 @@
  */
 package controller.group;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import entity.Account;
@@ -11,6 +12,7 @@ import entity.AccountInfo;
 import entity.Exam;
 import entity.Group;
 import entity.Register;
+import entity.RoleAccess;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
  *
  * @author nghia
  */
-public class ViewGroupDetailForLecture extends BasedRequiredAuthenticationController {
+public class ViewGroupDetailForLecture extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
@@ -52,8 +54,13 @@ public class ViewGroupDetailForLecture extends BasedRequiredAuthenticationContro
     }// </editor-fold>
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         int lecturerId = LoggedUser.getAccountId();
         AccountInfo accountInfo = db.getAccountInfoByAccountId(lecturerId);
         ArrayList<Group> listGroupOwned = db.getListGroupOwnedByLectureId(accountInfo.getAccountInfoId());
@@ -73,12 +80,7 @@ public class ViewGroupDetailForLecture extends BasedRequiredAuthenticationContro
         request.setAttribute("groupId", groupId);
         request.setAttribute("listExamOfGroup", listExamOfGroup);
         request.getRequestDispatcher("view/controllerGroup/GroupDetailForLecture.jsp").forward(request, response);
-
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
 }

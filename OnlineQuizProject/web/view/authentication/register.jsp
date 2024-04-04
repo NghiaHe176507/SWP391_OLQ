@@ -31,7 +31,7 @@
     <body>
         <div class="main">
             <div style="display: flex; background: #fff">
-                <img style="width: 64%" src="https://static.vecteezy.com/system/resources/previews/029/888/142/original/megaphone-banner-quiz-time-illustration-vector.jpg" alt=""/>
+                <img style="width: 64%" src="image/banner-quiz.jpg" alt=""/>
                 <form id="registrationForm" onsubmit="return validateForm()" class="form" method="POST" style="width: 447px; padding: 20px 10px;">                
                     <div>
                         <h1 class="heading">Registration</h1>
@@ -160,6 +160,13 @@
 
                             if (dobDate >= today) {
                                 dobError.innerHTML = "Date of Birth must be less than today";
+                                return false;
+                            }
+                            
+                            var validateDOB = today.getFullYear() - dobDate.getFullYear();
+                            
+                            if (validateDOB < 14) {
+                                dobError.innerHTML = "Your age must equal or greater than 14";
                                 return false;
                             }
 

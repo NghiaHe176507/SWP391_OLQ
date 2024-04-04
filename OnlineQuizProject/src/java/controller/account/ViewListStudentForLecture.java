@@ -34,14 +34,20 @@ public class ViewListStudentForLecture extends BasedAuthorizationController {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int groupID = Integer.parseInt(request.getParameter("groupID"));
+        int examId = Integer.parseInt(request.getParameter("examId"));
         ArrayList<Register> listOfStudentHasTest = db.getListAccountRegistedExamByGroup(groupID);
         request.setAttribute("listOfStudentHasTest", listOfStudentHasTest);
-
+        ArrayList<Integer> listAttempStudentTake = new ArrayList<>();
+        for (Register register : listOfStudentHasTest) {
+            listAttempStudentTake.add(db.getCurrentAttemptOfExamByStudentId(register.getStudentInfo().getAccountInfoId(), examId));
+        }
         int lecturerAccountId = LoggedUser.getAccountId();
         AccountInfo accountInfo = db.getAccountInfoByAccountId(lecturerAccountId);
         
         ArrayList<Result> listExaminationOfStudent = db.getListExaminationOfStudent(accountInfo.getAccountInfoId());
         request.setAttribute("listExaminationOfStudent", listExaminationOfStudent);
+        request.setAttribute("listAttempStudentTake", listAttempStudentTake);
+        request.setAttribute("examId", examId);
         request.getRequestDispatcher("view/test/ViewListStudentForExam.jsp").forward(request, response);
     }
 

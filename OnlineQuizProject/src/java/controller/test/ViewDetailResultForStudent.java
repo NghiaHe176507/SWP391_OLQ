@@ -4,6 +4,7 @@
  */
 package controller.test;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import dal.ExamDBContext;
@@ -12,6 +13,7 @@ import entity.Account;
 import entity.ExamQuestionMapping;
 import entity.OptionAnswer;
 import entity.Result;
+import entity.RoleAccess;
 import entity.StudentAnswer;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,7 +27,7 @@ import java.util.ArrayList;
  *
  * @author nghia
  */
-public class ViewDetailResultForStudent extends BasedRequiredAuthenticationController {
+public class ViewDetailResultForStudent extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
     ExamDBContext examDb = new ExamDBContext();
@@ -57,12 +59,12 @@ public class ViewDetailResultForStudent extends BasedRequiredAuthenticationContr
     }// </editor-fold>
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         String examIdParam = request.getParameter("examId");
         String resultNumberParam = request.getParameter("resultNumber");
         String studentInfoIdParam = request.getParameter("studentInfoId");
@@ -97,5 +99,6 @@ public class ViewDetailResultForStudent extends BasedRequiredAuthenticationContr
         request.getRequestDispatcher("view/test/ViewDetailResultForStudent.jsp").forward(request, response);
 
     }
+
 
 }

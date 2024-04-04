@@ -4,11 +4,13 @@
  */
 package controller.group;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import entity.Account;
 import entity.Exam;
 import entity.Register;
+import entity.RoleAccess;
 import entity.Status;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
  *
  * @author nghia
  */
-public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationController {
+public class ViewGroupDetailForStudent extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
@@ -52,7 +54,7 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
     }// </editor-fold>
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
 
         int studentAccountId = db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId();
         ArrayList<Register> listRegister = db.getRegisterByStudentId(studentAccountId);
@@ -81,7 +83,7 @@ public class ViewGroupDetailForStudent extends BasedRequiredAuthenticationContro
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

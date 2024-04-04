@@ -250,7 +250,7 @@
                                         <p class="topic-info-text" style="margin-bottom: 0">${group.status.statusName}</p>
                                     </c:otherwise>
                                 </c:choose>
-                                <form action="viewGroupDetailForLecture" method="GET"> 
+                                <form action="viewGroupDetailForLecture" method="POST"> 
                                     <div class="row">
                                         <div class="row" style="padding-left: 40px;margin-bottom: 5px;margin-top: 5px;">
                                             <button type="submit" class="btn btn-1 color-black topic-info-link">
@@ -263,7 +263,6 @@
                                         <input type="hidden" name="groupId" value="${group.groupId}" />
                                         <input type="hidden" name="topicId" value="${group.topic.topicId}" />
                                 </form>
-                                <form></form>   
                             </div>
                         </div>
                     </div>
