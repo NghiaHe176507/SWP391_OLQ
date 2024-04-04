@@ -9,7 +9,9 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -26,6 +28,22 @@ public class ViewOwnedGroupForLecture extends BasedAuthorizationController {
         int page = 1; // Default page number
         String groupNameFilter = request.getParameter("groupName"); // Get group name filter from request
 
+        HttpSession session = request.getSession();
+
+        // Lấy thông báo lỗi nếu có
+        String errorMessage = (String) session.getAttribute("errorMessage");
+        if (errorMessage != null) {
+            request.setAttribute("errorMessage", errorMessage);
+            session.removeAttribute("errorMessage"); // Xóa thông báo sau khi đã sử dụng
+        }
+
+// Lấy thông báo thành công nếu có
+        String successMessage = (String) session.getAttribute("successMessage");
+        if (successMessage != null) {
+            request.setAttribute("successMessage", successMessage);
+            session.removeAttribute("successMessage"); // Xóa thông báo sau khi đã sử dụng
+        }
+        
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
@@ -34,6 +52,7 @@ public class ViewOwnedGroupForLecture extends BasedAuthorizationController {
 
         // Fetch groups for the current page
         ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(lectureId);
+        Collections.reverse(listGroup);
 
         // Filter the list by group name if the filter is provided
         if (groupNameFilter != null && !groupNameFilter.isEmpty()) {

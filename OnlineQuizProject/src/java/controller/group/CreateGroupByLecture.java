@@ -17,7 +17,9 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -31,10 +33,11 @@ public class CreateGroupByLecture extends BasedAuthorizationController {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
-
         Topic topic = topicDB.getById(request.getParameter("topicId"));
         Status status = statusDB.getById("2");
         String groupName = request.getParameter("groupName");
+        int lectureId = db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId();
+        ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(lectureId);
 
         Group newGroup = new Group();
         newGroup.setGroupName(groupName);
@@ -42,9 +45,25 @@ public class CreateGroupByLecture extends BasedAuthorizationController {
         newGroup.setTopic(topic);
         newGroup.setStatus(status);
 
-        db.createNewGroupByLecture(newGroup);
+        boolean groupExists = false;
+        for (Group group : listGroup) {
+            if (group.getTopic().getTopicId() == topic.getTopicId() && group.getGroupName().equalsIgnoreCase(groupName)) {
+                groupExists = true;
+                break;
+            }
+        }
+
+        if (groupExists) {
+            HttpSession session = request.getSession();
+            session.setAttribute("errorMessage", "Nhóm đã tồn tại trong danh sách.");
+        } else {
+            db.createNewGroupByLecture(newGroup);
+            HttpSession session = request.getSession();
+            session.setAttribute("successMessage", "Nhóm đã được tạo thành công.");
+        }
 
         response.sendRedirect("../group-management");
+
     }
 
     @Override
@@ -61,6 +80,7 @@ public class CreateGroupByLecture extends BasedAuthorizationController {
 
         // Fetch groups for the current page
         ArrayList<Group> listGroup = db.getListGroupOwnedByLectureId(lectureId);
+        Collections.reverse(listGroup);
 
         // Filter the list by group name if the filter is provided
         if (groupNameFilter != null && !groupNameFilter.isEmpty()) {

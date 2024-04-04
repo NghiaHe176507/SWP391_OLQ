@@ -685,9 +685,26 @@
                                     <a href="<%=request.getContextPath()%>/admin/topic-management" class="btn btn-default">Cancel</a>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </c:if>
+                <%-- Hiển thị thông báo lỗi nếu có --%>
+                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% if (errorMessage != null) { %>
+                <div class="alert alert-danger">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+
+                <%-- Hiển thị thông báo thành công nếu có --%>
+                <% String successMessage = (String) request.getAttribute("successMessage"); %>
+                <% if (successMessage != null) { %>
+                <div class="alert alert-success">
+                    <%= successMessage %>
+                </div>
+                <% } %>
+
                 <div class="col-lg-8 list-topic-container">
                     <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" class="btn btn-success mb-3 create-button" id="toggleFormLink">Create Topic</a>
                     <div class="container-fluid">
