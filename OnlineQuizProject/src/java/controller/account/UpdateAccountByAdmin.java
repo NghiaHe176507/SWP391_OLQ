@@ -20,8 +20,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -67,6 +69,8 @@ public class UpdateAccountByAdmin extends BasedAuthorizationController {
         db.updateAccount(accountNeedToUpdate);
         db.updateAccountInfo(accountInfoNeedToUpdate);
         db.updateRoleFeature(roleFeatureNeedToUpdate);
+        HttpSession session = request.getSession();
+        session.setAttribute("successMessage", "Cập nhật tài khoản thành công.");
         response.sendRedirect(request.getContextPath() + "/admin/account-management");
     }
 
@@ -93,6 +97,7 @@ public class UpdateAccountByAdmin extends BasedAuthorizationController {
         ArrayList<AccountInfo> paginatedList = new ArrayList<>();
 
         if (keyword == null || keyword == "") {
+            Collections.reverse(listAccount);
             totalItems = listAccount.size();
             int totalPages = (int) Math.ceil((double) totalItems / pageSize);
             request.setAttribute("totalPages", totalPages);

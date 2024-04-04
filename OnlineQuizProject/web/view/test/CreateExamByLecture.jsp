@@ -303,9 +303,8 @@
                                 <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>
-                        <div class="login col-md-3">
+                        <div class="login col-md-2">
                             <ul id="nav" class="nav nav-pills">
-                                <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                 <li class="nav-item dropdown">
                                     <div class="circle-background">
                                         <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
@@ -324,12 +323,12 @@
             </div>
         </header>
         <div class="container mt-5 pt-4">
-            <form method="GET" class="mt-5">
+            <form method="GET" class="mt-5" onsubmit="return validateForm()">
                 <div class="mb-3">
                     <label for="numQuestion" class="form-label">Enter number of questions:</label>
                     <input type="number" class="form-control" id="numQuestion" name="numQuestion" required>
                     <input hidden="hidden" type="number" class="form-control" id="groupId" name="groupId" value="${requestScope.groupId}">
-                    <div id="numQuestionError" class="error"></div>
+                    <div id="numQuestionError" class="error" style="color: red;"></div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -357,11 +356,11 @@
 
                         <div class="row">
                             <div class="col-lg-6 mb-3">
-                                <label for="examEndDate" class="form-label">End Exam Date:</label>
+                                <label for="examEndDate" class="form-label">End Exam Date: <span class="required">(*)</span></label>
                                 <input type="date" class="form-control" id="examEndDate" name="examEndDate" min="<%= request.getParameter("examDate") %>" required>
                             </div>
                             <div class="col-lg-6 mb-3">
-                                <label for="examEndTime" class="form-label">End Exam Time:</label>
+                                <label for="examEndTime" class="form-label">End Exam Time: <span class="required">(*)</span></label>
                                 <input type="time" class="form-control" id="examEndTime" name="examEndTime" min="<%= request.getParameter("examTime") %>" required>
                             </div>
                         </div>
@@ -425,6 +424,17 @@
             <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
         </div>
         <script>
+            function validateForm() {
+                var numQuestion = document.getElementById('numQuestion').value;
+
+                if (numQuestion < 1 || numQuestion > 50) {
+                    document.getElementById('numQuestionError').innerText = "Please enter between 1 question and 50 questions.";
+                    return false;
+                } else {
+                    document.getElementById('numQuestionError').innerText = "";
+                    return true;
+                }
+            }
             function addAnswer(questionNum) {
                 var answerContainer = document.getElementById('answerContainer_' + questionNum);
                 var answerCount = answerContainer.querySelectorAll('.answer').length + 1;
@@ -541,10 +551,11 @@
                     var attempt = document.getElementById('attempt').value;
                     var examStartDate = document.getElementById('examStartDate').value;
                     var examStartTime = document.getElementById('examStartTime').value;
+                    var examEndDate = document.getElementById('examEndDate').value;
+                    var examEndTime = document.getElementById('examEndTime').value;
                     var examTimeToTest = document.getElementsByName('examTimeToTest')[0].value;
-                    var isPractice = document.getElementById('isPractice').checked;
 
-                    if (examTitle == "" || attempt == "" || examStartDate == "" || examStartTime == "" || examEndDate == "" || examEndTime == "" || examTimeToTest == "" || !isPractice) {
+                    if (examTitle == "" || attempt == "" || examStartDate == "" || examStartTime == "" || examEndDate == "" || examEndTime == "" || examTimeToTest == "") {
                         alert("Please fill in all the required fields.");
                         return false; // Prevent form submission
                     }
@@ -555,8 +566,8 @@
                         return false; // Prevent form submission
                     }
 
-                    if (attempt == "") {
-                        alert("Please enter the attempt.");
+                    if (attempt == "" || attempt < 0 || attempt > 10) {
+                        alert("Attempt must be a number between 0 and 10");
                         return false; // Prevent form submission
                     }
 
@@ -570,19 +581,29 @@
                         return false; // Prevent form submission
                     }
 
+                    if (examEndDate == "") {
+                        alert("Please select the end date of the exam.");
+                        return false; // Prevent form submission
+                    }
+
+                    if (examEndTime == "") {
+                        alert("Please select the end time of the exam.");
+                        return false; // Prevent form submission
+                    }
+
                     if (examTimeToTest == "") {
                         alert("Please enter the time for the exam in minutes.");
                         return false; // Prevent form submission
                     }
 
-                    if (!isPractice) {
-                        alert("Please indicate if the exam is for practice.");
+                    if (parseInt(examTimeToTest) < 5) {
+                        alert("Exam time to test must be greater than 10 minutes.");
                         return false; // Prevent form submission
                     }
 
-                    // If everything is filled, return true to submit the form
-                    return true;
+                    // If everything is filled, submit the form
                     document.getElementById("questionForm").submit();
+                    return true;
                 }
             }
 

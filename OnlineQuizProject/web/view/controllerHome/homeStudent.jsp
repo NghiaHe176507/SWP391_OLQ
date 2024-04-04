@@ -214,7 +214,7 @@
                             <ul class="subnav">
                                 <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
                                 <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
+                                <li><a href="<%= request.getContextPath() %>/achivement"><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                 <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
                             </ul>
@@ -231,7 +231,7 @@
 
         <div class="topic" id="topicContainer">
             <c:forEach var="register" items="${requestScope.listRegister}" varStatus="loop">
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4">
                     <div class="topic-info" style="width: 18rem;">
                         <div class="topic-info-body">
                             <h4 class="topic-info-title">Class Name: ${register.group.groupName}</h4>

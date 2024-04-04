@@ -13,7 +13,9 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -25,7 +27,23 @@ public class ViewListTopic extends BasedAuthorizationController {
             throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<Topic> listTopic = db.getListTopic();
+        HttpSession session = request.getSession();
 
+        // Lấy thông báo lỗi nếu có
+        String errorMessage = (String) session.getAttribute("errorMessage");
+        if (errorMessage != null) {
+            request.setAttribute("errorMessage", errorMessage);
+            session.removeAttribute("errorMessage"); // Xóa thông báo sau khi đã sử dụng
+        }
+
+// Lấy thông báo thành công nếu có
+        String successMessage = (String) session.getAttribute("successMessage");
+        if (successMessage != null) {
+            request.setAttribute("successMessage", successMessage);
+            session.removeAttribute("successMessage"); // Xóa thông báo sau khi đã sử dụng
+        }
+
+        Collections.reverse(listTopic);
         // Pagination parameters
         int pageSize = 8; // Number of items per page
         int currentPage = 1; // Default current page number

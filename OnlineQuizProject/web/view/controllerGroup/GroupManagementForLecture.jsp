@@ -743,6 +743,25 @@
                         </div>
                     </div>
                 </c:if>
+
+                <%-- Hiển thị thông báo lỗi nếu có --%>
+                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% if (errorMessage != null) { %>
+                <div class="alert alert-danger">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+
+                <%-- Hiển thị thông báo thành công nếu có --%>
+                <% String successMessage = (String) request.getAttribute("successMessage"); %>
+                <% if (successMessage != null) { %>
+                <div class="alert alert-success">
+                    <%= successMessage %>
+                </div>
+                <% } %>
+
+                <%-- Tiếp tục viết mã HTML/Java để hiển thị nội dung của trang --%>
+
                 <div class="col-lg-8 list-group-container"> 
                     <div class="container-fluid">
                         <div style="display: flex;">
