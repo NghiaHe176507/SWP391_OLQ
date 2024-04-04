@@ -11,7 +11,9 @@ import entity.AccountInfo;
 import entity.Result;
 import entity.RoleAccess;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
  *
  * @author nghia
  */
-public class AchivementDetail extends BasedAuthorizationController {
+public class Achivement extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
 
@@ -29,13 +31,9 @@ public class AchivementDetail extends BasedAuthorizationController {
         AccountInfo accountInfo = db.getAccountInfoByAccountId(LoggedUser.getAccountId());
         ArrayList<Result> listResult = db.getResultByStudentId(accountInfo.getAccountInfoId());
 
-
-        request.setAttribute("check", request.getParameter("check"));
-        request.setAttribute("selectedResultId", request.getParameter("resultId"));
-        request.setAttribute("GroupId", request.getParameter("GroupId"));
         request.setAttribute("studentInfoId", accountInfo.getAccountInfoId());
         request.setAttribute("listResult", listResult);
-        request.getRequestDispatcher("view/test/AchivementDetail.jsp").forward(request, response);
+        request.getRequestDispatcher("view/test/Achivement.jsp").forward(request, response);
     }
 
     @Override

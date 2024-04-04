@@ -197,7 +197,7 @@
                 <!-- Search container -->
                 <form action="search" method="GET" class="col-md-6">
                     <div class="search-container" style="width:100%;">
-                        <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                        <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm topic hoặc group...">
                         <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </form>
@@ -214,7 +214,7 @@
                             <ul class="subnav">
                                 <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
                                 <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                <li><a href="<%= request.getContextPath() %>/achivement-detail"><i class="fa-solid fa-trophy"></i> Achievement</a></li>
+                                <li><a href="<%= request.getContextPath() %>/achivement"><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                 <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
 
                             </ul>

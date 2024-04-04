@@ -200,6 +200,10 @@
         <servlet-name>AchivementDetail</servlet-name>
         <servlet-class>controller.test.AchivementDetail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Achivement</servlet-name>
+        <servlet-class>controller.test.Achivement</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -399,6 +403,10 @@
     <servlet-mapping>
         <servlet-name>AchivementDetail</servlet-name>
         <url-pattern>/achivement-detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Achivement</servlet-name>
+        <url-pattern>/achivement</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

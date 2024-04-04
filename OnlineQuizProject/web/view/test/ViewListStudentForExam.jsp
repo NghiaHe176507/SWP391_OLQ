@@ -94,7 +94,7 @@
                     <!-- Search container -->
                     <form action="search" method="GET" class="col-md-7">
                         <div class="search-container">
-                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm topic hoặc group...">
                             <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>

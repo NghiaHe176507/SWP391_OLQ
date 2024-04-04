@@ -2035,7 +2035,10 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
     public ArrayList<Result> getResultByStudentId(int studentId) {
         ArrayList<Result> resultList = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [Result] WHERE [student_id] = ?";
+            String sql =  "SELECT * FROM [Result] " +
+                     "INNER JOIN [Exam] ON [Result].[exam_id] = [Exam].[exam_id] " +
+                     "WHERE [Result].[student_id] = ? " +
+                     "ORDER BY [Exam].[group_id]";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, studentId);
             ResultSet rs = stm.executeQuery();

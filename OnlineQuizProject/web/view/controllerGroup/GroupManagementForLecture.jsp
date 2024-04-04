@@ -678,7 +678,7 @@
 
                         <form action="search" method="GET" class="col-md-6">
                             <div class="search-container" style="width:100%;">
-                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm...">
                                 <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>

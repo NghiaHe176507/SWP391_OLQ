@@ -110,7 +110,7 @@
                     <!-- Search container -->
                     <form action="search" method="GET" class=" col-md-6">
                         <div class="search-container" style="width: 100%;">
-                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
+                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm...">
                             <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
@@ -126,7 +126,6 @@
                                     <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
                                     <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                     <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
-
                                 </ul>
                             </li>
                         </ul>
