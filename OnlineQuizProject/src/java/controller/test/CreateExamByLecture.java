@@ -63,7 +63,10 @@ public class CreateExamByLecture extends BasedAuthorizationController {
             Timestamp startDateExam = ((!request.getParameter("examStartDate").isEmpty() 
                     || !request.getParameter("examStartDate").isBlank()) 
                     ? Timestamp.valueOf(request.getParameter("examStartDate") + " " + examStartTimeParam + ":00") : currentTime);
-            Timestamp endDateExam = Timestamp.valueOf(request.getParameter("examEndDate") + " " + examEndTimeParam + ":00");
+            Timestamp endDateExam = null;
+            if(!request.getParameter("examEndDate").isEmpty()){
+                endDateExam = Timestamp.valueOf(request.getParameter("examEndDate") + " " + examEndTimeParam + ":00");
+            }
 
             int examTimeMinutes = Integer.parseInt(request.getParameter("examTimeToTest"));
             long milliseconds = examTimeMinutes * 60 * 1000;

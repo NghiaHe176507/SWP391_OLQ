@@ -609,7 +609,8 @@
                         document.getElementById("questionForm").submit();
                         return true;
                     }
-
+                    document.getElementById("questionForm").submit();
+                    return true;
                 }
             }
 
