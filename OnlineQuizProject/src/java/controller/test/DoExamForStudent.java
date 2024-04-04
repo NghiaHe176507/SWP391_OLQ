@@ -45,30 +45,36 @@ public class DoExamForStudent extends BasedAuthorizationController {
             throws ServletException, IOException {
 
         String examIdParam = request.getParameter("examId");
-        String examTime = request.getParameter("examTime");
-        request.setAttribute("examTime", examTime);
+        
 
-        int examId = Integer.parseInt(examIdParam);
-        ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(examId);
-        request.setAttribute("listQuestion", listExamQuestionMapping);
+            String examTime = request.getParameter("examTime");
+            request.setAttribute("examTime", examTime);
 
-        ArrayList<ArrayList<OptionAnswer>> optionAnswersForEachQuestion = new ArrayList<>();
+            int examId = Integer.parseInt(examIdParam);
+            ArrayList<ExamQuestionMapping> listExamQuestionMapping = db.getListExamQuestionMappingByExamId(examId);
+            request.setAttribute("listQuestion", listExamQuestionMapping);
 
-        for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
-            ArrayList<OptionAnswer> listOptionAnswerByQuestion = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
-            optionAnswersForEachQuestion.add(listOptionAnswerByQuestion);
-        }
-        Result studentDefaultResult = new Result();
-        studentDefaultResult.setExam(examDb.getById(String.valueOf(examId)));
-        studentDefaultResult.setScore(0.0);
-        studentDefaultResult.setStudentInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
-        studentDefaultResult = db.createNewResult(studentDefaultResult);
-        studentDefaultResult = resultDB.getById(String.valueOf(studentDefaultResult.getResultId()));
-        request.setAttribute("attemptNumber", studentDefaultResult.getAttemptNumber());
-        request.setAttribute("optionAnswersForEachQuestion", optionAnswersForEachQuestion);
-        request.setAttribute("examId", examId);
-        request.setAttribute("timeExam", examDb.getById(String.valueOf(examId)).getExamTime());
-        request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
+            ArrayList<ArrayList<OptionAnswer>> optionAnswersForEachQuestion = new ArrayList<>();
+
+            for (ExamQuestionMapping examQuestionMapping : listExamQuestionMapping) {
+                ArrayList<OptionAnswer> listOptionAnswerByQuestion = db.getListOptionAnswerByQuestionId(examQuestionMapping.getQuestion().getQuestionId());
+                optionAnswersForEachQuestion.add(listOptionAnswerByQuestion);
+            }
+            
+            Result studentDefaultResult = new Result();
+            studentDefaultResult.setExam(examDb.getById(String.valueOf(examId)));
+            studentDefaultResult.setScore(0.0);
+            studentDefaultResult.setStudentInfo(db.getAccountInfoByAccountId(LoggedUser.getAccountId()));
+            if (db.checkAttemptLimit(Integer.parseInt(examIdParam), db.getAccountInfoByAccountId(LoggedUser.getAccountId()).getAccountInfoId())) {
+            studentDefaultResult = db.createNewResult(studentDefaultResult);
+            studentDefaultResult = resultDB.getById(String.valueOf(studentDefaultResult.getResultId()));
+            request.setAttribute("attemptNumber", studentDefaultResult.getAttemptNumber());
+            }
+            request.setAttribute("optionAnswersForEachQuestion", optionAnswersForEachQuestion);
+            request.setAttribute("examId", examId);
+            request.setAttribute("timeExam", examDb.getById(String.valueOf(examId)).getExamTime());
+            request.getRequestDispatcher("view/test/DoExamForStudent.jsp").forward(request, response);
+        
     }
 
     @Override

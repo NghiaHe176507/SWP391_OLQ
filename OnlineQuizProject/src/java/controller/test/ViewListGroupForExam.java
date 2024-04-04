@@ -4,12 +4,14 @@
  */
 package controller.test;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import entity.Account;
 import entity.AccountInfo;
 import entity.Exam;
 import entity.Group;
+import entity.RoleAccess;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
  *
  * @author hatua
  */
-public class ViewListGroupForExam extends BasedRequiredAuthenticationController {
+public class ViewListGroupForExam extends BasedAuthorizationController {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
@@ -37,15 +39,16 @@ public class ViewListGroupForExam extends BasedRequiredAuthenticationController 
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
     }
+
 
 }

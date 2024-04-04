@@ -134,25 +134,27 @@
                         <tr>
                             <th>No</th>
                             <th>Student Name</th>
-                            <th>Student DOB</th>
-                            <th>Registered Date</th>
+                            <th>Number Attempt</th>
                             <!-- Add a header for the dropdown -->
                             <th>More</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="list" items="${requestScope.listOfStudentHasTest}" varStatus="loop">
+                        <form action="view-list-exam" method="POST">
+                            <input hidden="hidden" name="studentID" value="${list.studentInfo.accountInfoId}">
+                            <input hidden="hidden" name="examId" value="${examId}">
                             <tr>
                                 <td>${loop.index + 1}</td>
                                 <td>${list.studentInfo.fullName}</td>
-                                <td>${list.studentInfo.dob}</td>
-                                <td>${list.registerDate}</td>
+                                <td>${listAttempStudentTake.get(loop.index)}</td>
                                 <!-- Add a cell for the dropdown -->
                                 <td>
-                                    <a href="<%= request.getContextPath() %>/view-list-exam?studentID=${list.studentInfo.accountInfoId}">Show More</a>                             
+                                    <button type="submit" class="btn btn-primary">Show More</button>                           
                                 </td>
                             </tr>
-                        </c:forEach>
+                        </form>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>

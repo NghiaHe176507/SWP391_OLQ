@@ -72,24 +72,21 @@ public class TestDBContext extends DBContext<OptionAnswer> {
         return listQuestion;
     }
 
-    public ArrayList<Result> getListExaminationOfStudent(int studentID) {
+    public ArrayList<Result> getListExaminationOfStudent(int studentID, int examID) {
         ArrayList<Result> listStudentExamResult = new ArrayList<>();
         try {
             String sql = """
-                        SELECT [result_id]
-                              ,t.topic_name
-                              ,acI.fullname
-                              ,[score]
-                              ,[attempt_number]
-                              ,e.isPractice
-                          FROM [Result] r INNER JOIN Exam e ON r.exam_id = e.exam_id
-                          INNER JOIN Account a ON r.student_id = a.account_id
-                          INNER JOIN AccountInfo acI ON a.account_id = acI.account_id
-                          INNER JOIN [Group] g ON e.group_id = g.group_id
-                          INNER JOIN [Topic] t ON g.topic_id = t.topic_id
-                          WHERE acI.accountInfo_id = ?""";
+                         SELECT [result_id]
+                               ,[exam_id]
+                               ,[student_id]
+                               ,[score]
+                               ,[comment_content]
+                               ,[attempt_number]
+                           FROM [Result]
+                           WHERE [student_id]=? AND [exam_id]=?""";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, studentID);
+            stm.setInt(2, examID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Result r = resultDB.getById(String.valueOf(rs.getInt("result_id")));

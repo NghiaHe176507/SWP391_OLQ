@@ -138,96 +138,100 @@
             <div class="row">
                 <div class="space"></div>
             </div>
-            <form>
-                <!-- Table for displaying class information -->
-                <table class="table class-table">
-                    <thead>
-                        <tr style="font-size: 30px;">
-                            <th scope="col">Group Management</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="group" items="${requestScope.listGroup}">
-                            <c:if test="${group.groupId == groupId}">
-                                <tr>
-                                    <td>
-                                        <p><strong>Group Name: </strong> ${group.groupName}</p>
-                                        <p><strong>Topic Name: </strong>${group.topic.topicName}</p>
-                                        <p><strong>Lecture: </strong>${group.lectureInfo.fullName}</p>
-                                        <p><strong>Status: </strong>${group.status.statusName}</p>
-                                    </td>
-                                </tr>
-                            </c:if>
-                        </c:forEach>
-                    </tbody>
-                </table>
 
-                <!-- Table for listing exams -->
-                <table class="table exam-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Exam Title</th>
-                            <th scope="col">StartDate</th>
-                            <th scope="col">EndDate</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Status</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
-                            <c:if test="${exam.group.groupId == groupId}">
-                                <tr>
-                                    <td>${exam.examTitle}</td>
-                                    <td>${exam.examStartDate}</td>
-                                    <td>${exam.examEndDate}</td>
-                                    <td>${exam.examTime}</td>
-                                    <td>${exam.status.statusName}</td>
-                                    <td><a href="<%= request.getContextPath() %>/show-result-test-list-student?groupID=${groupId}"class="btn btn-primary">View Detail</a></td>
-                                </tr>
-                            </c:if>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </form>
+            <!-- Table for displaying class information -->
+            <table class="table class-table">
+                <thead>
+                    <tr style="font-size: 30px;">
+                        <th scope="col">Group Management</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="group" items="${requestScope.listGroup}">
+                        <c:if test="${group.groupId == groupId}">
+                            <tr>
+                                <td>
+                                    <p><strong>Group Name: </strong> ${group.groupName}</p>
+                                    <p><strong>Topic Name: </strong>${group.topic.topicName}</p>
+                                    <p><strong>Lecture: </strong>${group.lectureInfo.fullName}</p>
+                                    <p><strong>Status: </strong>${group.status.statusName}</p>
+                                </td>
+                            </tr>
+                        </c:if>
+                    </c:forEach>
+                </tbody>
+            </table>
 
+            <!-- Table for listing exams -->
+            <table class="table exam-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Exam Title</th>
+                        <th scope="col">StartDate</th>
+                        <th scope="col">EndDate</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Status</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
+                        <c:if test="${exam.group.groupId == groupId}">
+                        <form action="show-result-test-list-student" method="POST">
+                            <input hidden="hidden" name="groupID" value="${groupId}">
+                            <input hidden="hidden" name="examId" value="${exam.examId}">
+                            <tr>
+                                <td>${exam.examTitle}</td>
+                                <td>${exam.examStartDate}</td>
+                                <td>${exam.examEndDate}</td>
+                                <td>${exam.examTime}</td>
+                                <td>${exam.status.statusName}</td>
+                                <td><button type="submit" class="btn btn-primary">View Detail</button></td>
+                            </tr>
+                        </form>
+                    </c:if>
+                </c:forEach>
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+
+
+    <!-- Footer section -->
+    <div id="footer">
+        <!-- Social Icons -->
+        <div class="socials-list">
+            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-solid fa-bell"></i></a>
         </div>
+        <!-- Slogan -->
+        <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+    </div>
+    <!-- End of footer section -->
 
+    <!-- End of main container div -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the logo element
+            var logo = document.querySelector('.logo a');
 
-        <!-- Footer section -->
-        <div id="footer">
-            <!-- Social Icons -->
-            <div class="socials-list">
-                <a href=""><i class="fa-brands fa-facebook"></i></a>
-                <a href=""><i class="fa-brands fa-instagram"></i></a>
-                <a href=""><i class="fa-solid fa-bell"></i></a>
-            </div>
-            <!-- Slogan -->
-            <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
-        </div>
-        <!-- End of footer section -->
+            // Add click event listener to the logo
+            logo.addEventListener('click', function (event) {
+                // Prevent the default action of the link
+                event.preventDefault();
 
-        <!-- End of main container div -->
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Get the logo element
-                var logo = document.querySelector('.logo a');
+                // Get the base URL
+                var baseUrl = "<%= request.getContextPath() %>";
 
-                // Add click event listener to the logo
-                logo.addEventListener('click', function (event) {
-                    // Prevent the default action of the link
-                    event.preventDefault();
-
-                    // Get the base URL
-                    var baseUrl = "<%= request.getContextPath() %>";
-
-                    // Navigate to the home page
-                    window.location.href = baseUrl + "/home";
-                });
+                // Navigate to the home page
+                window.location.href = baseUrl + "/home";
             });
-        </script>
+        });
+    </script>
 
-    </body>
+</body>
 
 </html>
 

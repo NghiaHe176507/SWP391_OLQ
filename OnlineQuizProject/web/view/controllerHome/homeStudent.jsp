@@ -238,7 +238,7 @@
                             <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.group.topic.topicName}</h6>
                             <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.group.lectureInfo.fullName}</h6>
                             <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
-                            <form action="viewGroupDetail" method="GET"> 
+                            <form action="viewGroupDetail" method="POST"> 
                                 <div class="row">
                                     <div class="row" style="padding-left: 40px;margin-bottom: 5px;">
                                         <button type="submit" class="btn btn-1 color-black topic-info-link">

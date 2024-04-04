@@ -2013,4 +2013,26 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public ArrayList<Question> getListQuestionInQuestionBankByTopicId(int topicID) {
+        ArrayList<Question> listQuestion = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [question_id]
+                         FROM [Question] 
+                         WHERE [inBank] = 'True' AND [topic_id] = ?""";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, topicID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Question question = new Question();
+                question = questionDB.getById(String.valueOf(rs.getInt("question_id")));
+                listQuestion.add(question);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listQuestion;
+    }
 }

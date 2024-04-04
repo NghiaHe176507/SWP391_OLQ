@@ -5,12 +5,14 @@
 
 package controller.group;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import dal.GroupDBContext;
 import entity.Account;
 import entity.Group;
 import entity.Register;
+import entity.RoleAccess;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,12 +21,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  *
  * @author PC
  */
-public class UnenrollGroupForStudent extends BasedRequiredAuthenticationController {
+public class UnenrollGroupForStudent extends BasedAuthorizationController {
 
     ControllerDBContext db = new ControllerDBContext();
     GroupDBContext GroupDB = new GroupDBContext();
@@ -41,11 +44,11 @@ public class UnenrollGroupForStudent extends BasedRequiredAuthenticationControll
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);
     }
 

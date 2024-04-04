@@ -5,23 +5,26 @@
 
 package controller.group;
 
+import controller.authentication.BasedAuthorizationController;
 import controller.authentication.BasedRequiredAuthenticationController;
 import dal.ControllerDBContext;
 import dal.GroupDBContext;
 import entity.Account;
 import entity.Group;
+import entity.RoleAccess;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
  * @author PC
  */
 @WebServlet(name="CreateGroupInviteCode", urlPatterns={"/group-management/create-invite-code"})
-public class CreateGroupInviteCode extends BasedRequiredAuthenticationController {
+public class CreateGroupInviteCode extends BasedAuthorizationController {
    
     ControllerDBContext db = new ControllerDBContext();
     GroupDBContext GroupDB = new GroupDBContext();
@@ -40,11 +43,11 @@ public class CreateGroupInviteCode extends BasedRequiredAuthenticationController
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);    }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles) throws ServletException, IOException {
         processRequest(request, response, LoggedUser);    }
 
 }

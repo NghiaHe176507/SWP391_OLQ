@@ -84,30 +84,29 @@
                                     </div>
                                     <div class="col-md-6" style="padding-left: 120px;">
                                         <p><strong>Assignment:</strong> ${resultTotalExam.exam.group.topic.topicName}</p>
-                                        <p><strong>Submitted Date:</strong> ${resultTotalExam.exam.examEndDate}</p>
+                                        <p><strong>Submitted Date:</strong> <p id="current-date-time"></p></p>
                                         <p><strong>Status:</strong> ${resultTotalExam.exam.status.statusName}</p>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="grade">
                                     <h3>Grading Details</h3>
-                                    <p><strong>Time Exam</strong> ${resultTotalExam.exam.examTime}</p>
                                     <p><strong>Score:</strong> ${resultTotalExam.score}</p>
                                     <p><strong>Comments:</strong> 
-                                    <c:choose>
-                                        <c:when test="${resultTotalExam.score >= 9}">
-                                            Excellent performance! Keep up the great work!
-                                        </c:when>
-                                        <c:when test="${resultTotalExam.score >= 8}">
-                                            Well done! You've achieved a commendable score.
-                                        </c:when>
-                                        <c:when test="${resultTotalExam.score >= 4}">
-                                            You've passed the exam. Keep practicing to improve further.
-                                        </c:when>
-                                        <c:otherwise>
-                                            Your score is below passing. Keep studying and aim for improvement.
-                                        </c:otherwise>
-                                    </c:choose>
+                                        <c:choose>
+                                            <c:when test="${resultTotalExam.score >= 9}">
+                                                Excellent performance! Keep up the great work!
+                                            </c:when>
+                                            <c:when test="${resultTotalExam.score >= 8}">
+                                                Well done! You've achieved a commendable score.
+                                            </c:when>
+                                            <c:when test="${resultTotalExam.score >= 4}">
+                                                You've passed the exam. Keep practicing to improve further.
+                                            </c:when>
+                                            <c:otherwise>
+                                                Your score is below passing. Keep studying and aim for improvement.
+                                            </c:otherwise>
+                                        </c:choose>
                                     </p>
                                 </div>
                             </div>
@@ -160,6 +159,21 @@
                     });
                 });
             </script>
+            <script>
+        function displayCurrentDateTime() {
+            var currentTime = new Date();
+            var day = currentTime.getDate();
+            var month = currentTime.getMonth() + 1; // Tháng bắt đầu từ 0
+            var year = currentTime.getFullYear();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+            var formattedDateTime = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+            document.getElementById("current-date-time").innerText = formattedDateTime;
+        }
+        // Gọi hàm displayCurrentDateTime() khi trang được tải
+        window.onload = displayCurrentDateTime;
+    </script>
     </body>
 
 </html>

@@ -27,10 +27,11 @@ public class ViewResultTestStudent extends BasedAuthorizationController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser, ArrayList<RoleAccess> roles)
             throws ServletException, IOException {
         int studentID = Integer.parseInt(request.getParameter("studentID"));
+        int examId = Integer.parseInt(request.getParameter("examId"));
         response.setContentType("text/html;charset=UTF-8");
 
         TestDBContext test = new TestDBContext();
-        ArrayList<Result> listExaminationOfStudent = test.getListExaminationOfStudent(studentID);
+        ArrayList<Result> listExaminationOfStudent = test.getListExaminationOfStudent(studentID,examId);
         request.setAttribute("listExaminationOfStudent", listExaminationOfStudent);
         request.getRequestDispatcher("view/test/ViewListExamTest.jsp").forward(request, response);
     }
