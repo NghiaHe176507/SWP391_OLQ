@@ -1022,6 +1022,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                          ,acI.fullname
                          ,[score]
                          ,e.isPractice
+                         ,e.exam_title 
                         FROM [Result] r INNER JOIN Exam e ON r.exam_id = e.exam_id
                         INNER JOIN Account a ON r.student_id = a.account_id
                         INNER JOIN AccountInfo acI ON a.account_id = acI.account_id
@@ -1038,6 +1039,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
                 topic.setTopicName(rs.getString("topic_name"));
                 Exam exam = new Exam();
                 exam.setIsPractice(rs.getBoolean("isPractice"));
+                exam.setExamTitle(rs.getString("exam_title"));
                 Result result = new Result();
                 result.setExam(exam);
                 result.setStudentInfo(acc);
@@ -1050,22 +1052,65 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return resultOfStudents;
     }
 
+    public ArrayList<Question> getListQuestion() {
+        ArrayList<Question> questionList = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [question_id]
+                               ,[topic_id]
+                               ,[question_content]
+                               ,[inBank]
+                               ,[question_answer_detail]
+                           FROM [Question] """;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Question question = new Question();
+                question.setQuestionId(rs.getInt("question_id"));
+                Topic t = new Topic();
+                t.setTopicId(rs.getInt("topic_id"));
+                question.setTopic(t);
+                question.setQuestionContent(rs.getString("question_content"));
+                question.setInBank(rs.getBoolean("inBank"));
+                question.setQuestionAnswerDetail(rs.getString("question_answer_detail"));
+                questionList.add(question);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questionList;
+    }
+
     public ArrayList<Register> getListAccountRegistedExamByGroup(int groupID) {
         ArrayList<Register> listRegister = new ArrayList<>();
         try {
             String sql = """
-                         SELECT [register_id]
-                               ,[register_date]
-                               ,[student_id]
-                               ,[group_id]
-                           FROM [Register]
-                           WHERE [group_id]=?""";
+                         SELECT DISTINCT [register_id]
+                                        ,[register_date]
+                                        ,r.[student_id]
+                                        ,acc.fullname
+                                        ,r.[group_id]
+                                        ,acc.dob
+                         FROM [Register] r INNER JOIN Result re ON r.student_id = re.student_id
+                         INNER JOIN [AccountInfo] acc ON re.student_id = acc.accountInfo_id
+                         WHERE r.[group_id]= ?""";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, groupID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Register newRegister = registerDB.getById(String.valueOf(rs.getInt("register_id")));
-                listRegister.add(newRegister);
+                Register register = new Register();
+                register.setRegisterId(rs.getInt("register_id"));
+                register.setRegisterDate(rs.getDate("register_date"));
+                AccountInfo acc = new AccountInfo();
+                acc.setAccountInfoId(rs.getInt("student_id"));
+                acc.setFullName(rs.getString("fullname"));
+                acc.setDob(rs.getDate("dob"));
+                register.setStudentInfo(acc);
+                Group group = new Group();
+                group.setGroupId(rs.getInt("group_id"));
+                register.setGroup(group);
+                listRegister.add(register);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);

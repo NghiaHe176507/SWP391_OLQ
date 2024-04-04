@@ -28,6 +28,7 @@ public class Result extends BaseEntity {
         this.commentContent = commentContent;
         this.attemptNumber = attemptNumber;
     }
+    
 
     public int getResultId() {
         return resultId;
