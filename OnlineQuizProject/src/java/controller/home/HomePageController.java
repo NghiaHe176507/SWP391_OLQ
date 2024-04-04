@@ -11,6 +11,7 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -121,6 +122,17 @@ public class HomePageController extends BasedRequiredAuthenticationController {
                 request.getRequestDispatcher("view/controllerHome/homeLecture.jsp").forward(request, response);
                 break;
             case 3:
+                HttpSession session = request.getSession();
+                String successMessage = (String) session.getAttribute("successMessage");
+                if (successMessage != null) {
+                    request.setAttribute("successMessage", successMessage);
+                    session.removeAttribute("successMessage"); // Xóa thông báo sau khi đã sử dụng
+                }
+                String errorMessage = (String) session.getAttribute("errorMessage");
+                if (errorMessage != null) {
+                    request.setAttribute("errorMessage", errorMessage);
+                    session.removeAttribute("errorMessage"); // Xóa thông báo sau khi đã sử dụng
+                }
                 String keywords = request.getParameter("searchQuery");
                 ArrayList<Group> searchResults = db.searchGroup(keywords);
                 request.setAttribute("searchResults", searchResults);

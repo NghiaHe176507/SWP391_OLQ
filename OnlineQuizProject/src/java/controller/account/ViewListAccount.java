@@ -14,6 +14,7 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -27,6 +28,19 @@ public class ViewListAccount extends BasedAuthorizationController {
             throws ServletException, IOException {
         ControllerDBContext db = new ControllerDBContext();
         ArrayList<AccountInfo> listAccount = db.getListAccountWithInfo();
+
+        HttpSession session = request.getSession();
+        String errorMessage = (String) session.getAttribute("errorMessage");
+        if (errorMessage != null) {
+            request.setAttribute("errorMessage", errorMessage);
+            session.removeAttribute("errorMessage");
+        }
+
+        String successMessage = (String) session.getAttribute("successMessage");
+        if (successMessage != null) {
+            request.setAttribute("successMessage", successMessage);
+            session.removeAttribute("successMessage"); 
+        }
 //        ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(listAccount);
         String keyword = request.getParameter("query");
 
@@ -63,8 +77,6 @@ public class ViewListAccount extends BasedAuthorizationController {
         }
 
         request.setAttribute("paginatedList", paginatedList);
-//        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
-//        request.setAttribute("listAccountWithInfo", listAccount);
         ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(paginatedList);
         request.setAttribute("listAccountWithInfo", listAccount);
         request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);

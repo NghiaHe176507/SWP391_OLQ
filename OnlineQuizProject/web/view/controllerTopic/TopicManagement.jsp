@@ -685,20 +685,46 @@
                                     <a href="<%=request.getContextPath()%>/admin/topic-management" class="btn btn-default">Cancel</a>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </c:if>
+                <%-- Hiển thị thông báo lỗi nếu có --%>
+                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% if (errorMessage != null) { %>
+                <div class="alert alert-danger">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+
+                <%-- Hiển thị thông báo thành công nếu có --%>
+                <% String successMessage = (String) request.getAttribute("successMessage"); %>
+                <% if (successMessage != null) { %>
+                <div class="alert alert-success">
+                    <%= successMessage %>
+                </div>
+                <% } %>
+
                 <div class="col-lg-8 list-topic-container">
                     <a href="<%=request.getContextPath()%>/admin/topic-management/create-topic" class="btn btn-success mb-3 create-button" id="toggleFormLink">Create Topic</a>
                     <div class="container-fluid">
                         <h2 class="mb-4">View List Topic</h2>
                         <table class="table table-striped" id="myTable">
+
                             <thead class="thead-dark">
                                 <tr>
                                     <th>Topic Id</th>
                                     <th>Topic Name</th>
                                     <th>Action</th>
                                 </tr>
+                                <tr>
+                            <form style="width: 100%;" action="<%=request.getContextPath()%>/admin/topic-management" method="POST">
+                                <div style="width: 100%;" class="search-container">
+                                    <input name="query" type="text" id="searchInput" placeholder="Vui lòng nhập topic..." style=" border: 1px solid #000;">
+                                    <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </div>
+                            </form>
+                            </tr>
                             </thead>
                             <tbody id="tableBody">
                                 <c:forEach items="${requestScope.listTopic}" var="topic">
@@ -713,27 +739,27 @@
                             </tbody>
                         </table>
                         <div class="pagination-container">
-                            <c:if test="${not empty totalPages}">
-                                <c:if test="${currentPage > 1}">
-                                    <a href="?page=1">&laquo; First</a>
-                                    <a href="?page=${currentPage - 1}">&lsaquo; Previous</a>
+                                <c:if test="${not empty totalPages}">
+                                    <c:if test="${currentPage > 1}">
+                                        <a href="?query=${param.query}&page=1">&laquo; First</a>
+                                        <a href="?query=${param.query}&page=${currentPage - 1}">&lsaquo; Previous</a>
+                                    </c:if>
+                                    <c:forEach var="pageNum" begin="1" end="${totalPages}">
+                                        <c:choose>
+                                            <c:when test="${pageNum == currentPage}">
+                                                <span class="current-page">${pageNum}</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="?query=${param.query}&page=${pageNum}">${pageNum}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <c:if test="${currentPage < totalPages}">
+                                        <a href="?query=${param.query}&page=${currentPage + 1}">Next &rsaquo;</a>
+                                        <a href="?query=${param.query}&page=${totalPages}">Last &raquo;</a>
+                                    </c:if>
                                 </c:if>
-                                <c:forEach var="pageNum" begin="1" end="${totalPages}">
-                                    <c:choose>
-                                        <c:when test="${pageNum == currentPage}">
-                                            <span class="current-page">${pageNum}</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="?page=${pageNum}">${pageNum}</a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                                <c:if test="${currentPage < totalPages}">
-                                    <a href="?page=${currentPage + 1}">Next &rsaquo;</a>
-                                    <a href="?page=${totalPages}">Last &raquo;</a>
-                                </c:if>
-                            </c:if>
-                        </div>
+                            </div>
 
                     </div>
                 </div>

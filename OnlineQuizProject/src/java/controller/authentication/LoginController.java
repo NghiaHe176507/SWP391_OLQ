@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet {
         param.setPassword(password);
         Account loggedUser = db.getAccount(mail, password);
         
-          if ((loggedUser == null)||("Closed".equals(loggedUser.getAccountStatus()))) {
+          if ((loggedUser == null)||("Closed".equals(loggedUser.getAccountStatus()))||("Pending".equals(loggedUser.getAccountStatus()))) {
             request.setAttribute("checkAuthentication", "F");
             request.getRequestDispatcher("view/authentication/login.jsp").forward(request, response);
         } else {

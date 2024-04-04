@@ -678,7 +678,7 @@
 
                         <form action="search" method="GET" class="col-md-6">
                             <div class="search-container" style="width:100%;">
-                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm...">
                                 <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>
@@ -743,6 +743,25 @@
                         </div>
                     </div>
                 </c:if>
+
+                <%-- Hiển thị thông báo lỗi nếu có --%>
+                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% if (errorMessage != null) { %>
+                <div class="alert alert-danger">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+
+                <%-- Hiển thị thông báo thành công nếu có --%>
+                <% String successMessage = (String) request.getAttribute("successMessage"); %>
+                <% if (successMessage != null) { %>
+                <div class="alert alert-success">
+                    <%= successMessage %>
+                </div>
+                <% } %>
+
+                <%-- Tiếp tục viết mã HTML/Java để hiển thị nội dung của trang --%>
+
                 <div class="col-lg-8 list-group-container"> 
                     <div class="container-fluid">
                         <div style="display: flex;">
@@ -773,6 +792,8 @@
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Action</span></td>
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
+
                                 </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -812,6 +833,15 @@
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </c:if>
+                                        </td>
+                                        <td>
+                                            <form action="viewGroupDetailForLecture" method="POST"> 
+                                                <button type="submit" class="btn btn-secondary">
+                                                    More Details
+                                                </button>
+                                                <input type="hidden" name="groupId" value="${group.groupId}" />
+                                                <input type="hidden" name="topicId" value="${group.topic.topicId}" />
+                                            </form>
                                         </td>
                                     </tr>
                                 </c:forEach>

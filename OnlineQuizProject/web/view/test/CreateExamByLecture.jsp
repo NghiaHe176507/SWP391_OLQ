@@ -299,13 +299,12 @@
 
                         <form action="search" method="GET" class="col-md-6">
                             <div class="search-container" style="width: 100%">
-                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi, topic hoặc group...">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm topic hoặc group...">
                                 <button id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>
-                        <div class="login col-md-3">
+                        <div class="login col-md-2">
                             <ul id="nav" class="nav nav-pills">
-                                <li><a href="#"><i class="fa-regular fa-bell"></i> </a></li>
                                 <li class="nav-item dropdown">
                                     <div class="circle-background">
                                         <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
@@ -313,7 +312,6 @@
                                     <ul class="subnav">
                                         <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
                                         <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                        <li><a><i class="fa-solid fa-trophy"></i> Achievement</a></li>
                                         <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
                                     </ul>
                                 </li>
@@ -427,9 +425,8 @@
         <script>
             function validateForm() {
                 var numQuestion = document.getElementById('numQuestion').value;
-
-                if (numQuestion < 1) {
-                    document.getElementById('numQuestionError').innerText = "Please enter at least 1 question.";
+                if (numQuestion < 1 || numQuestion > 50) {
+                    document.getElementById('numQuestionError').innerText = "Please enter between 1 question and 50 questions.";
                     return false;
                 } else {
                     document.getElementById('numQuestionError').innerText = "";
@@ -567,7 +564,8 @@
                         return false; // Prevent form submission
                     }
 
-                    if (attempt == "" || parseInt(attempt) < 0 || parseInt(attempt)) {
+
+                    if (attempt == "" || attempt < 0 || attempt > 10) {
                         alert("Attempt must be a number between 0 and 10");
                         return false; // Prevent form submission
                     }
@@ -597,7 +595,8 @@
                         return false; // Prevent form submission
                     }
 
-                    if (parseInt(examTimeToTest) <= 10) {
+
+                    if (parseInt(examTimeToTest) < 5) {
                         alert("Exam time to test must be greater than 10 minutes.");
                         return false; // Prevent form submission
                     }

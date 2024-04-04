@@ -13,7 +13,9 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -28,9 +30,32 @@ public class CreateTopic extends BasedAuthorizationController {
         Topic newTopic = new Topic();
         String topicName = request.getParameter("topicName");
 
-        newTopic.setTopicName(topicName);
-        db.createNewTopic(newTopic);
+        ArrayList<Topic> listTopic = db.getListTopic();
+
+        boolean topicExists = false;
+        for (Topic existingTopic : listTopic) {
+            if (existingTopic.getTopicName().equalsIgnoreCase(topicName)) {
+                // Nếu chủ đề đã tồn tại, đặt biến topicExists thành true và thoát vòng lặp
+                topicExists = true;
+                break;
+            }
+        }
+
+        if (topicExists) {
+            HttpSession session = request.getSession();
+            session.setAttribute("errorMessage", "Chủ đề đã tồn tại trong danh sách.");
+        } else {
+            // Nếu chủ đề không tồn tại, tạo mới và thêm vào cơ sở dữ liệu
+            newTopic.setTopicName(topicName);
+            db.createNewTopic(newTopic);
+
+            HttpSession session = request.getSession();
+            session.setAttribute("successMessage", "Chủ đề đã được thêm thành công.");
+        }
+
+// Sau khi xử lý xong, chuyển hướng đến trang quản lý chủ đề
         response.sendRedirect(request.getContextPath() + "/admin/topic-management");
+
     }
 
     @Override
@@ -38,12 +63,12 @@ public class CreateTopic extends BasedAuthorizationController {
         ControllerDBContext db = new ControllerDBContext();
 //        ArrayList<Topic> listTopic = db.getListTopic();
 //        request.setAttribute("listTopic", listTopic);
-        
-        ArrayList<Topic> listTopic = db.getListTopic();
 
+        ArrayList<Topic> listTopic = db.getListTopic();
+        Collections.reverse(listTopic);
         // Pagination parameters
         int pageSize = 8;
-        int currentPage = 1; 
+        int currentPage = 1;
 
         if (request.getParameter("page") != null) {
             currentPage = Integer.parseInt(request.getParameter("page"));

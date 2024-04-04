@@ -2035,4 +2035,43 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         }
         return listQuestion;
     }
+    public ArrayList<String> getListEmail() {
+        ArrayList<String> listEmail = new ArrayList<>();
+        try {
+            String sql = "SELECT [mail] FROM [Account]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                String email = rs.getString("mail");
+                listEmail.add(email);
+            }
+            rs.close();
+            stm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listEmail;
+    }
+
+    public ArrayList<Result> getResultByStudentId(int studentId) {
+        ArrayList<Result> resultList = new ArrayList<>();
+        try {
+            String sql =  "SELECT * FROM [Result] " +
+                     "INNER JOIN [Exam] ON [Result].[exam_id] = [Exam].[exam_id] " +
+                     "WHERE [Result].[student_id] = ? " +
+                     "ORDER BY [Exam].[group_id]";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, studentId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Result result = new Result();
+                result = resultDB.getById(String.valueOf(rs.getString("result_id")));
+                resultList.add(result);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ControllerDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultList;
+    }
+
 }

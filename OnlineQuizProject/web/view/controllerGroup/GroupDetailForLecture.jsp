@@ -110,7 +110,7 @@
                     <!-- Search container -->
                     <form action="search" method="GET" class=" col-md-6">
                         <div class="search-container" style="width: 100%;">
-                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
+                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm...">
                             <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
@@ -126,7 +126,6 @@
                                     <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
                                     <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                     <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
-
                                 </ul>
                             </li>
                         </ul>
@@ -162,74 +161,83 @@
                 </tbody>
             </table>
 
-            <!-- Table for listing exams -->
-            <table class="table exam-table">
-                <thead>
-                    <tr>
-                        <th scope="col">Exam Title</th>
-                        <th scope="col">StartDate</th>
-                        <th scope="col">EndDate</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Status</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
-                        <c:if test="${exam.group.groupId == groupId}">
-                        <form action="show-result-test-list-student" method="POST">
-                            <input hidden="hidden" name="groupID" value="${groupId}">
-                            <input hidden="hidden" name="examId" value="${exam.examId}">
-                            <tr>
-                                <td>${exam.examTitle}</td>
-                                <td>${exam.examStartDate}</td>
-                                <td>${exam.examEndDate}</td>
-                                <td>${exam.examTime}</td>
-                                <td>${exam.status.statusName}</td>
-                                <td><button type="submit" class="btn btn-primary">View Detail</button></td>
-                            </tr>
-                        </form>
-                    </c:if>
-                </c:forEach>
-                </tbody>
-            </table>
-        </form>
+        <!-- Table for listing exams -->
+        <table class="table exam-table">
+            <thead>
+                <tr>
+                    <th scope="col">Exam Title</th>
+                    <th scope="col">StartDate</th>
+                    <th scope="col">EndDate</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:choose>
+                    <c:when test="${empty requestScope.listExamOfGroup}">
+                        <tr>
+                            <td colspan="6">There are no ongoing activities yet.</td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
+                            <c:if test="${exam.group.groupId == groupId}">
+                            <form action="show-result-test-list-student" method="POST">
+                                <input hidden="hidden" name="groupID" value="${groupId}">
+                                <input hidden="hidden" name="examId" value="${exam.examId}">
+                                <tr>
+                                    <td>${exam.examTitle}</td>
+                                    <td>${exam.examStartDate}</td>
+                                    <td>${exam.examEndDate}</td>
+                                    <td>${exam.examTime}</td>
+                                    <td>${exam.status.statusName}</td>
+                                    <td><button type="submit" class="btn btn-primary">View Detail</button></td>
+                                </tr>
+                            </form>
+                        </c:if>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+            </tbody>
+        </table>
+    </form>
 
+</div>
+
+
+<!-- Footer section -->
+<div id="footer">
+    <!-- Social Icons -->
+    <div class="socials-list">
+        <a href=""><i class="fa-brands fa-facebook"></i></a>
+        <a href=""><i class="fa-brands fa-instagram"></i></a>
+        <a href=""><i class="fa-solid fa-bell"></i></a>
     </div>
+    <!-- Slogan -->
+    <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+</div>
+<!-- End of footer section -->
 
+<!-- End of main container div -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the logo element
+        var logo = document.querySelector('.logo a');
 
-    <!-- Footer section -->
-    <div id="footer">
-        <!-- Social Icons -->
-        <div class="socials-list">
-            <a href=""><i class="fa-brands fa-facebook"></i></a>
-            <a href=""><i class="fa-brands fa-instagram"></i></a>
-            <a href=""><i class="fa-solid fa-bell"></i></a>
-        </div>
-        <!-- Slogan -->
-        <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
-    </div>
-    <!-- End of footer section -->
+        // Add click event listener to the logo
+        logo.addEventListener('click', function (event) {
+            // Prevent the default action of the link
+            event.preventDefault();
 
-    <!-- End of main container div -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Get the logo element
-            var logo = document.querySelector('.logo a');
+            // Get the base URL
+            var baseUrl = "<%= request.getContextPath() %>";
 
-            // Add click event listener to the logo
-            logo.addEventListener('click', function (event) {
-                // Prevent the default action of the link
-                event.preventDefault();
-
-                // Get the base URL
-                var baseUrl = "<%= request.getContextPath() %>";
-
-                // Navigate to the home page
-                window.location.href = baseUrl + "/home";
-            });
+            // Navigate to the home page
+            window.location.href = baseUrl + "/home";
         });
-    </script>
+    });
+</script>
 
 </body>
 

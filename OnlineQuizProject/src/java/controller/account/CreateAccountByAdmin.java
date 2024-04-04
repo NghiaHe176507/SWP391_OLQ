@@ -17,6 +17,7 @@ import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.Collections;
@@ -35,6 +36,7 @@ public class CreateAccountByAdmin extends BasedAuthorizationController {
         Account newAccount = new Account();
         AccountInfo newAccountInfo = new AccountInfo();
         RoleFeature newRoleFeature = new RoleFeature();
+        ArrayList<String> emails = db.getListEmail();
 
         String mail = request.getParameter("mail");
         String password = request.getParameter("password");
@@ -44,23 +46,42 @@ public class CreateAccountByAdmin extends BasedAuthorizationController {
         String status = request.getParameter("status");
         String roleId = request.getParameter("roleId");
 
-        newAccount.setMail(mail);
-        newAccount.setPassword(password);
-        newAccount.setDisplayName(displayname);
-        newAccount.setAccountStatus(status);
+// Kiểm tra xem email đã tồn tại trong danh sách hay chưa
+        boolean emailExists = false;
+        for (String email : emails) {
+            if (email.equalsIgnoreCase(mail)) {
+                emailExists = true;
+                break;
+            }
+        }
 
-        newAccountInfo.setFullName(fullname);
-        newAccountInfo.setDob(dob);
-        newAccountInfo.setAccount(newAccount);
+        if (emailExists) {
+            HttpSession session = request.getSession();
+            session.setAttribute("errorMessage", "Email đã tồn tại trong hệ thống. Vui lòng chọn email khác.");
+        } else {
+            newAccount.setMail(mail);
+            newAccount.setPassword(password);
+            newAccount.setDisplayName(displayname);
+            newAccount.setAccountStatus(status);
 
-        newRoleFeature.setRole(roleDB.getById(roleId));
-        newRoleFeature.setAccount(newAccount);
+            newAccountInfo.setFullName(fullname);
+            newAccountInfo.setDob(dob);
+            newAccountInfo.setAccount(newAccount);
 
-        db.createNewAccount(newAccount);
-        db.createNewAccountInfo(newAccountInfo);
-        db.createNewRoleFeature(newRoleFeature);
+            newRoleFeature.setRole(roleDB.getById(roleId));
+            newRoleFeature.setAccount(newAccount);
 
+            db.createNewAccount(newAccount);
+            db.createNewAccountInfo(newAccountInfo);
+            db.createNewRoleFeature(newRoleFeature);
+
+            HttpSession session = request.getSession();
+            session.setAttribute("successMessage", "Tạo tài khoản thành công.");
+        }
+
+// Sau khi xử lý xong, chuyển hướng đến servlet /admin/account-management
         response.sendRedirect(request.getContextPath() + "/admin/account-management");
+
     }
 
     @Override

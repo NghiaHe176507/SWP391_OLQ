@@ -315,12 +315,13 @@
                                         <c:if test="${requestScope.url == 'update'}">
                                             <form action="update-account" method="POST" class="form-control" class="needs-validation" onsubmit="return validateForm1()"> 
                                                 Id: <input name="accountId" type="text" class="form-control" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/> <br/>
-                                                Mail: <input type="text" name="mail" class="form-control" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
+                                                Mail: <input type="text" name="mail" class="form-control" readonly="readonly" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
                                                 Password: <input type="password" class="form-control" name="password" value="${requestScope.accountNeedToUpdate.password}"/> <br/>
                                                 Display Name: <input type="text" class="form-control" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/> <br/>
                                                 Full Name: <input type="text" class="form-control" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/> <br/>
-                                                Dob: <input type="date" class="form-control" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/> <br/>
-                                                <div id="error" style="color: red"></div>
+
+                                                Dob: <input type="date" class="form-control" name="dob" readonly="readonly" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/> <br/>
+
                                                 Status: 
                                                 <select name="status" class="form-select" required>
                                                     <c:forEach items="${requestScope.listStatus}" var="status">
@@ -367,7 +368,24 @@
                         </div>
                     </c:if>
                 </div>
+
                 <div class="col-lg-8">
+                                    <%-- Hiển thị thông báo lỗi nếu có --%>
+                <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+                <% if (errorMessage != null) { %>
+                <div class="alert alert-danger">
+                    <%= errorMessage %>
+                </div>
+                <% } %>
+
+                <%-- Hiển thị thông báo thành công nếu có --%>
+                <% String successMessage = (String) request.getAttribute("successMessage"); %>
+                <% if (successMessage != null) { %>
+                <div class="alert alert-success">
+                    <%= successMessage %>
+                </div>
+                <% } %>
+
                     <div class="main-box clearfix">
                         <div class="table-responsive">
                             <a href="<%=request.getContextPath()%>/admin/account-management/create-account" class="btn btn-primary mb-2 create-button" id="toggleFormLink">Create Account</a>

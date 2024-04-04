@@ -91,86 +91,86 @@
             }
 
             /* Style for User Profile */
-.card {
-    background-color: #f7f7f7;
-    padding: 20px;
-}
+            .card {
+                background-color: #f7f7f7;
+                padding: 20px;
+            }
 
-.card-header {
-    background-color: #007bff;
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    padding: 10px;
-}
+            .card-header {
+                background-color: #007bff;
+                color: white;
+                font-size: 24px;
+                text-align: center;
+                padding: 10px;
+            }
 
-.table-bordered {
-    border: 1px solid #dee2e6;
-}
+            .table-bordered {
+                border: 1px solid #dee2e6;
+            }
 
-.table-bordered th,
-.table-bordered td {
-    border: 1px solid #dee2e6;
-    padding: 8px;
-}
+            .table-bordered th,
+            .table-bordered td {
+                border: 1px solid #dee2e6;
+                padding: 8px;
+            }
 
-.table-bordered th {
-    background-color: #f2f2f2;
-}
+            .table-bordered th {
+                background-color: #f2f2f2;
+            }
 
-/* Responsive Image */
-.img-fluid {
-    max-width: 100%;
-    height: auto;
-}
+            /* Responsive Image */
+            .img-fluid {
+                max-width: 100%;
+                height: auto;
+            }
 
-/* Center align text in table */
-.table td.text-center,
-.table th.text-center {
-    text-align: center;
-}
+            /* Center align text in table */
+            .table td.text-center,
+            .table th.text-center {
+                text-align: center;
+            }
 
-/* Form input style */
-.form-control[readonly] {
-    background-color: #f7f7f7;
-    border: none;
-}
+            /* Form input style */
+            .form-control[readonly] {
+                background-color: #f7f7f7;
+                border: none;
+            }
 
-/* Additional styles for Account Status and Mail */
-.table-bordered th,
-.table-bordered td {
-    border: 1px solid #dee2e6;
-    padding: 12px;
-}
+            /* Additional styles for Account Status and Mail */
+            .table-bordered th,
+            .table-bordered td {
+                border: 1px solid #dee2e6;
+                padding: 12px;
+            }
 
-/* Style for Account Status label */
-.text-end-label {
-    font-weight: bold;
-}
+            /* Style for Account Status label */
+            .text-end-label {
+                font-weight: bold;
+            }
 
-/* Center align text in the table cells */
-.table td.text-center,
-.table th.text-center {
-    text-align: center;
-}
+            /* Center align text in the table cells */
+            .table td.text-center,
+            .table th.text-center {
+                text-align: center;
+            }
 
-/* Responsive Image */
-.img-fluid {
-    max-width: 100%;
-    height: auto;
-}
+            /* Responsive Image */
+            .img-fluid {
+                max-width: 100%;
+                height: auto;
+            }
 
-/* Center align text in table */
-.table td.text-center,
-.table th.text-center {
-    text-align: center;
-}
+            /* Center align text in table */
+            .table td.text-center,
+            .table th.text-center {
+                text-align: center;
+            }
 
-/* Form input style */
-.form-control[readonly] {
-    background-color: #f7f7f7;
-    border: none;
-}
+            /* Form input style */
+            .form-control[readonly] {
+                background-color: #f7f7f7;
+                border: none;
+            }
 
 
 
@@ -194,7 +194,7 @@
                     <!-- Search container -->
                     <form action="search" method="GET" class=" col-md-5">
                         <div class="search-container">
-                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
+                            <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm...">
                             <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </div>
                     </form>
@@ -209,7 +209,7 @@
                                 </div>
                                 <ul class="subnav">
                                     <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                    <li><a href="<%= request.getContextPath() %>/change-password-lecture"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                    <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
                                     <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
                                 </ul>
                             </li>

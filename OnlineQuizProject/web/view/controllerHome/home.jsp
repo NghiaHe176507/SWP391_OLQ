@@ -41,7 +41,7 @@
                         <!-- Search container -->
                         <form action="search" method="GET">       
                             <div class="search-container col-md-6">
-                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm câu hỏi...">
+                                <input name="query" type="text" id="searchInput" placeholder="Tìm kiếm...">
                                 <button type="submit" id="searchButton"><i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>
                         </form>

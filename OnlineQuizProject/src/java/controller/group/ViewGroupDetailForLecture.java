@@ -38,9 +38,27 @@ public class ViewGroupDetailForLecture extends BasedAuthorizationController {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, Account LoggedUser)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        int lecturerId = LoggedUser.getAccountId();
+        AccountInfo accountInfo = db.getAccountInfoByAccountId(lecturerId);
+        ArrayList<Group> listGroupOwned = db.getListGroupOwnedByLectureId(accountInfo.getAccountInfoId());
+
+        String groupIdStr = request.getParameter("groupId");
+        int groupId = Integer.parseInt(groupIdStr);
+
+        String topicIdStr = request.getParameter("topicId");
+        int topicId = Integer.parseInt(topicIdStr);
+
+        ArrayList<Exam> listExamOfGroup = db.getListExamByGroupId(groupId);
+        for (Exam exam : listExamOfGroup) {
+            db.updateStatusExamToFitRealTime(exam);
+        }
+        request.setAttribute("listGroup", listGroupOwned);
+        request.setAttribute("topicId", topicId);
+        request.setAttribute("groupId", groupId);
+        request.setAttribute("listExamOfGroup", listExamOfGroup);
+        request.getRequestDispatcher("view/controllerGroup/GroupDetailForLecture.jsp").forward(request, response);
     }
 
     /**
