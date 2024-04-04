@@ -265,6 +265,7 @@
                                                 Display Name: <input type="text" name="displayname" class="form-control" required /> <br/>
                                                 Full Name: <input type="text" name="fullname" class="form-control" required /> <br/>
                                                 Dob: <input type="date" name="dob" class="form-control" value="1999-01-01" /> <br/>
+                                                <div id="error" style="color: red"></div>
                                                 Status: 
                                                 <select name="status" class="form-select" required>
                                                     <c:forEach items="${requestScope.listStatus}" var="status">
@@ -285,10 +286,12 @@
                                             </form>
                                             <script>
                                                 function validateForm() {
-                                                    var form = document.forms[0];
-
-                                                    if (!form.checkValidity()) {
-                                                        alert("Please fill out all required fields.");
+                                                    var dobInput = document.getElementsByName("dob")[0].value;
+                                                    var dob = new Date(dobInput);
+                                                    var today = new Date();
+                                                    var age = today.getFullYear() - dob.getFullYear();
+                                                    if (age < 14) {
+                                                        document.getElementById("error").innerHTML = "You must be at least 14 years old";
                                                         return false;
                                                     }
                                                     return true;
@@ -310,13 +313,14 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <c:if test="${requestScope.url == 'update'}">
-                                            <form action="update-account" method="POST" class="form-control" class="needs-validation" novalidate> 
+                                            <form action="update-account" method="POST" class="form-control" class="needs-validation" onsubmit="return validateForm1()"> 
                                                 Id: <input name="accountId" type="text" class="form-control" readonly="readonly" value="${requestScope.accountNeedToUpdate.accountId}"/> <br/>
                                                 Mail: <input type="text" name="mail" class="form-control" value="${requestScope.accountNeedToUpdate.mail}"/> <br/>
                                                 Password: <input type="password" class="form-control" name="password" value="${requestScope.accountNeedToUpdate.password}"/> <br/>
                                                 Display Name: <input type="text" class="form-control" name="displayname" value="${requestScope.accountNeedToUpdate.displayName}"/> <br/>
                                                 Full Name: <input type="text" class="form-control" name="fullname" value="${requestScope.infoAbountAccountNeedToUpdate.fullName}"/> <br/>
                                                 Dob: <input type="date" class="form-control" name="dob" value="${requestScope.infoAbountAccountNeedToUpdate.dob}"/> <br/>
+                                                <div id="error" style="color: red"></div>
                                                 Status: 
                                                 <select name="status" class="form-select" required>
                                                     <c:forEach items="${requestScope.listStatus}" var="status">
@@ -337,11 +341,25 @@
                                                             type="radio" value="${role.roleId}" name="roleId"/> <span style="padding-right: 60px;">${role.roleName}</span>
                                                     </c:if>
                                                 </c:forEach><br/>
+                                                <script>
+                                                    function validateForm1() {
+                                                        var dobInput = document.getElementsByName("dob")[0].value;
+                                                        var dob = new Date(dobInput);
+                                                        var today = new Date();
+                                                        var age = today.getFullYear() - dob.getFullYear();
+                                                        if (age < 14) {
+                                                            document.getElementById("error").innerHTML = "You must be at least 14 years old";
+                                                            return false;
+                                                        }
+                                                        return true;
+                                                    }
+                                                </script>
                                                 <div class="d-grid gap-2">
                                                     <button type="submit" class="btn btn-primary" value="Save">Submit</button>
                                                     <a href="<%=request.getContextPath()%>/admin/account-management" class="btn btn-default">Cancel</a>
                                                 </div>
                                             </form>
+
                                         </c:if>
                                     </div>
                                 </div>

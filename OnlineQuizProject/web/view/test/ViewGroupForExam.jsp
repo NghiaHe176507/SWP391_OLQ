@@ -385,28 +385,22 @@
             <div class="row">
                 <span class="text-muted d-block"><i class="fa fa-bar-chart" style="margin-right: 6px;" aria-hidden="true"></i>Number of exam: ${listGroupExam.size()}</span>
                 <c:forEach items="${requestScope.listGroupExam}" var="groupE">
-                    <c:if test="${groupE.status.statusId==1}" >
+                    <c:if test="${groupE.status.statusId == 1}">
                         <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-
                             <div class="group-info card border-0 bg-light rounded shadow">
-
                                 <div class="card-body p-4">
                                     <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">${accountInfo.fullName}</span>
                                     <h5>${groupE.groupName}</h5>
                                     <div class="mt-3">
                                         <span class="text-muted d-block"><i class="fa fa-graduation-cap" aria-hidden="true"></i> ${groupE.topic.topicName}</span>
                                     </div>
-
                                     <div class="mt-3">
-
                                         <a href="<%= request.getContextPath() %>/create-exam?groupId=${groupE.groupId}" class="btn btn-primary">Create Exam</a>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </c:if>
-
                 </c:forEach>
 
                 <div class="row justify-content-end mb-4 pb-2">

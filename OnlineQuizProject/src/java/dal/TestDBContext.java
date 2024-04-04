@@ -80,6 +80,8 @@ public class TestDBContext extends DBContext<OptionAnswer> {
                               ,t.topic_name
                               ,acI.fullname
                               ,[score]
+                              ,[attempt_number]
+                              ,e.isPractice
                           FROM [Result] r INNER JOIN Exam e ON r.exam_id = e.exam_id
                           INNER JOIN Account a ON r.student_id = a.account_id
                           INNER JOIN AccountInfo acI ON a.account_id = acI.account_id
