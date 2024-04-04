@@ -1052,6 +1052,36 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
         return resultOfStudents;
     }
 
+    public ArrayList<Question> getListQuestion() {
+        ArrayList<Question> questionList = new ArrayList<>();
+        try {
+            String sql = """
+                         SELECT [question_id]
+                               ,[topic_id]
+                               ,[question_content]
+                               ,[inBank]
+                               ,[question_answer_detail]
+                           FROM [Question] """;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Question question = new Question();
+                question.setQuestionId(rs.getInt("question_id"));
+                Topic t = new Topic();
+                t.setTopicId(rs.getInt("topic_id"));
+                question.setTopic(t);
+                question.setQuestionContent(rs.getString("question_content"));
+                question.setInBank(rs.getBoolean("inBank"));
+                question.setQuestionAnswerDetail(rs.getString("question_answer_detail"));
+                questionList.add(question);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(QuestionDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return questionList;
+    }
+
     public ArrayList<Register> getListAccountRegistedExamByGroup(int groupID) {
         ArrayList<Register> listRegister = new ArrayList<>();
         try {
@@ -1071,7 +1101,7 @@ public class ControllerDBContext extends DBContext<BaseEntity> {
             while (rs.next()) {
                 Register register = new Register();
                 register.setRegisterId(rs.getInt("register_id"));
-                register.setRegisterDate(rs.getDate("register_date")); 
+                register.setRegisterDate(rs.getDate("register_date"));
                 AccountInfo acc = new AccountInfo();
                 acc.setAccountInfoId(rs.getInt("student_id"));
                 acc.setFullName(rs.getString("fullname"));
