@@ -141,13 +141,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="list" items="${requestScope.listOfStudentHasTest}" varStatus="loop">
+                        <c:forEach var="list" items="${listOfStudentHasTest}" varStatus="loop">
                             <tr>
                                 <td>${loop.index + 1}</td>
                                 <td>${list.studentInfo.fullName}</td>
                                 <td>${list.studentInfo.dob}</td>
                                 <td>${list.registerDate}</td>
-                                <!-- Add a cell for the dropdown -->
                                 <td>
                                     <a href="<%= request.getContextPath() %>/view-list-exam?studentID=${list.studentInfo.accountInfoId}">Show More</a>                             
                                 </td>
