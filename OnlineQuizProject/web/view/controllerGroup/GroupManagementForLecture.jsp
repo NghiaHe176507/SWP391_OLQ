@@ -792,6 +792,8 @@
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span>Action</span></td>
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
                                     <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
+                                    <td style="background-color: #002d72; color: #fff; padding: 15px"><span></span></td>
+
                                 </tr>
                             </thead>
                             <tbody id="tableBody">
@@ -831,6 +833,15 @@
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                             </c:if>
+                                        </td>
+                                        <td>
+                                            <form action="viewGroupDetailForLecture" method="POST"> 
+                                                <button type="submit" class="btn btn-secondary">
+                                                    More Details
+                                                </button>
+                                                <input type="hidden" name="groupId" value="${group.groupId}" />
+                                                <input type="hidden" name="topicId" value="${group.topic.topicId}" />
+                                            </form>
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -29,14 +29,12 @@ public class ViewListTopic extends BasedAuthorizationController {
         ArrayList<Topic> listTopic = db.getListTopic();
         HttpSession session = request.getSession();
 
-        // Lấy thông báo lỗi nếu có
         String errorMessage = (String) session.getAttribute("errorMessage");
         if (errorMessage != null) {
             request.setAttribute("errorMessage", errorMessage);
             session.removeAttribute("errorMessage"); // Xóa thông báo sau khi đã sử dụng
         }
 
-// Lấy thông báo thành công nếu có
         String successMessage = (String) session.getAttribute("successMessage");
         if (successMessage != null) {
             request.setAttribute("successMessage", successMessage);
@@ -44,28 +42,41 @@ public class ViewListTopic extends BasedAuthorizationController {
         }
 
         Collections.reverse(listTopic);
-        // Pagination parameters
+        String keyword = request.getParameter("query");
+
         int pageSize = 8; // Number of items per page
-        int currentPage = 1; // Default current page number
-
+        int page = 1; // Default page number
         if (request.getParameter("page") != null) {
-            currentPage = Integer.parseInt(request.getParameter("page"));
+            page = Integer.parseInt(request.getParameter("page"));
         }
+        int totalItems;
+        ArrayList<Topic> paginatedList = new ArrayList<>();
 
-        // Calculate startIndex and endIndex for pagination
-        int totalItems = listTopic.size();
-        int totalPages = (int) Math.ceil((double) totalItems / pageSize);
-        int startIndex = (currentPage - 1) * pageSize;
-        int endIndex = Math.min(startIndex + pageSize, totalItems);
+        if (keyword == null || keyword.isEmpty()) {
+            totalItems = listTopic.size();
+            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
 
-        // Retrieve sublist of topics based on pagination
-        ArrayList<Topic> paginatedList = new ArrayList<>(listTopic.subList(startIndex, endIndex));
+            int startIndex = (page - 1) * pageSize;
+            int endIndex = Math.min(startIndex + pageSize, totalItems);
+            paginatedList = new ArrayList<>(listTopic.subList(startIndex, endIndex));
+        } else {
 
-        // Set attributes for pagination and paginated list
+            ArrayList<Topic> searchResult = db.searchTopic(keyword);
+
+            totalItems = searchResult.size();
+            int totalPages = (int) Math.ceil((double) totalItems / pageSize);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
+
+            int startIndex = (page - 1) * pageSize;
+            int endIndex = Math.min(startIndex + pageSize, totalItems);
+            paginatedList = new ArrayList<>(searchResult.subList(startIndex, endIndex));
+
+        }
         request.setAttribute("listTopic", paginatedList);
-        request.setAttribute("totalPages", totalPages);
-        request.setAttribute("currentPage", currentPage);
-
+        
         // Forward the request to the JSP page
         request.getRequestDispatcher("/view/controllerTopic/TopicManagement.jsp").forward(request, response);
     }

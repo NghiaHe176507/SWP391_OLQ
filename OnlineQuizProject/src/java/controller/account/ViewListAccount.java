@@ -77,8 +77,6 @@ public class ViewListAccount extends BasedAuthorizationController {
         }
 
         request.setAttribute("paginatedList", paginatedList);
-//        request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);
-//        request.setAttribute("listAccountWithInfo", listAccount);
         ArrayList<RoleFeature> listRoleFeature = db.getListRoleFeatureByListAccount(paginatedList);
         request.setAttribute("listAccountWithInfo", listAccount);
         request.setAttribute("listRoleFeatureByListAccount", listRoleFeature);

@@ -174,20 +174,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
-                            <c:if test="${exam.group.groupId == groupId}">
+                        <c:choose>
+                            <c:when test="${empty requestScope.listExamOfGroup}">
                                 <tr>
-                                    <td>${exam.examTitle}</td>
-                                    <td>${exam.examStartDate}</td>
-                                    <td>${exam.examEndDate}</td>
-                                    <td>${exam.examTime}</td>
-                                    <td>${exam.status.statusName}</td>
-                                    <td><a href="<%= request.getContextPath() %>/show-result-test-list-student?groupID=${groupId}"class="btn btn-primary">View Detail</a></td>
+                                    <td colspan="6">There are no ongoing activities yet.</td>
                                 </tr>
-                            </c:if>
-                        </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
+                                    <c:if test="${exam.group.groupId == groupId}">
+                                        <tr>
+                                            <td>${exam.examTitle}</td>
+                                            <td>${exam.examStartDate}</td>
+                                            <td>${exam.examEndDate}</td>
+                                            <td>${exam.examTime}</td>
+                                            <td>${exam.status.statusName}</td>
+                                            <td><a href="<%= request.getContextPath() %>/show-result-test-list-student?groupID=${groupId}"class="btn btn-primary">View Detail</a></td>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
+
             </form>
 
         </div>

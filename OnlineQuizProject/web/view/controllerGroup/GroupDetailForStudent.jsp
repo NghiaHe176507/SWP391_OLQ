@@ -119,7 +119,7 @@
                         <c:if test="${register.group.groupId == groupId}">
                             <tr>
                                 <td>
-                                    <p><strong>Group Name: </strong>${register.group.topic.topicName}</p>
+                                    <p><strong>Group Name: </strong>${register.group.groupName}</p>
                                     <p><strong>Topic Name: </strong>${register.group.topic.topicName}</p>
                                     <p><strong>Lecture: </strong>${register.group.lectureInfo.fullName}</p>
                                     <p><strong>Start Date: </strong>${register.registerDate}</p>

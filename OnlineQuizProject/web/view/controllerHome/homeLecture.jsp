@@ -220,54 +220,56 @@
 
             <div class="topic" id="topicContainer">
                 <c:forEach var="group" items="${requestScope.listGroup}" varStatus="loop">
-                    <div class="col-md-4 mb-3">
-                        <div class="topic-info" style="width: 18rem;">
-                            <div class="topic-info-body">
-                                <h5 class="topic-info-title">Class Name: ${group.groupName}</h5>
-                                <h6 class="topic-info-subtitle mb-2">Topic: ${group.topic.topicName}</h6>
+                    <c:if test="${group.status.statusId eq 1}">
+                        <div class="col-md-4 mb-3">
+                            <div class="topic-info" style="width: 18rem;">
+                                <div class="topic-info-body">
+                                    <h5 class="topic-info-title">Class Name: ${group.groupName}</h5>
+                                    <h6 class="topic-info-subtitle mb-2">Topic: ${group.topic.topicName}</h6>
 
-                                <c:choose>
-                                    <c:when test="${group.groupInviteCode == null}">
-                                        <h6 class="topic-info-subtitle mb-2">Invite Code: NULL</h6>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <!-- Hiển thị Invite Code nếu đã có -->
-                                        <h6 class="topic-info-subtitle mb-2">Invite Code: ${group.groupInviteCode}</h6>
-                                    </c:otherwise>
-                                </c:choose>
+                                    <c:choose>
+                                        <c:when test="${group.groupInviteCode == null}">
+                                            <h6 class="topic-info-subtitle mb-2">Invite Code: NULL</h6>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <!-- Hiển thị Invite Code nếu đã có -->
+                                            <h6 class="topic-info-subtitle mb-2">Invite Code: ${group.groupInviteCode}</h6>
+                                        </c:otherwise>
+                                    </c:choose>
 
-                                <c:choose>
-                                    <c:when test="${group.status.statusName eq 'Active'}">
-                                        <p class="topic-info-text text-success" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
-                                    </c:when>
-                                    <c:when test="${group.status.statusName eq 'Pending'}">
-                                        <p class="topic-info-text text-secondary" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
-                                    </c:when>
-                                    <c:when test="${group.status.statusName eq 'Closed'}">
-                                        <p class="topic-info-text text-danger" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <p class="topic-info-text" style="margin-bottom: 0">${group.status.statusName}</p>
-                                    </c:otherwise>
-                                </c:choose>
-                                <form action="viewGroupDetailForLecture" method="GET"> 
-                                    <div class="row">
-                                        <div class="row" style="padding-left: 40px;margin-bottom: 5px;margin-top: 5px;">
-                                            <button type="submit" class="btn btn-1 color-black topic-info-link">
-                                                <svg>
-                                                <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                                </svg>
-                                                More Details
-                                            </button>
-                                        </div>
-                                        <input type="hidden" name="groupId" value="${group.groupId}" />
-                                        <input type="hidden" name="topicId" value="${group.topic.topicId}" />
-                                </form>
-                                <form></form>   
+                                    <c:choose>
+                                        <c:when test="${group.status.statusName eq 'Active'}">
+                                            <p class="topic-info-text text-success" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:when test="${group.status.statusName eq 'Pending'}">
+                                            <p class="topic-info-text text-secondary" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:when test="${group.status.statusName eq 'Closed'}">
+                                            <p class="topic-info-text text-danger" style="margin-bottom: 0;font-weight: bold;">${group.status.statusName}</p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p class="topic-info-text" style="margin-bottom: 0">${group.status.statusName}</p>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <form action="viewGroupDetailForLecture" method="GET"> 
+                                        <div class="row">
+                                            <div class="row" style="padding-left: 40px;margin-bottom: 5px;margin-top: 5px;">
+                                                <button type="submit" class="btn btn-1 color-black topic-info-link">
+                                                    <svg>
+                                                    <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                                    </svg>
+                                                    More Details
+                                                </button>
+                                            </div>
+                                            <input type="hidden" name="groupId" value="${group.groupId}" />
+                                            <input type="hidden" name="topicId" value="${group.topic.topicId}" />
+                                    </form>
+                                    <form></form>   
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </c:if>
             </c:forEach>
 
             <div class="show-all">

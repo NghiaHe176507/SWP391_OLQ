@@ -229,45 +229,71 @@
             <div class="space"></div>
         </div>
 
+        <div>
+            <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
+            <% if (errorMessage != null) { %>
+            <div class="alert alert-danger">
+                <%= errorMessage %>
+            </div>
+            <% } %>
+
+            <% String successMessage = (String) request.getAttribute("successMessage"); %>
+            <% if (successMessage != null) { %>
+            <div class="alert alert-success">
+                <%= successMessage %>
+            </div>
+            <% } %>
+            <script>
+                setTimeout(function () {
+                    var alertMessages = document.querySelectorAll('.alert');
+                    alertMessages.forEach(function (alert) {
+                        alert.style.display = 'none';
+                    });
+                }, 3000);
+            </script>
+
+        </div>
         <div class="topic" id="topicContainer">
             <c:forEach var="register" items="${requestScope.listRegister}" varStatus="loop">
-                <div class="col-md-4">
-                    <div class="topic-info" style="width: 18rem;">
-                        <div class="topic-info-body">
-                            <h4 class="topic-info-title">Class Name: ${register.group.groupName}</h4>
-                            <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.group.topic.topicName}</h6>
-                            <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.group.lectureInfo.fullName}</h6>
-                            <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
-                            <form action="viewGroupDetail" method="GET"> 
-                                <div class="row">
-                                    <div class="row" style="padding-left: 40px;margin-bottom: 5px;">
-                                        <button type="submit" class="btn btn-1 color-black topic-info-link">
+                <c:if test="${register.group.status.statusId eq 1}">
+                    <div class="col-md-4">
+                        <div class="topic-info" style="width: 18rem;">
+                            <div class="topic-info-body">
+                                <h4 class="topic-info-title">Class Name: ${register.group.groupName}</h4>
+                                <h6 class="topic-info-subtitle mb-2">Topic Name: ${register.group.topic.topicName}</h6>
+                                <h6 class="topic-info-subtitle mb-2">Lecturer: ${register.group.lectureInfo.fullName}</h6>
+                                <h6 class="topic-info-subtitle mb-2">Start Date: ${register.registerDate}</h6>
+                                <form action="viewGroupDetail" method="GET"> 
+                                    <div class="row">
+                                        <div class="row" style="padding-left: 40px;margin-bottom: 5px;">
+                                            <button type="submit" class="btn btn-1 color-black topic-info-link">
+                                                <svg>
+                                                <rect x="0" y="0" fill="none" width="100%" height="100%"/>
+                                                </svg>
+                                                More Details
+                                            </button>
+                                        </div>
+                                        <input type="hidden" name="groupId" value="${register.group.groupId}" />
+                                        <input type="hidden" name="topicId" value="${register.group.topic.topicId}" />
+
+                                </form>
+
+                                <form action="unenroll" method="POST"> 
+                                    <div class="row" style="padding-left: 27px;margin-bottom: 5px;    margin-right: 11px;">
+                                        <input type="hidden" name="groupId" id="groupId" value="${register.group.groupId}"> 
+                                        <button class="unenrollButton btn btn-1 color-red">
                                             <svg>
                                             <rect x="0" y="0" fill="none" width="100%" height="100%"/>
                                             </svg>
-                                            More Details
+                                            Unenroll group</i>
                                         </button>
-                                    </div>
-                                    <input type="hidden" name="groupId" value="${register.group.groupId}" />
-                                    <input type="hidden" name="topicId" value="${register.group.topic.topicId}" />
-
-                            </form>
-
-                            <form action="unenroll" method="POST"> 
-                                <div class="row" style="padding-left: 27px;margin-bottom: 5px;    margin-right: 11px;">
-                                    <input type="hidden" name="groupId" id="groupId" value="${register.group.groupId}"> 
-                                    <button class="unenrollButton btn btn-1 color-red">
-                                        <svg>
-                                        <rect x="0" y="0" fill="none" width="100%" height="100%"/>
-                                        </svg>
-                                        Unenroll group</i>
-                                    </button>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </c:if>
     </c:forEach>
 
     <div class="show-all">

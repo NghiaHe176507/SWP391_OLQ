@@ -128,7 +128,7 @@
 
             <div class="achievement-container">
                 <div class="achievement-title">
-                    <h2 style="font-size: 30px; font-weight: bold;">Your achievements</h2>
+                    <h2 style="font-size: 30px; font-weight: bold;">Your achievements <i class="fa-solid fa-trophy"></i></h2>
                     <h7 style="color: #6c757d">"Dare to Quiz, Excel to Win! - Your Journey to Quiz Mastery with QuizWiz"</h7>
                 </div>
 

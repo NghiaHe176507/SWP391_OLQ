@@ -204,6 +204,10 @@
         <servlet-name>Achivement</servlet-name>
         <servlet-class>controller.test.Achivement</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HistoryGroupHasJoined</servlet-name>
+        <servlet-class>controller.group.HistoryGroupHasJoined</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
@@ -407,6 +411,10 @@
     <servlet-mapping>
         <servlet-name>Achivement</servlet-name>
         <url-pattern>/achivement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HistoryGroupHasJoined</servlet-name>
+        <url-pattern>/history-group</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

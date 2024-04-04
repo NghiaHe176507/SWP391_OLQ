@@ -74,6 +74,50 @@
             .achievement-table th {
                 background-color: #f2f2f2;
             }
+            
+            /* Dropdown menu */
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #000; /* New color for the dropdown background */
+                min-width: 204px;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: white; /* New color for the dropdown text */
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #444; /* New color for the dropdown hover background */
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropbtn {
+                background-color: transparent;
+                color: #fff;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .dropbtn:hover {
+                background-color: #0056b3;
+            }
+
 
         </style>
     </head>
@@ -88,8 +132,14 @@
                     <div class="logo col-md-2">
                         <a href="#">QUIZWIZ</a>
                     </div>
-                    <div class="create col-md-1">
-                        <a href="${pageContext.request.contextPath}/home">Return Home</a>
+                    <div class="menu-icon col-md-1">
+                        <div class="dropdown">
+                            <button class="dropbtn" style="font-size: 19px;"><i class="fa-solid fa-bars" style="padding-right: 4px;"></i>Menu</button>
+                            <div class="dropdown-content">
+                                <a href="<%= request.getContextPath() %>/history-group">History Group</a>
+                                <a href="<%= request.getContextPath() %>/home"><i class="fa-solid fa-rotate-left"></i> Return Home</a>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Search container -->
@@ -127,7 +177,7 @@
 
             <div class="achievement-container">
                 <div class="achievement-title">
-                    <h2 style="font-size: 30px; font-weight: bold;">Your achievements</h2>
+                    <h2 style="font-size: 30px; font-weight: bold;">Your achievements <i class="fa-solid fa-trophy"></i></h2>
                     <h7 style="color: #6c757d">"Dare to Quiz, Excel to Win! - Your Journey to Quiz Mastery with QuizWiz"</h7>
                 </div>
 
@@ -144,55 +194,77 @@
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <table class="achievement-table" style="margin-bottom: 15px">
                             <thead>
-                                <tr>
-                                    <th style="text-align: center;">Group Information</th>
-                                    <th style="text-align: center;">Exam Title</th>
-                                    <th></th>
-                                </tr>
+                                <c:set var="headerDisplayed" value="false" />
+
+                                <c:if test="${not headerDisplayed}">
+                                    <tr>
+                                        <th style="text-align: center; width: 16.66%;">Exam Title</th>
+                                        <th style="text-align: center; width: 16.66%;">Start Date</th>
+                                        <th style="text-align: center; width: 16.66%;">End Date</th>
+                                        <th style="text-align: center; width: 16.66%;">Time</th>
+                                        <th style="text-align: center; width: 16.66%;">Attempt Number</th>
+                                        <th style="text-align: center; width: 16.66%;"></th>
+                                    </tr>
+                                    <c:set var="headerDisplayed" value="true" />
+                                </c:if>
                             </thead>
                             <tbody>
-
                                 <c:set var="currentGroupId" value="" />
+                                <c:set var="displayedExamIds" value="" />
+
                                 <c:forEach var="result" items="${requestScope.listResult}">
                                     <c:if test="${result.exam.isPractice eq false}">
                                         <c:if test="${!result.exam.group.groupId.equals(currentGroupId)}">
-                                            <tr>
-                                                <td style="text-align: center;">
-                                                    <b>${result.exam.group.groupName} - ${result.exam.group.topic.topicName}</b>
-                                                </td>
-                                                <td >
-                                                    <form style="text-align: center;" action="${pageContext.request.contextPath}/achivement-detail" method="POST">
-                                                        <select name="resultId">
-                                                            <option value="">Choose an exam</option>
-                                                            <c:set var="addedExamIds" value="" />
-                                                            <c:forEach var="exam" items="${requestScope.listResult}">
-                                                                <c:if test="${not exam.exam.isPractice}">
-                                                                    <c:if test="${exam.exam.group.groupId eq result.exam.group.groupId}">
-                                                                        <c:if test="${not fn:contains(addedExamIds, exam.exam.examId)}">
-                                                                            <option value="${exam.exam.examId}">
-                                                                                ${exam.exam.examTitle}
-                                                                            </option>
-                                                                            <c:set var="addedExamIds" value="${addedExamIds},${exam.exam.examId}" />
-                                                                        </c:if>
-                                                                    </c:if>
-                                                                </c:if>
-                                                            </c:forEach>
-
-                                                        </select>
-                                                        <input type="hidden" name="GroupId" value="${result.exam.group.groupId}">
-                                                        <input type="hidden" name="check" value="false">
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <button type="submit" class="btn btn-secondary">View Detailed</button>
-                                                    </form>
+                                            <tr onclick="toggleRows('${result.exam.group.groupId}')">
+                                                <td style="text-align: center;font-size: 18px;" colspan="6">
+                                                    <b>${result.exam.group.groupName} - ${result.exam.group.topic.topicName} <i class="fa-solid fa-caret-down"></i></b>
                                                 </td>
                                             </tr>
-
                                             <c:set var="currentGroupId" value="${result.exam.group.groupId}" />
+
+                                            <c:forEach var="exam" items="${requestScope.listResult}">
+
+                                                <c:if test="${not exam.exam.isPractice}">
+                                                    <c:if test="${exam.exam.group.groupId eq result.exam.group.groupId}">
+                                                        <c:if test="${not fn:contains(displayedExamIds, exam.exam.examId)}">
+
+                                                            <tr style="display: none;" data-group-id="${result.exam.group.groupId}">
+                                                                <td style="text-align: center;">${exam.exam.examTitle}</td>
+                                                                <td style="text-align: center;">${exam.exam.examStartDate}</td>
+                                                                <td style="text-align: center;">${exam.exam.examEndDate}</td>
+                                                                <td style="text-align: center;">${exam.exam.examTime}</td>
+                                                                <td style="text-align: center;">${exam.exam.examAttemp}</td>
+                                                                <td style="text-align: center;">
+                                                                    <form action="${pageContext.request.contextPath}/achivement-detail" method="POST">
+                                                                        <input type="hidden" name="GroupId" value="${exam.exam.group.groupId}">
+                                                                        <input type="hidden" name="resultId" value="${exam.exam.examId}">
+                                                                        <input type="hidden" name="check" value="false">
+                                                                        <input type="hidden" name="examId" value="${exam.exam.examId}">
+                                                                        <button type="submit" class="btn btn-secondary view-details-btn">View Detailed</button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                            <c:set var="displayedExamIds" value="${displayedExamIds},${exam.exam.examId}" />
+                                                        </c:if>
+                                                    </c:if>
+                                                </c:if>
+                                            </c:forEach>
                                         </c:if>
                                     </c:if>
                                 </c:forEach>
 
+                            <script>
+                                function toggleRows(groupId) {
+                                    var rows = document.querySelectorAll('tr[data-group-id="' + groupId + '"]');
+                                    rows.forEach(function (row) {
+                                        if (row.style.display === 'none') {
+                                            row.style.display = '';
+                                        } else {
+                                            row.style.display = 'none';
+                                        }
+                                    });
+                                }
+                            </script>
 
                             </tbody>
                         </table>
@@ -200,50 +272,54 @@
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <table class="achievement-table" style="margin-bottom: 15px">
                             <thead>
-                                <tr>
-                                    <th style="text-align: center;">Group Information</th>
-                                    <th style="text-align: center;">Exam Title</th>
-                                    <th></th>
-                                </tr>
+                                <c:set var="headerDisplayed" value="false" />
+
+                                <c:if test="${not headerDisplayed}">
+                                    <tr>
+                                        <th style="text-align: center; width: 200px;">Practice Title</th>
+                                        <th style="width: 200px;"></th>
+
+                                    </tr>
+                                    <c:set var="headerDisplayed" value="true" />
+                                </c:if>
                             </thead>
                             <tbody>
-
                                 <c:set var="currentGroupId" value="" />
+                                <c:set var="displayedExamIds" value="" />
+
                                 <c:forEach var="result" items="${requestScope.listResult}">
                                     <c:if test="${result.exam.isPractice eq true}">
                                         <c:if test="${!result.exam.group.groupId.equals(currentGroupId)}">
-                                            <tr>
-                                                <td style="text-align: center;">
-                                                    <b>${result.exam.group.groupName} - ${result.exam.group.topic.topicName}</b>
-                                                </td>
-                                                <td >
-                                                    <form style="text-align: center;" action="${pageContext.request.contextPath}/achivement-detail" method="POST">
-                                                        <select name="resultId">
-                                                            <option value="">Choose an exam</option>
-                                                            <c:set var="addedExamIds" value="" />
-                                                            <c:forEach var="exam" items="${requestScope.listResult}">
-                                                                <c:if test="${exam.exam.isPractice}">
-                                                                    <c:if test="${exam.exam.group.groupId eq result.exam.group.groupId}">
-                                                                        <c:if test="${not fn:contains(addedExamIds, exam.exam.examId)}">
-                                                                            <option value="${exam.exam.examId}">
-                                                                                ${exam.exam.examTitle}
-                                                                            </option>
-                                                                            <c:set var="addedExamIds" value="${addedExamIds},${exam.exam.examId}" />
-                                                                        </c:if>
-                                                                    </c:if>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                        </select>
-                                                        <input type="hidden" name="GroupId" value="${result.exam.group.groupId}">
-                                                        <input type="hidden" name="check" value="true">
-                                                        </td>
-                                                        <td style="text-align: center;">
-                                                            <button type="submit" class="btn btn-secondary">View Detailed</button>
-                                                    </form>
+                                            <tr onclick="toggleRows('${result.exam.group.groupId}')">
+                                                <td style="text-align: center;font-size: 18px;" colspan="6">
+                                                    <b>${result.exam.group.groupName} - ${result.exam.group.topic.topicName} <i class="fa-solid fa-caret-down"></i></b>
                                                 </td>
                                             </tr>
-
                                             <c:set var="currentGroupId" value="${result.exam.group.groupId}" />
+
+                                            <c:forEach var="exam" items="${requestScope.listResult}">
+
+                                                <c:if test="${exam.exam.isPractice}">
+                                                    <c:if test="${exam.exam.group.groupId eq result.exam.group.groupId}">
+                                                        <c:if test="${not fn:contains(displayedExamIds, exam.exam.examId)}">
+
+                                                            <tr style="display: none;" data-group-id="${result.exam.group.groupId}">
+                                                                <td style="text-align: center;">${exam.exam.examTitle}</td>
+                                                                <td style="text-align: center;">
+                                                                    <form action="${pageContext.request.contextPath}/achivement-detail" method="POST">
+                                                                        <input type="hidden" name="GroupId" value="${exam.exam.group.groupId}">
+                                                                        <input type="hidden" name="check" value="false">
+                                                                        <input type="hidden" name="resultId" value="${exam.exam.examId}">
+                                                                        <input type="hidden" name="examId" value="${exam.exam.examId}">
+                                                                        <button type="submit" class="btn btn-secondary view-details-btn">View Detailed</button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                            <c:set var="displayedExamIds" value="${displayedExamIds},${exam.exam.examId}" />
+                                                        </c:if>
+                                                    </c:if>
+                                                </c:if>
+                                            </c:forEach>
                                         </c:if>
                                     </c:if>
                                 </c:forEach>
@@ -270,6 +346,7 @@
     <!-- End of footer section -->
 
     <!-- End of main container div -->
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Get the logo element
