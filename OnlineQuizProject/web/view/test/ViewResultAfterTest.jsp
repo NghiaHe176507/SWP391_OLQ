@@ -54,10 +54,10 @@
                                         <img class="profile-image" src="image/avatar.jpg" alt="Profile Image">
                                     </div>
                                     <ul class="subnav">
-                                       <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
-                                            <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
-                                            <li><a href="<%= request.getContextPath() %>/achivement"><i class="fa-solid fa-trophy"></i> Achievement</a></li>
-                                            <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/UserDetail"><i class="fa-solid fa-user"></i> User Details</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/change-password-student"><i class="fa-solid fa-lock"></i> Change Password</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/achivement"><i class="fa-solid fa-trophy"></i> Achievement</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/logout"><i class="fa-solid fa-right-from-bracket"></i> Log out</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -114,7 +114,9 @@
                                     <input type="hidden" id="examId" name="examId" value="${examId}">
                                     <input type="hidden" id="studentInfoId" name="studentInfoId" value="${studentInfoId}">
                                     <input type="hidden" id="resultNumber" name="resultNumber" value="${requestScope.newResult.attemptNumber}">
-                                    <button type="submit" id="viewResultsBtn" class="btn btn-secondary">View Detailed Results</button>
+                                    <c:if test="${resultTotalExam.exam.isPractice}">
+                                        <button type="submit" id="viewResultsBtn" class="btn btn-secondary">View Detailed Results</button>
+                                    </c:if>
                             </div>
                             </form>
 
@@ -158,20 +160,20 @@
                 });
             </script>
             <script>
-        function displayCurrentDateTime() {
-            var currentTime = new Date();
-            var day = currentTime.getDate();
-            var month = currentTime.getMonth() + 1; // Tháng bắt đầu từ 0
-            var year = currentTime.getFullYear();
-            var hours = currentTime.getHours();
-            var minutes = currentTime.getMinutes();
-            var seconds = currentTime.getSeconds();
-            var formattedDateTime = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
-            document.getElementById("current-date-time").innerText = formattedDateTime;
-        }
-        // Gọi hàm displayCurrentDateTime() khi trang được tải
-        window.onload = displayCurrentDateTime;
-    </script>
+                function displayCurrentDateTime() {
+                    var currentTime = new Date();
+                    var day = currentTime.getDate();
+                    var month = currentTime.getMonth() + 1; // Tháng bắt đầu từ 0
+                    var year = currentTime.getFullYear();
+                    var hours = currentTime.getHours();
+                    var minutes = currentTime.getMinutes();
+                    var seconds = currentTime.getSeconds();
+                    var formattedDateTime = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+                    document.getElementById("current-date-time").innerText = formattedDateTime;
+                }
+                // Gọi hàm displayCurrentDateTime() khi trang được tải
+                window.onload = displayCurrentDateTime;
+            </script>
     </body>
 
 </html>

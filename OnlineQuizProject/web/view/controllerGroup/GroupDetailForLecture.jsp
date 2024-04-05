@@ -155,89 +155,155 @@
                                     <p><strong>Lecture: </strong>${group.lectureInfo.fullName}</p>
                                     <p><strong>Status: </strong>${group.status.statusName}</p>
                                 </td>
+
+                                <td>
+                                    <div class="mt-3">
+                                        <a href="<%= request.getContextPath() %>/create-exam?groupId=${group.groupId}" class="btn btn-primary">Create Exam</a>
+                                    </div>
+                                </td>
                             </tr>
+
                         </c:if>
                     </c:forEach>
+
                 </tbody>
             </table>
 
-        <!-- Table for listing exams -->
-        <table class="table exam-table">
-            <thead>
-                <tr>
-                    <th scope="col">Exam Title</th>
-                    <th scope="col">StartDate</th>
-                    <th scope="col">EndDate</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Status</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:choose>
-                    <c:when test="${empty requestScope.listExamOfGroup}">
-                        <tr>
-                            <td colspan="6">There are no ongoing activities yet.</td>
-                        </tr>
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
-                            <c:if test="${exam.group.groupId == groupId}">
-                            <form action="show-result-test-list-student" method="POST">
-                                <input hidden="hidden" name="groupID" value="${groupId}">
-                                <input hidden="hidden" name="examId" value="${exam.examId}">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Exam</button>
+                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Practice</button>
+                </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"> <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Exam Title</th>
+                                <th scope="col">StartDate</th>
+                                <th scope="col">EndDate</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Status</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:choose>
+                                <c:when test="${empty requestScope.listExamOfGroup}">
+                                    <tr>
+                                        <td colspan="6">There are no ongoing activities yet.</td>
+                                    </tr>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
+                                        <c:if test="${!exam.isPractice}">
+                                            <c:if test="${exam.group.groupId == groupId}">
+                                            <form action="show-result-test-list-student" method="POST">
+                                                <input hidden="hidden" name="groupID" value="${groupId}">
+                                                <input hidden="hidden" name="examId" value="${exam.examId}">
+                                                <tr>
+                                                    <td>${exam.examTitle}</td>
+                                                    <td>${exam.examStartDate}</td>
+                                                    <td>${exam.examEndDate}</td>
+                                                    <td>${exam.examTime}</td>
+                                                    <td>${exam.status.statusName}</td>
+                                                    <td><button type="submit" class="btn btn-primary">View Detail</button></td>
+                                                </tr>
+                                            </form>
+                                        </c:if>
+                                    </c:if>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"> <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>${exam.examTitle}</td>
-                                    <td>${exam.examStartDate}</td>
-                                    <td>${exam.examEndDate}</td>
-                                    <td>${exam.examTime}</td>
-                                    <td>${exam.status.statusName}</td>
-                                    <td><button type="submit" class="btn btn-primary">View Detail</button></td>
+                                    <th scope="col">Exam Title</th>
+                                    <th scope="col">StartDate</th>
+                                    <th scope="col">EndDate</th>
+                                    <th scope="col">Time</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"></th>
                                 </tr>
-                            </form>
-                        </c:if>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
-            </tbody>
-        </table>
-    </form>
+                            </thead>
+                            <tbody>
+                                <c:choose>
+                                    <c:when test="${empty requestScope.listExamOfGroup}">
+                                        <tr>
+                                            <td colspan="6">There are no ongoing activities yet.</td>
+                                        </tr>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="exam" items="${requestScope.listExamOfGroup}">
+                                            <c:if test="${exam.isPractice}">
+                                                <c:if test="${exam.group.groupId == groupId}">
+                                                <form action="show-result-test-list-student" method="POST">
+                                                    <input hidden="hidden" name="groupID" value="${groupId}">
+                                                    <input hidden="hidden" name="examId" value="${exam.examId}">
+                                                    <tr>
+                                                        <td>${exam.examTitle}</td>
+                                                        <td>${exam.examStartDate}</td>
+                                                        <td>${exam.examEndDate}</td>
+                                                        <td>${exam.examTime}</td>
+                                                        <td>${exam.status.statusName}</td>
+                                                        <td><button type="submit" class="btn btn-primary">View Detail</button></td>
+                                                    </tr>
+                                                </form>
+                                            </c:if>
+                                        </c:if>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-</div>
+            </div>
+            
+        </form>
 
-
-<!-- Footer section -->
-<div id="footer">
-    <!-- Social Icons -->
-    <div class="socials-list">
-        <a href=""><i class="fa-brands fa-facebook"></i></a>
-        <a href=""><i class="fa-brands fa-instagram"></i></a>
-        <a href=""><i class="fa-solid fa-bell"></i></a>
     </div>
-    <!-- Slogan -->
-    <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
-</div>
-<!-- End of footer section -->
 
-<!-- End of main container div -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Get the logo element
-        var logo = document.querySelector('.logo a');
 
-        // Add click event listener to the logo
-        logo.addEventListener('click', function (event) {
-            // Prevent the default action of the link
-            event.preventDefault();
+    <!-- Footer section -->
+    <div id="footer">
+        <!-- Social Icons -->
+        <div class="socials-list">
+            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-solid fa-bell"></i></a>
+        </div>
+        <!-- Slogan -->
+        <p class="slogan">Khám phá sức thông minh cùng <a href="#">Quizwiz</a> </p>
+    </div>
+    <!-- End of footer section -->
 
-            // Get the base URL
-            var baseUrl = "<%= request.getContextPath() %>";
+    <!-- End of main container div -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the logo element
+            var logo = document.querySelector('.logo a');
 
-            // Navigate to the home page
-            window.location.href = baseUrl + "/home";
+            // Add click event listener to the logo
+            logo.addEventListener('click', function (event) {
+                // Prevent the default action of the link
+                event.preventDefault();
+
+                // Get the base URL
+                var baseUrl = "<%= request.getContextPath() %>";
+
+                // Navigate to the home page
+                window.location.href = baseUrl + "/home";
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
 

@@ -264,6 +264,7 @@
                                             <input type="hidden" name="groupId" value="${group.groupId}" />
                                             <input type="hidden" name="topicId" value="${group.topic.topicId}" />
                                     </form>   
+                                    <form></form>
                                 </div>
                             </div>
                         </div>

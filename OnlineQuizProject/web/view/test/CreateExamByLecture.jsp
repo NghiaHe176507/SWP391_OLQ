@@ -570,7 +570,7 @@
                             return false; // Prevent form submission
                         }
 
-                        if (attempt == "" || attempt < 0 || attempt > 10) {
+                        if (parseInt(attempt) <= 0 || parseInt(attempt) > 10) {
                             alert("Attempt must be a number between 0 and 10");
                             return false; // Prevent form submission
                         }
